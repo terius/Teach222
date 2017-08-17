@@ -9,7 +9,7 @@ namespace StudentUser
 {
     public partial class VLCPlayer : Form
     {
-       
+
         public VLCPlayer()
         {
             InitializeComponent();
@@ -44,10 +44,14 @@ namespace StudentUser
 
         public void StartPlayStream(string url)
         {
+            this.Text = url;
             Uri uri = new Uri(url);
             var option = ":network-caching=300:rtsp-caching=300:no-video-title-show";
             Loger.LogMessage("接收到rtsp地址：" + url);
-            vlcControl1.Play(uri, option);
+            //   vlcControl1.Video.FullScreen
+            vlcControl1.Video.AspectRatio = "16:9";
+            vlcControl1.Play(uri, new string[] { "start-time=300" });
+
         }
 
         public void StartPlayLocation(string filename)
@@ -58,7 +62,7 @@ namespace StudentUser
 
         public void StopPlay()
         {
-      
+
             vlcControl1.Stop();
         }
     }

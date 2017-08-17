@@ -31,7 +31,7 @@ namespace StudentUser
         static extern void BlockInput(bool Block);
 
 
-    
+
         private void lockTaskmgr()//锁定任务管理器
 
         {
@@ -67,10 +67,10 @@ namespace StudentUser
         private void Form1_Load(object sender, EventArgs e)
 
         {
-
+          
             //this.lockAll();
 
-       
+
 
         }
 
@@ -108,7 +108,13 @@ namespace StudentUser
 
         private void Form1_Load_1(object sender, EventArgs e)
         {
-            LockWorkStation();
+            // LockWorkStation();
+            var videoPlayer = new VLCPlayer();
+            videoPlayer.BringToFront();
+            videoPlayer.Show();
+            var url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
+            var url2 = @"D:\dy\hl.mkv";
+            videoPlayer.StartPlayStream(url);
         }
     }
 }

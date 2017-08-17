@@ -19,7 +19,7 @@ namespace StudentUser
     public partial class UserMainForm : XtraForm
     {
         BlackScreen bsForm = null;
-        // VLCPlayer videoPlayer;
+        VLCPlayer videoPlayer;
         ChatForm chatForm = new ChatForm();
         ViewRtsp videoPlayer2;
         CallForm callForm;
@@ -545,17 +545,17 @@ namespace StudentUser
 
 
         //最小化窗体
-        private bool windowCreate = true;
-        protected override void OnActivated(EventArgs e)
-        {
-            if (windowCreate)
-            {
-                base.Visible = false;
-                windowCreate = false;
-            }
+        //private bool windowCreate = true;
+        //protected override void OnActivated(EventArgs e)
+        //{
+        //    if (windowCreate)
+        //    {
+        //        base.Visible = false;
+        //        windowCreate = false;
+        //    }
 
-            base.OnActivated(e);
-        }
+        //    base.OnActivated(e);
+        //}
 
 
 
@@ -706,7 +706,9 @@ namespace StudentUser
         private void button1_Click(object sender, EventArgs e)
         {
             var url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
-            ShowViewRtsp2(url);
+            videoPlayer = new VLCPlayer();
+            videoPlayer.Show();
+            videoPlayer.StartPlayStream(@"D:\dy\hl.mkv");
         }
 
         private void button2_Click(object sender, EventArgs e)
