@@ -14,6 +14,8 @@ namespace SharedForms
 {
     public static class GlobalVariable
     {
+        public static readonly string DownloadPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DownloadFiles");
+        public static readonly string AudioRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AudioRecord");
         public static string TeacherIP { get; set; }
         public static MyClient client;
         //public static MyClient client

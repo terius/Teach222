@@ -422,13 +422,13 @@ namespace MySocket
                 case (int)CommandType.CreateTeam://收到创建群组信息
                     DueMessage(OnCreateTeam, message);
                     break;
-                case (int)CommandType.CallStudentShow://收到请求审讯室演示
+                case (int)CommandType.CallStudentShow://收到请求学生演示
                     DueMessage(OnCallStudentShow, message);
                     break;
-                case (int)CommandType.CallStudentShowForMySelf://收到请求审讯室演示
+                case (int)CommandType.CallStudentShowForMySelf://收到请求学生演示
                     DueMessage(OnCallStudentShowForTeacher, message);
                     break;
-                case (int)CommandType.CallStudentShowVideoToTeacher://收到请求审讯室演示视频
+                case (int)CommandType.CallStudentShowVideoToTeacher://收到请求学生演示视频
                     DueMessage(OnCallStudentShowVideoForTeacher, message);
                     break;
                 case (int)CommandType.StopStudentShow://停止演示
@@ -762,7 +762,7 @@ namespace MySocket
         }
 
         /// <summary>
-        /// 呼叫审讯室演示
+        /// 呼叫学生演示
         /// </summary>
         /// <param name="userName"></param>
         public void Send_CallStudentShow(string userName)
@@ -772,7 +772,7 @@ namespace MySocket
         }
 
         /// <summary>
-        /// 呼叫审讯室演示(只给主机)
+        /// 呼叫学生演示(只给教师)
         /// </summary>
         /// <param name="userName"></param>
         public void Send_CallStudentShowForMySelf(string userName)
@@ -782,7 +782,7 @@ namespace MySocket
         }
 
         /// <summary>
-        /// 呼叫审讯室演示视频(只给主机)
+        /// 呼叫学生演示视频(只给教师)
         /// </summary>
         /// <param name="userName"></param>
         public void Send_CallStudentShowVideoForMySelf(string userName)
@@ -792,7 +792,7 @@ namespace MySocket
         }
 
         /// <summary>
-        /// 关闭审讯室演示
+        /// 关闭学生演示
         /// </summary>
         /// <param name="userName"></param>
         public void Send_StopStudentShow(string userName)

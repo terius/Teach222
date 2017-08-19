@@ -398,7 +398,7 @@ namespace Helpers
             {
                 myClient.UploadFileCompleted += action.Invoke;
                 myClient.UploadProgressChanged += progressAction.Invoke;
-                
+
                 myClient.UploadFileAsync(new Uri(serverUrl), fileName);
 
             }
@@ -415,27 +415,42 @@ namespace Helpers
         //    string result = Encoding.UTF8.GetString(e.Result);
         //    MessageBox.Show(result);
         //}
-
-        public static string DownloadFile(string url)
+        //    Action<string> OnDownloadComplete;
+        public static void DownloadFile(string url, Action<object, System.ComponentModel.AsyncCompletedEventArgs> onComplete, string savePath = null)
         {
             if (string.IsNullOrWhiteSpace(url))
             {
                 MessageBox.Show("下载地址为空");
-                return null;
+                return;
             }
-            using (var myClient = new System.Net.WebClient())
+
+          
+
+            using (var myClient = new WebClient())
             {
-                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-                saveFileDialog1.RestoreDirectory = true;
-                saveFileDialog1.FileName = url.Substring(url.LastIndexOf("/") + 1);
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+
+                if (string.IsNullOrWhiteSpace(savePath))
                 {
-                    myClient.DownloadFileAsync(new Uri(url), saveFileDialog1.FileName);
-                    return saveFileDialog1.FileName;
+                    SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                    saveFileDialog1.RestoreDirectory = true;
+                    saveFileDialog1.FileName = url.Substring(url.LastIndexOf("/") + 1);
+                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        savePath = saveFileDialog1.FileName;
+                    }
                 }
+                if (!string.IsNullOrWhiteSpace(savePath))
+                {
+                    myClient.DownloadFileCompleted += onComplete.Invoke;
+                    myClient.DownloadFileAsync(new Uri(url), savePath, savePath);
+
+                }
+
             }
-            return null;
+
         }
+
+
 
         public static byte[] ImageToByteArray(Image imageIn)
         {
@@ -459,6 +474,9 @@ namespace Helpers
                 return returnImage;
             }
         }
+
+
+
 
         const int LOCK = 500; //申请读写时间
         const int SLEEP = 100; //线程挂起时间
@@ -503,6 +521,12 @@ namespace Helpers
             {
                 readWriteLock.ReleaseWriterLock();
             }
+        }
+
+
+        public static string GetFileExt(string fileName)
+        {
+            return fileName.Substring(fileName.LastIndexOf('.') + 1).ToLower();
         }
     }
 }

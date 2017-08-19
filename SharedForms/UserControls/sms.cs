@@ -40,6 +40,7 @@ namespace SharedForms
         bool messageIsString = false;
         string _downloadFileUrl;
         string saveFilePath;
+        PictureShow picShow;
 
         public sms(ChatMessage messageInfo, bool isMySelf)
         {
@@ -97,21 +98,88 @@ namespace SharedForms
 
         private void PictureBox1_Click(object sender, EventArgs e)
         {
+
+
             var fileType = GetFileType(_downloadFileUrl);
+            Action<object, System.ComponentModel.AsyncCompletedEventArgs> onDownload;
             if (fileType == Common.MessageType.Sound)
             {
                 //ShowNotify("开始播放", 1000);
-                PlayMp3FromUrl(_downloadFileUrl);
+                //  PlayMp3FromUrl(_downloadFileUrl);
+                var fileName = _downloadFileUrl.Substring(_downloadFileUrl.LastIndexOf("/") + 1);
+                var savePath = GlobalVariable.DownloadPath + "\\" + fileName;
+                if (!string.IsNullOrWhiteSpace(savePath))
+                {
+                    if (File.Exists(savePath))
+                    {
+                        ((ChatForm)this.ParentForm).PlayVoice(savePath);
+                        return;
+                    }
+                }
+
+
+                onDownload = (ob, eve) =>
+                {
+                    saveFilePath = eve.UserState.ToString();
+                    if (!string.IsNullOrWhiteSpace(saveFilePath))
+                    {
+                        ((ChatForm)this.ParentForm).PlayVoice(saveFilePath);
+                    }
+
+                };
+
+                FileHelper.DownloadFile(_downloadFileUrl, onDownload, savePath);
+
+
             }
             else
             {
-                saveFilePath = FileHelper.DownloadFile(_downloadFileUrl);
-                if (!string.IsNullOrWhiteSpace(saveFilePath))
+                string savePath = "";
+                if (fileType == Common.MessageType.Image)
                 {
-                    ShowNotify("下载成功!文件已下载到\r\n" + saveFilePath);
+                    var fileName = _downloadFileUrl.Substring(_downloadFileUrl.LastIndexOf("/") + 1);
+                    savePath = GlobalVariable.DownloadPath + "\\" + fileName;
+                    if (File.Exists(savePath))
+                    {
+                        ShowPic(savePath);
+                        return;
+                    }
                 }
+                onDownload = (ob, eve) =>
+                {
+                    MessageBox.Show("okoko");
+                    saveFilePath = eve.UserState.ToString();
+                    if (!string.IsNullOrWhiteSpace(saveFilePath))
+                    {
+                        if (fileType == Common.MessageType.Image)
+                        {
+                            ShowPic(saveFilePath);
+                        }
+                        else
+                        {
+                            ShowNotify("下载成功!文件已下载到\r\n" + saveFilePath);
+                        }
+                    }
+
+                };
+
+
+                FileHelper.DownloadFile(_downloadFileUrl, onDownload, savePath);
+
             }
 
+
+        }
+
+        private void ShowPic(string filePath)
+        {
+            if (picShow == null || picShow.IsDisposed)
+            {
+                picShow = new PictureShow();
+            }
+            picShow.BringToFront();
+            picShow.Show();
+            picShow.ShowPic(filePath);
         }
 
         private void PlayMp3FromUrl(string url)
@@ -134,7 +202,7 @@ namespace SharedForms
                 using (WaveStream blockAlignedStream =
                     new BlockAlignReductionStream(
                         WaveFormatConversionStream.CreatePcmStream(
-                            new WaveFileReader(ms))))
+                            new Mp3FileReader(ms))))
                 {
                     using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
                     {
@@ -161,6 +229,7 @@ namespace SharedForms
                     return Common.MessageType.Image;
                 case "mp3":
                 case "wav":
+                case "amr":
                     return Common.MessageType.Sound;
                 case "mp4":
                 case "avi":
@@ -173,8 +242,8 @@ namespace SharedForms
         }
 
 
-      
-     
+
+
 
         AlertControl messagebox;
         private void ShowNotify(string msg, int autoFormDelay = 2000)

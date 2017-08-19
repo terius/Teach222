@@ -67,8 +67,8 @@
             this.userList_P_allowPrivateChat = new System.Windows.Forms.ToolStripMenuItem();
             this.userList_P_allowGroupChat = new System.Windows.Forms.ToolStripMenuItem();
             this.userList_studentShow = new System.Windows.Forms.ToolStripMenuItem();
+            this.学生视频演示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userList_stopStudentShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.审讯室视频演示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
@@ -121,7 +121,6 @@
             this.menuExportSign.Id = 1;
             this.menuExportSign.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("menuExportSign.ImageOptions.LargeImage")));
             this.menuExportSign.Name = "menuExportSign";
-            this.menuExportSign.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             this.menuExportSign.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.menuExportSign_ItemClick);
             // 
             // menuClassNamed
@@ -130,7 +129,6 @@
             this.menuClassNamed.Id = 2;
             this.menuClassNamed.ImageOptions.LargeImage = global::NewTeacher.Properties.Resources.上课点名;
             this.menuClassNamed.Name = "menuClassNamed";
-            this.menuClassNamed.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             this.menuClassNamed.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.menuClassNamed_ItemClick);
             // 
             // menuGroupChat
@@ -193,7 +191,7 @@
             // 
             // menuStudentShow
             // 
-            this.menuStudentShow.Caption = "审讯室演示";
+            this.menuStudentShow.Caption = "学生演示";
             this.menuStudentShow.Id = 2;
             this.menuStudentShow.ImageOptions.LargeImage = global::NewTeacher.Properties.Resources.学生演示;
             this.menuStudentShow.Name = "menuStudentShow";
@@ -279,7 +277,7 @@
             this.splitContainerControl1.Panel1.Controls.Add(this.panelControl1);
             this.splitContainerControl1.Panel1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.splitContainerControl1.Panel1.ShowCaption = true;
-            this.splitContainerControl1.Panel1.Text = "审讯室列表";
+            this.splitContainerControl1.Panel1.Text = "学生列表";
             this.splitContainerControl1.Panel2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Default;
             this.splitContainerControl1.Panel2.Controls.Add(this.flowLayoutPanel1);
             this.splitContainerControl1.Panel2.ShowCaption = true;
@@ -359,10 +357,10 @@
             this.userList_stopLockScreen,
             this.userList_permisson,
             this.userList_studentShow,
-            this.审讯室视频演示ToolStripMenuItem,
+            this.学生视频演示ToolStripMenuItem,
             this.userList_stopStudentShow});
             this.UserListMenu.Name = "contextMenuStrip1";
-            this.UserListMenu.Size = new System.Drawing.Size(181, 208);
+            this.UserListMenu.Size = new System.Drawing.Size(181, 186);
             // 
             // userList_privateChat
             // 
@@ -430,22 +428,22 @@
             // 
             this.userList_studentShow.Name = "userList_studentShow";
             this.userList_studentShow.Size = new System.Drawing.Size(180, 26);
-            this.userList_studentShow.Text = "审讯室演示";
+            this.userList_studentShow.Text = "学生演示";
             this.userList_studentShow.Click += new System.EventHandler(this.userList_studentShow_Click);
+            // 
+            // 学生视频演示ToolStripMenuItem
+            // 
+            this.学生视频演示ToolStripMenuItem.Name = "学生视频演示ToolStripMenuItem";
+            this.学生视频演示ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.学生视频演示ToolStripMenuItem.Text = "学生视频演示";
+            this.学生视频演示ToolStripMenuItem.Click += new System.EventHandler(this.学生视频演示ToolStripMenuItem_Click);
             // 
             // userList_stopStudentShow
             // 
             this.userList_stopStudentShow.Name = "userList_stopStudentShow";
             this.userList_stopStudentShow.Size = new System.Drawing.Size(180, 26);
-            this.userList_stopStudentShow.Text = "停止审讯室演示";
+            this.userList_stopStudentShow.Text = "停止学生演示";
             this.userList_stopStudentShow.Click += new System.EventHandler(this.userList_stopStudentShow_Click);
-            // 
-            // 审讯室视频演示ToolStripMenuItem
-            // 
-            this.审讯室视频演示ToolStripMenuItem.Name = "审讯室视频演示ToolStripMenuItem";
-            this.审讯室视频演示ToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
-            this.审讯室视频演示ToolStripMenuItem.Text = "审讯室视频演示";
-            this.审讯室视频演示ToolStripMenuItem.Click += new System.EventHandler(this.审讯室视频演示ToolStripMenuItem_Click);
             // 
             // defaultLookAndFeel1
             // 
@@ -518,6 +516,6 @@
         private System.Windows.Forms.ImageList imageList1;
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ToolStripMenuItem 审讯室视频演示ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 学生视频演示ToolStripMenuItem;
     }
 }

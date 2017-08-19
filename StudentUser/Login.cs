@@ -123,7 +123,7 @@ namespace StudentUser
         {
 
             string userName = textBox1.Text.Trim();
-            nickName = "审讯室" + userName;
+            nickName = "学生" + userName;
             string password = textBox2.Text.Trim();
 
             if (userName == string.Empty)

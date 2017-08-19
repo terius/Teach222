@@ -79,7 +79,7 @@
         StudentCall = 19,
         StudentInMainForm = 20,
         /// <summary>
-        /// 开始审讯室演示
+        /// 开始学生演示
         /// </summary>
         CallStudentShow = 21,
         ///// <summary>
@@ -87,7 +87,7 @@
         ///// </summary>
         //StudentBeginShow = 22,
         /// <summary>
-        /// 停止审讯室演示
+        /// 停止学生演示
         /// </summary>
         StopStudentShow = 23,
         ///// <summary>
@@ -127,15 +127,15 @@
         /// </summary>
         TeacherLoginOut = 81,
         /// <summary>
-        /// 开始审讯室对指挥室演示
+        /// 开始学生对教师演示
         /// </summary>
         CallStudentShowForMySelf = 31,
         /// <summary>
-        /// 开始审讯室对指挥室演示
+        /// 开始学生对教师演示
         /// </summary>
         StudentShowToTeacher = 32,
         /// <summary>
-        /// 通知审讯室发送视频直播
+        /// 通知学生发送视频直播
         /// </summary>
         CallStudentShowVideoToTeacher = 33
        

@@ -82,7 +82,7 @@ namespace NewTeacher
                     GlobalVariable.client.OnReveieveData -= Client_OnReveieveData;
                     GlobalVariable.LoginUserInfo = new LoginUserInfo
                     {
-                        DisplayName = "主机",
+                        DisplayName = "教师",
                         UserName = textBox1.Text.Trim(),
                         UserType = ClientRole.Teacher,
                         No = textBox2.Text.Trim()

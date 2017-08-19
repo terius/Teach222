@@ -154,9 +154,9 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(368, 62);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(123, 30);
+            this.label5.Size = new System.Drawing.Size(101, 30);
             this.label5.TabIndex = 14;
-            this.label5.Text = "审讯室登陆";
+            this.label5.Text = "学生登陆";
             // 
             // labVer
             // 
@@ -175,9 +175,9 @@
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(114, 18);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(123, 36);
+            this.label6.Size = new System.Drawing.Size(177, 36);
             this.label6.TabIndex = 16;
-            this.label6.Text = "会审系统";
+            this.label6.Text = "在线教育系统";
             // 
             // Login
             // 

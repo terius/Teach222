@@ -70,7 +70,7 @@ namespace NewTeacher
         //        {
         //            //if (screenmonitor == null)
         //            //{
-        //            //    MessageBox.Show("请通过用户列表右键菜单关闭审讯室演示!");
+        //            //    MessageBox.Show("请通过用户列表右键菜单关闭学生演示!");
         //            //    return;
         //            //}
         //        }

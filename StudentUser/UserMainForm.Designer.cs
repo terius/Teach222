@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserMainForm));
             this.btnLockScreen = new System.Windows.Forms.Button();
             this.btnStopLockScreen = new System.Windows.Forms.Button();
@@ -36,8 +35,8 @@
             this.btnScreenCapture = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.tuopan = new System.Windows.Forms.NotifyIcon(this.components);
-            this.MinMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tuopan = new System.Windows.Forms.NotifyIcon();
+            this.MinMenu = new System.Windows.Forms.ContextMenuStrip();
             this.mSignIn = new System.Windows.Forms.ToolStripMenuItem();
             this.mChat = new System.Windows.Forms.ToolStripMenuItem();
             this.mHandUp = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,7 +139,6 @@
             this.mSignIn.Name = "mSignIn";
             this.mSignIn.Size = new System.Drawing.Size(152, 22);
             this.mSignIn.Text = "签到";
-            this.mSignIn.Visible = false;
             this.mSignIn.Click += new System.EventHandler(this.mSignIn_Click);
             // 
             // mChat
@@ -157,7 +155,6 @@
             this.mHandUp.Name = "mHandUp";
             this.mHandUp.Size = new System.Drawing.Size(152, 22);
             this.mHandUp.Text = "举手";
-            this.mHandUp.Visible = false;
             this.mHandUp.Click += new System.EventHandler(this.mHandUp_Click);
             // 
             // mPrivateSMS

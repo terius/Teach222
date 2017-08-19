@@ -39,6 +39,11 @@ namespace NewTeacher
             GlobalVariable.client.Send_OnlineList();
             CreateUDPConnect();
             //  ReceiveStudentDesktopImg();
+
+            //PictureShow ps = new PictureShow();
+            //ps.Show();
+            //ps.BringToFront();
+            //ps.ShowPic(@"D:\我的图片\t2.png");
         }
 
 
@@ -217,7 +222,7 @@ namespace NewTeacher
                     var userList2 = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
                     onlineInfo.OnOnlineChange(userList2);
                     break;
-                case (int)CommandType.PrivateChat://接收到审讯室私聊信息
+                case (int)CommandType.PrivateChat://接收到学生私聊信息
                     var PrivateChatMessage = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
                     this.InvokeOnUiThreadIfRequired(() => { ReceievePrivateMessage(PrivateChatMessage); });
                     break;
@@ -229,7 +234,7 @@ namespace NewTeacher
                     var groupChatRequest = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
                     this.InvokeOnUiThreadIfRequired(() => { ReceieveGroupMessage(groupChatRequest); });
                     break;
-                case (int)CommandType.OneUserLogIn://某个审讯室登录
+                case (int)CommandType.OneUserLogIn://某个学生登录
                     var newUser = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
                    
                     onlineInfo.OnNewUserLoginIn(newUser);
@@ -391,12 +396,12 @@ namespace NewTeacher
         {
             if (lvOnline.Items.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("当前在线审讯室为空");
+                GlobalVariable.ShowWarnning("当前在线学生为空");
                 return "";
             }
             if (lvOnline.SelectedItems.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("请先选择审讯室");
+                GlobalVariable.ShowWarnning("请先选择学生");
                 return "";
             }
             string username = lvOnline.SelectedItems[0].SubItems[2].Text;
@@ -424,11 +429,11 @@ namespace NewTeacher
             //var onlineList = onlineInfo.GetStudentOnlineList();
             if (onlineInfo.LoginedStuList.Count <= 0)
             {
-                MessageBox.Show("当前登陆审讯室为空");
+                MessageBox.Show("当前登陆学生为空");
                 return;
             }
             var table = new System.Data.DataTable();
-            table.Columns.Add("审讯室姓名", typeof(string));
+            table.Columns.Add("学生姓名", typeof(string));
             table.Columns.Add("是否签到", typeof(string));
             foreach (var item in onlineInfo.LoginedStuList)
             {
@@ -552,7 +557,7 @@ namespace NewTeacher
         private void menuStudentShow_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             string text = e.Item.Caption;
-            if (text == "审讯室演示")
+            if (text == "学生演示")
             {
                 var username = GetSelectStudentUserName();
                 if (!string.IsNullOrWhiteSpace(username))
@@ -570,7 +575,7 @@ namespace NewTeacher
                 {
                     GlobalVariable.client.Send_StopStudentShow(actionStuUserName);
                     actionStuUserName = null;
-                    e.Item.Caption = "审讯室演示";
+                    e.Item.Caption = "学生演示";
                 }
             }
 
@@ -738,7 +743,7 @@ namespace NewTeacher
             }
         }
 
-        private void 审讯室视频演示ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 学生视频演示ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var userName = GetSelectStudentUserName();
             if (!string.IsNullOrWhiteSpace(userName))

@@ -172,7 +172,7 @@ namespace StudentUser
                 });
 
             };
-            //收到请求审讯室演示
+            //收到请求学生演示
             GlobalVariable.client.OnCallStudentShow = (message) =>
             {
                 DoAction(() =>
@@ -183,7 +183,7 @@ namespace StudentUser
                 });
 
             };
-            //收到请求审讯室演示,只给主机
+            //收到请求学生演示,只给教师
             GlobalVariable.client.OnCallStudentShowForTeacher = (message) =>
             {
                 DoAction(() =>
@@ -194,7 +194,7 @@ namespace StudentUser
                 });
 
             };
-            //收到请求审讯室演示视频,只给主机
+            //收到请求学生演示视频,只给教师
             GlobalVariable.client.OnCallStudentShowVideoForTeacher = (message) =>
             {
                 DoAction(() =>
@@ -393,7 +393,7 @@ namespace StudentUser
         //            });
 
         //            break;
-        //        case (int)CommandType.CallStudentShow://收到请求审讯室演示
+        //        case (int)CommandType.CallStudentShow://收到请求学生演示
         //            DoAction(() =>
         //            {
         //                GlobalVariable.client.CreateScreenInteract();
@@ -545,17 +545,17 @@ namespace StudentUser
 
 
         //最小化窗体
-        //private bool windowCreate = true;
-        //protected override void OnActivated(EventArgs e)
-        //{
-        //    if (windowCreate)
-        //    {
-        //        base.Visible = false;
-        //        windowCreate = false;
-        //    }
+        private bool windowCreate = true;
+        protected override void OnActivated(EventArgs e)
+        {
+            if (windowCreate)
+            {
+                base.Visible = false;
+                windowCreate = false;
+            }
 
-        //    base.OnActivated(e);
-        //}
+            base.OnActivated(e);
+        }
 
 
 

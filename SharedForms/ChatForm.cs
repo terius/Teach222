@@ -40,13 +40,23 @@ namespace SharedForms
         string groupId = "allpeople";
         readonly string UploadFileServer = System.Configuration.ConfigurationManager.AppSettings["UploadFileServer"];
         readonly string ServerIp = System.Configuration.ConfigurationManager.AppSettings["serverIP"];
-        AudioRecorder audioRecorder;
-        string saveAudioFile = "";
-        string saveAudioFilePath = "";
+        //  AudioRecorder audioRecorder;
+        RecordVoice recordVoice;
+        // string saveAudioFile = "";
+        //   string saveAudioFilePath = "";
         #endregion
 
         #region 构造函数
 
+
+        public void PlayVoice(string fileName)
+        {
+            if (recordVoice == null)
+            {
+                recordVoice = new RecordVoice();
+            }
+            recordVoice.PlayVoice(fileName);
+        }
 
         public ChatForm()
         {
@@ -57,10 +67,23 @@ namespace SharedForms
                 ChatNav.CreateItem(groupChat);
             }
             InitProgressBar();
-            saveAudioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "audiorecord");
-            if (!Directory.Exists(saveAudioFilePath))
+            CheckPath();
+
+
+
+        }
+
+        private void CheckPath()
+        {
+            if (!Directory.Exists(GlobalVariable.AudioRecordPath))
             {
-                Directory.CreateDirectory(saveAudioFilePath);
+                Directory.CreateDirectory(GlobalVariable.AudioRecordPath);
+            }
+
+
+            if (!Directory.Exists(GlobalVariable.DownloadPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.DownloadPath);
             }
         }
 
@@ -518,7 +541,7 @@ namespace SharedForms
                 if (string.IsNullOrWhiteSpace(uploadFile))
                 {
                     OpenFileDialog dlg = new OpenFileDialog();
-                    dlg.Filter = "媒体文件 (*.jpg,*.gif,*.bmp,*.png,*.mp3,*.wav,*.mp4,*.avi,*.mpg)|*.jpg;*.gif;*.bmp;*.png;*.mp3;*.wav;*.mp4;*.avi;*.mpg";
+                    dlg.Filter = "媒体文件 (*.jpg,*.gif,*.bmp,*.png,*.mp3,*.wav,*.amr,*.mp4,*.avi,*.mpg)|*.jpg;*.gif;*.bmp;*.png;*.mp3;*.wav;*.amr;*.mp4;*.avi;*.mpg";
                     dlg.Title = "选择媒体文件";
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
@@ -574,6 +597,10 @@ namespace SharedForms
                     if (isTempFile)
                     {
                         File.Delete(uploadFile);
+                        if (FileHelper.GetFileExt(uploadFile) == "amr")
+                        {
+                            File.Delete(uploadFile.Substring(0, uploadFile.LastIndexOf('.') + 1) + "wav");
+                        }
                     }
                 }, (ob, progress) =>
                 {
@@ -608,6 +635,7 @@ namespace SharedForms
 
                 case ".mp3":
                 case ".wav":
+                case ".amr":
                     return MessageType.Sound;
 
                 case ".mp4":
@@ -674,24 +702,30 @@ namespace SharedForms
 
             if (btnRecordAudio.Caption == "开始录音")
             {
-                saveAudioFile = Path.Combine(saveAudioFilePath, DateTime.Now.Ticks + ".wav");
+                //  saveAudioFile = Path.Combine(saveAudioFilePath, DateTime.Now.Ticks + ".wav");
 
                 btnRecordAudio.Caption = "录音中";
                 ((ToolTipItem)btnRecordAudio.SuperTip.Items[0]).Text = "点击按钮结束录音";
-                if (audioRecorder == null)
+                if (recordVoice == null)
                 {
-                    audioRecorder = new AudioRecorder();
+                    recordVoice = new RecordVoice();
                 }
-                audioRecorder.StartRecording(saveAudioFile);
+                recordVoice.BeginRecord();
+                //if (audioRecorder == null)
+                //{
+                //    audioRecorder = new AudioRecorder();
+                //}
+                //audioRecorder.StartRecording(saveAudioFile);
             }
             else if (btnRecordAudio.Caption == "录音中")
             {
                 btnRecordAudio.Caption = "开始录音";
                 ((ToolTipItem)btnRecordAudio.SuperTip.Items[0]).Text = "点击按钮开始录音";
-                audioRecorder.EndRecord();
+                string saveFile = recordVoice.StopRecord();
+                // audioRecorder.EndRecord();
                 Thread.Sleep(500);
 
-                UploadFileToALL(saveAudioFile, true);
+                UploadFileToALL(saveFile, true);
             }
         }
 
