@@ -8,7 +8,7 @@ namespace StudentUser
 {
     public class VLCPlus
     {
-        private string param = ":network-caching=300:rtsp-caching=300:no-video-title-show";
+        private string param = ":network-caching=300:rtsp-caching=300:no-video-title-show";//:aspect-ratio=16:9
         public AxVLCPlugin2 axVLCPlugin2;
         private int Width;
         private int Height;
@@ -34,6 +34,14 @@ namespace StudentUser
         public void startPlay(string rtsp)
         {
             this.axVLCPlugin2.Invoke((Delegate)this.rtspPlayer, (object)rtsp);
+        }
+
+        public void PlayVideo(string url)
+        {
+            var uri = new Uri(url);
+            var convertedURI = uri.AbsoluteUri;
+            axVLCPlugin2.playlist.add(convertedURI);
+            axVLCPlugin2.playlist.play();
         }
 
         private void playVideo(string rtsp)

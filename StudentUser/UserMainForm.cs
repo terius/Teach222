@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using AxAXVLC;
+using Common;
 using DevExpress.XtraEditors;
 using Helpers;
 using Model;
@@ -25,6 +26,19 @@ namespace StudentUser
         CallForm callForm;
         volatile bool isRunScreen = false;
         Thread theadScreen;
+
+        //最小化窗体
+        //private bool windowCreate = true;
+        //protected override void OnActivated(EventArgs e)
+        //{
+        //    if (windowCreate)
+        //    {
+        //        base.Visible = false;
+        //        windowCreate = false;
+        //    }
+
+        //    base.OnActivated(e);
+        //}
         public UserMainForm()
         {
             InitializeComponent();
@@ -251,187 +265,11 @@ namespace StudentUser
 
         private void UserMainForm_Load(object sender, System.EventArgs e)
         {
-            //ThreadStart ts = new ThreadStart(GetScreenCapture);
-            //Thread t = new Thread(ts);
-            //t.IsBackground = true;
-            //t.Start();
-            //string pluginPath = Environment.CurrentDirectory + "\\plugins\\";  //插件目录
-            //var player = new VlcPlayerBase(pluginPath);
-            //player.SetRenderWindow((int)this.Handle);//panel
-            // player.LoadFile("d:\\1.mkv");//视频文件路径
-            //  if (!string.IsNullOrWhiteSpace(GlobalVariable.TeacherIP))
-            //  {
             CreateUDPHole();
-            //   GetScreen();
-            //  }
-            //   CreateUDPConnect();
         }
 
 
-        //private void SendScreen()
-        //{
-        //    if (theadScreen == null || theadScreen.ThreadState != ThreadState.Running)
-        //    {
-        //        theadScreen = new Thread(new ThreadStart(GetScreenCapture));
-        //        theadScreen.IsBackground = true;
-        //        theadScreen.Start();
-        //    }
-        //}
-
-        //private void Client_OnReveieveData(ReceieveMessage message)
-        //{
-        //    //DoAction(() => {
-        //    //    this.richTextBox1.AppendText(JsonHelper.SerializeObj(message) + "\r\n");
-        //    //});
-        //    switch (message.Action)
-        //    {
-        //        case (int)CommandType.TeacherLoginIn://教师端登录
-
-        //            DoAction(() =>
-        //            {
-        //                if (theadScreen == null || theadScreen.ThreadState != ThreadState.Running)
-        //                {
-        //                    TeacherLoginInResponse teachRes = JsonHelper.DeserializeObj<TeacherLoginInResponse>(message.DataStr);
-        //                    GlobalVariable.TeacherIP = teachRes.teachIP;
-        //                    theadScreen = new Thread(new ThreadStart(GetScreenCapture));
-
-        //                    theadScreen.IsBackground = true;
-        //                    theadScreen.Start();
-        //                }
-
-        //            });
-        //            break;
-        //        case (int)CommandType.TeacherLoginOut://教师端登出
-        //            if (theadScreen != null && theadScreen.ThreadState == ThreadState.Background)
-        //            {
-        //                isRunScreen = false;
-        //                Thread.Sleep(200);
-        //                theadScreen.Abort();
-        //            }
-        //            break;
-        //        case (int)CommandType.ScreenInteract://收到视频流
-        //            ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
-        //            DoAction(() =>
-        //            {
-        //                ShowViewRtsp2(resp.url);
-
-        //            });
-        //            break;
-        //        case (int)CommandType.StopScreenInteract://收到视频流停止
-        //            DoAction(() =>
-        //            {
-        //                StopPlay();
-
-        //            });
-
-        //            break;
-        //        case (int)CommandType.LockScreen://锁屏
-        //            LockScreen(false);
-        //            break;
-        //        case (int)CommandType.StopLockScreen://终止锁屏
-        //            StopLockScreen();
-        //            break;
-        //        case (int)CommandType.Quiet://屏幕肃静
-        //            LockScreen(true);
-        //            break;
-        //        case (int)CommandType.StopQuiet://终止屏幕肃静
-        //            StopLockScreen();
-        //            break;
-
-        //        case (int)CommandType.PrivateChat://收到私聊信息
-        //            var chatResponse = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
-        //            DoAction(() =>
-        //            {
-        //                var chatMessage = chatResponse.ToChatMessage();
-        //                OpenChatForm(chatMessage);
-        //            });
-        //            break;
-        //        case (int)CommandType.TeamChat://收到群聊信息
-        //            var teamChatResponse = JsonHelper.DeserializeObj<TeamChatRequest>(message.DataStr);
-
-        //            DoAction(() =>
-        //            {
-        //                var request = teamChatResponse.ToChatMessage();
-        //                OpenChatForm(request);
-        //            });
-        //            break;
-        //        case (int)CommandType.GroupChat://收到群聊信息
-        //            var groupChatResponse = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
-
-        //            DoAction(() =>
-        //            {
-        //                var request = groupChatResponse.ToChatMessage();
-        //                OpenChatForm(request);
-        //            });
-        //            break;
-        //        case (int)CommandType.BeginCall://开始点名
-        //            DoAction(() =>
-        //            {
-        //                OpenCallForm();
-
-        //            });
-
-        //            break;
-        //        case (int)CommandType.EndCall://结束点名
-        //            DoAction(() =>
-        //            {
-        //                CloseCallForm();
-
-        //            });
-
-        //            break;
-        //        case (int)CommandType.CreateTeam://收到创建群组信息
-        //            var teamInfo = JsonHelper.DeserializeObj<TeamChatCreateOrUpdateRequest>(message.DataStr);
-        //            GlobalVariable.RefleshTeamList(teamInfo);
-        //            DoAction(() =>
-        //            {
-        //                chatForm.BringToFront();
-        //                chatForm.Show();
-        //                chatForm.ReflashTeamChat();
-
-
-        //            });
-
-        //            break;
-        //        case (int)CommandType.CallStudentShow://收到请求学生演示
-        //            DoAction(() =>
-        //            {
-        //                GlobalVariable.client.CreateScreenInteract();
-        //                GlobalVariable.client.Send_ScreenInteract();
-
-        //            });
-        //            break;
-        //        case (int)CommandType.StopStudentShow://停止演示
-        //            DoAction(() =>
-        //            {
-        //                GlobalVariable.client.StopScreenInteract();
-        //                GlobalVariable.client.Send_StopScreenInteract();
-
-        //            });
-        //            break;
-        //        case (int)CommandType.ForbidPrivateChat://收到禁止私聊
-        //            GlobalVariable.LoginUserInfo.AllowPrivateChat = false;
-        //            ChangeChatAllowOrForbit(ChatType.PrivateChat, false);
-        //            break;
-        //        case (int)CommandType.ForbidTeamChat://收到禁止群聊
-        //            GlobalVariable.LoginUserInfo.AllowTeamChat = false;
-        //            ChangeChatAllowOrForbit(ChatType.TeamChat, false);
-        //            break;
-        //        case (int)CommandType.AllowPrivateChat://收到允许私聊
-        //            GlobalVariable.LoginUserInfo.AllowPrivateChat = true;
-        //            ChangeChatAllowOrForbit(ChatType.PrivateChat, true);
-        //            break;
-        //        case (int)CommandType.AllowTeamChat://收到允许群聊
-        //            GlobalVariable.LoginUserInfo.AllowTeamChat = true;
-        //            ChangeChatAllowOrForbit(ChatType.TeamChat, true);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-
-
-
+        
 
         private void CreateUDPHole()
         {
@@ -544,22 +382,11 @@ namespace StudentUser
         //}
 
 
-        //最小化窗体
-        private bool windowCreate = true;
-        protected override void OnActivated(EventArgs e)
-        {
-            if (windowCreate)
-            {
-                base.Visible = false;
-                windowCreate = false;
-            }
-
-            base.OnActivated(e);
-        }
 
 
 
 
+      
         private void ShowViewRtsp2(string rtsp)
         {
 
@@ -569,7 +396,7 @@ namespace StudentUser
             }
             videoPlayer2.Show();
             //  videoPlayer = f;
-            videoPlayer2.startPlay();
+            videoPlayer2.PlayVideo(rtsp);
 
         }
 
@@ -703,12 +530,20 @@ namespace StudentUser
 
         #endregion
 
+
+        
+
         private void button1_Click(object sender, EventArgs e)
         {
-            var url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
-            videoPlayer = new VLCPlayer();
-            videoPlayer.Show();
-            videoPlayer.StartPlayStream(@"D:\dy\hl.mkv");
+            //var url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
+            //videoPlayer = new VLCPlayer();
+            //videoPlayer.Show();
+            //videoPlayer.StartPlayStream(@"D:\dy\hl.mkv");
+            var url = @"D:\dy\hl.mkv";
+            VideoShow vs = new VideoShow();
+         
+            vs.Show();
+            vs.PlayVideo(url);
         }
 
         private void button2_Click(object sender, EventArgs e)
