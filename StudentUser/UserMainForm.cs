@@ -1,5 +1,4 @@
-﻿using AxAXVLC;
-using Common;
+﻿using Common;
 using DevExpress.XtraEditors;
 using Helpers;
 using Model;
@@ -7,25 +6,25 @@ using SharedForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace StudentUser
 {
     public partial class UserMainForm : XtraForm
     {
         BlackScreen bsForm = null;
-        VLCPlayer videoPlayer;
+        //  VLCPlayer videoPlayer;
         ChatForm chatForm = new ChatForm();
-        ViewRtsp videoPlayer2;
+        //   ViewRtsp videoPlayer2;
         CallForm callForm;
         volatile bool isRunScreen = false;
         Thread theadScreen;
+        ScreenCapture sc;
+        object obLock = new object();
+        VideoShow videoForm;
 
         //最小化窗体
         //private bool windowCreate = true;
@@ -41,6 +40,7 @@ namespace StudentUser
         //}
         public UserMainForm()
         {
+
             InitializeComponent();
             Text = GlobalVariable.LoginUserInfo.DisplayName;
             tuopan.Text = Text;
@@ -76,7 +76,7 @@ namespace StudentUser
                 ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
                 DoAction(() =>
                 {
-                    ShowViewRtsp2(resp.url);
+                    ShowRtspVideo(resp.url);
 
                 });
 
@@ -269,21 +269,21 @@ namespace StudentUser
         }
 
 
-        
+
 
         private void CreateUDPHole()
         {
             if (theadScreen == null || theadScreen.ThreadState != ThreadState.Running)
             {
-                theadScreen = new Thread(() =>
-            {
+                    theadScreen = new Thread(() =>
+                {
 
-                GlobalVariable.client.CreateUDPStudentHole();
-                GetScreenCapture();
+                    GlobalVariable.client.CreateUDPStudentHole();
+                    GetScreenCapture();
 
-            });
-                theadScreen.IsBackground = true;
-                theadScreen.Start();
+                });
+                    theadScreen.IsBackground = true;
+                    theadScreen.Start();
             }
         }
 
@@ -299,8 +299,6 @@ namespace StudentUser
             var str = Encoding.UTF8.GetString(receiveBytes);
 
         }
-
-
 
         private void DoAction(Action action)
         {
@@ -386,17 +384,17 @@ namespace StudentUser
 
 
 
-      
-        private void ShowViewRtsp2(string rtsp)
-        {
 
-            if (videoPlayer2 == null || videoPlayer2.IsDisposed)
+        private void ShowRtspVideo(string rtsp)
+        {
+            if (videoForm == null || videoForm.IsDisposed)
             {
-                videoPlayer2 = new ViewRtsp(rtsp);
+                videoForm = new VideoShow(ProgramType.Student);
             }
-            videoPlayer2.Show();
+            videoForm.BringToFront();
+            videoForm.Show();
             //  videoPlayer = f;
-            videoPlayer2.PlayVideo(rtsp);
+            videoForm.PlayVideo(rtsp);
 
         }
 
@@ -405,10 +403,10 @@ namespace StudentUser
 
         private void StopPlay()
         {
-            if (videoPlayer2 != null)
+            if (videoForm != null)
             {
-                videoPlayer2.Close();
-                videoPlayer2 = null;
+                videoForm.Close();
+                videoForm = null;
             }
 
         }
@@ -531,7 +529,7 @@ namespace StudentUser
         #endregion
 
 
-        
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -539,11 +537,10 @@ namespace StudentUser
             //videoPlayer = new VLCPlayer();
             //videoPlayer.Show();
             //videoPlayer.StartPlayStream(@"D:\dy\hl.mkv");
-            var url = @"D:\dy\hl.mkv";
-            VideoShow vs = new VideoShow();
-         
-            vs.Show();
-            vs.PlayVideo(url);
+
+            var url = @"e:\terius\hkdg.mkv";
+            url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
+            ShowRtspVideo(url);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -556,24 +553,9 @@ namespace StudentUser
 
 
         }
-        ScreenCapture sc = new ScreenCapture();
-        object obLock = new object();
+
         private void GetScreenCapture()
         {
-
-            //  sc = new ScreenCapture();
-            //// capture entire screen, and save it to a file
-            ////  Image img = sc.CaptureScreen();
-            //// display image in a Picture control named imageDisplay
-            ////  this.pictureBox1.Image = img;
-            //// capture this window, and save it
-            //string pathPerc = @"Send.png";
-            //string source = @"Capture.png";
-            //sc.CaptureScreenToFile(source, ImageFormat.Png);
-            //getThumImage(source, 40, 5, pathPerc);
-            //string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathPerc);
-            //GlobalVariable.client.SendDesktopPic(fullPath);
-            // GlobalVariable.client.CreateUDPStudentHole();
             isRunScreen = true;
             while (isRunScreen)
             {
@@ -581,9 +563,11 @@ namespace StudentUser
                 {
                     try
                     {
-                        Image img = sc.CaptureScreen();
-                        var thumImg = getThumImage(img, 40, 5);
-
+                        if (sc == null)
+                        {
+                            sc = new ScreenCapture();
+                        }
+                        Image screenImage = sc.CaptureScreen();
                         ScreenCaptureInfo info = new ScreenCaptureInfo();
                         info.DisplayName = GlobalVariable.LoginUserInfo.DisplayName;
                         info.UserName = GlobalVariable.LoginUserInfo.UserName;
@@ -591,7 +575,7 @@ namespace StudentUser
                         var userJson = JsonHelper.SerializeObj(info);
                         byte[] userBytes = Encoding.UTF8.GetBytes(userJson);
                         byte[] userLengthBytes = BitConverter.GetBytes(userBytes.Length);
-                        byte[] imgBytes = FileHelper.ImageToByteArray(thumImg);
+                        byte[] imgBytes = FileHelper.ImageToByteArray(screenImage);
                         byte[] imgLengthBytes = BitConverter.GetBytes(imgBytes.Length);
                         byte[] allLengtBytes = BitConverter.GetBytes(userBytes.Length + userLengthBytes.Length + imgBytes.Length + imgLengthBytes.Length);
 
@@ -622,257 +606,27 @@ namespace StudentUser
 
 
 
-        private Image getThumImage(Image image, long quality, int multiple)
-
-        {
-            Bitmap newImage = null;
-            try
-            {
-                long imageQuality = quality;
-                Bitmap sourceImage = new Bitmap(image);
-                ImageCodecInfo myImageCodecInfo = GetEncoderInfo("image/png");
-                System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
-                EncoderParameters myEncoderParameters = new EncoderParameters(1);
-                EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, imageQuality);
-                myEncoderParameters.Param[0] = myEncoderParameter;
-                float xWidth = sourceImage.Width;
-                float yWidth = sourceImage.Height;
-                int newWidth = (int)(xWidth / multiple);
-                int newHeight = (int)(yWidth / multiple);
-                newImage = new Bitmap(newWidth, newHeight);
-                Graphics g = Graphics.FromImage(newImage);
-
-                g.DrawImage(sourceImage, 0, 0, newWidth, newHeight);
-                g.Dispose();
-                //   newImage.Save(outputFile, myImageCodecInfo, myEncoderParameters);
-                sourceImage.Dispose();
-
-            }
-            catch (Exception ex)
-            {
-                Loger.LogMessage(ex);
-            }
-            return newImage;
-        }
-
-        ///// <param name="sourceFile">原始图片文件</param>  
-        ///// <param name="quality">质量压缩比</param>  
-        ///// <param name="multiple">收缩倍数</param>  
-        ///// <param name="outputFile">输出文件名</param>  
-        ///// <returns>成功返回true,失败则返回false</returns> 
-        //private bool getThumImage(String sourceFile, long quality, int multiple, String outputFile)
-        //{
-        //    try
-        //    {
-        //        long imageQuality = quality;
-        //        Bitmap sourceImage = new Bitmap(sourceFile);
-        //        ImageCodecInfo myImageCodecInfo = GetEncoderInfo("image/png");
-        //        System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
-        //        EncoderParameters myEncoderParameters = new EncoderParameters(1);
-        //        EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, imageQuality);
-        //        myEncoderParameters.Param[0] = myEncoderParameter;
-        //        float xWidth = sourceImage.Width;
-        //        float yWidth = sourceImage.Height;
-
-        //        Bitmap newImage = new Bitmap((int)(xWidth / multiple), (int)(yWidth / multiple));
-        //        Graphics g = Graphics.FromImage(newImage);
-
-        //        g.DrawImage(sourceImage, 0, 0, xWidth / multiple, yWidth / multiple);
-        //        g.Dispose();
-        //        newImage.Save(outputFile, myImageCodecInfo, myEncoderParameters);
-        //        sourceImage.Dispose();
-        //        return true;
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
-        // 获取图片编码信息  
-        private ImageCodecInfo GetEncoderInfo(String mimeType)
-        {
-            int j;
-            ImageCodecInfo[] encoders;
-            encoders = ImageCodecInfo.GetImageEncoders();
-            for (j = 0; j < encoders.Length; ++j)
-            {
-                if (encoders[j].MimeType == mimeType)
-                    return encoders[j];
-            }
-            return null;
-        }
-
         private void UserMainForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
             GlobalVariable.client.Send_StudentLoginOut();
+            StopUdp();
         }
 
-        private Image GetScreen()
+        private void StopUdp()
         {
-            var bmpScreenshot = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
-                               Screen.PrimaryScreen.Bounds.Height,
-                               PixelFormat.Format32bppArgb);
-
-            // Create a graphics object from the bitmap.
-            var gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-
-            // Take the screenshot from the upper left corner to the right bottom corner.
-            gfxScreenshot.CopyFromScreen(Screen.PrimaryScreen.Bounds.X,
-                                        Screen.PrimaryScreen.Bounds.Y,
-                                        0,
-                                        0,
-                                        Screen.PrimaryScreen.Bounds.Size,
-                                        CopyPixelOperation.SourceCopy);
-
-
-
-            //int width = 128;
-            //int height = 128;
-            //int stride = width;
-            //byte[] pixels = new byte[height * stride];
-
-            //// Define the image palette
-            //BitmapPalette myPalette = BitmapPalettes.Halftone256;
-
-            //// Creates a new empty image with the pre-defined palette
-
-            //BitmapSource image = BitmapSource.Create(
-            //    width,
-            //    height,
-            //    96,
-            //    96,
-            //    PixelFormats.Indexed8,
-            //    myPalette,
-            //    pixels,
-            //    stride);
-
-            //FileStream stream = new FileStream("new.png", FileMode.Create);
-            //PngBitmapEncoder encoder = new PngBitmapEncoder();
-            //TextBlock myTextBlock = new TextBlock();
-            //myTextBlock.Text = "Codec Author is: " + encoder.CodecInfo.Author.ToString();
-            //encoder.Interlace = PngInterlaceOption.On;
-            //encoder.Frames.Add(BitmapFrame.Create(image));
-            //encoder.Save(stream);
-
-            return bmpScreenshot;
-            // Save the screenshot to the specified path that the user has chosen.
-            // bmpScreenshot.Save("Screenshot.png", ImageFormat.Png);
-        }
-    }
-
-
-
-    public class ScreenCapture
-    {
-        /// <summary>
-        /// Creates an Image object containing a screen shot of the entire desktop
-        /// </summary>
-        /// <returns></returns>
-        public Image CaptureScreen()
-        {
-            return CaptureWindow(User32.GetDesktopWindow());
-        }
-        /// <summary>
-        /// Creates an Image object containing a screen shot of a specific window
-        /// </summary>
-        /// <param name="handle">The handle to the window. (In windows forms, this is obtained by the Handle property)</param>
-        /// <returns></returns>
-        public Image CaptureWindow(IntPtr handle)
-        {
-            // get te hDC of the target window
-            IntPtr hdcSrc = User32.GetWindowDC(handle);
-            // get the size
-            User32.RECT windowRect = new User32.RECT();
-            User32.GetWindowRect(handle, ref windowRect);
-            int width = windowRect.right - windowRect.left;
-            int height = windowRect.bottom - windowRect.top;
-            // create a device context we can copy to
-            IntPtr hdcDest = GDI32.CreateCompatibleDC(hdcSrc);
-            // create a bitmap we can copy it to,
-            // using GetDeviceCaps to get the width/height
-            IntPtr hBitmap = GDI32.CreateCompatibleBitmap(hdcSrc, width, height);
-            // select the bitmap object
-            IntPtr hOld = GDI32.SelectObject(hdcDest, hBitmap);
-            // bitblt over
-            GDI32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, 0, 0, GDI32.SRCCOPY);
-            // restore selection
-            GDI32.SelectObject(hdcDest, hOld);
-            // clean up 
-            GDI32.DeleteDC(hdcDest);
-            User32.ReleaseDC(handle, hdcSrc);
-            // get a .NET image object for it
-            Image img = Image.FromHbitmap(hBitmap);
-            // free up the Bitmap object
-            GDI32.DeleteObject(hBitmap);
-            return img;
-        }
-        /// <summary>
-        /// Captures a screen shot of a specific window, and saves it to a file
-        /// </summary>
-        /// <param name="handle"></param>
-        /// <param name="filename"></param>
-        /// <param name="format"></param>
-        public void CaptureWindowToFile(IntPtr handle, string filename, ImageFormat format)
-        {
-            Image img = CaptureWindow(handle);
-            img.Save(filename, format);
-        }
-        /// <summary>
-        /// Captures a screen shot of the entire desktop, and saves it to a file
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="format"></param>
-        public void CaptureScreenToFile(string filename, ImageFormat format)
-        {
-            Image img = CaptureScreen();
-            img.Save(filename, format);
-        }
-
-        /// <summary>
-        /// Helper class containing Gdi32 API functions
-        /// </summary>
-        private class GDI32
-        {
-            public const int CAPTUREBLT = 1073741824;
-            public const int SRCCOPY = 0x00CC0020; // BitBlt dwRop parameter
-            [DllImport("gdi32.dll")]
-            public static extern bool BitBlt(IntPtr hObject, int nXDest, int nYDest,
-                int nWidth, int nHeight, IntPtr hObjectSource,
-                int nXSrc, int nYSrc, int dwRop);
-            [DllImport("gdi32.dll")]
-            public static extern IntPtr CreateCompatibleBitmap(IntPtr hDC, int nWidth,
-                int nHeight);
-            [DllImport("gdi32.dll")]
-            public static extern IntPtr CreateCompatibleDC(IntPtr hDC);
-            [DllImport("gdi32.dll")]
-            public static extern bool DeleteDC(IntPtr hDC);
-            [DllImport("gdi32.dll")]
-            public static extern bool DeleteObject(IntPtr hObject);
-            [DllImport("gdi32.dll")]
-            public static extern IntPtr SelectObject(IntPtr hDC, IntPtr hObject);
-        }
-
-        /// <summary>
-        /// Helper class containing User32 API functions
-        /// </summary>
-        private class User32
-        {
-            [StructLayout(LayoutKind.Sequential)]
-            public struct RECT
+            isRunScreen = false;
+            Thread.Sleep(500);
+            if (theadScreen != null)
             {
-                public int left;
-                public int top;
-                public int right;
-                public int bottom;
+                theadScreen.Abort();
             }
-            [DllImport("user32.dll")]
-            public static extern IntPtr GetDesktopWindow();
-            [DllImport("user32.dll")]
-            public static extern IntPtr GetWindowDC(IntPtr hWnd);
-            [DllImport("user32.dll")]
-            public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDC);
-            [DllImport("user32.dll")]
-            public static extern IntPtr GetWindowRect(IntPtr hWnd, ref RECT rect);
+
         }
+
+      
     }
+
+
+
+
 }

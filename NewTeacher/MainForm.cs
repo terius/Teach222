@@ -20,7 +20,8 @@ namespace NewTeacher
         //  string soundSource;
         bool isPush = false;//是否正在推送视频流
         string actionStuUserName;
-        ViewRtsp videoPlayer;
+        VideoShow videoForm;
+        //   ViewRtsp videoPlayer;
         #endregion
         public MainForm()
         {
@@ -236,7 +237,7 @@ namespace NewTeacher
                     break;
                 case (int)CommandType.OneUserLogIn://某个学生登录
                     var newUser = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
-                   
+
                     onlineInfo.OnNewUserLoginIn(newUser);
                     //  OnlineInfo_AddOnLine(onlineInfo, e2);
                     break;
@@ -256,7 +257,7 @@ namespace NewTeacher
                     {
                         if (message.Action == (int)CommandType.StudentShowToTeacher)
                         {
-                           
+
                         }
                         PlayRtspVideo(resp.url);
                     });
@@ -302,21 +303,20 @@ namespace NewTeacher
         private void PlayRtspVideo(string rtsp)
         {
 
-            if (videoPlayer == null || videoPlayer.IsDisposed)
+            if (videoForm == null || videoForm.IsDisposed)
             {
-                videoPlayer = new ViewRtsp(rtsp);
+                videoForm = new VideoShow(ProgramType.Teacher);
             }
-            videoPlayer.Show();
-            //  videoPlayer = f;
-            videoPlayer.startPlay();
+            videoForm.Show();
+            videoForm.PlayVideo(rtsp);
 
         }
         private void StopPlay()
         {
-            if (videoPlayer != null)
+            if (videoForm != null)
             {
-                videoPlayer.Close();
-                videoPlayer = null;
+                videoForm.Close();
+                videoForm = null;
             }
 
         }
@@ -736,12 +736,15 @@ namespace NewTeacher
 
         private void userList_stopStudentShow_Click(object sender, EventArgs e)
         {
+            StopPlay();
             var userName = GetSelectStudentUserName();
             if (!string.IsNullOrWhiteSpace(userName))
             {
                 GlobalVariable.client.Send_StopStudentShow(userName);
             }
         }
+
+     
 
         private void 学生视频演示ToolStripMenuItem_Click(object sender, EventArgs e)
         {
