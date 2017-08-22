@@ -110,6 +110,12 @@
     <Compile Include="UserControls\ChatItem.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UserControls\MyGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\MyGroupBox.Designer.cs">
+      <DependentUpon>MyGroupBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\sms.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -158,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TeamView.resx">
       <DependentUpon>TeamView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\MyGroupBox.resx">
+      <DependentUpon>MyGroupBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\sms.resx">
       <DependentUpon>sms.cs</DependentUpon>

@@ -136,8 +136,66 @@ namespace StudentUser
         }
 
         bool isMySelf;
-        private void button1_Click(object sender, EventArgs e)
+
+        private Point GetNewPoint(Control panel, int smsWidth, bool isMySelf)
         {
+
+            if (isMySelf)
+            {
+                return new Point(panel.Width - smsWidth - 20, GetLastY());
+            }
+            else
+            {
+
+                return new Point(0, GetLastY());
+
+            }
+
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // var control = panel1.Controls[panel1.Controls.Count - 1];
+            //  MessageBox.Show("width:" + control.Width + "   height:" + control.Height);
+        }
+
+        private void panel1_ControlAdded(object sender, ControlEventArgs e)
+        {
+            // this.panel1.ScrollControlIntoView(e.Control);
+            //  panel1.VerticalScroll.Value = panel1.VerticalScroll.Maximum;
+        }
+
+        private void panel1_Resize(object sender, EventArgs e)
+        {
+
+        }
+        private int GetLastY()
+        {
+            int icount = panel1.Controls.Count;
+            if (icount == 0)
+            {
+                return 0;
+            }
+            var control = panel1.Controls[icount - 1];
+            return control.Location.Y + control.Height;
+        }
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Label labTime = new Label();
+            labTime.ForeColor = Color.White;
+            labTime.BackColor = Color.FromArgb(218, 218, 218);
+            labTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            labTime.AutoSize = true;
+            //  labTime.TextAlign = ContentAlignment.MiddleCenter;
+            labTime.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            //  labTime.Width = this.panel1.Width - 20;
+            // labTime.Margin = new Padding(0, 0, 0, 20);
+
+            labTime.Location = new Point((this.panel1.Width - 20 - labTime.Width) / 2, GetLastY());
+            // return new Point(panel.Width - smsWidth - 20, control.Location.Y + control.Height);
+            this.panel1.Controls.Add(labTime);
+
             ChatMessage message = new ChatMessage();
             message.Message = textBox1.Text.Trim();
             message.MessageType = Common.MessageType.String;
@@ -162,56 +220,12 @@ namespace StudentUser
 
             sms.Location = GetNewPoint(panel1, sms.Width, isMySelf);
             panel1.Controls.Add(sms);
-            this.Text = panel1.Width.ToString() + "    " + panel1.DisplayRectangle.Width.ToString();
-
+            // this.Text = panel1.Width.ToString() + "    " + panel1.DisplayRectangle.Width.ToString();
         }
 
-        private Point GetNewPoint(Control panel, int smsWidth, bool isMySelf)
-        {
-
-            if (isMySelf)
-            {
-                if (panel.Controls.Count == 0)
-                {
-                    return new Point(panel.Width - smsWidth - 20, 0);
-                }
-                else
-                {
-                    var control = panel.Controls[panel.Controls.Count - 1];
-                    return new Point(panel.Width - smsWidth - 20, control.Location.Y + control.Height + 20);
-                }
-            }
-            else
-            {
-                if (panel.Controls.Count == 0)
-                {
-                    return new Point(0, 0);
-                }
-                else
-                {
-                    var control = panel.Controls[panel.Controls.Count - 1];
-                    return new Point(0, control.Location.Y + control.Height + 20);
-                }
-            }
-
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // var control = panel1.Controls[panel1.Controls.Count - 1];
-            //  MessageBox.Show("width:" + control.Width + "   height:" + control.Height);
-        }
-
-        private void panel1_ControlAdded(object sender, ControlEventArgs e)
+        private void panel1_ControlAdded_1(object sender, ControlEventArgs e)
         {
             this.panel1.ScrollControlIntoView(e.Control);
-          //  panel1.VerticalScroll.Value = panel1.VerticalScroll.Maximum;
-        }
-
-        private void panel1_Resize(object sender, EventArgs e)
-        {
-
         }
     }
 }
