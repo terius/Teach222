@@ -79,7 +79,14 @@
     </Compile>
     <Compile Include="ControlExtensions.cs" />
     <Compile Include="GlobalVariable.cs" />
+    <Compile Include="GraphicsExtension.cs" />
     <Compile Include="Models\ChatStore.cs" />
+    <Compile Include="MyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyForm.designer.cs">
+      <DependentUpon>MyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PictureShow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,11 +116,23 @@
     <Compile Include="UserControls\sms.Designer.cs">
       <DependentUpon>sms.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\sms2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\sms2.Designer.cs">
+      <DependentUpon>sms2.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\smsPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserControls\smsPanel.Designer.cs">
       <DependentUpon>smsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScrollAblePanelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ScrollAblePanelControl.designer.cs">
+      <DependentUpon>ScrollAblePanelControl.cs</DependentUpon>
     </Compile>
     <Compile Include="VideoShow.cs">
       <SubType>Form</SubType>
@@ -126,9 +145,13 @@
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MyForm.resx">
+      <DependentUpon>MyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PictureShow.resx">
       <DependentUpon>PictureShow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
@@ -138,6 +161,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\sms.resx">
       <DependentUpon>sms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\sms2.resx">
+      <DependentUpon>sms2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ScrollAblePanelControl.resx">
+      <DependentUpon>ScrollAblePanelControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VideoShow.resx">
       <DependentUpon>VideoShow.cs</DependentUpon>

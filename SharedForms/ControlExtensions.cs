@@ -13,11 +13,12 @@ namespace SharedForms
 
         public static void SetButtonHoverLeave(this Control control)
         {
-            if (control.GetType() == typeof(Button))
-            {
-                control.MouseHover += (sender, e) => ((Button)sender).BackColor = Color.FromArgb(0, 240, 59);
-                control.MouseLeave += (sender, e) => ((Button)sender).BackColor = Color.FromArgb(0, 201, 59);
-            }
+            //if (control.GetType() == typeof(Button))
+            // {
+            control.MouseHover += (sender, e) => ((Control)sender).BackColor = Color.FromArgb(82, 168, 255);
+            //   control.Enter += (sender, e) => ((Control)sender).BackColor = Color.FromArgb(82, 168, 255);
+            control.MouseLeave += (sender, e) => ((Control)sender).BackColor = Color.FromArgb(55, 152, 249);
+            //  }
         }
 
         public static void InvokeOnUiThreadIfRequired(this Control control, Action action)
@@ -54,7 +55,7 @@ namespace SharedForms
             request.DownloadFileUrl = response.DownloadFileUrl;
             request.MessageType = response.MessageType;
             request.ReceieveUserName = response.receivename;
-         
+
             return request;
         }
 
@@ -90,7 +91,7 @@ namespace SharedForms
         //{
         //    ChatItem item = new ChatItem(source, request.UserName,
         //        request.DisplayName, request.ChatType, request.UserType);
-          
+
         //    return item;
         //}
 
@@ -114,6 +115,6 @@ namespace SharedForms
             return userName == GlobalVariable.LoginUserInfo.UserName;
         }
 
-       
+
     }
 }

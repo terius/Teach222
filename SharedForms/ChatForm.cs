@@ -410,13 +410,49 @@ namespace SharedForms
         {
             bool isMySelf = IsMySelf(chatMessage.SendUserName);
 
-            smsPanel1.AddMessage(chatMessage, isMySelf);
+            sms2 sms = new sms2(chatMessage, !isMySelf);
+            sms.Location = GetNewPoint(panel1, sms.Width, !isMySelf);
+            this.panel1.Controls.Add(sms);
+
+
+
+            // smsPanel1.AddMessage(chatMessage, isMySelf);
             if (isInput)
             {
                 //清空发送输入框
                 this.sendBox.Text = string.Empty;
                 this.sendBox.Focus();
             }
+        }
+
+        private Point GetNewPoint(Panel panel, int smsWidth, bool isMySelf)
+        {
+            if (isMySelf)
+            {
+                if (panel.Controls.Count == 0)
+                {
+                    return new Point(panel.Width - smsWidth - 20, 0);
+                }
+                else
+                {
+                    var control = panel.Controls[panel.Controls.Count - 1];
+                    return new Point(panel.Width - smsWidth - 20, control.Location.Y + control.Height + 20);
+                }
+            }
+            else
+            {
+                if (panel.Controls.Count == 0)
+                {
+                    return new Point(0, 0);
+                }
+                else
+                {
+                    var control = panel.Controls[panel.Controls.Count - 1];
+                    return new Point(0, control.Location.Y + control.Height + 20);
+                }
+            }
+
+
         }
 
         AlertControl messagebox;

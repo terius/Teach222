@@ -24,7 +24,7 @@ namespace SharedForms
         //}
 
         int X = 10;
-        sms chatItem;
+        sms2 chatItem;
         public smsPanel()
         {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace SharedForms
             MouseEnter += SmsPanel_MouseEnter;
         }
 
-       
+
 
         private void SmsPanel_MouseEnter(object sender, EventArgs e)
         {
@@ -47,10 +47,10 @@ namespace SharedForms
 
         private void SmsPanel_Resize(object sender, EventArgs e)
         {
-            sms s;
+            sms2 s;
             foreach (Control item in Controls)
             {
-                s = (sms)item;
+                s = (sms2)item;
                 if (s.IsMySelf)
                 {
                     s.Location = new Point(Width - 420 - SystemInformation.VerticalScrollBarWidth - 5, s.Location.Y);
@@ -61,13 +61,13 @@ namespace SharedForms
         private void SmsPanel_ControlAdded(object sender, ControlEventArgs e)
         {
 
-            ScrollControlIntoView(e.Control);
+             ScrollControlIntoView(e.Control);
         }
 
 
         public void AddMessage(ChatMessage messageInfo, bool isMySelf)
         {
-            chatItem = new sms(messageInfo, isMySelf);
+            chatItem = new sms2(messageInfo, isMySelf);
             if (isMySelf)
             {
                 X = Width - chatItem.SizeWidth - SystemInformation.VerticalScrollBarWidth - 5;
@@ -79,7 +79,7 @@ namespace SharedForms
             Controls.Add(chatItem);
             chatItem.Location = new Point(X - HorizontalScroll.Value, _lastY - VerticalScroll.Value);
             ScrollControlIntoView(Controls[Controls.Count - 1]);
-            _lastY += chatItem.Height;
+            _lastY += chatItem.Height + 10;
         }
     }
 }
