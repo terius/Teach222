@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SharedForms.UserControls
+namespace SharedForms
 {
     //public partial class MyGroupBox : UserControl
     //{
@@ -28,7 +22,7 @@ namespace SharedForms.UserControls
             //base class will draw empty string
             //in such way we see only text what we draw
             base.Text = "";
-
+           
         }
 
 

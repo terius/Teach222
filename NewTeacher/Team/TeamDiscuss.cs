@@ -1,5 +1,4 @@
 ﻿using Common;
-using DevExpress.XtraEditors;
 using Model;
 using SharedForms;
 using System;
@@ -8,7 +7,7 @@ using System.Windows.Forms;
 
 namespace NewTeacher
 {
-    public partial class TeamDiscuss : XtraForm
+    public partial class TeamDiscuss : MyForm
     {
 
         OnlineInfo _onLineInfo;
@@ -19,7 +18,7 @@ namespace NewTeacher
             _onLineInfo = onLineInfo;
             _onLineInfo.AddOnLine += _onLineInfo_AddOnLine;
             _onLineInfo.DelOnLine += _onLineInfo_DelOnLine;
-          
+
         }
 
         private void _onLineInfo_DelOnLine(UserLogoutResponse delInfo)
@@ -64,7 +63,7 @@ namespace NewTeacher
 
         private void TeamDiscuss_Load(object sender, System.EventArgs e)
         {
-           
+
             BindOnlineUser();
             BindTeam();
         }
@@ -166,14 +165,14 @@ namespace NewTeacher
             }
         }
 
-       
+
 
         private void BindTeamMember()
         {
             if (cboxTeam2.SelectedIndex >= 0)
             {
                 selectTeam = (ChatStore)cboxTeam2.SelectedItem;
-                groupBox2.Text = "分组：" + selectTeam.ChatDisplayName + "的成员";
+                myGroupBox3.Text = "分组：" + selectTeam.ChatDisplayName + "的成员";
                 teamMemList.Clear();
                 foreach (TeamMember mem in selectTeam.TeamMembers)
                 {
@@ -232,16 +231,9 @@ namespace NewTeacher
         {
             BindTeamMember();
         }
+        
 
-
-
-        private void btnSave_Click_1(object sender, EventArgs e)
-        {
-            GlobalVariable.SendCommand_CreateOrUpdateTeam();
-            MessageBox.Show("群组信息保存成功");
-        }
-
-        private void btnAddStudent_Click(object sender, EventArgs e)
+        private void btnAddStudent_Click_1(object sender, EventArgs e)
         {
             if (onLineListView.CheckedItems.Count <= 0)
             {
@@ -257,6 +249,20 @@ namespace NewTeacher
             selectTeam = (ChatStore)cboxTeam2.SelectedItem;
             GlobalVariable.AddTeamMember(onLineListView.CheckedItems, selectTeam.ChatUserName);
             BindTeamMember();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            GlobalVariable.SendCommand_CreateOrUpdateTeam();
+            MessageBox.Show("群组信息保存成功");
+        }
+
+        private void TeamDiscuss_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("是否要保存群组信息？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            {
+                GlobalVariable.SaveTeamInfoToFile();
+            }
         }
     }
 }

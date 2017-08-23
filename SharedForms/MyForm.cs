@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -49,15 +50,41 @@ namespace SharedForms
         public static extern bool ReleaseCapture();
         [DllImport("user32.dll")]
         public static extern bool SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
+        //[Browsable(true)]
+        //public string Title
+        //{
+        //    get { return this.labTitile.Text; }
+        //    set { this.Text = this.labTitile.Text = value; }
+        //}
 
-        public string Title
+        bool _hideCloseBtn;
+        [Browsable(true)]
+        public bool HideCloseBtn
         {
-            get { return this.labTitile.Text; }
-            set { this.labTitile.Text = value; }
+            get { return _hideCloseBtn; }
+            set { _hideCloseBtn = value; this.picClose.Visible = !_hideCloseBtn; }
+        }
+        bool _hideMaxBtn;
+        [Browsable(true)]
+        public bool HideMaxBtn
+        {
+            get { return _hideMaxBtn; }
+            set { _hideMaxBtn = value; this.picMax.Visible = !_hideMaxBtn; }
+        }
+        bool _hideMinBtn;
+        [Browsable(true)]
+        public bool HideMinBtn
+        {
+            get { return _hideMinBtn; }
+            set { _hideMinBtn = value; this.picMin.Visible = !_hideMinBtn; }
         }
 
-
-
+        [Browsable(true)]
+        public Color FormBorderColor
+        {
+            get { return this.BackColor; }
+            set { this.BackColor = value; }
+        }
 
         public MyForm()
         {
@@ -80,30 +107,54 @@ namespace SharedForms
             picMax.SetButtonHoverLeave();
             picMin.SetButtonHoverLeave();
             picMin.Click += (obj, e) => { this.WindowState = FormWindowState.Minimized; };
+            this.picClose.Visible = !_hideCloseBtn;
+            this.picMax.Visible = !_hideMaxBtn;
+            this.picMin.Visible = !_hideMinBtn;
+
+            this.Load += (obj, e) =>
+            {
+                this.labTitile.Text = this.Text;
+            };
+            this.panelTitle.DoubleClick += (obj, e) =>
+            {
+                if (this.WindowState == FormWindowState.Normal)
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
+                else
+                {
+                    this.WindowState = FormWindowState.Normal;
+                }
+            };
         }
+
+      
 
         private void PanelTitle_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                ReleaseCapture(); //释放鼠标捕捉
-                SendMessage(Handle, 0xA1, 0x02, 0);
+                if (e.Clicks == 1)
+                {
+                    ReleaseCapture(); //释放鼠标捕捉
+                    SendMessage(Handle, 0xA1, 0x02, 0);
+                }
             }
         }
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                //  m_aeroEnabled = CheckAeroEnabled();
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        m_aeroEnabled = CheckAeroEnabled();
 
-                CreateParams cp = base.CreateParams;
-                //   if (!m_aeroEnabled)
-                cp.ClassStyle |= CS_DROPSHADOW;
+        //        CreateParams cp = base.CreateParams;
+        //        if (!m_aeroEnabled)
+        //            cp.ClassStyle |= CS_DROPSHADOW;
 
-                return cp;
-            }
-        }
+        //        return cp;
+        //    }
+        //}
 
         //protected override CreateParams CreateParams
         //{
@@ -127,6 +178,8 @@ namespace SharedForms
             }
             return false;
         }
+
+       
 
         //protected override void WndProc(ref Message m)
         //{
@@ -159,14 +212,16 @@ namespace SharedForms
 
         //}
 
+        //protected override void OnPaint(PaintEventArgs e)
+        //{
+        //    base.OnPaint(e);
 
+        //    Graphics g = e.Graphics;
+        //    Rectangle rect = new Rectangle(new Point(0, 0), new Size(this.Width - 1, this.Height - 1));
+        //    Pen pen = new Pen(Color.Black);
 
-
-
-
-
-
-
+        //    g.DrawRectangle(pen, rect);
+        //}
 
 
 

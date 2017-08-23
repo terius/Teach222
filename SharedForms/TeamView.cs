@@ -1,12 +1,10 @@
-﻿using DevExpress.XtraEditors;
-using Model;
-using SharedForms;
+﻿using Model;
 using System;
 using System.Windows.Forms;
 
 namespace SharedForms
 {
-    public partial class TeamView : XtraForm
+    public partial class TeamView : MyForm
     {
     
         public TeamView()

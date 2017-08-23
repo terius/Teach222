@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("节点4");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("节点5");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("节点6");
@@ -41,9 +40,15 @@
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("节点3");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamView));
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList();
+            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.panelContent.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // panelContent
+            // 
+            this.panelContent.Controls.Add(this.treeView1);
+            this.panelContent.Size = new System.Drawing.Size(443, 357);
             // 
             // treeView1
             // 
@@ -77,7 +82,7 @@
             treeNode7});
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(519, 454);
+            this.treeView1.Size = new System.Drawing.Size(443, 357);
             this.treeView1.TabIndex = 0;
             this.toolTip1.SetToolTip(this.treeView1, "在线状态");
             // 
@@ -97,16 +102,16 @@
             // 
             // TeamView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(519, 454);
-            this.Controls.Add(this.treeView1);
+            this.ClientSize = new System.Drawing.Size(445, 389);
             this.Name = "TeamView";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "查看分组";
             this.Load += new System.EventHandler(this.TeamView_Load);
+            this.panelContent.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

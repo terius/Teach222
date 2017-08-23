@@ -425,6 +425,12 @@ namespace SharedForms
             client.Send_CreateTeam(request);
         }
 
+        public static void SaveTeamInfoToFile()
+        {
+            var list = GetTeamChatList();
+            SaveTeamXML(list);
+        }
+
         private static void SaveTeamXML(IList<ChatStore> teamChatList)
         {
             TeamXmlInfo info = new TeamXmlInfo();

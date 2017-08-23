@@ -36,6 +36,14 @@ namespace NewTeacher
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             this.labVer.Text = "版本：" + version;
             //TestAES();
+
+
+
+            //自动登录
+            string userName = "Teacher001";
+            string pwd = "123456";
+            string nickname = "老师001";
+            GlobalVariable.client.Send_UserLogin(userName, nickname, pwd, ClientRole.Teacher);
         }
 
 

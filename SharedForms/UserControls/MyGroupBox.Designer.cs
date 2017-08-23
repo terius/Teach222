@@ -1,4 +1,4 @@
-﻿namespace SharedForms.UserControls
+﻿namespace SharedForms
 {
     partial class MyGroupBox
     {
