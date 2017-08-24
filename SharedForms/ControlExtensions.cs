@@ -95,16 +95,31 @@ namespace SharedForms
         //    return item;
         //}
 
-        public static ChatItem CreateItem(this NavBarControl source, ChatMessage request)
+        public static ChatItem CreateItem(this Panel source, ChatMessage request)
         {
             ChatItem item = new ChatItem(source, request.SendUserName,
                 request.SendDisplayName, request.ChatType, request.UserType);
 
             return item;
         }
-        public static ChatItem CreateItem(this NavBarControl source, ChatStore store)
+        public static ChatItem CreateItem(this Panel source, ChatStore store)
         {
             ChatItem item = new ChatItem(source, store.ChatUserName,
+                store.ChatDisplayName, store.ChatType, store.UserType);
+
+            return item;
+        }
+
+        public static ChatItemOld CreateItem(this NavBarControl source, ChatMessage request)
+        {
+            var item = new ChatItemOld(source, request.SendUserName,
+                request.SendDisplayName, request.ChatType, request.UserType);
+
+            return item;
+        }
+        public static ChatItemOld CreateItem(this NavBarControl source, ChatStore store)
+        {
+            var item = new ChatItemOld(source, store.ChatUserName,
                 store.ChatDisplayName, store.ChatType, store.UserType);
 
             return item;

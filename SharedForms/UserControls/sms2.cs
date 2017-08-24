@@ -118,7 +118,7 @@ namespace SharedForms
                 {
                     if (File.Exists(savePath))
                     {
-                        ((ChatForm)this.ParentForm).PlayVoice(savePath);
+                        ((ChatFormOld)this.ParentForm).PlayVoice(savePath);
                         return;
                     }
                 }
@@ -129,7 +129,7 @@ namespace SharedForms
                     saveFilePath = eve.UserState.ToString();
                     if (!string.IsNullOrWhiteSpace(saveFilePath))
                     {
-                        ((ChatForm)this.ParentForm).PlayVoice(saveFilePath);
+                        ((ChatFormOld)this.ParentForm).PlayVoice(saveFilePath);
                     }
 
                 };

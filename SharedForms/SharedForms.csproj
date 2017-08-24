@@ -74,8 +74,14 @@
     <Compile Include="ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChatForm.designer.cs">
+    <Compile Include="ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChatFormOld.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChatFormOld.designer.cs">
+      <DependentUpon>ChatFormOld.cs</DependentUpon>
     </Compile>
     <Compile Include="ControlExtensions.cs" />
     <Compile Include="GlobalVariable.cs" />
@@ -108,13 +114,31 @@
       <DependentUpon>TeamView.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ChatItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ChatItem.Designer.cs">
+      <DependentUpon>ChatItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ChatItemOld.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ChatListPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ChatListPanel.Designer.cs">
+      <DependentUpon>ChatListPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\MyGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserControls\MyGroupBox.Designer.cs">
       <DependentUpon>MyGroupBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SelectablePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\SelectablePanel.Designer.cs">
+      <DependentUpon>SelectablePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\sms.cs">
       <SubType>UserControl</SubType>
@@ -151,12 +175,16 @@
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ChatFormOld.resx">
+      <DependentUpon>ChatFormOld.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PictureShow.resx">
       <DependentUpon>PictureShow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
@@ -164,8 +192,17 @@
     <EmbeddedResource Include="TeamView.resx">
       <DependentUpon>TeamView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ChatItem.resx">
+      <DependentUpon>ChatItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ChatListPanel.resx">
+      <DependentUpon>ChatListPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\MyGroupBox.resx">
       <DependentUpon>MyGroupBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\SelectablePanel.resx">
+      <DependentUpon>SelectablePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\sms.resx">
       <DependentUpon>sms.cs</DependentUpon>
@@ -230,9 +267,6 @@
     <None Include="Resources\私.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\所有人.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\群组24.png" />
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +317,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\私聊.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\所有人.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\群聊.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

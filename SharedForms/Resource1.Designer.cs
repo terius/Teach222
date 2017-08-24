@@ -223,6 +223,16 @@ namespace SharedForms {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 私聊 {
+            get {
+                object obj = ResourceManager.GetObject("私聊", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 群组 {
             get {
                 object obj = ResourceManager.GetObject("群组", resourceCulture);
@@ -236,6 +246,16 @@ namespace SharedForms {
         internal static System.Drawing.Bitmap 群组24 {
             get {
                 object obj = ResourceManager.GetObject("群组24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 群聊 {
+            get {
+                object obj = ResourceManager.GetObject("群聊", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

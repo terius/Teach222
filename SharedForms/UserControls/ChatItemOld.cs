@@ -1,20 +1,27 @@
 ﻿using Common;
+using DevExpress.XtraNavBar;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace SharedForms
 {
-    public partial class ChatItem : UserControl
+    public class ChatItemOld : NavBarItem
     {
+        public ChatItemOld()
+        {
+
+        }
+
+        public System.Drawing.Image DefaultImg { get; private set; }
+       
         public string UserName { get; set; }
         public string DisplayName { get; set; }
 
         public ChatType ChatType { get; set; }
-        public ChatItem(Panel source, string userName, string displayName, ChatType chatType, ClientRole userType)
+
+        public ChatItemOld(NavBarControl source, string userName, string displayName, ChatType chatType, ClientRole userType)
         {
-            InitializeComponent();
             Name = "item_" + userName;
-            labName.Text = displayName;
+            Caption = displayName;
             switch (chatType)
             {
                 case ChatType.PrivateChat:
@@ -22,32 +29,32 @@ namespace SharedForms
                     {
                         case ClientRole.Teacher:
                         case ClientRole.Assistant:
-                            this.pictureBox1.Image = Resource1.老师24;
+                            SmallImage = Resource1.老师24;
                             break;
                         case ClientRole.Student:
-                            this.pictureBox1.Image = Resource1.学生24;
+                            SmallImage = Resource1.学生24;
                             break;
                         default:
                             break;
                     }
-                    source.Controls.Add(this);
+                    source.Groups[2].ItemLinks.Add(this);
                     //  this.paren = source.Groups[2];
 
                     break;
                 case ChatType.GroupChat:
-                    pictureBox1.Image = Resource1.所有人24;
-                    source.Controls.Add(this);
+                    SmallImage = Resource1.所有人24;
+                    source.Groups[0].ItemLinks.Add(this);
                     //   this.Group = source.Groups[0];
                     break;
                 case ChatType.TeamChat:
-                    pictureBox1.Image = Resource1.群组24;
-                    source.Controls.Add(this);
+                    SmallImage = Resource1.群组24;
+                    source.Groups[1].ItemLinks.Add(this);
                     //  this.Group = source.Groups[1];
                     var childList = GlobalVariable.GetTeamMemberDisplayNames(userName);
-                    // Caption = displayName + " 【" + childList.Count + "】";
-                    //   Hint = string.Join("\r\n", childList);
+                    Caption = displayName + " 【" + childList.Count + "】";
+                    Hint= string.Join("\r\n", childList);
                     // this.ToolTipText = string.Join("\r\n", childList);
-
+                   
                     break;
                 default:
                     break;
@@ -55,15 +62,10 @@ namespace SharedForms
             this.UserName = userName;
             this.DisplayName = displayName;
             this.ChatType = chatType;
+            DefaultImg = SmallImage;
             //  this.AppearanceHotTracked.BorderColor = System.Drawing.Color.Black;
             //    this.AppearanceHotTracked.Options.UseBorderColor = true;
-            // source.Items.Add(this);
-        }
-
-
-        public void SetNewMessagePic()
-        {
-            this.picNewMessage.Image = Resource1.新消息24;
+            source.Items.Add(this);
         }
 
         public ChatStore GetChatStore()

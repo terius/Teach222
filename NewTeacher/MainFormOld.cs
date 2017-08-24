@@ -16,7 +16,7 @@ namespace NewTeacher
     {
         #region 自定义字段
         OnlineInfo onlineInfo;
-        ChatForm chatForm;
+        ChatFormOld chatForm;
         //  string soundSource;
         bool isPush = false;//是否正在推送视频流
         string actionStuUserName;
@@ -35,7 +35,7 @@ namespace NewTeacher
         private void MainForm_Load(object sender, EventArgs e)
         {
             GlobalVariable.LoadTeamFromXML();
-            chatForm = new ChatForm();
+            chatForm = new ChatFormOld();
             GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
             GlobalVariable.client.Send_OnlineList();
             CreateUDPConnect();

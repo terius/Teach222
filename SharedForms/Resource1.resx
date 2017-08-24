@@ -166,11 +166,17 @@
   <data name="私" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\私.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="私聊" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\私聊.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="群组" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\群组.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="群组24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\群组24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="群聊" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\群聊.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="老师" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\老师.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

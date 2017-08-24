@@ -137,22 +137,7 @@ namespace StudentUser
 
         bool isMySelf;
 
-        private Point GetNewPoint(Control panel, int smsWidth, bool isMySelf)
-        {
-
-            if (isMySelf)
-            {
-                return new Point(panel.Width - smsWidth - 20, GetLastY());
-            }
-            else
-            {
-
-                return new Point(0, GetLastY());
-
-            }
-
-
-        }
+     
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -194,7 +179,7 @@ namespace StudentUser
 
             labTime.Location = new Point((this.panel1.Width - 20 - labTime.Width) / 2, GetLastY());
             // return new Point(panel.Width - smsWidth - 20, control.Location.Y + control.Height);
-            this.panel1.Controls.Add(labTime);
+            // this.panel1.PanelInner.Controls.Add(labTime);
 
             ChatMessage message = new ChatMessage();
             message.Message = textBox1.Text.Trim();
@@ -213,19 +198,21 @@ namespace StudentUser
             }
             else
             {
-                isMySelf = true;
+                isMySelf = false;
                 message.UserType = Common.ClientRole.Teacher;
             }
             sms2 sms = new sms2(message, isMySelf);
 
-            sms.Location = GetNewPoint(panel1, sms.Width, isMySelf);
+            sms.Location = new Point(isMySelf ? panel1.Width - sms.Width - 20 : 0, GetLastY());
             panel1.Controls.Add(sms);
             // this.Text = panel1.Width.ToString() + "    " + panel1.DisplayRectangle.Width.ToString();
+          
         }
 
         private void panel1_ControlAdded_1(object sender, ControlEventArgs e)
         {
             this.panel1.ScrollControlIntoView(e.Control);
+            
         }
     }
 }

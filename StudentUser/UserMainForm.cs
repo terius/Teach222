@@ -17,7 +17,7 @@ namespace StudentUser
     {
         BlackScreen bsForm = null;
         //  VLCPlayer videoPlayer;
-        ChatForm chatForm = new ChatForm();
+        ChatFormOld chatForm = new ChatFormOld();
         //   ViewRtsp videoPlayer2;
         CallForm callForm;
         volatile bool isRunScreen = false;
