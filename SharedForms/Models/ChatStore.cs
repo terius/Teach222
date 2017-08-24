@@ -31,6 +31,8 @@ namespace SharedForms
 
         public smsPanel HistoryContent { get; set; }
 
+        public smsPanelNew HistoryContentNew { get; set; } //暂时使用
+
         public IList<TeamMember> TeamMembers
         {
             get

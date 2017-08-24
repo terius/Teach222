@@ -10,7 +10,7 @@ namespace SharedForms
         public string DisplayName { get; set; }
 
         public ChatType ChatType { get; set; }
-        public ChatItem(Panel source, string userName, string displayName, ChatType chatType, ClientRole userType)
+        public ChatItem(string userName, string displayName, ChatType chatType, ClientRole userType)
         {
             InitializeComponent();
             Name = "item_" + userName;
@@ -30,18 +30,18 @@ namespace SharedForms
                         default:
                             break;
                     }
-                    source.Controls.Add(this);
+                    //source.pan. Controls.Add(this);
                     //  this.paren = source.Groups[2];
 
                     break;
                 case ChatType.GroupChat:
                     pictureBox1.Image = Resource1.所有人24;
-                    source.Controls.Add(this);
+                    //  source.Controls.Add(this);
                     //   this.Group = source.Groups[0];
                     break;
                 case ChatType.TeamChat:
                     pictureBox1.Image = Resource1.群组24;
-                    source.Controls.Add(this);
+                    //    source.Controls.Add(this);
                     //  this.Group = source.Groups[1];
                     var childList = GlobalVariable.GetTeamMemberDisplayNames(userName);
                     // Caption = displayName + " 【" + childList.Count + "】";
@@ -52,9 +52,11 @@ namespace SharedForms
                 default:
                     break;
             }
+         
             this.UserName = userName;
             this.DisplayName = displayName;
             this.ChatType = chatType;
+           // source.AddChatItem(this);
             //  this.AppearanceHotTracked.BorderColor = System.Drawing.Color.Black;
             //    this.AppearanceHotTracked.Options.UseBorderColor = true;
             // source.Items.Add(this);

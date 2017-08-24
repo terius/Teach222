@@ -164,6 +164,12 @@
     <Compile Include="UserControls\ScrollAblePanelControl.designer.cs">
       <DependentUpon>ScrollAblePanelControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\smsPanelNew.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\smsPanelNew.Designer.cs">
+      <DependentUpon>smsPanelNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="VideoShow.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,4 +1,4 @@
-﻿namespace SharedForms.UserControls
+﻿namespace SharedForms
 {
     partial class ChatListPanel
     {
@@ -29,187 +29,193 @@
         private void InitializeComponent()
         {
             this.panOut = new System.Windows.Forms.Panel();
-            this.panBottom_content = new System.Windows.Forms.Panel();
-            this.panBottom = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.picBottom = new System.Windows.Forms.PictureBox();
-            this.panMiddle_content = new System.Windows.Forms.Panel();
-            this.panMiddle = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.picMiddle = new System.Windows.Forms.PictureBox();
-            this.panTop_content = new System.Windows.Forms.Panel();
-            this.panTop = new System.Windows.Forms.Panel();
-            this.Chn_1 = new System.Windows.Forms.Label();
-            this.picTop = new System.Windows.Forms.PictureBox();
+            this.panPrivate_content = new System.Windows.Forms.Panel();
+            this.panPrivate = new System.Windows.Forms.Panel();
+            this.labPrivate = new System.Windows.Forms.Label();
+            this.picPrivate = new System.Windows.Forms.PictureBox();
+            this.panTeam_content = new System.Windows.Forms.Panel();
+            this.panTeam = new System.Windows.Forms.Panel();
+            this.labTeam = new System.Windows.Forms.Label();
+            this.picTeam = new System.Windows.Forms.PictureBox();
+            this.panGroup_content = new System.Windows.Forms.Panel();
+            this.panGroup = new System.Windows.Forms.Panel();
+            this.labGroup = new System.Windows.Forms.Label();
+            this.picGroup = new System.Windows.Forms.PictureBox();
             this.panOut.SuspendLayout();
-            this.panBottom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBottom)).BeginInit();
-            this.panMiddle.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picMiddle)).BeginInit();
-            this.panTop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picTop)).BeginInit();
+            this.panPrivate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPrivate)).BeginInit();
+            this.panTeam.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTeam)).BeginInit();
+            this.panGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picGroup)).BeginInit();
             this.SuspendLayout();
             // 
             // panOut
             // 
-            this.panOut.Controls.Add(this.panBottom_content);
-            this.panOut.Controls.Add(this.panBottom);
-            this.panOut.Controls.Add(this.panMiddle_content);
-            this.panOut.Controls.Add(this.panMiddle);
-            this.panOut.Controls.Add(this.panTop_content);
-            this.panOut.Controls.Add(this.panTop);
+            this.panOut.Controls.Add(this.panPrivate_content);
+            this.panOut.Controls.Add(this.panPrivate);
+            this.panOut.Controls.Add(this.panTeam_content);
+            this.panOut.Controls.Add(this.panTeam);
+            this.panOut.Controls.Add(this.panGroup_content);
+            this.panOut.Controls.Add(this.panGroup);
             this.panOut.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panOut.Location = new System.Drawing.Point(0, 0);
             this.panOut.Name = "panOut";
             this.panOut.Size = new System.Drawing.Size(368, 425);
             this.panOut.TabIndex = 1;
             // 
-            // panBottom_content
+            // panPrivate_content
             // 
-            this.panBottom_content.AutoScroll = true;
-            this.panBottom_content.BackColor = System.Drawing.Color.White;
-            this.panBottom_content.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panBottom_content.Location = new System.Drawing.Point(0, 212);
-            this.panBottom_content.Name = "panBottom_content";
-            this.panBottom_content.Size = new System.Drawing.Size(368, 16);
-            this.panBottom_content.TabIndex = 5;
-            this.panBottom_content.Visible = false;
+            this.panPrivate_content.AutoScroll = true;
+            this.panPrivate_content.BackColor = System.Drawing.Color.White;
+            this.panPrivate_content.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panPrivate_content.Location = new System.Drawing.Point(0, 212);
+            this.panPrivate_content.Name = "panPrivate_content";
+            this.panPrivate_content.Size = new System.Drawing.Size(368, 16);
+            this.panPrivate_content.TabIndex = 5;
+            this.panPrivate_content.Visible = false;
             // 
-            // panBottom
+            // panPrivate
             // 
-            this.panBottom.BackColor = System.Drawing.Color.White;
-            this.panBottom.Controls.Add(this.label3);
-            this.panBottom.Controls.Add(this.picBottom);
-            this.panBottom.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panBottom.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panBottom.Location = new System.Drawing.Point(0, 152);
-            this.panBottom.Name = "panBottom";
-            this.panBottom.Padding = new System.Windows.Forms.Padding(10);
-            this.panBottom.Size = new System.Drawing.Size(368, 60);
-            this.panBottom.TabIndex = 4;
-            this.panBottom.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panBottom_MouseClick);
+            this.panPrivate.BackColor = System.Drawing.Color.White;
+            this.panPrivate.Controls.Add(this.labPrivate);
+            this.panPrivate.Controls.Add(this.picPrivate);
+            this.panPrivate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.panPrivate.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panPrivate.Location = new System.Drawing.Point(0, 152);
+            this.panPrivate.Name = "panPrivate";
+            this.panPrivate.Padding = new System.Windows.Forms.Padding(10);
+            this.panPrivate.Size = new System.Drawing.Size(368, 60);
+            this.panPrivate.TabIndex = 4;
+            this.panPrivate.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panBottom_MouseClick);
             // 
-            // label3
+            // labPrivate
             // 
-            this.label3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
-            this.label3.Location = new System.Drawing.Point(50, 10);
-            this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.label3.Size = new System.Drawing.Size(80, 40);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "私聊";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labPrivate.BackColor = System.Drawing.Color.Transparent;
+            this.labPrivate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labPrivate.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labPrivate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
+            this.labPrivate.Location = new System.Drawing.Point(50, 10);
+            this.labPrivate.Name = "labPrivate";
+            this.labPrivate.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.labPrivate.Size = new System.Drawing.Size(80, 40);
+            this.labPrivate.TabIndex = 7;
+            this.labPrivate.Text = "私聊";
+            this.labPrivate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // picBottom
+            // picPrivate
             // 
-            this.picBottom.Dock = System.Windows.Forms.DockStyle.Left;
-            this.picBottom.Image = global::SharedForms.Resource1.私聊;
-            this.picBottom.Location = new System.Drawing.Point(10, 10);
-            this.picBottom.Name = "picBottom";
-            this.picBottom.Size = new System.Drawing.Size(40, 40);
-            this.picBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picBottom.TabIndex = 6;
-            this.picBottom.TabStop = false;
+            this.picPrivate.BackColor = System.Drawing.Color.Transparent;
+            this.picPrivate.Dock = System.Windows.Forms.DockStyle.Left;
+            this.picPrivate.Image = global::SharedForms.Resource1.私聊;
+            this.picPrivate.Location = new System.Drawing.Point(10, 10);
+            this.picPrivate.Name = "picPrivate";
+            this.picPrivate.Size = new System.Drawing.Size(40, 40);
+            this.picPrivate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picPrivate.TabIndex = 6;
+            this.picPrivate.TabStop = false;
             // 
-            // panMiddle_content
+            // panTeam_content
             // 
-            this.panMiddle_content.AutoScroll = true;
-            this.panMiddle_content.BackColor = System.Drawing.Color.White;
-            this.panMiddle_content.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panMiddle_content.Location = new System.Drawing.Point(0, 136);
-            this.panMiddle_content.Name = "panMiddle_content";
-            this.panMiddle_content.Size = new System.Drawing.Size(368, 16);
-            this.panMiddle_content.TabIndex = 3;
-            this.panMiddle_content.Visible = false;
+            this.panTeam_content.AutoScroll = true;
+            this.panTeam_content.BackColor = System.Drawing.Color.White;
+            this.panTeam_content.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panTeam_content.Location = new System.Drawing.Point(0, 136);
+            this.panTeam_content.Name = "panTeam_content";
+            this.panTeam_content.Size = new System.Drawing.Size(368, 16);
+            this.panTeam_content.TabIndex = 3;
+            this.panTeam_content.Visible = false;
             // 
-            // panMiddle
+            // panTeam
             // 
-            this.panMiddle.BackColor = System.Drawing.Color.White;
-            this.panMiddle.Controls.Add(this.label2);
-            this.panMiddle.Controls.Add(this.picMiddle);
-            this.panMiddle.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panMiddle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panMiddle.Location = new System.Drawing.Point(0, 76);
-            this.panMiddle.Name = "panMiddle";
-            this.panMiddle.Padding = new System.Windows.Forms.Padding(10);
-            this.panMiddle.Size = new System.Drawing.Size(368, 60);
-            this.panMiddle.TabIndex = 2;
-            this.panMiddle.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panMiddle_MouseClick);
+            this.panTeam.BackColor = System.Drawing.Color.White;
+            this.panTeam.Controls.Add(this.labTeam);
+            this.panTeam.Controls.Add(this.picTeam);
+            this.panTeam.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.panTeam.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panTeam.Location = new System.Drawing.Point(0, 76);
+            this.panTeam.Name = "panTeam";
+            this.panTeam.Padding = new System.Windows.Forms.Padding(10);
+            this.panTeam.Size = new System.Drawing.Size(368, 60);
+            this.panTeam.TabIndex = 2;
+            this.panTeam.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panMiddle_MouseClick);
             // 
-            // label2
+            // labTeam
             // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
-            this.label2.Location = new System.Drawing.Point(50, 10);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.label2.Size = new System.Drawing.Size(80, 40);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "群聊";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labTeam.BackColor = System.Drawing.Color.Transparent;
+            this.labTeam.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labTeam.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labTeam.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
+            this.labTeam.Location = new System.Drawing.Point(50, 10);
+            this.labTeam.Name = "labTeam";
+            this.labTeam.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.labTeam.Size = new System.Drawing.Size(80, 40);
+            this.labTeam.TabIndex = 5;
+            this.labTeam.Text = "群聊";
+            this.labTeam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // picMiddle
+            // picTeam
             // 
-            this.picMiddle.Dock = System.Windows.Forms.DockStyle.Left;
-            this.picMiddle.Image = global::SharedForms.Resource1.群聊;
-            this.picMiddle.Location = new System.Drawing.Point(10, 10);
-            this.picMiddle.Name = "picMiddle";
-            this.picMiddle.Size = new System.Drawing.Size(40, 40);
-            this.picMiddle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picMiddle.TabIndex = 4;
-            this.picMiddle.TabStop = false;
+            this.picTeam.BackColor = System.Drawing.Color.Transparent;
+            this.picTeam.Dock = System.Windows.Forms.DockStyle.Left;
+            this.picTeam.Image = global::SharedForms.Resource1.群聊;
+            this.picTeam.Location = new System.Drawing.Point(10, 10);
+            this.picTeam.Name = "picTeam";
+            this.picTeam.Size = new System.Drawing.Size(40, 40);
+            this.picTeam.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picTeam.TabIndex = 4;
+            this.picTeam.TabStop = false;
             // 
-            // panTop_content
+            // panGroup_content
             // 
-            this.panTop_content.AutoScroll = true;
-            this.panTop_content.BackColor = System.Drawing.Color.White;
-            this.panTop_content.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panTop_content.Location = new System.Drawing.Point(0, 60);
-            this.panTop_content.Name = "panTop_content";
-            this.panTop_content.Size = new System.Drawing.Size(368, 16);
-            this.panTop_content.TabIndex = 6;
-            this.panTop_content.Visible = false;
+            this.panGroup_content.AutoScroll = true;
+            this.panGroup_content.BackColor = System.Drawing.Color.White;
+            this.panGroup_content.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panGroup_content.Location = new System.Drawing.Point(0, 60);
+            this.panGroup_content.Name = "panGroup_content";
+            this.panGroup_content.Size = new System.Drawing.Size(368, 16);
+            this.panGroup_content.TabIndex = 6;
+            this.panGroup_content.Visible = false;
             // 
-            // panTop
+            // panGroup
             // 
-            this.panTop.BackColor = System.Drawing.Color.White;
-            this.panTop.Controls.Add(this.Chn_1);
-            this.panTop.Controls.Add(this.picTop);
-            this.panTop.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panTop.Location = new System.Drawing.Point(0, 0);
-            this.panTop.Name = "panTop";
-            this.panTop.Padding = new System.Windows.Forms.Padding(10);
-            this.panTop.Size = new System.Drawing.Size(368, 60);
-            this.panTop.TabIndex = 0;
-            this.panTop.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panTop_MouseClick);
+            this.panGroup.BackColor = System.Drawing.Color.White;
+            this.panGroup.Controls.Add(this.labGroup);
+            this.panGroup.Controls.Add(this.picGroup);
+            this.panGroup.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.panGroup.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panGroup.Location = new System.Drawing.Point(0, 0);
+            this.panGroup.Name = "panGroup";
+            this.panGroup.Padding = new System.Windows.Forms.Padding(10);
+            this.panGroup.Size = new System.Drawing.Size(368, 60);
+            this.panGroup.TabIndex = 0;
+            this.panGroup.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panTop_MouseClick);
             // 
-            // Chn_1
+            // labGroup
             // 
-            this.Chn_1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.Chn_1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Chn_1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
-            this.Chn_1.Location = new System.Drawing.Point(50, 10);
-            this.Chn_1.Name = "Chn_1";
-            this.Chn_1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.Chn_1.Size = new System.Drawing.Size(80, 40);
-            this.Chn_1.TabIndex = 4;
-            this.Chn_1.Text = "所有人";
-            this.Chn_1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labGroup.BackColor = System.Drawing.Color.Transparent;
+            this.labGroup.Dock = System.Windows.Forms.DockStyle.Left;
+            this.labGroup.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
+            this.labGroup.Location = new System.Drawing.Point(50, 10);
+            this.labGroup.Name = "labGroup";
+            this.labGroup.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.labGroup.Size = new System.Drawing.Size(80, 40);
+            this.labGroup.TabIndex = 4;
+            this.labGroup.Text = "所有人";
+            this.labGroup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // picTop
+            // picGroup
             // 
-            this.picTop.Dock = System.Windows.Forms.DockStyle.Left;
-            this.picTop.Image = global::SharedForms.Resource1.所有人;
-            this.picTop.Location = new System.Drawing.Point(10, 10);
-            this.picTop.Name = "picTop";
-            this.picTop.Size = new System.Drawing.Size(40, 40);
-            this.picTop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picTop.TabIndex = 3;
-            this.picTop.TabStop = false;
+            this.picGroup.BackColor = System.Drawing.Color.Transparent;
+            this.picGroup.Dock = System.Windows.Forms.DockStyle.Left;
+            this.picGroup.Image = global::SharedForms.Resource1.所有人;
+            this.picGroup.Location = new System.Drawing.Point(10, 10);
+            this.picGroup.Name = "picGroup";
+            this.picGroup.Size = new System.Drawing.Size(40, 40);
+            this.picGroup.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picGroup.TabIndex = 3;
+            this.picGroup.TabStop = false;
             // 
             // ChatListPanel
             // 
@@ -220,29 +226,29 @@
             this.Size = new System.Drawing.Size(368, 425);
             this.Load += new System.EventHandler(this.ChatListPanel_Load);
             this.panOut.ResumeLayout(false);
-            this.panBottom.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picBottom)).EndInit();
-            this.panMiddle.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picMiddle)).EndInit();
-            this.panTop.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picTop)).EndInit();
+            this.panPrivate.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picPrivate)).EndInit();
+            this.panTeam.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picTeam)).EndInit();
+            this.panGroup.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picGroup)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Panel panOut;
-        private System.Windows.Forms.Panel panMiddle_content;
-        private System.Windows.Forms.Panel panMiddle;
-        private System.Windows.Forms.Panel panTop;
-        private System.Windows.Forms.Panel panBottom_content;
-        private System.Windows.Forms.Panel panBottom;
-        private System.Windows.Forms.PictureBox picMiddle;
-        private System.Windows.Forms.Label Chn_1;
-        private System.Windows.Forms.PictureBox picTop;
-        private System.Windows.Forms.Panel panTop_content;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.PictureBox picBottom;
+        private System.Windows.Forms.Panel panTeam_content;
+        private System.Windows.Forms.Panel panTeam;
+        private System.Windows.Forms.Panel panGroup;
+        private System.Windows.Forms.Panel panPrivate_content;
+        private System.Windows.Forms.Panel panPrivate;
+        private System.Windows.Forms.PictureBox picTeam;
+        private System.Windows.Forms.Label labGroup;
+        private System.Windows.Forms.PictureBox picGroup;
+        private System.Windows.Forms.Panel panGroup_content;
+        private System.Windows.Forms.Label labTeam;
+        private System.Windows.Forms.Label labPrivate;
+        private System.Windows.Forms.PictureBox picPrivate;
     }
 }

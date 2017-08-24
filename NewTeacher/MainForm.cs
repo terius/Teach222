@@ -14,7 +14,7 @@ namespace NewTeacher
     {
         #region 自定义字段
         OnlineInfo onlineInfo;
-        ChatFormOld chatForm;
+        ChatForm chatForm;
         //  string soundSource;
         bool isPush = false;//是否正在推送视频流
         string actionStuUserName;
@@ -444,7 +444,7 @@ namespace NewTeacher
                     break;
                 case TeacherAction.menuFileShare_Click:
                     ChatToALL();
-                    chatForm.UploadFileToALL();
+                  //  chatForm.UploadFileToALL();  暂时屏蔽
                     break;
                 case TeacherAction.menuFileShare2_Click:
 
@@ -491,7 +491,7 @@ namespace NewTeacher
         {
             if (chatForm == null || chatForm.IsDisposed)
             {
-                chatForm = new ChatFormOld();
+                chatForm = new ChatForm();
             }
 
             chatForm.BringToFront();

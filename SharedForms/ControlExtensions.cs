@@ -95,20 +95,20 @@ namespace SharedForms
         //    return item;
         //}
 
-        public static ChatItem CreateItem(this Panel source, ChatMessage request)
-        {
-            ChatItem item = new ChatItem(source, request.SendUserName,
-                request.SendDisplayName, request.ChatType, request.UserType);
+        //public static ChatItem CreateItem(this ChatListPanel source, ChatMessage request)
+        //{
+        //    ChatItem item = new ChatItem( request.SendUserName,
+        //        request.SendDisplayName, request.ChatType, request.UserType);
 
-            return item;
-        }
-        public static ChatItem CreateItem(this Panel source, ChatStore store)
-        {
-            ChatItem item = new ChatItem(source, store.ChatUserName,
-                store.ChatDisplayName, store.ChatType, store.UserType);
+        //    return item;
+        //}
+        //public static ChatItem CreateItem(this ChatListPanel source, ChatStore store)
+        //{
+        //    ChatItem item = new ChatItem(source, store.ChatUserName,
+        //        store.ChatDisplayName, store.ChatType, store.UserType);
 
-            return item;
-        }
+        //    return item;
+        //}
 
         public static ChatItemOld CreateItem(this NavBarControl source, ChatMessage request)
         {

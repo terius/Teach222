@@ -33,7 +33,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.chatListPanel1 = new SharedForms.UserControls.ChatListPanel();
+            this.chatListPanel1 = new SharedForms.ChatListPanel();
             this.panelContent.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -126,6 +126,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
-        private SharedForms.UserControls.ChatListPanel chatListPanel1;
+        private SharedForms.ChatListPanel chatListPanel1;
     }
 }

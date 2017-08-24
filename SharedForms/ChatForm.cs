@@ -1,6 +1,8 @@
 ﻿using Common;
 using Model;
+using System;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SharedForms
 {
@@ -36,11 +38,7 @@ namespace SharedForms
         public ChatForm()
         {
             InitializeComponent();
-            var groupChat = GlobalVariable.CreateGroupChat(groupId);
-            if (groupChat != null)
-            {
-                ChatNav.GroupPanel.CreateItem(groupChat);
-            }
+            ChatNav.CreateNewGroupChat(groupId);
             InitProgressBar();
             CheckPath();
         }
@@ -123,20 +121,23 @@ namespace SharedForms
         {
             this.Text = GlobalVariable.LoginUserInfo.DisplayName + " 的聊天窗口";
             IsHide = false;
-            ReflashTeamChat();
-            var chatItem = GetItemInChatListBox(request.SendUserName);
-            if (chatItem == null)
-            {
-                chatItem = ChatNav.CreateItem(request);
+            ChatNav.ReflashTeamChat();
+            var chatItem = ChatNav.GetChatItem(request);
 
-            }
+            //var chatItem = GetItemInChatListBox(request.SendUserName);
+            //if (chatItem == null)
+            //{
+            //    chatItem = ChatNav.CreateItem(request);
+
+            //}
 
             if (fromReceieveMessage)
             {
                 if (!string.IsNullOrWhiteSpace(selectUserName) && chatItem.UserName != selectUserName)
                 {
+                    chatItem.SetNewMessagePic();
                     //chatItem.Caption = chatItem.DisplayName + " 有新消息！";
-                    chatItem.SmallImage = Resource1.新消息24;
+                    //  chatItem.SmallImage = Resource1.新消息24;
                 }
                 else
                 {
@@ -152,33 +153,34 @@ namespace SharedForms
 
         public void ChangeAllowChat(ChatType chatType, bool allow)
         {
-            switch (chatType)
-            {
-                case ChatType.PrivateChat:
-                    if (allow)
-                    {
-                        ChatNav.Groups[2].LargeImage = Resource1.私;
-                    }
-                    else
-                    {
-                        ChatNav.Groups[2].LargeImage = Resource1.禁止;
-                    }
-                    break;
-                case ChatType.GroupChat:
-                    break;
-                case ChatType.TeamChat:
-                    if (allow)
-                    {
-                        ChatNav.Groups[1].LargeImage = Resource1.群组;
-                    }
-                    else
-                    {
-                        ChatNav.Groups[1].LargeImage = Resource1.禁止;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            ChatNav.SetAllowOrFobbitChat(chatType, allow);
+            //switch (chatType)
+            //{
+            //    case ChatType.PrivateChat:
+            //        if (allow)
+            //        {
+            //            ChatNav.Groups[2].LargeImage = Resource1.私;
+            //        }
+            //        else
+            //        {
+            //            ChatNav.Groups[2].LargeImage = Resource1.禁止;
+            //        }
+            //        break;
+            //    case ChatType.GroupChat:
+            //        break;
+            //    case ChatType.TeamChat:
+            //        if (allow)
+            //        {
+            //            ChatNav.Groups[1].LargeImage = Resource1.群组;
+            //        }
+            //        else
+            //        {
+            //            ChatNav.Groups[1].LargeImage = Resource1.禁止;
+            //        }
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         /// <summary>
@@ -194,51 +196,36 @@ namespace SharedForms
             {
                 return;
             }
-          //  chatItem.SmallImage = chatItem.DefaultImg;
+            //  chatItem.SmallImage = chatItem.DefaultImg;
             if (chatItem.UserName != selectUserName)
             {
                 LoadChatMessage(chatItem);
             }
             AppendNewMessage(chatItem);
             selectUserName = chatItem.UserName;
-            ChatNav.SelectedLink = chatItem.Links[0];
+            ChatNav.SelectedChatItem = chatItem;
         }
 
 
-        /// <summary>
-        /// 刷新群组信息
-        /// </summary>
-        public void ReflashTeamChat()
-        {
-            if (GlobalVariable.IsTeamChatChanged)
-            {
-                GlobalVariable.IsTeamChatChanged = false;
-                var list = GlobalVariable.GetTeamChatList();
-                ChatNav.ClearChatItem(1);
-                foreach (ChatStore item in list)
-                {
-                    ChatNav.GroupPanel.CreateItem(item);
-                }
-            }
-        }
 
-        /// <summary>
-        /// 获取当前聊天对象
-        /// </summary>
-        /// <param name="chatUserName"></param>
-        /// <returns></returns>
-        private ChatItem GetItemInChatListBox(string userName)
-        {
-            foreach (ChatItem item in ChatNav.GroupPanel.Controls)
-            {
-                if (item.UserName == userName)
-                {
-                    return item;
-                }
-            }
 
-            return null;
-        }
+        ///// <summary>
+        ///// 获取当前聊天对象
+        ///// </summary>
+        ///// <param name="chatUserName"></param>
+        ///// <returns></returns>
+        //private ChatItem GetItemInChatListBox(string userName)
+        //{
+        //    foreach (ChatItem item in ChatNav.ChatItemList)
+        //    {
+        //        if (item.UserName == userName)
+        //        {
+        //            return item;
+        //        }
+        //    }
+
+        //    return null;
+        //}
 
 
         /// <summary>
@@ -257,7 +244,7 @@ namespace SharedForms
                     {
                         AppendMessage(item, false);
                     }
-                    GlobalVariable.SaveChatMessage(smsPanel1, subItem.UserName);
+                    GlobalVariable.SaveChatMessage(smsPanelNew1, subItem.UserName);
                 }
             }
         }
@@ -274,13 +261,13 @@ namespace SharedForms
             {
                 return;
             }
-            if (chatStore.HistoryContent == null)
+            if (chatStore.HistoryContentNew == null)
             {
-                chatStore.HistoryContent = new smsPanel();
-                panelControl2.Controls.Add(chatStore.HistoryContent);
+                chatStore.HistoryContentNew = new smsPanelNew();
+               // panelControl2.Controls.Add(chatStore.HistoryContent); //terius
             }
-            smsPanel1 = chatStore.HistoryContent;
-            chatStore.HistoryContent.BringToFront();
+            smsPanelNew1 = chatStore.HistoryContentNew;
+            chatStore.HistoryContentNew.BringToFront();
 
         }
 
@@ -412,5 +399,54 @@ namespace SharedForms
         // AlertControl messagebox;
 
         #endregion
+
+        private void sendBox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnSendMessage();
+                e.Handled = true;
+            }
+        }
+
+        private void BtnSendMessage()
+        {
+            string content = sendBox.Text;
+            //发送内容为空时，不做响应
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                return;
+            }
+            if (ChatNav.SelectedChatItem == null || string.IsNullOrWhiteSpace(selectUserName))
+            {
+                GlobalVariable.ShowWarnning("请先选择聊天对象");
+                return;
+            }
+
+            var message = new ChatMessage(_myUserName, _myDisplayName, selectUserName, content, GlobalVariable.LoginUserInfo.UserType);
+            if (SendMessageCommand(message))
+            {
+                AppendMessage(message, true);
+                GlobalVariable.SaveChatMessage(smsPanelNew1, selectUserName);
+            }
+        }
+
+        private void ChatForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.IsHide = true;
+            this.Hide();
+            e.Cancel = true;
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            BtnSendMessage();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.IsHide = true;
+            this.Hide();
+        }
     }
 }

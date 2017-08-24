@@ -191,6 +191,16 @@ namespace SharedForms
             }
         }
 
+        public static void SaveChatMessage(smsPanelNew content, string userName)
+        {
+            var chatstore = ChatList.FirstOrDefault(d => d.ChatUserName == userName);
+            if (chatstore != null)
+            {
+                chatstore.HistoryContentNew = content;
+                chatstore.NewMessageList = null;
+            }
+        }
+
 
         public static void ShowError(string msg)
         {
