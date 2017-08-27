@@ -9,12 +9,11 @@ namespace SharedForms
 {
     public partial class ChatListPanel : UserControl
     {
+
         public ChatListPanel()
         {
+            // SetStyle(ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             InitializeComponent();
-            //     chatItemList = new List<ChatItem>();
-            picGroup.Click += (obj, eve) => { ShowContent(panGroup_content); };
-            labGroup.Click += (obj, eve) => { ShowContent(panGroup_content); };
             panGroup_content.MouseEnter += (obj, eve) =>
             {
                 panGroup_content.Focus();
@@ -23,9 +22,9 @@ namespace SharedForms
             {
 
             };
-            SetPanelHover(this.panGroup);
-            SetPanelHover(this.panTeam);
-            SetPanelHover(this.panPrivate);
+            //  SetPanelHover(this.panGroup);
+            //   SetPanelHover(this.panTeam);
+            //   SetPanelHover(this.panPrivate);
             // panTop_content.AutoScroll = panMiddle_content.AutoScroll = panBottom_content.AutoScroll = true;
             panGroup_content.MouseWheel += (obj, eve) =>
             {
@@ -59,9 +58,17 @@ namespace SharedForms
 
             };
 
+            panGroup.MouseClick += (sender, e) => {
+              
+            };
+
         }
 
-       
+        private void PanGroup_MouseClick(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         int groupLastY = 0;
         int teamLastY = 0;
         int privateLastY = 0;
@@ -145,18 +152,20 @@ namespace SharedForms
             switch (index)
             {
                 case 0:
-                    this.panGroup.Controls.Clear();
+                    this.panGroup_content.Controls.Clear();
                     break;
                 case 1:
-                    this.panTeam.Controls.Clear();
+                    this.panTeam_content.Controls.Clear();
                     break;
                 case 2:
-                    this.panPrivate.Controls.Clear();
+                    this.panPrivate_content.Controls.Clear();
                     break;
                 default:
                     break;
             }
         }
+
+
 
         //public void SetDefaultImage(int index)
         //{
@@ -208,12 +217,12 @@ namespace SharedForms
                 case ChatType.PrivateChat:
                     if (allow)
                     {
-                        this.picPrivate.Image = Resource1.私聊;
+                     //   this.picPrivate.Image = Resource1.私聊;
                         this.panPrivate_content.Enabled = true;
                     }
                     else
                     {
-                        this.picPrivate.Image = Resource1.禁止;
+                    //  this.picPrivate.Image = Resource1.禁止;
                         this.panPrivate_content.Enabled = false;
                     }
                     break;
@@ -222,12 +231,12 @@ namespace SharedForms
                 case ChatType.TeamChat:
                     if (allow)
                     {
-                        this.picTeam.Image = Resource1.群聊;
+                        //this.picTeam.Image = Resource1.群聊;
                         this.panTeam_content.Enabled = true;
                     }
                     else
                     {
-                        this.picTeam.Image = Resource1.禁止;
+                      //  this.picTeam.Image = Resource1.禁止;
                         this.panTeam_content.Enabled = false;
                     }
                     break;
@@ -270,12 +279,18 @@ namespace SharedForms
 
         private void panMiddle_MouseClick(object sender, MouseEventArgs e)
         {
-            ShowContent(panTeam_content);
+            if (e.Button == MouseButtons.Left)
+            {
+                ShowContent(panTeam_content);
+            }
         }
 
         private void panBottom_MouseClick(object sender, MouseEventArgs e)
         {
-            ShowContent(panPrivate_content);
+            if (e.Button == MouseButtons.Left)
+            {
+                ShowContent(panPrivate_content);
+            }
         }
 
         //private void button1_Click(object sender, EventArgs e)
@@ -370,7 +385,26 @@ namespace SharedForms
 
         public ChatItem SelectedChatItem { get; set; }
 
+        private void panGroup_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ShowContent(this.panGroup_content);
+            }
+        }
 
-
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (panGroup.Forbit)
+            {
+                panGroup.Forbit = false;
+       
+            }
+            else
+            {
+                panGroup.Forbit = true;
+            }
+            panGroup.Invalidate();
+        }
     }
 }

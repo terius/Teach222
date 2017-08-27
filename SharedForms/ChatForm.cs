@@ -1,6 +1,7 @@
 ﻿using Common;
 using Model;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -34,6 +35,7 @@ namespace SharedForms
         RecordVoice recordVoice;
         // string saveAudioFile = "";
         //   string saveAudioFilePath = "";
+       
         #endregion
         public ChatForm()
         {

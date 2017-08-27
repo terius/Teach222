@@ -128,6 +128,12 @@
     <Compile Include="UserControls\ChatListPanel.Designer.cs">
       <DependentUpon>ChatListPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ChatTypePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ChatTypePanel.Designer.cs">
+      <DependentUpon>ChatTypePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\MyGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
