@@ -10,19 +10,47 @@ namespace SharedForms
         Image headIcon = Resource1.私聊;
         SolidBrush brush = new SolidBrush(Color.FromArgb(55, 152, 249));
         Font titleFont = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
+        Color defaultBackColor = Color.FromArgb(250, 250, 250);
+        Color defaultSelectColor = Color.FromArgb(235, 235, 236);
         //  ChatType _chatType;
         string title;
         public ChatType ChatType { get; set; }
         public bool Forbit { get; set; }
+        public bool IsSelected { get; set; }
+        
         public ChatTypePanel()
         {
             // _chatType = ChatType;
 
             InitializeComponent();
 
-            this.SetChatPanelHover();
+            SetChatPanelHover();
+            this.MouseClick += ChatTypePanel_MouseClick;
             this.Cursor = Cursors.Hand;
             this.BackColor = Color.White;
+
+        }
+
+        private void ChatTypePanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.BackColor = defaultSelectColor;
+                IsSelected = true;
+            }
+           
+        }
+
+        private void SetChatPanelHover()
+        {
+            this.MouseEnter += (sender, e) => ((Control)sender).BackColor = defaultSelectColor;
+            this.MouseLeave += (sender, e) =>
+            {
+                if (!IsSelected)
+                {
+                    ((Control)sender).BackColor = defaultBackColor;
+                }
+            };
 
         }
 

@@ -35,14 +35,33 @@ namespace SharedForms
         RecordVoice recordVoice;
         // string saveAudioFile = "";
         //   string saveAudioFilePath = "";
-       
+
         #endregion
         public ChatForm()
         {
             InitializeComponent();
+            ChatNav.SelectChatItem += ChatNav_SelectChatItem;
             ChatNav.CreateNewGroupChat(groupId);
             InitProgressBar();
             CheckPath();
+        }
+
+        private void ChatNav_SelectChatItem(object sender, ChatItem chatItem)
+        {
+            selectUserName = chatItem.UserName;
+            this.labChatTitle.Text = "与【" + chatItem.DisplayName + "】的对话：";
+            //  chatItem.Caption = chatItem.DisplayName;
+            if (chatItem.FromClick && chatItem.UserName == selectUserName)
+            {
+                return;
+            }
+            //  chatItem.SmallImage = chatItem.DefaultImg;
+            if (chatItem.UserName != selectUserName)
+            {
+                LoadChatMessage(chatItem);
+            }
+            AppendNewMessage(chatItem);
+          
         }
 
 
@@ -119,6 +138,14 @@ namespace SharedForms
         //    }
         //}
 
+
+        public void ReflashTeamChat()
+        {
+            ChatNav.ReflashTeamChat();
+        }
+
+
+
         public void CreateChatItems(ChatMessage request, bool fromReceieveMessage)
         {
             this.Text = GlobalVariable.LoginUserInfo.DisplayName + " 的聊天窗口";
@@ -143,12 +170,12 @@ namespace SharedForms
                 }
                 else
                 {
-                    ChatItemSelected(chatItem, false);
+                    ChatItemSelected(chatItem);
                 }
             }
             else
             {
-                ChatItemSelected(chatItem, false);
+                ChatItemSelected(chatItem);
             }
         }
 
@@ -189,23 +216,10 @@ namespace SharedForms
         /// 聊天列表对象被选中
         /// </summary>
         /// <param name="chatItem"></param>
-        /// <param name="fromClick"></param>
-        private void ChatItemSelected(ChatItem chatItem, bool fromClick)
+        private void ChatItemSelected(ChatItem chatItem)
         {
-            this.labChatTitle.Text = "与【" + chatItem.DisplayName + "】的对话：";
-            //  chatItem.Caption = chatItem.DisplayName;
-            if (fromClick && chatItem.UserName == selectUserName)
-            {
-                return;
-            }
-            //  chatItem.SmallImage = chatItem.DefaultImg;
-            if (chatItem.UserName != selectUserName)
-            {
-                LoadChatMessage(chatItem);
-            }
-            AppendNewMessage(chatItem);
-            selectUserName = chatItem.UserName;
-            ChatNav.SelectedChatItem = chatItem;
+
+            ChatNav.SetSelectChatItem(chatItem, false);
         }
 
 
@@ -266,7 +280,7 @@ namespace SharedForms
             if (chatStore.HistoryContentNew == null)
             {
                 chatStore.HistoryContentNew = new smsPanelNew();
-               // panelControl2.Controls.Add(chatStore.HistoryContent); //terius
+                panMessage.Controls.Add(chatStore.HistoryContentNew);
             }
             smsPanelNew1 = chatStore.HistoryContentNew;
             chatStore.HistoryContentNew.BringToFront();
@@ -361,15 +375,7 @@ namespace SharedForms
         }
 
 
-        /// <summary>
-        /// 发送者是否为当前登录人
-        /// </summary>
-        /// <param name="sendUserName"></param>
-        /// <returns></returns>
-        public bool IsMySelf(string sendUserName)
-        {
-            return GlobalVariable.LoginUserInfo.UserName == sendUserName;
-        }
+
 
 
         /// <summary>
@@ -379,15 +385,12 @@ namespace SharedForms
         /// <param name="isInput"></param>
         private void AppendMessage(ChatMessage chatMessage, bool isInput)
         {
-            bool isMySelf = IsMySelf(chatMessage.SendUserName);
 
-            sms2 sms = new sms2(chatMessage, !isMySelf);
+
+            //  sms2 sms = new sms2(chatMessage, !isMySelf);
             //   sms.Location = GetNewPoint(panel1, sms.Width, !isMySelf);
-            this.panel1.Controls.Add(sms);
-
-
-
-            // smsPanel1.AddMessage(chatMessage, isMySelf);
+            //    this.panel1.Controls.Add(sms);
+            smsPanelNew1.AddMessage(chatMessage);
             if (isInput)
             {
                 //清空发送输入框

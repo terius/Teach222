@@ -29,6 +29,7 @@ namespace SharedForms
         Color backColor;
         public sms2(ChatMessage messageInfo, bool isMySelf)
         {
+            
             _title = messageInfo.Title;
             _message = messageInfo.Message;
             _isMySelf = isMySelf;

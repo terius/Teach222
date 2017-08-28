@@ -36,11 +36,6 @@
     <ApplicationIcon>stu.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.BonusSkins.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Data.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Printing.v16.2.Core, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -191,10 +186,6 @@
     <ProjectReference Include="..\SharedForms\SharedForms.csproj">
       <Project>{56b28b98-487b-450f-8b3a-654b668db221}</Project>
       <Name>SharedForms</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\terius\Desktop\thegrouper\Grouper\CodeVendor.Controls.csproj">
-      <Project>{d5d88eb0-23b9-46ce-b23c-c6245ecf023c}</Project>
-      <Name>CodeVendor.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

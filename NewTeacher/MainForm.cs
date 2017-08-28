@@ -637,7 +637,7 @@ namespace NewTeacher
             {
                 return;
             }
-            GlobalVariable.ShowSuccess(actionStuUserName);
+          //  GlobalVariable.ShowSuccess(actionStuUserName);
             switch (name)
             {
                 case "userList_privateChat":

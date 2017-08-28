@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.myGroupBox7 = new SharedForms.MyGroupBox();
             this.lvOnline = new System.Windows.Forms.ListView();
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colCall = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.imageList1 = new System.Windows.Forms.ImageList();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.myGroupBox8 = new SharedForms.MyGroupBox();
@@ -67,7 +68,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.menuRomoteControl = new System.Windows.Forms.Button();
             this.menuSilence = new System.Windows.Forms.Button();
-            this.UserListMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.UserListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.userList_privateChat = new System.Windows.Forms.ToolStripMenuItem();
             this.userList_lockScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.userList_stopLockScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -781,28 +782,28 @@
             // userList_P_forbidPrivateChat
             // 
             this.userList_P_forbidPrivateChat.Name = "userList_P_forbidPrivateChat";
-            this.userList_P_forbidPrivateChat.Size = new System.Drawing.Size(152, 24);
+            this.userList_P_forbidPrivateChat.Size = new System.Drawing.Size(134, 24);
             this.userList_P_forbidPrivateChat.Text = "禁止私聊";
             this.userList_P_forbidPrivateChat.Click += new System.EventHandler(this.userList_P_forbidPrivateChat_Click);
             // 
             // userList_P_forbidGroupChat
             // 
             this.userList_P_forbidGroupChat.Name = "userList_P_forbidGroupChat";
-            this.userList_P_forbidGroupChat.Size = new System.Drawing.Size(152, 24);
+            this.userList_P_forbidGroupChat.Size = new System.Drawing.Size(134, 24);
             this.userList_P_forbidGroupChat.Text = "禁止群聊";
             this.userList_P_forbidGroupChat.Click += new System.EventHandler(this.userList_P_forbidGroupChat_Click);
             // 
             // userList_P_allowPrivateChat
             // 
             this.userList_P_allowPrivateChat.Name = "userList_P_allowPrivateChat";
-            this.userList_P_allowPrivateChat.Size = new System.Drawing.Size(152, 24);
+            this.userList_P_allowPrivateChat.Size = new System.Drawing.Size(134, 24);
             this.userList_P_allowPrivateChat.Text = "允许私聊";
             this.userList_P_allowPrivateChat.Click += new System.EventHandler(this.userList_P_allowPrivateChat_Click);
             // 
             // userList_P_allowGroupChat
             // 
             this.userList_P_allowGroupChat.Name = "userList_P_allowGroupChat";
-            this.userList_P_allowGroupChat.Size = new System.Drawing.Size(152, 24);
+            this.userList_P_allowGroupChat.Size = new System.Drawing.Size(134, 24);
             this.userList_P_allowGroupChat.Text = "允许群聊";
             this.userList_P_allowGroupChat.Click += new System.EventHandler(this.userList_P_allowGroupChat_Click);
             // 

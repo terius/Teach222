@@ -1,5 +1,4 @@
-﻿using DevExpress.XtraEditors;
-using Model;
+﻿using Model;
 using SharedForms;
 using System;
 using System.Drawing;

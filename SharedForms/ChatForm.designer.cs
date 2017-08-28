@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChatForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.ChatNav = new SharedForms.ChatListPanel();
+            this.panMessage = new System.Windows.Forms.Panel();
             this.smsPanelNew1 = new SharedForms.smsPanelNew();
             this.panel1 = new System.Windows.Forms.Panel();
             this.progressBarControl1 = new System.Windows.Forms.ProgressBar();
@@ -44,6 +46,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panMessage.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panelControl3.SuspendLayout();
@@ -65,7 +68,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.smsPanelNew1);
+            this.splitContainer1.Panel2.Controls.Add(this.panMessage);
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
             this.splitContainer1.Panel2.Controls.Add(this.panelControl3);
@@ -76,18 +79,27 @@
             // ChatNav
             // 
             this.ChatNav.BackColor = System.Drawing.Color.White;
-            this.ChatNav.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ChatNav.Location = new System.Drawing.Point(0, 0);
             this.ChatNav.Name = "ChatNav";
             this.ChatNav.SelectedChatItem = null;
             this.ChatNav.Size = new System.Drawing.Size(236, 591);
             this.ChatNav.TabIndex = 0;
             // 
+            // panMessage
+            // 
+            this.panMessage.Controls.Add(this.smsPanelNew1);
+            this.panMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panMessage.Location = new System.Drawing.Point(0, 36);
+            this.panMessage.Name = "panMessage";
+            this.panMessage.Size = new System.Drawing.Size(551, 363);
+            this.panMessage.TabIndex = 5;
+            // 
             // smsPanelNew1
             // 
+            this.smsPanelNew1.AutoScroll = true;
             this.smsPanelNew1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.smsPanelNew1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.smsPanelNew1.Location = new System.Drawing.Point(0, 36);
+            this.smsPanelNew1.Location = new System.Drawing.Point(0, 0);
             this.smsPanelNew1.Name = "smsPanelNew1";
             this.smsPanelNew1.Size = new System.Drawing.Size(551, 363);
             this.smsPanelNew1.TabIndex = 4;
@@ -174,9 +186,11 @@
             // labChatTitle
             // 
             this.labChatTitle.AutoSize = true;
-            this.labChatTitle.Location = new System.Drawing.Point(99, 12);
+            this.labChatTitle.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labChatTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
+            this.labChatTitle.Location = new System.Drawing.Point(24, 9);
             this.labChatTitle.Name = "labChatTitle";
-            this.labChatTitle.Size = new System.Drawing.Size(41, 12);
+            this.labChatTitle.Size = new System.Drawing.Size(51, 19);
             this.labChatTitle.TabIndex = 0;
             this.labChatTitle.Text = "label1";
             // 
@@ -185,6 +199,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(793, 623);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ChatForm";
             this.Text = "聊天窗口";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatForm_FormClosing);
@@ -193,6 +208,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panMessage.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panelControl3.ResumeLayout(false);
@@ -214,5 +230,6 @@
         private System.Windows.Forms.ProgressBar progressBarControl1;
         private System.Windows.Forms.Label labChatTitle;
         private smsPanelNew smsPanelNew1;
+        private System.Windows.Forms.Panel panMessage;
     }
 }

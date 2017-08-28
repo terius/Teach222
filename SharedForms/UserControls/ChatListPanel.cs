@@ -1,7 +1,6 @@
 ﻿using Common;
 using Model;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,11 +8,22 @@ namespace SharedForms
 {
     public partial class ChatListPanel : UserControl
     {
-
+        Color defaultBackColor = Color.FromArgb(250, 250, 250);
+        ChatTypePanel selectedPan;
+        Color defaultSelectChatItemColor = Color.FromArgb(200, 200, 200);
+        public event EventHandler<ChatItem> SelectChatItem;
+        public ChatItem SelectedChatItem { get; set; }
         public ChatListPanel()
         {
             // SetStyle(ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             InitializeComponent();
+
+            //    panGroup.BackColor = panTeam.BackColor = panPrivate.BackColor = defaultBackColor;
+            panGroup_content.BackColor = panTeam_content.BackColor = panPrivate_content.BackColor = defaultBackColor;
+            panGroup_content.HorizontalScroll.Enabled = panTeam_content.HorizontalScroll.Enabled = panPrivate_content.HorizontalScroll.Enabled = false;
+            panGroup.MouseClick += PanGroup_MouseClick;
+            panTeam.MouseClick += PanGroup_MouseClick;
+            panPrivate.MouseClick += PanGroup_MouseClick;
             panGroup_content.MouseEnter += (obj, eve) =>
             {
                 panGroup_content.Focus();
@@ -58,15 +68,41 @@ namespace SharedForms
 
             };
 
-            panGroup.MouseClick += (sender, e) => {
-              
-            };
+
+
+        }
+
+        public void SetSelectPanel(ChatTypePanel panel)
+        {
 
         }
 
         private void PanGroup_MouseClick(object sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            var chatType = ((ChatTypePanel)sender).ChatType;
+            if (selectedPan != null && selectedPan.ChatType != chatType)
+            {
+                selectedPan.BackColor = defaultBackColor;
+            }
+            selectedPan = ((ChatTypePanel)sender);
+            switch (chatType)
+            {
+                case ChatType.PrivateChat:
+                    panGroup.IsSelected = false;
+                    panTeam.IsSelected = false;
+                    break;
+                case ChatType.GroupChat:
+                    panPrivate.IsSelected = false;
+                    panTeam.IsSelected = false;
+                    break;
+                case ChatType.TeamChat:
+                    panPrivate.IsSelected = false;
+                    panGroup.IsSelected = false;
+                    break;
+                default:
+                    break;
+            }
+            ShowOrHideContent(chatType);
         }
 
         int groupLastY = 0;
@@ -76,9 +112,9 @@ namespace SharedForms
 
         private void ChatListPanel_Load(object sender, System.EventArgs e)
         {
-            var contentHeight = this.panOut.Height - panGroup.Height * 3;
+            var contentHeight = (this.panOut.Height - panGroup.Height * 3) / 3;
             panGroup_content.Height = panTeam_content.Height = panPrivate_content.Height = contentHeight;
-            panGroup_content.BackColor = panTeam_content.BackColor = panPrivate_content.BackColor = Color.FromArgb(235, 235, 235);
+
         }
 
         //IList<ChatItem> chatItemList;
@@ -95,6 +131,7 @@ namespace SharedForms
 
         public void AddChatItem(ChatItem item)
         {
+            item.Width = panGroup.Width;
             switch (item.ChatType)
             {
                 case Common.ChatType.PrivateChat:
@@ -121,26 +158,7 @@ namespace SharedForms
 
         }
 
-        private void SetPanelHover(Control control)
-        {
-            control.MouseEnter += (sender, e) => ((Control)sender).BackColor = Color.Red;
-            control.MouseLeave += (sender, e) => ((Control)sender).BackColor = Color.FromArgb(255, 255, 255);
-            foreach (Control item in control.Controls)
-            {
-                item.MouseMove += (sender, e) =>
-                {
-                    item.BackColor = item.Parent.BackColor = Color.Red;
-
-                };
-                item.MouseLeave += (sender, e) =>
-                {
-                    item.BackColor = Color.Transparent;
-                    item.Parent.BackColor = Color.FromArgb(255, 255, 255);
-                };
-            }
-
-
-        }
+    
 
         //public Panel GroupPanel { get { return this.panTop; } }
         //public Panel TeamPanel { get { return this.panMiddle; } }
@@ -217,12 +235,12 @@ namespace SharedForms
                 case ChatType.PrivateChat:
                     if (allow)
                     {
-                     //   this.picPrivate.Image = Resource1.私聊;
+                        //   this.picPrivate.Image = Resource1.私聊;
                         this.panPrivate_content.Enabled = true;
                     }
                     else
                     {
-                    //  this.picPrivate.Image = Resource1.禁止;
+                        //  this.picPrivate.Image = Resource1.禁止;
                         this.panPrivate_content.Enabled = false;
                     }
                     break;
@@ -236,7 +254,7 @@ namespace SharedForms
                     }
                     else
                     {
-                      //  this.picTeam.Image = Resource1.禁止;
+                        //  this.picTeam.Image = Resource1.禁止;
                         this.panTeam_content.Enabled = false;
                     }
                     break;
@@ -246,52 +264,83 @@ namespace SharedForms
         }
 
 
-        private Panel CreateChatItem()
+
+
+
+
+        private void ShowOrHideContent(ChatType chatType)
         {
-            var chatItem1 = new Panel();
-            chatItem1.BackColor = Color.Lime;
-            chatItem1.Width = this.panOut.Width - 20;
-            chatItem1.Height = 40;
-            Label lab = new Label();
-            lab.Text = DateTime.Now.Ticks.ToString();
-            chatItem1.Controls.Add(lab);
-            chatItem1.Padding = new Padding(10, 10, 10, 10);
-            // chatItem1.Dock = DockStyle.Top;
-            return chatItem1;
+            switch (chatType)
+            {
+                case ChatType.PrivateChat:
+                    if (panPrivate_content.Visible)
+                    {
+                        panPrivate_content.Visible = false;
+                    }
+                    else
+                    {
+                        panPrivate_content.Visible = true;
+                    }
+                    break;
+                case ChatType.GroupChat:
+                    if (panGroup_content.Visible)
+                    {
+                        panGroup_content.Visible = false;
+                    }
+                    else
+                    {
+                        panGroup_content.Visible = true;
+                    }
+                    break;
+                case ChatType.TeamChat:
+                    if (panTeam_content.Visible)
+                    {
+                        panTeam_content.Visible = false;
+                    }
+                    else
+                    {
+                        panTeam_content.Visible = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
         }
 
-        private void panTop_MouseClick(object sender, MouseEventArgs e)
+
+        private void ShowContent(ChatType chatType)
         {
-            ShowContent(panGroup_content);
+            switch (chatType)
+            {
+                case ChatType.PrivateChat:
+                    if (!panPrivate_content.Visible)
+                    {
+                        panPrivate_content.Visible = true;
+                    }
+                    
+                    break;
+                case ChatType.GroupChat:
+                    if (!panGroup_content.Visible)
+                    {
+                        panGroup_content.Visible = true;
+                    }
+                  
+                    break;
+                case ChatType.TeamChat:
+                    if (!panTeam_content.Visible)
+                    {
+                        panTeam_content.Visible = true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
         }
 
-        private void ShowContent(Panel panContent)
-        {
-            if (panContent.Visible)
-            {
-                panContent.Visible = false;
-            }
-            else
-            {
-                panContent.Visible = true;
-            }
-        }
 
-        private void panMiddle_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ShowContent(panTeam_content);
-            }
-        }
 
-        private void panBottom_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ShowContent(panPrivate_content);
-            }
-        }
 
         //private void button1_Click(object sender, EventArgs e)
         //{
@@ -321,7 +370,7 @@ namespace SharedForms
 
         public ChatItem CreateItem(ChatStore store)
         {
-            ChatItem item = new ChatItem(store.ChatUserName,
+            ChatItem item = new ChatItem(this, store.ChatUserName,
                 store.ChatDisplayName, store.ChatType, store.UserType);
             this.AddChatItem(item);
             return item;
@@ -329,7 +378,7 @@ namespace SharedForms
 
         public ChatItem CreateItem(ChatMessage request)
         {
-            ChatItem item = new ChatItem(request.SendUserName,
+            ChatItem item = new ChatItem(this, request.SendUserName,
                  request.SendDisplayName, request.ChatType, request.UserType);
             this.AddChatItem(item);
             return item;
@@ -337,6 +386,7 @@ namespace SharedForms
 
         public void CreateNewGroupChat(string groupId)
         {
+
             var groupChat = GlobalVariable.CreateGroupChat(groupId);
             if (groupChat != null)
             {
@@ -351,6 +401,7 @@ namespace SharedForms
             {
                 if (item.UserName == userName)
                 {
+
                     return item;
                 }
             }
@@ -359,6 +410,7 @@ namespace SharedForms
             {
                 if (item.UserName == userName)
                 {
+
                     return item;
                 }
             }
@@ -366,6 +418,7 @@ namespace SharedForms
             {
                 if (item.UserName == userName)
                 {
+
                     return item;
                 }
             }
@@ -383,22 +436,29 @@ namespace SharedForms
             return item;
         }
 
-        public ChatItem SelectedChatItem { get; set; }
-
-        private void panGroup_MouseClick(object sender, MouseEventArgs e)
+        public void SetSelectChatItem(ChatItem item,bool fromClick)
         {
-            if (e.Button == MouseButtons.Left)
+            ShowContent(item.ChatType);
+            if (SelectedChatItem != null && SelectedChatItem.UserName != item.UserName)
             {
-                ShowContent(this.panGroup_content);
+                SelectedChatItem.BackColor = defaultBackColor;
+                SelectedChatItem.IsSelected = false;
             }
+            item.IsSelected = true;
+            SelectedChatItem = item;
+            SelectedChatItem.BackColor = defaultSelectChatItemColor;
+            SelectedChatItem.FromClick = fromClick;
+            SelectChatItem(this, SelectedChatItem);
         }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (panGroup.Forbit)
             {
                 panGroup.Forbit = false;
-       
+
             }
             else
             {

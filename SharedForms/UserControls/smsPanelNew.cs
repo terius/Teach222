@@ -7,14 +7,14 @@ namespace SharedForms
     public partial class smsPanelNew : Panel
     {
         private int _lastY = 10;
-       // int X = 10;
+        // int X = 10;
         sms2 chatItem;
         public smsPanelNew()
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
             HorizontalScroll.Enabled = false;
-
+            AutoScroll = true;
             ControlAdded += SmsPanelNew_ControlAdded;
             Resize += SmsPanelNew_Resize;
             MouseEnter += SmsPanelNew_MouseEnter;
@@ -38,13 +38,24 @@ namespace SharedForms
             }
         }
 
+        /// <summary>
+        /// 发送者是否为当前登录人
+        /// </summary>
+        /// <param name="sendUserName"></param>
+        /// <returns></returns>
+        private bool IsMySelf(string sendUserName)
+        {
+            return GlobalVariable.LoginUserInfo.UserName == sendUserName;
+        }
+
         private void SmsPanelNew_ControlAdded(object sender, ControlEventArgs e)
         {
             this.ScrollControlIntoView(e.Control);
         }
 
-        public void AddMessage(ChatMessage messageInfo, bool isMySelf)
+        public void AddMessage(ChatMessage messageInfo)
         {
+            bool isMySelf = IsMySelf(messageInfo.SendUserName);
             chatItem = new sms2(messageInfo, isMySelf);
             //if (isMySelf)
             //{
@@ -54,7 +65,7 @@ namespace SharedForms
             //{
             //    X = 10;
             //}
-            chatItem.Location = new Point(isMySelf ? this.Width - chatItem.Width - 20 : 0, _lastY);
+            chatItem.Location = new Point(isMySelf ? this.Width - chatItem.Width - 20 : 0, _lastY - VerticalScroll.Value);
             Controls.Add(chatItem);
             _lastY += chatItem.Height + 10;
         }

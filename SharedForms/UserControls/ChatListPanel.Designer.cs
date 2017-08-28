@@ -35,13 +35,11 @@
             this.panTeam = new SharedForms.ChatTypePanel();
             this.panGroup_content = new System.Windows.Forms.Panel();
             this.panGroup = new SharedForms.ChatTypePanel();
-            this.button1 = new System.Windows.Forms.Button();
             this.panOut.SuspendLayout();
             this.SuspendLayout();
             // 
             // panOut
             // 
-            this.panOut.Controls.Add(this.button1);
             this.panOut.Controls.Add(this.panPrivate_content);
             this.panOut.Controls.Add(this.panPrivate);
             this.panOut.Controls.Add(this.panTeam_content);
@@ -50,9 +48,8 @@
             this.panOut.Controls.Add(this.panGroup);
             this.panOut.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panOut.Location = new System.Drawing.Point(0, 0);
-            this.panOut.Margin = new System.Windows.Forms.Padding(4);
             this.panOut.Name = "panOut";
-            this.panOut.Size = new System.Drawing.Size(491, 531);
+            this.panOut.Size = new System.Drawing.Size(268, 425);
             this.panOut.TabIndex = 1;
             // 
             // panPrivate_content
@@ -60,10 +57,9 @@
             this.panPrivate_content.AutoScroll = true;
             this.panPrivate_content.BackColor = System.Drawing.Color.White;
             this.panPrivate_content.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panPrivate_content.Location = new System.Drawing.Point(0, 232);
-            this.panPrivate_content.Margin = new System.Windows.Forms.Padding(4);
+            this.panPrivate_content.Location = new System.Drawing.Point(0, 185);
             this.panPrivate_content.Name = "panPrivate_content";
-            this.panPrivate_content.Size = new System.Drawing.Size(491, 20);
+            this.panPrivate_content.Size = new System.Drawing.Size(268, 16);
             this.panPrivate_content.TabIndex = 5;
             this.panPrivate_content.Visible = false;
             // 
@@ -74,9 +70,11 @@
             this.panPrivate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panPrivate.Dock = System.Windows.Forms.DockStyle.Top;
             this.panPrivate.Forbit = false;
-            this.panPrivate.Location = new System.Drawing.Point(0, 168);
+            this.panPrivate.IsSelected = false;
+            this.panPrivate.Location = new System.Drawing.Point(0, 134);
+            this.panPrivate.Margin = new System.Windows.Forms.Padding(2);
             this.panPrivate.Name = "panPrivate";
-            this.panPrivate.Size = new System.Drawing.Size(491, 64);
+            this.panPrivate.Size = new System.Drawing.Size(268, 51);
             this.panPrivate.TabIndex = 9;
             // 
             // panTeam_content
@@ -84,10 +82,9 @@
             this.panTeam_content.AutoScroll = true;
             this.panTeam_content.BackColor = System.Drawing.Color.White;
             this.panTeam_content.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panTeam_content.Location = new System.Drawing.Point(0, 148);
-            this.panTeam_content.Margin = new System.Windows.Forms.Padding(4);
+            this.panTeam_content.Location = new System.Drawing.Point(0, 118);
             this.panTeam_content.Name = "panTeam_content";
-            this.panTeam_content.Size = new System.Drawing.Size(491, 20);
+            this.panTeam_content.Size = new System.Drawing.Size(268, 16);
             this.panTeam_content.TabIndex = 3;
             this.panTeam_content.Visible = false;
             // 
@@ -98,9 +95,11 @@
             this.panTeam.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panTeam.Dock = System.Windows.Forms.DockStyle.Top;
             this.panTeam.Forbit = false;
-            this.panTeam.Location = new System.Drawing.Point(0, 84);
+            this.panTeam.IsSelected = false;
+            this.panTeam.Location = new System.Drawing.Point(0, 67);
+            this.panTeam.Margin = new System.Windows.Forms.Padding(2);
             this.panTeam.Name = "panTeam";
-            this.panTeam.Size = new System.Drawing.Size(491, 64);
+            this.panTeam.Size = new System.Drawing.Size(268, 51);
             this.panTeam.TabIndex = 8;
             // 
             // panGroup_content
@@ -108,10 +107,9 @@
             this.panGroup_content.AutoScroll = true;
             this.panGroup_content.BackColor = System.Drawing.Color.White;
             this.panGroup_content.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panGroup_content.Location = new System.Drawing.Point(0, 64);
-            this.panGroup_content.Margin = new System.Windows.Forms.Padding(4);
+            this.panGroup_content.Location = new System.Drawing.Point(0, 51);
             this.panGroup_content.Name = "panGroup_content";
-            this.panGroup_content.Size = new System.Drawing.Size(491, 20);
+            this.panGroup_content.Size = new System.Drawing.Size(268, 16);
             this.panGroup_content.TabIndex = 6;
             this.panGroup_content.Visible = false;
             // 
@@ -122,30 +120,20 @@
             this.panGroup.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panGroup.Dock = System.Windows.Forms.DockStyle.Top;
             this.panGroup.Forbit = false;
+            this.panGroup.IsSelected = false;
             this.panGroup.Location = new System.Drawing.Point(0, 0);
+            this.panGroup.Margin = new System.Windows.Forms.Padding(2);
             this.panGroup.Name = "panGroup";
-            this.panGroup.Size = new System.Drawing.Size(491, 64);
+            this.panGroup.Size = new System.Drawing.Size(268, 51);
             this.panGroup.TabIndex = 7;
-            this.panGroup.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panGroup_MouseClick);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(165, 356);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ChatListPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panOut);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ChatListPanel";
-            this.Size = new System.Drawing.Size(491, 531);
+            this.Size = new System.Drawing.Size(268, 425);
             this.Load += new System.EventHandler(this.ChatListPanel_Load);
             this.panOut.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -160,6 +148,5 @@
         private ChatTypePanel panGroup;
         private ChatTypePanel panTeam;
         private ChatTypePanel panPrivate;
-        private System.Windows.Forms.Button button1;
     }
 }

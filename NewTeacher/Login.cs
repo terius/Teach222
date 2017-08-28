@@ -4,8 +4,6 @@ using Model;
 using MySocket;
 using SharedForms;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 
 namespace NewTeacher
@@ -16,7 +14,7 @@ namespace NewTeacher
         {
             InitializeComponent();
         }
-
+        string _userName, _displayName;
 
         //   private delegate void messageListCallback(string content);
         //  private messageListCallback messageCallback;
@@ -40,10 +38,10 @@ namespace NewTeacher
 
 
             //自动登录
-            string userName = "Teacher001";
+            _userName = "Teacher001";
             string pwd = "123456";
-            string nickname = "老师001";
-            GlobalVariable.client.Send_UserLogin(userName, nickname, pwd, ClientRole.Teacher);
+            _displayName = "老师001";
+            GlobalVariable.client.Send_UserLogin(_userName, _displayName, pwd, ClientRole.Teacher);
         }
 
 
@@ -90,8 +88,8 @@ namespace NewTeacher
                     GlobalVariable.client.OnReveieveData -= Client_OnReveieveData;
                     GlobalVariable.LoginUserInfo = new LoginUserInfo
                     {
-                        DisplayName = "教师",
-                        UserName = textBox1.Text.Trim(),
+                        DisplayName = _displayName,
+                        UserName = _userName,
                         UserType = ClientRole.Teacher,
                         No = textBox2.Text.Trim()
                     };
@@ -162,13 +160,12 @@ namespace NewTeacher
         private void button1_Click(object sender, EventArgs e)//登录 
         {
             //string connectionString = "Database='" + ConfigurationManager.AppSettings["Database"] + "';Data Source='" + ConfigurationManager.AppSettings["serverIP"]+ "';User Id='" + ConfigurationManager.AppSettings["User ID"]+ "';Password='" + ConfigurationManager.AppSettings["Password"]+ "'";//默认端口3306 
-            string displayName = this.textBox1.Text.Trim();
+            _userName = this.textBox1.Text.Trim();
+            _displayName = "教师001";
             string userPass = this.textBox2.Text.Trim();
-            int userRole = 1;// rbTeacher.Checked ? 1 : 2;
-
-            if (displayName == string.Empty)
+            if (_userName == string.Empty)
             {
-                MessageBox.Show("请输入姓名！");
+                MessageBox.Show("请输入用户名！");
                 return;
             }
             if (userPass == string.Empty)
@@ -177,7 +174,7 @@ namespace NewTeacher
                 return;
             }
 
-            GlobalVariable.client.Send_UserLogin(displayName, displayName, userPass, ClientRole.Teacher);
+            GlobalVariable.client.Send_UserLogin(_userName, _displayName, userPass, ClientRole.Teacher);
 
             //this.Hide();
             //MainForm f = new MainForm();

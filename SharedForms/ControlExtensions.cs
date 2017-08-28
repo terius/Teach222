@@ -23,8 +23,8 @@ namespace SharedForms
 
         public static void SetChatPanelHover(this Control control)
         {
-            control.MouseEnter += (sender, e) => ((Control)sender).BackColor = Color.FromArgb(225, 225, 225);
-            control.MouseLeave += (sender, e) => ((Control)sender).BackColor = Color.FromArgb(255, 255, 255);
+            control.MouseEnter += (sender, e) => ((Control)sender).BackColor = Color.FromArgb(235, 235, 236);
+            control.MouseLeave += (sender, e) => ((Control)sender).BackColor = Color.FromArgb(250, 250, 250);
            
         }
 

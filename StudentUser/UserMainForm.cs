@@ -1,5 +1,4 @@
 ﻿using Common;
-using DevExpress.XtraEditors;
 using Helpers;
 using Model;
 using SharedForms;
@@ -10,14 +9,15 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace StudentUser
 {
-    public partial class UserMainForm : XtraForm
+    public partial class UserMainForm : Form
     {
         BlackScreen bsForm = null;
         //  VLCPlayer videoPlayer;
-        ChatFormOld chatForm = new ChatFormOld();
+        ChatForm chatForm;
         //   ViewRtsp videoPlayer2;
         CallForm callForm;
         volatile bool isRunScreen = false;
@@ -42,6 +42,7 @@ namespace StudentUser
         {
 
             InitializeComponent();
+            chatForm = new ChatForm();
             Text = GlobalVariable.LoginUserInfo.DisplayName;
             tuopan.Text = Text;
             #region 处理收到的消息
@@ -275,15 +276,15 @@ namespace StudentUser
         {
             if (theadScreen == null || theadScreen.ThreadState != ThreadState.Running)
             {
-                    theadScreen = new Thread(() =>
-                {
+                theadScreen = new Thread(() =>
+            {
 
-                    GlobalVariable.client.CreateUDPStudentHole();
-                    GetScreenCapture();
+                GlobalVariable.client.CreateUDPStudentHole();
+                GetScreenCapture();
 
-                });
-                    theadScreen.IsBackground = true;
-                    theadScreen.Start();
+            });
+                theadScreen.IsBackground = true;
+                theadScreen.Start();
             }
         }
 
@@ -623,7 +624,7 @@ namespace StudentUser
 
         }
 
-      
+
     }
 
 
