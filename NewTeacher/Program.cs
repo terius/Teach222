@@ -44,7 +44,7 @@ namespace NewTeacher
                     Login frm = new Login();
                     if (frm.ShowDialog() == DialogResult.OK)
                     {
-                        Application.Run(new MainForm());
+                        Application.Run(new Form1());
                     }
 
                     //   Application.Run(new Form1());

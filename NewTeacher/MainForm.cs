@@ -24,7 +24,7 @@ namespace NewTeacher
         public MainForm()
         {
             InitializeComponent();
-
+            chatForm = new ChatForm();
         }
 
         private void MainForm_Load(object sender, System.EventArgs e)
@@ -33,7 +33,7 @@ namespace NewTeacher
             GlobalVariable.LoadTeamFromXML();
             GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
             GlobalVariable.client.Send_OnlineList();
-            CreateUDPConnect();
+          //  CreateUDPConnect();
         }
 
         #region  接收消息事件
@@ -47,6 +47,7 @@ namespace NewTeacher
                     onlineInfo.OnOnlineChange(userList2);
                     break;
                 case (int)CommandType.PrivateChat://接收到学生私聊信息
+                    MessageBox.Show("收到私聊信息");
                     var PrivateChatMessage = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
                     this.InvokeOnUiThreadIfRequired(() => { ReceievePrivateMessage(PrivateChatMessage); });
                     break;
@@ -236,7 +237,7 @@ namespace NewTeacher
                     listItem.ImageIndex = item.clientRole == ClientRole.Student ? 0 : 39;
                     listItem.SubItems.Add(item.isCalled ? "是" : "");
                     listItem.SubItems.Add(item.username);
-                    listItem.SubItems.Add(item.no.ToString());
+                    listItem.SubItems.Add(item.no);
                     this.lvOnline.Items.Add(listItem);
 
                 }

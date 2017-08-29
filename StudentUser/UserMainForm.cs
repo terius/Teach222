@@ -179,6 +179,7 @@ namespace StudentUser
                 GlobalVariable.RefleshTeamList(teamInfo);
                 DoAction(() =>
                 {
+                    
                     chatForm.BringToFront();
                     chatForm.Show();
                     chatForm.ReflashTeamChat();

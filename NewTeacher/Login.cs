@@ -41,7 +41,7 @@ namespace NewTeacher
             _userName = "Teacher001";
             string pwd = "123456";
             _displayName = "老师001";
-            GlobalVariable.client.Send_UserLogin(_userName, _displayName, pwd, ClientRole.Teacher);
+            //   GlobalVariable.client.Send_UserLogin(_userName, _displayName, pwd, ClientRole.Teacher);
         }
 
 
@@ -91,7 +91,7 @@ namespace NewTeacher
                         DisplayName = _displayName,
                         UserName = _userName,
                         UserType = ClientRole.Teacher,
-                        No = textBox2.Text.Trim()
+                        No = "999"
                     };
                     this.Close();
                 }

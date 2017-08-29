@@ -184,7 +184,7 @@ namespace NewTeacher
                     listItem.ImageIndex = item.clientRole == ClientRole.Student ? 0 : 39;
                     listItem.SubItems.Add(item.isCalled ? "是" : "");
                     listItem.SubItems.Add(item.username);
-                    listItem.SubItems.Add(item.no.ToString());
+                    listItem.SubItems.Add(item.no);
                     this.lvOnline.Items.Add(listItem);
 
                 }

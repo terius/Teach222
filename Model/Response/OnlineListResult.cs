@@ -9,7 +9,7 @@ namespace Model
         public ClientStyle clientStyle { get; set; }
         public ClientRole clientRole { get; set; }
 
-        public int no { get; set; }
+        public string no { get; set; }
 
       
         public bool isCalled { get; set; }
