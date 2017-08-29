@@ -27,14 +27,18 @@ namespace SharedForms
         PictureShow picShow;
         readonly int fullTextWidth = 307;
         Color backColor;
+        int textHeight;
+        readonly int bottomPadding = 10;
+
         public sms2(ChatMessage messageInfo, bool isMySelf)
         {
-            
+
             _title = messageInfo.Title;
             _message = messageInfo.Message;
             _isMySelf = isMySelf;
             _downloadFileUrl = messageInfo.DownloadFileUrl;
             InitializeComponent();
+            textHeight = titleFont.Height;
             if (messageInfo.MessageType == Common.MessageType.String)
             {
                 this.txtSMS.Show();
@@ -45,6 +49,7 @@ namespace SharedForms
             {
                 this.pictureBox1.Show();
                 this.pictureBox1.Cursor = Cursors.Hand;
+                SetPictureBoxHover();
                 this.pictureBox1.Click += PictureBox1_Click;
                 switch (messageInfo.MessageType)
                 {
@@ -61,7 +66,8 @@ namespace SharedForms
                     default:
                         break;
                 }
-                //  this.txtSMS.Hide();
+                this.Width = 200;
+                this.txtSMS.Hide();
 
                 //  this.txtLink.Show();
                 //  this.txtLink.LinkClicked += TxtLink_LinkClicked;
@@ -75,7 +81,16 @@ namespace SharedForms
                 headIcon = imgTech;
             }
 
-            //  this.Width = 100;
+
+        }
+
+        private void SetPictureBoxHover()
+        {
+            this.pictureBox1.MouseEnter += (sender, e) => ((Control)sender).BackColor = Color.White;
+            this.pictureBox1.MouseLeave += (sender, e) =>
+            {
+                ((Control)sender).BackColor = Color.Transparent;
+            };
 
         }
 
@@ -109,6 +124,8 @@ namespace SharedForms
 
             var fileType = GetFileType(_downloadFileUrl);
             Action<object, System.ComponentModel.AsyncCompletedEventArgs> onDownload;
+            Action<object, DownloadProgressChangedEventArgs> onProgress;
+            progressBar1.Visible = true;
             if (fileType == Common.MessageType.Sound)
             {
                 //ShowNotify("开始播放", 1000);
@@ -127,6 +144,7 @@ namespace SharedForms
 
                 onDownload = (ob, eve) =>
                 {
+                    progressBar1.Visible = false;
                     saveFilePath = eve.UserState.ToString();
                     if (!string.IsNullOrWhiteSpace(saveFilePath))
                     {
@@ -135,7 +153,14 @@ namespace SharedForms
 
                 };
 
-                FileHelper.DownloadFile(_downloadFileUrl, onDownload, savePath);
+                onProgress = (ob, progress) =>
+                {
+                    var p = (int)(progress.BytesReceived * 100 / progress.TotalBytesToReceive);
+                    progressBar1.Value = p;
+                    Application.DoEvents();
+                };
+
+                FileHelper.DownloadFile(_downloadFileUrl, onDownload, onProgress, savePath);
 
 
             }
@@ -154,6 +179,7 @@ namespace SharedForms
                 }
                 onDownload = (ob, eve) =>
                 {
+                    progressBar1.Visible = false;
                     // MessageBox.Show("okoko");
                     saveFilePath = eve.UserState.ToString();
                     if (!string.IsNullOrWhiteSpace(saveFilePath))
@@ -170,8 +196,13 @@ namespace SharedForms
 
                 };
 
-
-                FileHelper.DownloadFile(_downloadFileUrl, onDownload, savePath);
+                onProgress = (ob, progress) =>
+                {
+                    var p = (int)(progress.BytesReceived * 100 / progress.TotalBytesToReceive);
+                    progressBar1.Value = p;
+                    Application.DoEvents();
+                };
+                FileHelper.DownloadFile(_downloadFileUrl, onDownload, onProgress, savePath);
 
             }
 
@@ -180,12 +211,14 @@ namespace SharedForms
 
         private void ShowPic(string filePath)
         {
+            progressBar1.Visible = false;
             if (picShow == null || picShow.IsDisposed)
             {
                 picShow = new PictureShow();
             }
             picShow.BringToFront();
             picShow.Show();
+
             picShow.ShowPic(filePath);
         }
 
@@ -230,8 +263,8 @@ namespace SharedForms
             g.SmoothingMode = SmoothingMode.HighQuality; //高质量 
             g.PixelOffsetMode = PixelOffsetMode.HighQuality; //高像素偏移质量
             int width = this.Width;
-            int startY = 20;
-            int height = this.Height - startY - 10;
+            int startY = textHeight;
+            int height = this.Height - startY - bottomPadding;
             Rectangle rectArea;
 
             if (IsMySelf)
@@ -282,19 +315,29 @@ namespace SharedForms
         private void sms2_Load(object sender, EventArgs e)
         {
 
+            if (txtSMS.Visible)
+            {
+                var textSize = this.CreateGraphics().MeasureString(_message, txtSMS.Font);
+                //    int messageHeight = txtSMS.Font.Height;
+                int count = (int)Math.Floor(textSize.Width / fullTextWidth) + (textSize.Width % fullTextWidth == 0 ? 0 : 1);
+                //    messageHeight = messageHeight * count + 5;
+                this.Height = txtSMS.Font.Height * count + 5 + 10 * 2 + textHeight + bottomPadding;
+            }
+            else
+            {
+                this.Height = this.pictureBox1.Height + 10 * 2 + textHeight + bottomPadding;
+            }
 
-            var textSize = this.CreateGraphics().MeasureString(_message, txtSMS.Font);
-            int count = (int)Math.Floor(textSize.Width / fullTextWidth) + (textSize.Width % fullTextWidth == 0 ? 0 : 1);
-            this.Height = count * 20 + 10 * 3 + 20 + 10;
             if (IsMySelf)
             {
                 this.Padding = new Padding(10, 30, 50, 20);
-                backColor = txtSMS.BackColor = Color.FromArgb(158, 234, 106);
+                backColor = Color.FromArgb(158, 234, 106);
+                txtSMS.BackColor = Color.FromArgb(158, 234, 106);
             }
             else
             {
                 this.Padding = new Padding(50, 30, 10, 20);
-                backColor = txtSMS.BackColor = Color.White;
+                backColor = txtSMS.BackColor = Color.FromArgb(245, 245, 245);
             }
 
             //   _sizeHeight = 20 + 17 * 2 + _messageHeight;

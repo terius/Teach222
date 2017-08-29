@@ -32,6 +32,18 @@ namespace SharedForms
         //}
         public static LoginUserInfo LoginUserInfo;
 
+        public static void CreateTestLoginInfo()
+        {
+            LoginUserInfo = new LoginUserInfo();
+            LoginUserInfo.UserName = "user001";
+            LoginUserInfo.UserType = ClientRole.Teacher;
+            LoginUserInfo.DisplayName = "老师001";
+            LoginUserInfo.AllowPrivateChat = true;
+            LoginUserInfo.AllowTeamChat = true;
+            LoginUserInfo.No = "u001";
+          
+        }
+
         private static List<ChatStore> chatList;
 
         //   public static List<ChatStore> ChatList { get; set; }
@@ -286,7 +298,7 @@ namespace SharedForms
 
 
             ChatStore info = new ChatStore();
-            info.ChatDisplayName = "所有人";
+            info.ChatDisplayName = "全体成员";
             info.ChatStartTime = DateTime.Now;
             info.ChatType = ChatType.GroupChat;
             info.ChatUserName = groupId;

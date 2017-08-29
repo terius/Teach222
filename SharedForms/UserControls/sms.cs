@@ -128,7 +128,7 @@ namespace SharedForms
 
                 };
 
-                FileHelper.DownloadFile(_downloadFileUrl, onDownload, savePath);
+                FileHelper.DownloadFile(_downloadFileUrl, onDownload, null, savePath);
 
 
             }
@@ -164,7 +164,7 @@ namespace SharedForms
                 };
 
 
-                FileHelper.DownloadFile(_downloadFileUrl, onDownload, savePath);
+                FileHelper.DownloadFile(_downloadFileUrl, onDownload, null, savePath);
 
             }
 

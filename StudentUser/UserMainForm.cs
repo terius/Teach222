@@ -266,7 +266,7 @@ namespace StudentUser
 
         private void UserMainForm_Load(object sender, System.EventArgs e)
         {
-            CreateUDPHole();
+          //  CreateUDPHole();
         }
 
 
@@ -611,6 +611,7 @@ namespace StudentUser
         {
             GlobalVariable.client.Send_StudentLoginOut();
             StopUdp();
+            Environment.Exit(Environment.ExitCode);
         }
 
         private void StopUdp()

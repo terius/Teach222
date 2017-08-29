@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtSMS = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,17 +52,28 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Location = new System.Drawing.Point(13, 28);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.pictureBox1, "打开文件");
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(52, 37);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(63, 10);
+            this.progressBar1.TabIndex = 2;
+            this.progressBar1.Visible = false;
             // 
             // sms2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtSMS);
             this.Name = "sms2";
@@ -78,5 +92,7 @@
 
         private System.Windows.Forms.TextBox txtSMS;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }

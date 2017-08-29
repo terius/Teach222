@@ -1,8 +1,10 @@
 ﻿using Common;
+using Helpers;
 using Model;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SharedForms
@@ -44,11 +46,12 @@ namespace SharedForms
             ChatNav.CreateNewGroupChat(groupId);
             InitProgressBar();
             CheckPath();
+          
         }
 
         private void ChatNav_SelectChatItem(object sender, ChatItem chatItem)
         {
-            selectUserName = chatItem.UserName;
+           
             this.labChatTitle.Text = "与【" + chatItem.DisplayName + "】的对话：";
             //  chatItem.Caption = chatItem.DisplayName;
             if (chatItem.FromClick && chatItem.UserName == selectUserName)
@@ -61,7 +64,7 @@ namespace SharedForms
                 LoadChatMessage(chatItem);
             }
             AppendNewMessage(chatItem);
-          
+            selectUserName = chatItem.UserName;
         }
 
 
@@ -77,14 +80,14 @@ namespace SharedForms
 
         private void InitProgressBar()
         {
-            progressBarControl1.Minimum = 0;
+            toolProgressBar.Minimum = 0;
             //设置一个最大值
-            progressBarControl1.Maximum = 100;
+            toolProgressBar.Maximum = 100;
             //设置步长，即每次增加的数
-            progressBarControl1.Step = 1;
+            toolProgressBar.Step = 1;
 
             // progressBarControl1.PercentView = true;
-            progressBarControl1.Visible = false;
+            toolProgressBar.Visible = false;
         }
 
         private void CheckPath()
@@ -400,6 +403,125 @@ namespace SharedForms
         }
 
 
+        public void UploadFileToALL(string uploadFile = null, bool isTempFile = false)
+        {
+            try
+            {
+                if (ChatNav.SelectedChatItem == null || string.IsNullOrWhiteSpace(selectUserName))
+                {
+                    GlobalVariable.ShowWarnning("请先选择聊天对象");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(uploadFile))
+                {
+                    OpenFileDialog dlg = new OpenFileDialog();
+                    dlg.Filter = "媒体文件 (*.jpg,*.gif,*.bmp,*.png,*.mp3,*.wav,*.amr,*.mp4,*.avi,*.mpg)|*.jpg;*.gif;*.bmp;*.png;*.mp3;*.wav;*.amr;*.mp4;*.avi;*.mpg";
+                    dlg.Title = "选择媒体文件";
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        uploadFile = dlg.FileName;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                if (!File.Exists(uploadFile))
+                {
+                    GlobalVariable.ShowWarnning("文件不存在");
+                    return;
+                }
+
+                toolStrip1.Enabled = false;
+                toolProgressBar.Visible = true;
+                //  ShowNotify("上传中，请稍候。。。");
+                FileHelper.UploadFile(uploadFile, UploadFileServer, (ob, ea) =>
+                {
+                    if (ea.Error != null && string.IsNullOrWhiteSpace(ea.Error.Message))
+                    {
+                        this.toolStrip1.Enabled = true;
+                        toolProgressBar.Visible = false;
+                        throw new Exception(ea.Error.Message);
+                    }
+                    string result = Encoding.UTF8.GetString(ea.Result);
+                    UploadResult uploadResult = JsonHelper.DeserializeObj<UploadResult>(result);
+                    if (uploadResult.error == 0)
+                    {
+                        uploadResult.url = "http://" + ServerIp + ":8080" + uploadResult.url;
+                    }
+                    else
+                    {
+                        GlobalVariable.ShowError(uploadResult.message);
+                        this.toolStrip1.Enabled = true;
+                        toolProgressBar.Visible = false;
+                        return;
+                    }
+                    FileInfo fi = new FileInfo(uploadFile);
+                    var uploadtext = _myDisplayName + "上传了文件:" + fi.Name;
+                    var messageType = GetMessageType(fi.Extension.ToLower());
+                    var message = new ChatMessage(_myUserName, _myDisplayName, selectUserName, uploadtext, GlobalVariable.LoginUserInfo.UserType, messageType);
+                    message.DownloadFileUrl = uploadResult.url;
+                    if (SendMessageCommand(message))
+                    {
+                        AppendMessage(message, true);
+                        GlobalVariable.SaveChatMessage(smsPanelNew1, selectUserName);
+                     //   ShowNotify("上传成功");
+                    }
+                    toolStrip1.Enabled = true;
+                    toolProgressBar.Visible = false;
+                    //this.btnUploadFile.Enabled = true;
+                    //btnRecordAudio.Enabled = true;
+                    //progressBarControl1.Visible = false;
+                    if (isTempFile)
+                    {
+                        File.Delete(uploadFile);
+                        if (FileHelper.GetFileExt(uploadFile) == "amr")
+                        {
+                            File.Delete(uploadFile.Substring(0, uploadFile.LastIndexOf('.') + 1) + "wav");
+                        }
+                    }
+                }, (ob, progress) =>
+                {
+                    var p = (int)(progress.BytesSent * 100 / progress.TotalBytesToSend);
+                    toolProgressBar.Value = p;
+                    Application.DoEvents();
+
+                });
+
+
+            }
+            catch (Exception)
+            {
+                this.toolStrip1.Enabled = true;
+                toolProgressBar.Visible = false;
+                throw;
+            }
+        }
+
+        private MessageType GetMessageType(string ext)
+        {
+            switch (ext)
+            {
+                case ".jpg":
+                case ".gif":
+                case ".bmp":
+                case ".png":
+                    return MessageType.Image;
+
+                case ".mp3":
+                case ".wav":
+                case ".amr":
+                    return MessageType.Sound;
+
+                case ".mp4":
+                case ".avi":
+                case ".mpg":
+                    return MessageType.Video;
+                default:
+                    return MessageType.String;
+            }
+        }
+
 
         // AlertControl messagebox;
 
@@ -452,6 +574,11 @@ namespace SharedForms
         {
             this.IsHide = true;
             this.Hide();
+        }
+
+        private void toolUploadPic_Click(object sender, EventArgs e)
+        {
+            UploadFileToALL();
         }
     }
 }

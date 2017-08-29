@@ -416,7 +416,10 @@ namespace Helpers
         //    MessageBox.Show(result);
         //}
         //    Action<string> OnDownloadComplete;
-        public static void DownloadFile(string url, Action<object, System.ComponentModel.AsyncCompletedEventArgs> onComplete, string savePath = null)
+        public static void DownloadFile(string url,
+            Action<object, System.ComponentModel.AsyncCompletedEventArgs> onComplete,
+            Action<object, DownloadProgressChangedEventArgs> onProgress,
+            string savePath = null)
         {
             if (string.IsNullOrWhiteSpace(url))
             {
@@ -441,7 +444,9 @@ namespace Helpers
                 }
                 if (!string.IsNullOrWhiteSpace(savePath))
                 {
+                   
                     myClient.DownloadFileCompleted += onComplete.Invoke;
+                    myClient.DownloadProgressChanged += onProgress.Invoke;
                     myClient.DownloadFileAsync(new Uri(url), savePath, savePath);
 
                 }
@@ -450,7 +455,7 @@ namespace Helpers
 
         }
 
-
+     
 
         public static byte[] ImageToByteArray(Image imageIn)
         {

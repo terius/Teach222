@@ -11,6 +11,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Helpers;
 
 namespace MySocket
 {
@@ -40,6 +41,9 @@ namespace MySocket
 
         private string remoteIp;
         private int remotePort;
+
+        #region UDP方法
+
         public void SendDesktopPic(byte[] fileBytes)
         {
             //if (studentUdpClient == null)
@@ -293,6 +297,8 @@ namespace MySocket
             sendDone.WaitOne();
         }
 
+        #endregion
+
 
         public bool Connected
         {
@@ -317,8 +323,8 @@ namespace MySocket
             {
                 try
                 {
-
-                    Loger.LogMessage("收到消息【" + ((CommandType)response.Action).ToString() + "】：" + JsonHelper.SerializeObj(response));
+                    string text = StringHelper.GetEnumDescription((CommandType)response.Action);
+                    Loger.LogMessage("收到消息【" + ((CommandType)response.Action).ToString() + " " + text + "】：" + JsonHelper.SerializeObj(response));
                     OnReveieveData(response);
                 }
                 catch (Exception ex)
@@ -338,6 +344,8 @@ namespace MySocket
 
             _connected = client.ConnectAsync(new IPEndPoint(IPAddress.Parse(serverIP), serverPort)).Result;
         }
+
+
 
         public void DueLostMessage()
         {
@@ -492,7 +500,8 @@ namespace MySocket
         {
             if (client.IsConnected)
             {
-                Loger.LogMessage("发送信息【" + ((CommandType)message.Action).ToString() + "】：" + JsonHelper.SerializeObj(message));
+                string text = StringHelper.GetEnumDescription((CommandType)message.Action);
+                Loger.LogMessage("发送信息【" + ((CommandType)message.Action).ToString() + " " + text + "】：" + JsonHelper.SerializeObj(message));
                 var messageByte = CreateSendMessageByte(message);
                 client.Send(messageByte);
             }

@@ -57,11 +57,10 @@
             this.panPrivate_content.AutoScroll = true;
             this.panPrivate_content.BackColor = System.Drawing.Color.White;
             this.panPrivate_content.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panPrivate_content.Location = new System.Drawing.Point(0, 185);
+            this.panPrivate_content.Location = new System.Drawing.Point(0, 153);
             this.panPrivate_content.Name = "panPrivate_content";
-            this.panPrivate_content.Size = new System.Drawing.Size(268, 16);
+            this.panPrivate_content.Size = new System.Drawing.Size(268, 0);
             this.panPrivate_content.TabIndex = 5;
-            this.panPrivate_content.Visible = false;
             // 
             // panPrivate
             // 
@@ -71,7 +70,7 @@
             this.panPrivate.Dock = System.Windows.Forms.DockStyle.Top;
             this.panPrivate.Forbit = false;
             this.panPrivate.IsSelected = false;
-            this.panPrivate.Location = new System.Drawing.Point(0, 134);
+            this.panPrivate.Location = new System.Drawing.Point(0, 102);
             this.panPrivate.Margin = new System.Windows.Forms.Padding(2);
             this.panPrivate.Name = "panPrivate";
             this.panPrivate.Size = new System.Drawing.Size(268, 51);
@@ -82,11 +81,10 @@
             this.panTeam_content.AutoScroll = true;
             this.panTeam_content.BackColor = System.Drawing.Color.White;
             this.panTeam_content.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panTeam_content.Location = new System.Drawing.Point(0, 118);
+            this.panTeam_content.Location = new System.Drawing.Point(0, 102);
             this.panTeam_content.Name = "panTeam_content";
-            this.panTeam_content.Size = new System.Drawing.Size(268, 16);
+            this.panTeam_content.Size = new System.Drawing.Size(268, 0);
             this.panTeam_content.TabIndex = 3;
-            this.panTeam_content.Visible = false;
             // 
             // panTeam
             // 
@@ -96,7 +94,7 @@
             this.panTeam.Dock = System.Windows.Forms.DockStyle.Top;
             this.panTeam.Forbit = false;
             this.panTeam.IsSelected = false;
-            this.panTeam.Location = new System.Drawing.Point(0, 67);
+            this.panTeam.Location = new System.Drawing.Point(0, 51);
             this.panTeam.Margin = new System.Windows.Forms.Padding(2);
             this.panTeam.Name = "panTeam";
             this.panTeam.Size = new System.Drawing.Size(268, 51);
@@ -109,9 +107,8 @@
             this.panGroup_content.Dock = System.Windows.Forms.DockStyle.Top;
             this.panGroup_content.Location = new System.Drawing.Point(0, 51);
             this.panGroup_content.Name = "panGroup_content";
-            this.panGroup_content.Size = new System.Drawing.Size(268, 16);
+            this.panGroup_content.Size = new System.Drawing.Size(268, 0);
             this.panGroup_content.TabIndex = 6;
-            this.panGroup_content.Visible = false;
             // 
             // panGroup
             // 

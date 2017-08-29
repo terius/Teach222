@@ -12,7 +12,7 @@ namespace Model
         public int no { get; set; }
 
       
-        public bool IsCalled { get; set; }
+        public bool isCalled { get; set; }
 
         
 

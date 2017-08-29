@@ -2,6 +2,7 @@
 using Model;
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SharedForms
@@ -13,14 +14,17 @@ namespace SharedForms
         Color defaultSelectChatItemColor = Color.FromArgb(200, 200, 200);
         public event EventHandler<ChatItem> SelectChatItem;
         public ChatItem SelectedChatItem { get; set; }
+        int chatPanelHeight;
         public ChatListPanel()
         {
             // SetStyle(ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             InitializeComponent();
-
-            //    panGroup.BackColor = panTeam.BackColor = panPrivate.BackColor = defaultBackColor;
             panGroup_content.BackColor = panTeam_content.BackColor = panPrivate_content.BackColor = defaultBackColor;
-            panGroup_content.HorizontalScroll.Enabled = panTeam_content.HorizontalScroll.Enabled = panPrivate_content.HorizontalScroll.Enabled = false;
+
+
+            panGroup_content.HorizontalScroll.Enabled = panTeam_content.HorizontalScroll.Enabled = panPrivate_content.HorizontalScroll.Enabled = false;//好像没用
+
+            #region 注册事件
             panGroup.MouseClick += PanGroup_MouseClick;
             panTeam.MouseClick += PanGroup_MouseClick;
             panPrivate.MouseClick += PanGroup_MouseClick;
@@ -32,10 +36,6 @@ namespace SharedForms
             {
 
             };
-            //  SetPanelHover(this.panGroup);
-            //   SetPanelHover(this.panTeam);
-            //   SetPanelHover(this.panPrivate);
-            // panTop_content.AutoScroll = panMiddle_content.AutoScroll = panBottom_content.AutoScroll = true;
             panGroup_content.MouseWheel += (obj, eve) =>
             {
                 var scroll = this.panGroup_content.VerticalScroll;
@@ -67,9 +67,27 @@ namespace SharedForms
             {
 
             };
+            panGroup_content.Resize += Chat_content_Resize;
+            panTeam_content.Resize += Chat_content_Resize;
+            panPrivate_content.Resize += Chat_content_Resize;
+            #endregion
+
+        }
 
 
 
+        private void Chat_content_Resize(object sender, EventArgs e)
+        {
+            var control = ((Control)sender);
+            int height = control.Height;
+            if (height > 0)
+            {
+                foreach (Control item in control.Controls)
+                {
+                    item.Width = panGroup.Width;
+                }
+
+            }
         }
 
         public void SetSelectPanel(ChatTypePanel panel)
@@ -112,9 +130,58 @@ namespace SharedForms
 
         private void ChatListPanel_Load(object sender, System.EventArgs e)
         {
-            var contentHeight = (this.panOut.Height - panGroup.Height * 3) / 3;
-            panGroup_content.Height = panTeam_content.Height = panPrivate_content.Height = contentHeight;
+            //  GetChatPanelHeight();
+            // panGroup_content.Height = panTeam_content.Height = panPrivate_content.Height = chatPanelHeight;
 
+        }
+
+        private int GetChatPanelHeight(ChatType chatType)
+        {
+            int otherHeight = this.panOut.Height - panGroup.Height * 3;
+            int leftHeight = 0;
+            switch (chatType)
+            {
+                case ChatType.PrivateChat:
+                    if (panGroup_content.Height == otherHeight)
+                    {
+                        panGroup_content.Height = panGroup_content.Height / 2;
+                    }
+                    if (panTeam_content.Height == otherHeight)
+                    {
+                        panTeam_content.Height = panTeam_content.Height / 2;
+                    }
+                    leftHeight = otherHeight - panGroup_content.Height - panTeam_content.Height;
+                    break;
+                case ChatType.GroupChat:
+                    if (panPrivate_content.Height == otherHeight)
+                    {
+                        panPrivate_content.Height = panPrivate_content.Height / 2;
+                    }
+                    if (panTeam_content.Height == otherHeight)
+                    {
+                        panTeam_content.Height = panTeam_content.Height / 2;
+                    }
+                    leftHeight = otherHeight - panPrivate_content.Height - panTeam_content.Height;
+                    break;
+                case ChatType.TeamChat:
+                    if (panGroup_content.Height == otherHeight)
+                    {
+                        panGroup_content.Height = panGroup_content.Height / 2;
+                    }
+                    if (panPrivate_content.Height == otherHeight)
+                    {
+                        panPrivate_content.Height = panPrivate_content.Height / 2;
+                    }
+                    leftHeight = otherHeight - panGroup_content.Height - panPrivate_content.Height;
+                    break;
+                default:
+                    break;
+            }
+            if (leftHeight == 0)
+            {
+                leftHeight = otherHeight / 2;
+            }
+            return leftHeight;
         }
 
         //IList<ChatItem> chatItemList;
@@ -158,7 +225,7 @@ namespace SharedForms
 
         }
 
-    
+
 
         //public Panel GroupPanel { get { return this.panTop; } }
         //public Panel TeamPanel { get { return this.panMiddle; } }
@@ -273,33 +340,33 @@ namespace SharedForms
             switch (chatType)
             {
                 case ChatType.PrivateChat:
-                    if (panPrivate_content.Visible)
+                    if (panPrivate_content.Height > 0)
                     {
-                        panPrivate_content.Visible = false;
+                        panPrivate_content.Height = 0;
                     }
                     else
                     {
-                        panPrivate_content.Visible = true;
+                        panPrivate_content.Height = GetChatPanelHeight(chatType);
                     }
                     break;
                 case ChatType.GroupChat:
-                    if (panGroup_content.Visible)
+                    if (panGroup_content.Height > 0)
                     {
-                        panGroup_content.Visible = false;
+                        panGroup_content.Height = 0;
                     }
                     else
                     {
-                        panGroup_content.Visible = true;
+                        panGroup_content.Height = GetChatPanelHeight(chatType);
                     }
                     break;
                 case ChatType.TeamChat:
-                    if (panTeam_content.Visible)
+                    if (panTeam_content.Height > 0)
                     {
-                        panTeam_content.Visible = false;
+                        panTeam_content.Height = 0;
                     }
                     else
                     {
-                        panTeam_content.Visible = true;
+                        panTeam_content.Height = GetChatPanelHeight(chatType);
                     }
                     break;
                 default:
@@ -314,23 +381,23 @@ namespace SharedForms
             switch (chatType)
             {
                 case ChatType.PrivateChat:
-                    if (!panPrivate_content.Visible)
+                    if (panPrivate_content.Height == 0)
                     {
-                        panPrivate_content.Visible = true;
+                        panPrivate_content.Height = GetChatPanelHeight(chatType);
                     }
-                    
+
                     break;
                 case ChatType.GroupChat:
-                    if (!panGroup_content.Visible)
+                    if (panGroup_content.Height == 0)
                     {
-                        panGroup_content.Visible = true;
+                        panGroup_content.Height = GetChatPanelHeight(chatType);
                     }
-                  
+
                     break;
                 case ChatType.TeamChat:
-                    if (!panTeam_content.Visible)
+                    if (panTeam_content.Height == 0)
                     {
-                        panTeam_content.Visible = true;
+                        panTeam_content.Height = GetChatPanelHeight(chatType);
                     }
                     break;
                 default:
@@ -436,7 +503,7 @@ namespace SharedForms
             return item;
         }
 
-        public void SetSelectChatItem(ChatItem item,bool fromClick)
+        public void SetSelectChatItem(ChatItem item, bool fromClick)
         {
             ShowContent(item.ChatType);
             if (SelectedChatItem != null && SelectedChatItem.UserName != item.UserName)

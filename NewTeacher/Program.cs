@@ -47,7 +47,7 @@ namespace NewTeacher
                         Application.Run(new MainForm());
                     }
 
-                    // Application.Run(new MainForm());
+                    //   Application.Run(new Form1());
                 }
                 else
                 {

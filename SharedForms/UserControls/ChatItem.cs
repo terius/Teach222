@@ -12,18 +12,19 @@ namespace SharedForms
 
         public ChatType ChatType { get; set; }
         Image headIcon, newMsgIcon;
-        Font titleFont = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
+        Font titleFont = new Font("微软雅黑", 10F, FontStyle.Bold, GraphicsUnit.Point, 134);
         SolidBrush brush = new SolidBrush(Color.FromArgb(55, 152, 249));
         Color defaultBackColor = Color.FromArgb(250, 250, 250);
         Color defaultSelectColor = Color.FromArgb(200, 200, 200);
         public bool IsSelected { get; set; }
         ChatListPanel _parentPanel;
+        int titleHeight;
         public bool FromClick { get; set; }
         public ChatItem(ChatListPanel parent, string userName, string displayName, ChatType chatType, ClientRole userType)
         {
             _parentPanel = parent;
             InitializeComponent();
-            this.Height = 24 + 10 * 2;
+            this.Height = 24 + 5 * 2;
             this.BackColor = defaultBackColor;
             this.HorizontalScroll.Enabled = false;
             this.Cursor = Cursors.Hand;
@@ -45,6 +46,7 @@ namespace SharedForms
                         default:
                             break;
                     }
+
                     break;
                 case ChatType.GroupChat:
                     headIcon = Resource1.所有人24;
@@ -64,8 +66,9 @@ namespace SharedForms
             this.UserName = userName;
             this.DisplayName = displayName;
             this.ChatType = chatType;
-
         }
+
+
 
         private void ChatItem_MouseClick(object sender, MouseEventArgs e)
         {
@@ -111,12 +114,12 @@ namespace SharedForms
             //}
 
             var g = e.Graphics;
-            int fontHeight = titleFont.Height;
-            int x = 10;
+
+            int x = 20;
             var rectArea = new Rectangle(x, (this.Height - 24) / 2, 24, 24);
             x += 24 + 10;
             g.DrawImage(headIcon, rectArea);
-            g.DrawString(DisplayName, titleFont, brush, x, (this.Height - fontHeight) / 2);
+            g.DrawString(DisplayName, titleFont, brush, x, (this.Height - titleFont.Height) / 2);
             if (newMsgIcon != null)
             {
                 g.DrawImage(newMsgIcon, new Rectangle(this.Width - 34, (this.Height - 24) / 2, 24, 24));

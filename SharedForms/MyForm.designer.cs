@@ -113,7 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Lime;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(793, 623);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelTitle);

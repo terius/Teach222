@@ -12,12 +12,13 @@ namespace SharedForms
         Font titleFont = new Font("微软雅黑", 12F, FontStyle.Bold, GraphicsUnit.Point, 134);
         Color defaultBackColor = Color.FromArgb(250, 250, 250);
         Color defaultSelectColor = Color.FromArgb(235, 235, 236);
+        Pen pen = new Pen(Color.FromArgb(200, 200, 200));
         //  ChatType _chatType;
         string title;
         public ChatType ChatType { get; set; }
         public bool Forbit { get; set; }
         public bool IsSelected { get; set; }
-        
+
         public ChatTypePanel()
         {
             // _chatType = ChatType;
@@ -38,7 +39,7 @@ namespace SharedForms
                 this.BackColor = defaultSelectColor;
                 IsSelected = true;
             }
-           
+
         }
 
         private void SetChatPanelHover()
@@ -83,7 +84,8 @@ namespace SharedForms
             g.DrawImage(headIcon, rectArea);
             g.DrawString(title, titleFont, brush, 60, (this.Height - fontHeight) / 2);
             //  g.FillRectangle(brush, ClientRectangle);
-            //  g.DrawLine(Pens.Red, 0, ClientSize.Height - 1, ClientSize.Width - 1, ClientSize.Height - 1);
+
+            g.DrawLine(pen, 0, ClientSize.Height - 1, ClientSize.Width - 1, ClientSize.Height - 1);
 
         }
     }

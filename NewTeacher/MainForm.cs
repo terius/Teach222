@@ -172,7 +172,7 @@ namespace NewTeacher
             {
                 if (item.username == callInfo.username)
                 {
-                    item.IsCalled = true;
+                    item.isCalled = true;
                     break;
                 }
             }
@@ -234,7 +234,7 @@ namespace NewTeacher
                     ListViewItem listItem = new ListViewItem();
                     listItem.Text = item.nickname;
                     listItem.ImageIndex = item.clientRole == ClientRole.Student ? 0 : 39;
-                    listItem.SubItems.Add(item.IsCalled ? "是" : "");
+                    listItem.SubItems.Add(item.isCalled ? "是" : "");
                     listItem.SubItems.Add(item.username);
                     listItem.SubItems.Add(item.no.ToString());
                     this.lvOnline.Items.Add(listItem);
@@ -517,7 +517,7 @@ namespace NewTeacher
                 {
                     System.Data.DataRow dr = table.NewRow();
                     dr[0] = item.nickname;
-                    dr[1] = item.IsCalled ? "是" : "否";
+                    dr[1] = item.isCalled ? "是" : "否";
                     table.Rows.Add(dr);
                 }
             }

@@ -14,10 +14,12 @@ namespace SharedForms
             InitializeComponent();
             this.Dock = DockStyle.Fill;
             HorizontalScroll.Enabled = false;
+            HorizontalScroll.Visible = false;
             AutoScroll = true;
             ControlAdded += SmsPanelNew_ControlAdded;
             Resize += SmsPanelNew_Resize;
             MouseEnter += SmsPanelNew_MouseEnter;
+            BackColor = Color.White;
         }
 
         private void SmsPanelNew_MouseEnter(object sender, System.EventArgs e)
@@ -36,6 +38,7 @@ namespace SharedForms
                     s.Left = this.Width - s.Width - 20;
                 }
             }
+            //this.Invalidate();
         }
 
         /// <summary>
