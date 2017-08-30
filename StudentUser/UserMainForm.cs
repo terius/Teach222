@@ -179,7 +179,7 @@ namespace StudentUser
                 GlobalVariable.RefleshTeamList(teamInfo);
                 DoAction(() =>
                 {
-                    
+
                     chatForm.BringToFront();
                     chatForm.Show();
                     chatForm.ReflashTeamChat();
@@ -267,7 +267,7 @@ namespace StudentUser
 
         private void UserMainForm_Load(object sender, System.EventArgs e)
         {
-          //  CreateUDPHole();
+            CreateUDPHole();
         }
 
 

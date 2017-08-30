@@ -33,9 +33,9 @@ namespace NewTeacher
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
 
-                 //   BonusSkins.Register();
-                 //   SkinManager.EnableFormSkins();
-                 //  UserLookAndFeel.Default.SetSkinStyle("Office 2013 Light Gray");
+                    //   BonusSkins.Register();
+                    //   SkinManager.EnableFormSkins();
+                    //  UserLookAndFeel.Default.SetSkinStyle("Office 2013 Light Gray");
 
                     #region 线程异常处理
                     Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
@@ -44,10 +44,10 @@ namespace NewTeacher
                     Login frm = new Login();
                     if (frm.ShowDialog() == DialogResult.OK)
                     {
-                        Application.Run(new Form1());
+                        Application.Run(new MainForm());
                     }
 
-                    //   Application.Run(new Form1());
+                  //  Application.Run(new Form1());
                 }
                 else
                 {

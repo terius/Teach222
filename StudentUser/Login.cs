@@ -68,44 +68,7 @@ namespace StudentUser
             this.InvokeOnUiThreadIfRequired(action);
         }
 
-        private void Client_OnReveieveData(ReceieveMessage message)
-        {
-            // TranMessage = resStr =>
-            //  {
-            if (message.Action == 2)
-            {
-                var result = JsonHelper.DeserializeObj<LoginResult>(message.DataStr);
-                if (result.success)
-                {
-                    DoAction(() =>
-                    {
-                        this.DialogResult = DialogResult.OK;
-                        GlobalVariable.client.OnReveieveData -= Client_OnReveieveData;
-                        GlobalVariable.LoginUserInfo = new LoginUserInfo
-                        {
-                            DisplayName = nickName,
-                            UserName = textBox1.Text.Trim(),
-                            UserType = ClientRole.Student,
-                            No = textBox2.Text.Trim()
-                        };
-                        this.Close();
-                    });
-
-
-                }
-                else
-                {
-                    MessageBox.Show(result.msg);
-                }
-            }
-            //  };
-            //Action<string> action = (data) =>
-            //{
-            //    Thread.Sleep(3000);
-            //    txtBox.AppendText(data);
-            //};
-            // Invoke(TranMessage, message.DataStr);
-        }
+       
 
         // Action<string> TranMessage;
         private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)

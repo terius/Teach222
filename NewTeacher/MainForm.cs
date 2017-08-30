@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MySocket;
 using System.Threading;
+using System;
 
 namespace NewTeacher
 {
@@ -24,78 +25,87 @@ namespace NewTeacher
         public MainForm()
         {
             InitializeComponent();
-            chatForm = new ChatForm();
+            InitOnlineInfo();
+            GlobalVariable.LoadTeamFromXML();
+
+            #region 接收消息事件
+            GlobalVariable.client.OnOnlineList = (message) =>
+            {
+                var userList2 = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
+                onlineInfo.OnOnlineChange(userList2);
+            };
+
+            GlobalVariable.client.OnPrivateChat = (message) =>
+            {
+                var PrivateChatMessage = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
+                this.InvokeOnUiThreadIfRequired(() => { ReceievePrivateMessage(PrivateChatMessage); });
+            };
+
+            GlobalVariable.client.OnTeamChat = (message) =>   //收到群聊信息
+            {
+
+                var TeamChatRequest = JsonHelper.DeserializeObj<TeamChatRequest>(message.DataStr);
+                this.InvokeOnUiThreadIfRequired(() => { ReceieveTeamMessage(TeamChatRequest); });
+            };
+            GlobalVariable.client.OnGroupChat = (message) =>
+            {
+
+                var groupChatRequest = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
+                this.InvokeOnUiThreadIfRequired(() => { ReceieveGroupMessage(groupChatRequest); });
+            };
+            GlobalVariable.client.OnOneUserLogIn = (message) =>//某个学生登录
+            {
+
+                var newUser = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
+                onlineInfo.OnNewUserLoginIn(newUser);
+            };
+            GlobalVariable.client.OnStudentCall = (message) =>//课堂点名
+            {
+                var callInfo = JsonHelper.DeserializeObj<StuCallRequest>(message.DataStr);
+                UpdateOnLineStatus(callInfo);
+            };
+            GlobalVariable.client.OnUserLoginOut = (message) =>//用户登出
+            {
+                var loginoutInfo = JsonHelper.DeserializeObj<UserLogoutResponse>(message.DataStr);
+                onlineInfo.OnUserLoginOut(loginoutInfo);
+                DeleteScreen(loginoutInfo);
+            };
+            GlobalVariable.client.OnScreenInteract = (message) =>//收到视频流
+            {
+
+                ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
+                this.InvokeOnUiThreadIfRequired(() =>
+                {
+                    if (message.Action == (int)CommandType.StudentShowToTeacher)
+                    {
+
+                    }
+                    PlayRtspVideo(resp.url);
+                });
+            };
+            GlobalVariable.client.OnStopScreenInteract = (message) =>//收到停止接收视频流
+            {
+                this.InvokeOnUiThreadIfRequired(() =>
+                {
+                    StopPlay();
+                });
+            };
+
+            #endregion
+
+            GlobalVariable.client.DueLostMessage();
+            GlobalVariable.client.Send_OnlineList();
         }
+
+    
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            InitOnlineInfo();
-            GlobalVariable.LoadTeamFromXML();
-            GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
-            GlobalVariable.client.Send_OnlineList();
-          //  CreateUDPConnect();
+            CreateUDPConnect();
         }
 
         #region  接收消息事件
-        private void Client_OnReveieveData(ReceieveMessage message)
-        {
-            //   messageList.InvokeOnUiThreadIfRequired(() => messageList.AppendText(message.DataStr));
-            switch (message.Action)
-            {
-                case (int)CommandType.OnlineList://在线用户
-                    var userList2 = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
-                    onlineInfo.OnOnlineChange(userList2);
-                    break;
-                case (int)CommandType.PrivateChat://接收到学生私聊信息
-                    MessageBox.Show("收到私聊信息");
-                    var PrivateChatMessage = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
-                    this.InvokeOnUiThreadIfRequired(() => { ReceievePrivateMessage(PrivateChatMessage); });
-                    break;
-                case (int)CommandType.TeamChat://收到群聊信息
-                    var TeamChatRequest = JsonHelper.DeserializeObj<TeamChatRequest>(message.DataStr);
-                    this.InvokeOnUiThreadIfRequired(() => { ReceieveTeamMessage(TeamChatRequest); });
-                    break;
-                case (int)CommandType.GroupChat://收到群聊信息
-                    var groupChatRequest = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
-                    this.InvokeOnUiThreadIfRequired(() => { ReceieveGroupMessage(groupChatRequest); });
-                    break;
-                case (int)CommandType.OneUserLogIn://某个学生登录
-                    var newUser = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
 
-                    onlineInfo.OnNewUserLoginIn(newUser);
-                    //  OnlineInfo_AddOnLine(onlineInfo, e2);
-                    break;
-                case (int)CommandType.StudentCall://课堂点名
-                    var callInfo = JsonHelper.DeserializeObj<StuCallRequest>(message.DataStr);
-                    UpdateOnLineStatus(callInfo);
-                    break;
-                case (int)CommandType.UserLoginOut://用户登出
-                    var loginoutInfo = JsonHelper.DeserializeObj<UserLogoutResponse>(message.DataStr);
-                    onlineInfo.OnUserLoginOut(loginoutInfo);
-                    DeleteScreen(loginoutInfo);
-                    break;
-                case (int)CommandType.ScreenInteract://收到视频流
-                case (int)CommandType.StudentShowToTeacher://收到视频流
-                    ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
-                    this.InvokeOnUiThreadIfRequired(() =>
-                    {
-                        if (message.Action == (int)CommandType.StudentShowToTeacher)
-                        {
-
-                        }
-                        PlayRtspVideo(resp.url);
-                    });
-                    break;
-                case (int)CommandType.StopScreenInteract://收到停止接收视频流
-                    this.InvokeOnUiThreadIfRequired(() =>
-                    {
-                        StopPlay();
-                    });
-                    break;
-                default:
-                    break;
-            }
-        }
 
         private void HideScreenShowPic(string userName)
         {
@@ -445,7 +455,7 @@ namespace NewTeacher
                     break;
                 case TeacherAction.menuFileShare_Click:
                     ChatToALL();
-                  //  chatForm.UploadFileToALL();  暂时屏蔽
+                    //  chatForm.UploadFileToALL();  暂时屏蔽
                     break;
                 case TeacherAction.menuFileShare2_Click:
 
@@ -638,7 +648,7 @@ namespace NewTeacher
             {
                 return;
             }
-          //  GlobalVariable.ShowSuccess(actionStuUserName);
+            //  GlobalVariable.ShowSuccess(actionStuUserName);
             switch (name)
             {
                 case "userList_privateChat":

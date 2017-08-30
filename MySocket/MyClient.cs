@@ -339,7 +339,7 @@ namespace MySocket
             }
             else
             {
-                //  OnReveieveData += Teacher_OnReveieveData;
+                OnReveieveData += Teacher_OnReveieveData;
             }
 
             _connected = client.ConnectAsync(new IPEndPoint(IPAddress.Parse(serverIP), serverPort)).Result;
@@ -382,6 +382,13 @@ namespace MySocket
         public Action<ReceieveMessage> OnAllowPrivateChat;
         public Action<ReceieveMessage> OnForbidTeamChat;
         public Action<ReceieveMessage> OnAllowTeamChat;
+
+        //教师端
+        public Action<ReceieveMessage> OnOnlineList;
+        public Action<ReceieveMessage> OnOneUserLogIn;
+        public Action<ReceieveMessage> OnStudentCall;
+        public Action<ReceieveMessage> OnUserLoginOut;
+
         private void Student_OnReveieveData(ReceieveMessage message)
         {
             switch (message.Action)
@@ -464,7 +471,47 @@ namespace MySocket
 
         private void Teacher_OnReveieveData(ReceieveMessage message)
         {
+            switch ((CommandType)message.Action)
+            {
+                case CommandType.UserLoginRes:
+                    DueMessage(OnUserLoginRes, message);
+                    break;
+                case CommandType.OnlineList:
+                    DueMessage(OnOnlineList, message);
+                    break;
 
+                case CommandType.ScreenInteract:
+                    DueMessage(OnScreenInteract, message);
+                    break;
+                case CommandType.StopScreenInteract:
+                    DueMessage(OnStopScreenInteract, message);
+                    break;
+
+                case CommandType.PrivateChat:
+                    DueMessage(OnPrivateChat, message);
+                    break;
+                case CommandType.GroupChat:
+                    DueMessage(OnGroupChat, message);
+                    break;
+
+                case CommandType.TeamChat:
+                    DueMessage(OnTeamChat, message);
+                    break;
+                case CommandType.OneUserLogIn:
+                    DueMessage(OnOneUserLogIn, message);
+                    break;
+                case CommandType.UserLoginOut:
+                    DueMessage(OnUserLoginOut, message);
+                    break;
+                case CommandType.StudentCall:
+                    DueMessage(OnStudentCall, message);
+                    break;
+                case CommandType.StudentShowToTeacher:
+                    DueMessage(OnScreenInteract, message);
+                    break;
+                default:
+                    break;
+            }
 
         }
 
@@ -579,20 +626,10 @@ namespace MySocket
         /// <param name="clientRole"></param>
         public void Send_UserLogin(string userName, string nickName, string password, ClientRole clientRole)
         {
-            // GetAudioName();
             var loginInfo = new LoginInfo();
-            if (clientRole == ClientRole.Teacher || clientRole == ClientRole.Assistant)
-            {
-                loginInfo.username = nickName;
-                loginInfo.nickname = "老师";
-                loginInfo.password = password;
-            }
-            else
-            {
-                loginInfo.username = userName;
-                loginInfo.nickname = nickName;
-                loginInfo.no = password;
-            }
+            loginInfo.username = userName;
+            loginInfo.nickname = nickName;
+            loginInfo.no = password;
             loginInfo.clientRole = clientRole;
             loginInfo.clientStyle = ClientStyle.PC;
             SendMessage(loginInfo, CommandType.UserLogin);

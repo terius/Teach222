@@ -19,13 +19,20 @@ namespace NewTeacher
             //GlobalVariable.CreateTestLoginInfo();
             //ChatForm frm = new ChatForm();
             //frm.Show();
+            GlobalVariable.CreateTestLoginInfo();
+            GlobalVariable.client = new MyClient(ProgramType.Teacher);
             GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
+            GlobalVariable.client.Send_UserLogin(GlobalVariable.LoginUserInfo.UserName, GlobalVariable.LoginUserInfo.DisplayName, "111", ClientRole.Teacher);
             GlobalVariable.client.Send_OnlineList();
         }
 
         private void Client_OnReveieveData(ReceieveMessage message)
         {
-            MessageBox.Show(message.DataStr);
+            this.richTextBox1.InvokeOnUiThreadIfRequired(() =>
+            {
+                richTextBox1.AppendText(message.DataStr + "\r\n\r\n");
+
+            });
 
         }
 

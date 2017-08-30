@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherUser", "TeacherUser\TeacherUser.csproj", "{06BF00AE-3E4E-4C2F-AB68-3C5687380760}"
 EndProject
@@ -28,8 +28,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedForms", "SharedForms\SharedForms.csproj", "{56B28B98-487B-450F-8B3A-654B668DB221}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrisSkin4", "IrisSkin4\IrisSkin4.csproj", "{A0238A2B-E585-462E-B0E9-CC9BD0899C82}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeVendor.Controls", "C:\Users\terius\Desktop\thegrouper\Grouper\CodeVendor.Controls.csproj", "{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -197,18 +195,6 @@ Global
 		{A0238A2B-E585-462E-B0E9-CC9BD0899C82}.Release|x64.Build.0 = Release|Any CPU
 		{A0238A2B-E585-462E-B0E9-CC9BD0899C82}.Release|x86.ActiveCfg = Release|Any CPU
 		{A0238A2B-E585-462E-B0E9-CC9BD0899C82}.Release|x86.Build.0 = Release|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Debug|x64.Build.0 = Debug|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Debug|x86.Build.0 = Debug|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Release|x64.ActiveCfg = Release|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Release|x64.Build.0 = Release|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Release|x86.ActiveCfg = Release|Any CPU
-		{D5D88EB0-23B9-46CE-B23C-C6245ECF023C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

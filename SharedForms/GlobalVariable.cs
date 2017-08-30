@@ -35,9 +35,9 @@ namespace SharedForms
         public static void CreateTestLoginInfo()
         {
             LoginUserInfo = new LoginUserInfo();
-            LoginUserInfo.UserName = "user001";
+            LoginUserInfo.UserName = "teach0011111";
             LoginUserInfo.UserType = ClientRole.Teacher;
-            LoginUserInfo.DisplayName = "老师001";
+            LoginUserInfo.DisplayName = "teach0011111";
             LoginUserInfo.AllowPrivateChat = true;
             LoginUserInfo.AllowTeamChat = true;
             LoginUserInfo.No = "u001";
