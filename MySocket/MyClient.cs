@@ -395,6 +395,7 @@ namespace MySocket
             {
                 case (int)CommandType.UserLoginRes:
                     DueMessage(OnUserLoginRes, message);
+
                     break;
                 case (int)CommandType.TeacherLoginIn://教师端登录
                     DueMessage(OnTeacherLoginIn, message);
