@@ -30,6 +30,87 @@ namespace SharedForms
 
         //    }
         //}
+
+        public static void SendCommand(IsendRequest request,CommandType type)
+        {
+            if (client == null)
+            {
+                return;
+            }
+            switch (type)
+            {
+                case CommandType.UserLogin:
+                    client.Send_UserLogin((LoginRequest)request);
+                    break;
+                case CommandType.UserLoginRes:
+                    break;
+                case CommandType.OnlineList:
+                    break;
+                case CommandType.BeginCall:
+                    break;
+                case CommandType.EndCall:
+                    break;
+                case CommandType.ScreenInteract:
+                    break;
+                case CommandType.StopScreenInteract:
+                    break;
+                case CommandType.Quiet:
+                    break;
+                case CommandType.StopQuiet:
+                    break;
+                case CommandType.LockScreen:
+                    break;
+                case CommandType.StopLockScreen:
+                    break;
+                case CommandType.PrivateChat:
+                    break;
+                case CommandType.GroupChat:
+                    break;
+                case CommandType.CreateTeam:
+                    break;
+                case CommandType.TeamChat:
+                    break;
+                case CommandType.OneUserLogIn:
+                    break;
+                case CommandType.UserLoginOut:
+                    break;
+                case CommandType.StudentCall:
+                    break;
+                case CommandType.StudentInMainForm:
+                    break;
+                case CommandType.CallStudentShow:
+                    break;
+                case CommandType.StopStudentShow:
+                    break;
+                case CommandType.ForbidPrivateChat:
+                    break;
+                case CommandType.AllowPrivateChat:
+                    break;
+                case CommandType.ForbidTeamChat:
+                    break;
+                case CommandType.AllowTeamChat:
+                    break;
+                case CommandType.SendMessageWithFile:
+                    break;
+                case CommandType.TeacherLoginIn:
+                    break;
+                case CommandType.TeacherLoginOut:
+                    break;
+                case CommandType.CallStudentShowForMySelf:
+                    break;
+                case CommandType.StudentShowToTeacher:
+                    break;
+                case CommandType.CallStudentShowVideoToTeacher:
+                    break;
+                case CommandType.XinTiao:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
         public static LoginUserInfo LoginUserInfo;
 
         public static void CreateTestLoginInfo()
@@ -41,7 +122,7 @@ namespace SharedForms
             LoginUserInfo.AllowPrivateChat = true;
             LoginUserInfo.AllowTeamChat = true;
             LoginUserInfo.No = "u001";
-          
+
         }
 
         private static List<ChatStore> chatList;
@@ -117,7 +198,7 @@ namespace SharedForms
             if (!string.IsNullOrWhiteSpace(request.Message))
             {
                 //ChatBoxContent content = new ChatBoxContent(request.Message, messageFont, messageColor);
-             //   var message = request.ToChatMessage();// new ChatMessage(request.UserName, request.DisplayName, LoginUserInfo.UserName, content);
+                //   var message = request.ToChatMessage();// new ChatMessage(request.UserName, request.DisplayName, LoginUserInfo.UserName, content);
 
                 if (info.NewMessageList == null)
                 {

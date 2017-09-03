@@ -25,6 +25,7 @@ namespace NewTeacher
         public MainForm()
         {
             InitializeComponent();
+            GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
             InitOnlineInfo();
             GlobalVariable.LoadTeamFromXML();
 
@@ -97,7 +98,10 @@ namespace NewTeacher
             GlobalVariable.client.Send_OnlineList();
         }
 
-    
+        private void Client_OnClentIsConnecting(object sender, EventArgs e)
+        {
+            MessageBox.Show("正在连接中，请稍后再试");
+        }
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
@@ -139,9 +143,11 @@ namespace NewTeacher
 
             if (videoForm == null || videoForm.IsDisposed)
             {
-                videoForm = new VideoShow(ProgramType.Teacher);
+                videoForm = new VideoShow(ProgramType.Teacher, actionStuUserName);
             }
+            videoForm.BringToFront();
             videoForm.Show();
+            //    Thread.Sleep(5000);
             videoForm.PlayVideo(rtsp);
 
         }
@@ -294,7 +300,7 @@ namespace NewTeacher
                     });
 
                 };
-                GlobalVariable.client.CreateUDPTeacherHole();
+                GlobalVariable.client.CreateUDPTeacherHoleForInterNet();
 
 
             });

@@ -30,16 +30,25 @@
         {
             this.stop_btn = new System.Windows.Forms.Button();
             this.start_btn = new System.Windows.Forms.Button();
+            this.panelContent.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // panelContent
+            // 
+            this.panelContent.BackColor = System.Drawing.Color.White;
+            this.panelContent.Controls.Add(this.stop_btn);
+            this.panelContent.Controls.Add(this.start_btn);
+            this.panelContent.Size = new System.Drawing.Size(354, 125);
             // 
             // stop_btn
             // 
             this.stop_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.stop_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.stop_btn.ForeColor = System.Drawing.Color.White;
-            this.stop_btn.Location = new System.Drawing.Point(147, 49);
+            this.stop_btn.Location = new System.Drawing.Point(193, 48);
+            this.stop_btn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.stop_btn.Name = "stop_btn";
-            this.stop_btn.Size = new System.Drawing.Size(92, 32);
+            this.stop_btn.Size = new System.Drawing.Size(123, 40);
             this.stop_btn.TabIndex = 3;
             this.stop_btn.Text = "停止点名";
             this.stop_btn.UseVisualStyleBackColor = false;
@@ -50,9 +59,10 @@
             this.start_btn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.start_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.start_btn.ForeColor = System.Drawing.Color.White;
-            this.start_btn.Location = new System.Drawing.Point(15, 49);
+            this.start_btn.Location = new System.Drawing.Point(37, 48);
+            this.start_btn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.start_btn.Name = "start_btn";
-            this.start_btn.Size = new System.Drawing.Size(87, 32);
+            this.start_btn.Size = new System.Drawing.Size(116, 40);
             this.start_btn.TabIndex = 2;
             this.start_btn.Text = "开始点名";
             this.start_btn.UseVisualStyleBackColor = false;
@@ -60,13 +70,12 @@
             // 
             // CallForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(267, 132);
-            this.Controls.Add(this.stop_btn);
-            this.Controls.Add(this.start_btn);
+            this.ClientSize = new System.Drawing.Size(356, 165);
             this.HideMaxBtn = true;
             this.HideMinBtn = true;
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CallForm";
@@ -74,8 +83,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "点名";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CallForm_FormClosing);
-            this.Controls.SetChildIndex(this.start_btn, 0);
-            this.Controls.SetChildIndex(this.stop_btn, 0);
+            this.panelContent.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

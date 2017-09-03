@@ -47,10 +47,10 @@ namespace NewTeacher
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             this.labVer.Text = "版本：" + version;
             //自动登录
-            //_userName = "Teacher001";
-            //string pwd = "123456";
-            //_displayName = "老师001";
-            //   GlobalVariable.client.Send_UserLogin(_userName, _displayName, pwd, ClientRole.Teacher);
+            _userName = "Teacher001";
+            string pwd = "123456";
+            _displayName = "老师001";
+            GlobalVariable.client.Send_UserLogin(_userName, _displayName, pwd, ClientRole.Teacher);
         }
 
         

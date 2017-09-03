@@ -430,7 +430,10 @@ namespace SharedForms
                 this.panTeam_content.Controls.Clear();
                 foreach (ChatStore item in list)
                 {
-                    CreateItem(item);
+                    if (item.CheckLoginUserNameIsInTeam())
+                    {
+                        CreateItem(item);
+                    }
                 }
             }
         }

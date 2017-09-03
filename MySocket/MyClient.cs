@@ -22,6 +22,7 @@ namespace MySocket
         public delegate void ReceiveHandle(ReceieveMessage message);
         // internal ReceiveHandle _delegate;
         public event ReceiveHandle OnReveieveData;
+        public event EventHandler OnClentIsConnecting;
         //{
         //    add { _delegate += value; }
         //    remove { _delegate -= value; }
@@ -38,7 +39,7 @@ namespace MySocket
         IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
         ManualResetEvent sendDone = new ManualResetEvent(false);
         ProgramType programType;
-
+        bool isConnecting = false;
         private string remoteIp;
         private int remotePort;
 
@@ -65,6 +66,34 @@ namespace MySocket
             //  }, null);
             //sendDone.WaitOne();
         }
+
+        public void CreateUDPTeacherHoleForInterNet()
+        {
+            IPEndPoint fLocalIPEndPoint = new IPEndPoint(IPAddress.Any, udpPort);
+            teacherUdpClient = new UdpClient(fLocalIPEndPoint);
+            teacherUdpClient.Client.ReceiveBufferSize = 40000;
+            uint IOC_IN = 0x80000000;
+            uint IOC_VENDOR = 0x18000000;
+            uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
+            teacherUdpClient.Client.IOControl((int)SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
+            byte[] fHelloData = Encoding.UTF8.GetBytes("TEACHER");
+            teacherUdpClient.Send(fHelloData, fHelloData.Length, serverIP, udpPort);
+            ScreenCaptureInfo screenInfo;
+            while (true)
+            {
+                var receiveBytes = teacherUdpClient.Receive(ref RemoteIpEndPoint);
+                Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
+                if (receiveBytes.Length > 100)
+                {
+                    screenInfo = GetScreen(receiveBytes);
+                    OnTeacherReceiveUDP?.Invoke(screenInfo);
+                }
+                Thread.Sleep(200);
+            }
+            //    teacherUdpClient.BeginReceive(new AsyncCallback(TeacherReceiveUDPCallback), null);
+
+        }
+
 
         public void CreateUDPTeacherHole()
         {
@@ -151,9 +180,9 @@ namespace MySocket
         {
             IPEndPoint fLocalIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
             studentUdpClient = new UdpClient(fLocalIPEndPoint);
-            remoteIp = teacherIP;
-            remotePort = udpPort;
-            return;
+            //remoteIp = teacherIP;
+            //remotePort = udpPort;
+            //return;
 
 
 
@@ -314,6 +343,43 @@ namespace MySocket
         }
 
 
+        private void CreateSocketClient()
+        {
+            if (!isConnecting)
+            {
+                isConnecting = true;
+                _connected = client.ConnectAsync(new IPEndPoint(IPAddress.Parse(serverIP), serverPort)).Result;
+                isConnecting = false;
+            }
+          //  SendXinTiao();
+        }
+
+        private void Client_Error(object sender, ErrorEventArgs e)
+        {
+            ReConnectToServer();
+        }
+
+        private void ReConnectToServer()
+        {
+            if (!isConnecting)
+            {
+                int rootNum = 0;
+                do
+                {
+                    if (rootNum >= 5)
+                    {
+                        break;
+                        throw new Exception("服务已断开连接");
+
+                    }
+                    CreateSocketClient();
+                    rootNum++;
+
+                } while (client == null || !client.IsConnected);
+            }
+
+
+        }
 
         public MyClient(ProgramType _programType)
         {
@@ -341,8 +407,8 @@ namespace MySocket
             {
                 OnReveieveData += Teacher_OnReveieveData;
             }
-
-            _connected = client.ConnectAsync(new IPEndPoint(IPAddress.Parse(serverIP), serverPort)).Result;
+            client.Error += Client_Error;
+            CreateSocketClient();
         }
 
 
@@ -546,17 +612,35 @@ namespace MySocket
 
         public void SendMessage<T>(SendMessage<T> message) where T : class, new()
         {
-            if (client.IsConnected)
+            if (!client.IsConnected)
             {
-                string text = StringHelper.GetEnumDescription((CommandType)message.Action);
-                Loger.LogMessage("发送信息【" + ((CommandType)message.Action).ToString() + " " + text + "】：" + JsonHelper.SerializeObj(message));
-                var messageByte = CreateSendMessageByte(message);
-                client.Send(messageByte);
+                OnClentIsConnecting?.Invoke(this, null);
+                //  CreateSocketClient();
             }
-            else
+            string text = StringHelper.GetEnumDescription((CommandType)message.Action);
+            Loger.LogMessage("发送信息【" + ((CommandType)message.Action).ToString() + " " + text + "】：" + JsonHelper.SerializeObj(message));
+            var messageByte = CreateSendMessageByte(message);
+            client.Send(messageByte);
+
+
+
+        }
+
+
+        private void SendXinTiao()
+        {
+            ThreadPool.QueueUserWorkItem((ob) =>
             {
-                throw new Exception("连接服务器失败");
-            }
+                while (true)
+                {
+                    if (client.IsConnected)
+                    {
+                        SendMessageNoPara(CommandType.XinTiao);
+                    }
+                    Thread.Sleep(5000);
+                }
+
+            });
 
         }
 
@@ -635,6 +719,19 @@ namespace MySocket
             loginInfo.clientStyle = ClientStyle.PC;
             SendMessage(loginInfo, CommandType.UserLogin);
         }
+
+
+        public void Send_UserLogin(LoginRequest request)
+        {
+            var loginInfo = new LoginInfo();
+            loginInfo.username = request.userName;
+            loginInfo.nickname = request.nickName;
+            loginInfo.no = request.password;
+            loginInfo.clientRole = request.ClientRole;
+            loginInfo.clientStyle = ClientStyle.PC;
+            SendMessage(loginInfo, CommandType.UserLogin);
+        }
+
 
         /// <summary>
         /// 显示当前在线用户

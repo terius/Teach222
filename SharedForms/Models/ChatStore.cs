@@ -59,6 +59,20 @@ namespace SharedForms
         {
             return TeamMembers.Select(d => d.UserName).ToArray();
         }
+
+        public bool CheckLoginUserNameIsInTeam()
+        {
+            string loginUserName = GlobalVariable.LoginUserInfo.UserName;
+            var list = TeamMembers;
+            foreach (var item in list)
+            {
+                if (item.UserName.Equals(loginUserName))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
    

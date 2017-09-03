@@ -305,7 +305,7 @@ namespace NewTeacher
 
             if (videoForm == null || videoForm.IsDisposed)
             {
-                videoForm = new VideoShow(ProgramType.Teacher);
+                videoForm = new VideoShow(ProgramType.Teacher,actionStuUserName);
             }
             videoForm.Show();
             videoForm.PlayVideo(rtsp);

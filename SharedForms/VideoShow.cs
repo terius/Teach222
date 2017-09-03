@@ -1,5 +1,6 @@
 ﻿using Common;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SharedForms
@@ -8,36 +9,61 @@ namespace SharedForms
     {
         private string param = ":network-caching=300 :rtsp-caching=300";// ":aspect-ratio=4:3:network-caching=300:rtsp-caching=300";//:aspect-ratio=16:9
         ProgramType _type;
-        public VideoShow(ProgramType type)
+        string _userName;
+        public VideoShow(ProgramType type, string userName)
         {
             _type = type;
+            _userName = userName;
             InitializeComponent();
-            axVLCPlugin21.video.aspectRatio = GetScreenAspectRatio();
-            //  axVLCPlugin21.Toolbar = false;
-            // axVLCPlugin21.AllowDrop = false;
-            //  this.FormBorderStyle = FormBorderStyle.Sizable;
-            // this.axVLCPlugin21.FullscreenEnabled = false;
-            this.WindowState = FormWindowState.Maximized;
+            if (_type == ProgramType.Student)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+         //   axVLCPlugin21.video.aspectRatio = GetScreenAspectRatio();
+
+
         }
 
         public void PlayVideo(string url)
         {
             var uri = new Uri(url);
+            
             var convertedURI = uri.AbsoluteUri;
             axVLCPlugin21.playlist.items.clear();
-            axVLCPlugin21.playlist.add(convertedURI, "", param);
-            axVLCPlugin21.playlist.play();
+            axVLCPlugin21.playlist.add(convertedURI);
+       
+            //Thread.Sleep(1000);
+            try
+            {
+                axVLCPlugin21.playlist.play();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+          
 
         }
 
         private void VideoShow_Load(object sender, EventArgs e)
         {
+          
+            //  axVLCPlugin21.Toolbar = false;
+            // axVLCPlugin21.AllowDrop = false;
+            //  this.FormBorderStyle = FormBorderStyle.Sizable;
+            // this.axVLCPlugin21.FullscreenEnabled = false;
+   
             //  var url = @"E:\1.mp4";
             //  PlayVideo(url);
         }
 
         private void VideoShow_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!string.IsNullOrWhiteSpace(_userName))
+            {
+                GlobalVariable.client.Send_StopStudentShow(_userName);
+            }
             if (this.axVLCPlugin21.playlist.isPlaying)
                 this.axVLCPlugin21.playlist.stop();
             this.axVLCPlugin21.Dispose();

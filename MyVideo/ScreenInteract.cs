@@ -19,6 +19,7 @@ namespace MyVideo
         private string _serverIp;
         private string _ipSelf;
         private int _portSelf;
+      
         //  private int widthPixel;
         //  private int heightPixel;
 
@@ -50,8 +51,9 @@ namespace MyVideo
             {
                 stopScreenInteract();
             }
+       
             _rtspAddress = pushVideoByFFmpeg(_serverIp, _ipSelf, _portSelf);
-
+         
             isBeginScreenInteract = true;
             return this._rtspAddress;
         }
@@ -108,7 +110,7 @@ namespace MyVideo
             this._ffmpeg = new Ffmpeg();
             //  this._ffmpeg.MessageReceived += _ffmpeg_MessageReceived;
             this._ffmpeg.beginExecute(url);
-
+            _ffmpeg.WaitComplete();
             // var rtsp = "rtsp://" + ipServer + "/" + nameByIpPort + ".sdp";
             return para[0];
         }
@@ -145,6 +147,7 @@ namespace MyVideo
             Loger.LogMessage("视频命令:" + url);
             this._ffmpeg = new Ffmpeg();
             this._ffmpeg.beginExecute(url);
+            _ffmpeg.WaitComplete();
             return para[0];
         }
 
@@ -191,7 +194,7 @@ namespace MyVideo
         //        throw ex;
         //    }
         //}
-
+        ManualResetEvent runDone = new ManualResetEvent(false);
         public void beginExecute(string para)
         {
             try
@@ -220,6 +223,8 @@ namespace MyVideo
                     //while (!standardOutput.EndOfStream)
                     //    this.MessageReceived.BeginInvoke(standardOutput.ReadLine(), (AsyncCallback)null, (object)null);
                     //this.myProcess.WaitForExit();
+                    Thread.Sleep(1000);
+                    runDone.Set();
 
                 }).Start();
             }
@@ -227,6 +232,11 @@ namespace MyVideo
             {
                 throw ex;
             }
+        }
+
+        public void WaitComplete()
+        {
+            runDone.WaitOne();
         }
 
         private void MyProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)

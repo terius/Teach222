@@ -4,6 +4,7 @@ using Model;
 using MySocket;
 using SharedForms;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,6 +12,8 @@ namespace StudentUser
 {
     public partial class Login : Form
     {
+
+        string userName, nickName;
         public Login()
         {
             InitializeComponent();
@@ -21,45 +24,69 @@ namespace StudentUser
         //  private messageListCallback messageCallback;
         private void Form2_Load(object sender, EventArgs e)
         {
-            Login_Btn.SetButtonHoverLeave();
-            btnExit.SetButtonHoverLeave();
-            GlobalVariable.client = new MyClient(ProgramType.Student);
-            GlobalVariable.client.OnUserLoginRes = (message) =>
-            {
+            StartSocketClient();
 
-                var result = JsonHelper.DeserializeObj<LoginResult>(message.DataStr);
-                if (result.success)
-                {
-                    GlobalVariable.TeacherIP = result.teachIP;
-                    DoAction(() =>
-                    {
-
-                        // GlobalVariable.client.OnReveieveData -= Client_OnReveieveData;
-                        GlobalVariable.LoginUserInfo = new LoginUserInfo
-                        {
-                            DisplayName = nickName,
-                            UserName = textBox1.Text.Trim(),
-                            UserType = ClientRole.Student,
-                            No = textBox2.Text.Trim()
-                        };
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
-                    });
-
-
-                }
-                else
-                {
-                    MessageBox.Show(result.msg);
-                }
-
-            };
-            //  GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
-            //    GlobalVariable.client.messageDue.OnReceieveMessage += MessageDue_OnReceieveMessage;
-            // this.textBox1.Text = "Stu" + DateTime.Now.ToString("MMddHHmmss");
-            //   this.textBox2.Text = "8888";
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             this.labVer.Text = "版本：" + version;
+
+        }
+
+        private void AutoLogin()
+        {
+            userName = "stu001";
+            nickName = "学生001";
+            string password = "pw001";
+            LoginRequest q = new LoginRequest
+            {
+                ClientRole = ClientRole.Student,
+                nickName = nickName,
+                password = password,
+                userName = userName
+
+            };
+            GlobalVariable.SendCommand(q, CommandType.UserLogin);
+         //   GlobalVariable.client.Send_UserLogin(userName, nickName, password, ClientRole.Student);
+        }
+
+        private void StartSocketClient()
+        {
+            Thread td = new Thread(() =>
+            {
+                GlobalVariable.client = new MyClient(ProgramType.Student);
+                GlobalVariable.client.OnUserLoginRes = (message) =>
+                {
+
+                    var result = JsonHelper.DeserializeObj<LoginResult>(message.DataStr);
+                    if (result.success)
+                    {
+                        GlobalVariable.TeacherIP = result.teachIP;
+                        DoAction(() =>
+                        {
+                            // GlobalVariable.client.OnReveieveData -= Client_OnReveieveData;
+                            GlobalVariable.LoginUserInfo = new LoginUserInfo
+                            {
+                                DisplayName = nickName,
+                                UserName = userName,
+                                UserType = ClientRole.Student,
+                                No = "n001"
+                            };
+                            this.DialogResult = DialogResult.OK;
+                            this.Close();
+                        });
+
+
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.msg);
+                    }
+
+                };
+             //   AutoLogin();
+
+            });
+            td.IsBackground = true;
+            td.Start();
 
         }
 
@@ -68,24 +95,14 @@ namespace StudentUser
             this.InvokeOnUiThreadIfRequired(action);
         }
 
-       
-
-        // Action<string> TranMessage;
-        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-        }
 
 
-        private void button1_Click(object sender, EventArgs e)//登录 
-        {
-            //string connectionString = "Database='" + ConfigurationManager.AppSettings["Database"] + "';Data Source='" + ConfigurationManager.AppSettings["serverIP"]+ "';User Id='" + ConfigurationManager.AppSettings["User ID"]+ "';Password='" + ConfigurationManager.AppSettings["Password"]+ "'";//默认端口3306 
-            LoginIn();
-        }
-        string nickName;
+
+
         private void LoginIn()
         {
 
-            string userName = textBox1.Text.Trim();
+            userName = textBox1.Text.Trim();
             nickName = "学生" + userName;
             string password = textBox2.Text.Trim();
 
@@ -111,17 +128,12 @@ namespace StudentUser
             System.Environment.Exit(0);
         }
 
-        private void label1_Click(object sender, EventArgs e)
+
+
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-
+            LoginIn();
         }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-
     }
 }
 

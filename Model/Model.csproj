@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Request\EmptyRequest.cs" />
+    <Compile Include="Request\LoginRequest.cs" />
+    <Compile Include="Request\SendRequest.cs" />
     <Compile Include="Request\TeamChatListRequest.cs" />
     <Compile Include="Request\LockScreenRequest.cs" />
     <Compile Include="Request\GroupChatRequest.cs" />

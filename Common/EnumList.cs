@@ -124,7 +124,7 @@ namespace Common
         /// </summary>
         CallStudentShow = 21,
 
-       
+
         ///// <summary>
         ///// 学生启动演示
         ///// </summary>
@@ -136,7 +136,7 @@ namespace Common
         /// </summary>
         StopStudentShow = 23,
 
-        
+
         ///// <summary>
         ///// 视频直播
         ///// </summary>
@@ -204,8 +204,14 @@ namespace Common
         /// <summary>
         /// 通知学生发送视频直播
         /// </summary>
-        CallStudentShowVideoToTeacher = 33
-       
+        CallStudentShowVideoToTeacher = 33,
+
+        [Description("连接服务端心跳命令")]
+        /// <summary>
+        /// 通知学生发送视频直播
+        /// </summary>
+        XinTiao = 34
+
     }
 
     /// <summary>

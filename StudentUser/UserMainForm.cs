@@ -27,17 +27,19 @@ namespace StudentUser
         VideoShow videoForm;
 
         //最小化窗体
-        //private bool windowCreate = true;
-        //protected override void OnActivated(EventArgs e)
-        //{
-        //    if (windowCreate)
-        //    {
-        //        base.Visible = false;
-        //        windowCreate = false;
-        //    }
+        private bool windowCreate = true;
+        protected override void OnActivated(EventArgs e)
+        {
+            if (windowCreate)
+            {
+                base.Visible = false;
+                windowCreate = false;
+            }
 
-        //    base.OnActivated(e);
-        //}
+            base.OnActivated(e);
+        }
+
+
         public UserMainForm()
         {
 
@@ -391,7 +393,7 @@ namespace StudentUser
         {
             if (videoForm == null || videoForm.IsDisposed)
             {
-                videoForm = new VideoShow(ProgramType.Student);
+                videoForm = new VideoShow(ProgramType.Student, null);
             }
             videoForm.BringToFront();
             videoForm.Show();
