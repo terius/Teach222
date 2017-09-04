@@ -56,13 +56,14 @@
             this.pictureBox1.Location = new System.Drawing.Point(13, 28);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.toolTip1.SetToolTip(this.pictureBox1, "打开文件");
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(52, 37);
+            this.progressBar1.Location = new System.Drawing.Point(52, 40);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(63, 10);
             this.progressBar1.TabIndex = 2;

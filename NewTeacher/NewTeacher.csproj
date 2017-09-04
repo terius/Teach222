@@ -117,6 +117,12 @@
     <Compile Include="MainFormOld.Designer.cs">
       <DependentUpon>MainFormOld.cs</DependentUpon>
     </Compile>
+    <Compile Include="MyForm2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyForm2.designer.cs">
+      <DependentUpon>MyForm2.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyForm1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainFormOld.resx">
       <DependentUpon>MainFormOld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyForm2.resx">
+      <DependentUpon>MyForm2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyForm1.resx">
       <DependentUpon>MyForm1.cs</DependentUpon>

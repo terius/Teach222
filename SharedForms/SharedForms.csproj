@@ -84,6 +84,12 @@
       <DependentUpon>ChatFormOld.cs</DependentUpon>
     </Compile>
     <Compile Include="ControlExtensions.cs" />
+    <Compile Include="NotifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotifyForm.designer.cs">
+      <DependentUpon>NotifyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalVariable.cs" />
     <Compile Include="GraphicsExtension.cs" />
     <Compile Include="Models\ChatStore.cs" />
@@ -107,6 +113,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <Compile Include="ScreenImage.cs" />
     <Compile Include="TeamView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,12 +197,16 @@
     <EmbeddedResource Include="ChatFormOld.resx">
       <DependentUpon>ChatFormOld.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NotifyForm.resx">
+      <DependentUpon>NotifyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PictureShow.resx">
       <DependentUpon>PictureShow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
@@ -337,6 +348,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\群聊.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\录音中.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\录音.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

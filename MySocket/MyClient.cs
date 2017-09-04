@@ -329,53 +329,48 @@ namespace MySocket
         #endregion
 
 
-        public bool Connected
+        public bool ClientIsConnected
         {
             get
             {
-                return _connected;
+                if (client == null)
+                {
+                    return false;
+                }
+                return client.IsConnected;
             }
 
-            set
-            {
-                _connected = value;
-            }
+
         }
 
 
-        private void CreateSocketClient()
+ 
+
+        private void Client_Error(object sender, ErrorEventArgs e)
+        {
+           ConnectToServer();
+        }
+
+        private void ConnectToServer()
         {
             if (!isConnecting)
             {
                 isConnecting = true;
-                _connected = client.ConnectAsync(new IPEndPoint(IPAddress.Parse(serverIP), serverPort)).Result;
-                isConnecting = false;
-            }
-          //  SendXinTiao();
-        }
-
-        private void Client_Error(object sender, ErrorEventArgs e)
-        {
-            ReConnectToServer();
-        }
-
-        private void ReConnectToServer()
-        {
-            if (!isConnecting)
-            {
                 int rootNum = 0;
                 do
                 {
                     if (rootNum >= 5)
                     {
+                        isConnecting = false;
                         break;
                         throw new Exception("服务已断开连接");
 
                     }
-                    CreateSocketClient();
+                    _connected = client.ConnectAsync(new IPEndPoint(IPAddress.Parse(serverIP), serverPort)).Result;
                     rootNum++;
 
                 } while (client == null || !client.IsConnected);
+                isConnecting = false;
             }
 
 
@@ -407,8 +402,8 @@ namespace MySocket
             {
                 OnReveieveData += Teacher_OnReveieveData;
             }
-            client.Error += Client_Error;
-            CreateSocketClient();
+            //  client.Error += Client_Error;
+            ConnectToServer();
         }
 
 
@@ -615,12 +610,16 @@ namespace MySocket
             if (!client.IsConnected)
             {
                 OnClentIsConnecting?.Invoke(this, null);
+                ConnectToServer();
                 //  CreateSocketClient();
             }
-            string text = StringHelper.GetEnumDescription((CommandType)message.Action);
-            Loger.LogMessage("发送信息【" + ((CommandType)message.Action).ToString() + " " + text + "】：" + JsonHelper.SerializeObj(message));
-            var messageByte = CreateSendMessageByte(message);
-            client.Send(messageByte);
+            if (client.IsConnected)
+            {
+                string text = StringHelper.GetEnumDescription((CommandType)message.Action);
+                Loger.LogMessage("发送信息【" + ((CommandType)message.Action).ToString() + " " + text + "】：" + JsonHelper.SerializeObj(message));
+                var messageByte = CreateSendMessageByte(message);
+                client.Send(messageByte);
+            }
 
 
 

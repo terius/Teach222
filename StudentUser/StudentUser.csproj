@@ -87,7 +87,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ScreenImage.cs" />
     <Compile Include="UserActivityHook.cs" />
     <Compile Include="ViewRtsp.cs">
       <SubType>Form</SubType>

@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace StudentUser
+namespace SharedForms
 {
     public class ScreenCapture
     {
@@ -18,7 +18,7 @@ namespace StudentUser
             return getThumImage(CaptureWindow(User32.GetDesktopWindow()), 40, 5);
         }
 
-        private Image getThumImage(Image image, long quality, int multiple)
+        public Image getThumImage(Image image, long quality, int multiple)
 
         {
             Bitmap newImage = null;

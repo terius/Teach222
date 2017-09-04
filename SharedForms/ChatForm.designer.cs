@@ -37,7 +37,8 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolUploadPic = new System.Windows.Forms.ToolStripButton();
             this.toolRecordVoice = new System.Windows.Forms.ToolStripButton();
-            this.toolProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.labRecordVoice = new System.Windows.Forms.ToolStripLabel();
+            this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
@@ -128,7 +129,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolUploadPic,
             this.toolRecordVoice,
-            this.toolProgressBar});
+            this.labRecordVoice,
+            this.ProgressBar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(10, 0, 1, 0);
@@ -150,19 +152,27 @@
             // toolRecordVoice
             // 
             this.toolRecordVoice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolRecordVoice.Image = ((System.Drawing.Image)(resources.GetObject("toolRecordVoice.Image")));
+            this.toolRecordVoice.Image = global::SharedForms.Resource1.录音;
             this.toolRecordVoice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolRecordVoice.Name = "toolRecordVoice";
             this.toolRecordVoice.Size = new System.Drawing.Size(23, 27);
             this.toolRecordVoice.Text = "toolStripButton1";
             this.toolRecordVoice.ToolTipText = "开始录音";
+            this.toolRecordVoice.Click += new System.EventHandler(this.toolRecordVoice_Click);
             // 
-            // toolProgressBar
+            // labRecordVoice
             // 
-            this.toolProgressBar.BackColor = System.Drawing.Color.Tomato;
-            this.toolProgressBar.Name = "toolProgressBar";
-            this.toolProgressBar.Padding = new System.Windows.Forms.Padding(7);
-            this.toolProgressBar.Size = new System.Drawing.Size(114, 27);
+            this.labRecordVoice.Name = "labRecordVoice";
+            this.labRecordVoice.Size = new System.Drawing.Size(44, 27);
+            this.labRecordVoice.Text = "录音中";
+            this.labRecordVoice.Visible = false;
+            // 
+            // ProgressBar
+            // 
+            this.ProgressBar.BackColor = System.Drawing.Color.Tomato;
+            this.ProgressBar.Name = "ProgressBar";
+            this.ProgressBar.Padding = new System.Windows.Forms.Padding(7);
+            this.ProgressBar.Size = new System.Drawing.Size(114, 27);
             // 
             // panel2
             // 
@@ -279,6 +289,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolUploadPic;
         private System.Windows.Forms.ToolStripButton toolRecordVoice;
-        private System.Windows.Forms.ToolStripProgressBar toolProgressBar;
+        private System.Windows.Forms.ToolStripProgressBar ProgressBar;
+        private System.Windows.Forms.ToolStripLabel labRecordVoice;
     }
 }

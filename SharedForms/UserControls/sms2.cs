@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SharedForms
@@ -16,8 +17,8 @@ namespace SharedForms
         Font titleFont = new Font("微软雅黑", 10F, FontStyle.Bold, GraphicsUnit.Point, 134);
         Image imgTech = Resource1.老师;
         Image imgStu = Resource1.学生;
-        string _message;//消息
-        string _title; //标题
+        //   string _message;//消息
+        //  string _title; //标题
         bool _isMySelf;//是否为自己
         public bool IsMySelf { get { return _isMySelf; } }
         public readonly int SizeWidth = 420;
@@ -30,35 +31,42 @@ namespace SharedForms
         int textHeight;
         readonly int bottomPadding = 10;
 
+        ChatMessage _chatMessage;
+
+
         public sms2(ChatMessage messageInfo, bool isMySelf)
         {
-
-            _title = messageInfo.Title;
-            _message = messageInfo.Message;
+            _chatMessage = messageInfo;
+            //  _title = messageInfo.Title;
+            //    _message = messageInfo.Message;
             _isMySelf = isMySelf;
-            _downloadFileUrl = messageInfo.DownloadFileUrl;
+            _downloadFileUrl = _chatMessage.DownloadFileUrl;
             InitializeComponent();
             textHeight = titleFont.Height;
-            if (messageInfo.MessageType == Common.MessageType.String)
+
+            if (_chatMessage.MessageType == Common.MessageType.String)
             {
                 this.txtSMS.Show();
-                this.txtSMS.Text = _message;
+                this.txtSMS.Text = _chatMessage.Message;
                 this.pictureBox1.Hide();
             }
             else
             {
+                SetPicLocation();
                 this.pictureBox1.Show();
                 this.pictureBox1.Cursor = Cursors.Hand;
                 SetPictureBoxHover();
                 this.pictureBox1.Click += PictureBox1_Click;
-                switch (messageInfo.MessageType)
+                switch (_chatMessage.MessageType)
                 {
 
                     case Common.MessageType.Sound:
+
                         pictureBox1.Image = Resource1.声音;
                         break;
                     case Common.MessageType.Image:
-                        pictureBox1.Image = Resource1.图片;
+                        CreateSmallPic();
+                        //   pictureBox1.Image = Resource1.图片;
                         break;
                     case Common.MessageType.Video:
                         pictureBox1.Image = Resource1.视频;
@@ -72,7 +80,7 @@ namespace SharedForms
                 //  this.txtLink.Show();
                 //  this.txtLink.LinkClicked += TxtLink_LinkClicked;
             }
-            if (messageInfo.UserType == Common.ClientRole.Student)
+            if (_chatMessage.UserType == Common.ClientRole.Student)
             {
                 headIcon = imgStu;
             }
@@ -82,6 +90,43 @@ namespace SharedForms
             }
 
 
+        }
+
+        private void CreateSmallPic()
+        {
+            ThreadPool.QueueUserWorkItem((ob) =>
+            {
+                Image img = null;
+                if (!string.IsNullOrWhiteSpace(_chatMessage.LocalFilePath))
+                {
+                    img = Image.FromFile(_chatMessage.LocalFilePath);
+                    //   ScreenCapture sc = new ScreenCapture();
+                    var smallImg = FileHelper.ResizeImage(img, 32, 32);
+                    smallImg.Save(@"d:\" + DateTime.Now.Ticks.ToString() + ".png");
+                    this.pictureBox1.Image = smallImg;
+                }
+
+                //var fileName =_downloadFileUrl.Substring(_downloadFileUrl.LastIndexOf("/") + 1);
+                //var savePath = GlobalVariable.DownloadPath + "\\" + fileName;
+                //if (File.Exists(savePath))
+                //{
+                //    img = Image.FromFile(savePath);
+                //    ScreenCapture sc = new ScreenCapture();
+                //    var smallImg = sc.getThumImage(img, 40, 5);
+                //    this.pictureBox1.Image = smallImg;
+
+                //}
+
+
+            });
+        }
+
+        private void SetPicLocation()
+        {
+            if (!_isMySelf)
+            {
+                pictureBox1.Left = 50;
+            }
         }
 
         private void SetPictureBoxHover()
@@ -125,7 +170,7 @@ namespace SharedForms
             var fileType = GetFileType(_downloadFileUrl);
             Action<object, System.ComponentModel.AsyncCompletedEventArgs> onDownload;
             Action<object, DownloadProgressChangedEventArgs> onProgress;
-            progressBar1.Visible = true;
+        
             if (fileType == Common.MessageType.Sound)
             {
                 //ShowNotify("开始播放", 1000);
@@ -136,19 +181,23 @@ namespace SharedForms
                 {
                     if (File.Exists(savePath))
                     {
-                        ((ChatFormOld)this.ParentForm).PlayVoice(savePath);
+                        if (progressBar1.Visible)
+                        {
+                            progressBar1.Hide();
+                        }
+                        ((ChatForm)this.ParentForm).PlayVoice(savePath);
                         return;
                     }
                 }
 
-
+                progressBar1.Show();
                 onDownload = (ob, eve) =>
                 {
                     progressBar1.Visible = false;
                     saveFilePath = eve.UserState.ToString();
                     if (!string.IsNullOrWhiteSpace(saveFilePath))
                     {
-                        ((ChatFormOld)this.ParentForm).PlayVoice(saveFilePath);
+                        ((ChatForm)this.ParentForm).PlayVoice(saveFilePath);
                     }
 
                 };
@@ -173,10 +222,16 @@ namespace SharedForms
                     savePath = GlobalVariable.DownloadPath + "\\" + fileName;
                     if (File.Exists(savePath))
                     {
+                        if (progressBar1.Visible)
+                        {
+                            progressBar1.Hide();
+                        }
                         ShowPic(savePath);
                         return;
                     }
                 }
+
+                progressBar1.Show();
                 onDownload = (ob, eve) =>
                 {
                     progressBar1.Visible = false;
@@ -270,7 +325,7 @@ namespace SharedForms
             if (IsMySelf)
             {
                 //标题
-                g.DrawString(_title, titleFont, blackBrush, new PointF(0, 0));
+                g.DrawString(_chatMessage.Title, titleFont, blackBrush, new PointF(0, 0));
                 //边角椭圆
                 g.FillRoundedRectangle(new SolidBrush(backColor), 0, startY, width - 10 - 32, height, 5);
 
@@ -287,7 +342,7 @@ namespace SharedForms
             else
             {
                 //标题
-                g.DrawString(_title, titleFont, blackBrush, new PointF(32 + 11, 0));
+                g.DrawString(_chatMessage.Title, titleFont, blackBrush, new PointF(32 + 11, 0));
                 //人员头像
                 rectArea = new Rectangle(0, (height - 32) / 2 + startY, 32, 32);
                 g.DrawImage(headIcon, rectArea);
@@ -317,7 +372,7 @@ namespace SharedForms
 
             if (txtSMS.Visible)
             {
-                var textSize = this.CreateGraphics().MeasureString(_message, txtSMS.Font);
+                var textSize = this.CreateGraphics().MeasureString(_chatMessage.Message, txtSMS.Font);
                 //    int messageHeight = txtSMS.Font.Height;
                 int count = (int)Math.Floor(textSize.Width / fullTextWidth) + (textSize.Width % fullTextWidth == 0 ? 0 : 1);
                 //    messageHeight = messageHeight * count + 5;

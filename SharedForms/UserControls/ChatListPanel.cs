@@ -70,6 +70,7 @@ namespace SharedForms
             panGroup_content.Resize += Chat_content_Resize;
             panTeam_content.Resize += Chat_content_Resize;
             panPrivate_content.Resize += Chat_content_Resize;
+         
             #endregion
 
         }

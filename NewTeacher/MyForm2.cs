@@ -3,10 +3,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using SharedForms;
+using System.Threading;
 
-namespace SharedForms
+namespace NewTeacher
 {
-    public partial class MyForm : Form
+    public partial class MyForm2 : Form
     {
         private bool m_aeroEnabled;
         private const int CS_DROPSHADOW = 0x00020000;
@@ -86,7 +88,7 @@ namespace SharedForms
             set { this.BackColor = value; }
         }
 
-        public MyForm()
+        public MyForm2()
         {
             m_aeroEnabled = false; //窗体四边阴影
             InitializeComponent();
@@ -128,7 +130,7 @@ namespace SharedForms
             };
         }
 
-      
+
 
         private void PanelTitle_MouseDown(object sender, MouseEventArgs e)
         {
@@ -209,6 +211,17 @@ namespace SharedForms
 
             //if (m.Msg == WM_NCHITTEST && (int)m.Result == HTCLIENT)
             //    m.Result = (IntPtr)HTCAPTION;
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NotifyForm frm = new NotifyForm(this);
+            frm.Show();
+            //  MsgForm frm = new MsgForm();
+            //  frm.DueSecond = 5;
+            //  frm.Show();
+
 
         }
 

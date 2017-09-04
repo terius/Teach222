@@ -7,5 +7,7 @@ namespace Model
         public string DownloadFileUrl { get; set; }
         public MessageType MessageType { get; set; }
 
+        public string LocalFilePath { get; set; }
+
     }
 }

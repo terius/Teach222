@@ -54,6 +54,7 @@ namespace SharedForms
                 case ChatType.TeamChat:
                     headIcon = Resource1.群组24;
                     var childList = GlobalVariable.GetTeamMemberDisplayNames(userName);
+                    this.ContextMenuStrip = contextMenuStrip1;
                     // Caption = displayName + " 【" + childList.Count + "】";
                     //   Hint = string.Join("\r\n", childList);
                     // this.ToolTipText = string.Join("\r\n", childList);
@@ -78,6 +79,10 @@ namespace SharedForms
                 IsSelected = true;
                 _parentPanel.SetSelectChatItem(this, true);
             }
+            //else if (ChatType == ChatType.TeamChat && e.Button == MouseButtons.Right)
+            //{
+            //    this.m
+            //}
         }
 
         private void SetChatPanelHover()
@@ -138,6 +143,14 @@ namespace SharedForms
         public ChatStore GetChatStore()
         {
             return GlobalVariable.ChatList.FirstOrDefault(d => d.ChatUserName == UserName);
+        }
+
+       
+
+        private void 查看群组成员ToolStripMenuItem_Click_1(object sender, System.EventArgs e)
+        {
+            TeamView frm = new TeamView();
+            frm.ShowDialog();
         }
 
         public string GetTeamMemUserNames()

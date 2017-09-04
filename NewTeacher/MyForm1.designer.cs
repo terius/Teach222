@@ -28,24 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.panel1.Location = new System.Drawing.Point(271, 134);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(398, 282);
-            this.panel1.TabIndex = 0;
             // 
             // MyForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Silver;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(793, 623);
-            this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MyForm1";
@@ -56,7 +46,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
     }
 }

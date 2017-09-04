@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("节点4");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("节点5");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("节点6");
@@ -40,8 +41,8 @@
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("节点3");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamView));
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.imageList1 = new System.Windows.Forms.ImageList();
-            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panelContent.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,7 +110,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "查看分组";
+            this.Text = "查看群组成员";
             this.Load += new System.EventHandler(this.TeamView_Load);
             this.panelContent.ResumeLayout(false);
             this.ResumeLayout(false);

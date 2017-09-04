@@ -33,8 +33,9 @@ namespace SharedForms
 
         public static void SendCommand(IsendRequest request,CommandType type)
         {
-            if (client == null)
+            if (client == null || !client.ClientIsConnected)
             {
+                ShowWarnning("服务端未连接成功，请稍候再试");
                 return;
             }
             switch (type)

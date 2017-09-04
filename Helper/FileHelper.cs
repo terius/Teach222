@@ -5,6 +5,8 @@ namespace Helpers
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Imaging;
     using System.IO;
     using System.Net;
     using System.Text;
@@ -427,7 +429,7 @@ namespace Helpers
                 return;
             }
 
-          
+
 
             using (var myClient = new WebClient())
             {
@@ -444,9 +446,14 @@ namespace Helpers
                 }
                 if (!string.IsNullOrWhiteSpace(savePath))
                 {
-                   
-                    myClient.DownloadFileCompleted += onComplete.Invoke;
-                    myClient.DownloadProgressChanged += onProgress.Invoke;
+                    if (onComplete != null)
+                    {
+                        myClient.DownloadFileCompleted += onComplete.Invoke;
+                    }
+                    if (onProgress != null)
+                    {
+                        myClient.DownloadProgressChanged += onProgress.Invoke;
+                    }
                     myClient.DownloadFileAsync(new Uri(url), savePath, savePath);
 
                 }
@@ -455,7 +462,7 @@ namespace Helpers
 
         }
 
-     
+
 
         public static byte[] ImageToByteArray(Image imageIn)
         {
@@ -532,6 +539,32 @@ namespace Helpers
         public static string GetFileExt(string fileName)
         {
             return fileName.Substring(fileName.LastIndexOf('.') + 1).ToLower();
+        }
+
+
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
         }
     }
 }

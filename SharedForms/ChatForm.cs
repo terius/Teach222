@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SharedForms
@@ -80,14 +81,14 @@ namespace SharedForms
 
         private void InitProgressBar()
         {
-            toolProgressBar.Minimum = 0;
+            ProgressBar.Minimum = 0;
             //设置一个最大值
-            toolProgressBar.Maximum = 100;
+            ProgressBar.Maximum = 100;
             //设置步长，即每次增加的数
-            toolProgressBar.Step = 1;
+            ProgressBar.Step = 1;
 
             // progressBarControl1.PercentView = true;
-            toolProgressBar.Visible = false;
+            ProgressBar.Visible = false;
         }
 
         private void CheckPath()
@@ -433,14 +434,14 @@ namespace SharedForms
                 }
 
                 toolStrip1.Enabled = false;
-                toolProgressBar.Visible = true;
+                ProgressBar.Visible = true;
                 //  ShowNotify("上传中，请稍候。。。");
                 FileHelper.UploadFile(uploadFile, UploadFileServer, (ob, ea) =>
                 {
-                    if (ea.Error != null && string.IsNullOrWhiteSpace(ea.Error.Message))
+                    if (ea.Error != null && !string.IsNullOrWhiteSpace(ea.Error.Message))
                     {
                         this.toolStrip1.Enabled = true;
-                        toolProgressBar.Visible = false;
+                        ProgressBar.Visible = false;
                         throw new Exception(ea.Error.Message);
                     }
                     string result = Encoding.UTF8.GetString(ea.Result);
@@ -453,7 +454,7 @@ namespace SharedForms
                     {
                         GlobalVariable.ShowError(uploadResult.message);
                         this.toolStrip1.Enabled = true;
-                        toolProgressBar.Visible = false;
+                        ProgressBar.Visible = false;
                         return;
                     }
                     FileInfo fi = new FileInfo(uploadFile);
@@ -461,6 +462,7 @@ namespace SharedForms
                     var messageType = GetMessageType(fi.Extension.ToLower());
                     var message = new ChatMessage(_myUserName, _myDisplayName, selectUserName, uploadtext, GlobalVariable.LoginUserInfo.UserType, messageType);
                     message.DownloadFileUrl = uploadResult.url;
+                    message.LocalFilePath = uploadFile;
                     if (SendMessageCommand(message))
                     {
                         AppendMessage(message, true);
@@ -468,7 +470,7 @@ namespace SharedForms
                      //   ShowNotify("上传成功");
                     }
                     toolStrip1.Enabled = true;
-                    toolProgressBar.Visible = false;
+                    ProgressBar.Visible = false;
                     //this.btnUploadFile.Enabled = true;
                     //btnRecordAudio.Enabled = true;
                     //progressBarControl1.Visible = false;
@@ -483,7 +485,7 @@ namespace SharedForms
                 }, (ob, progress) =>
                 {
                     var p = (int)(progress.BytesSent * 100 / progress.TotalBytesToSend);
-                    toolProgressBar.Value = p;
+                    ProgressBar.Value = p;
                     Application.DoEvents();
 
                 });
@@ -493,7 +495,7 @@ namespace SharedForms
             catch (Exception)
             {
                 this.toolStrip1.Enabled = true;
-                toolProgressBar.Visible = false;
+                ProgressBar.Visible = false;
                 throw;
             }
         }
@@ -579,6 +581,39 @@ namespace SharedForms
         private void toolUploadPic_Click(object sender, EventArgs e)
         {
             UploadFileToALL();
+        }
+
+        private void toolRecordVoice_Click(object sender, EventArgs e)
+        {
+            if (!labRecordVoice.Visible)
+            {
+                toolRecordVoice.Image = Resource1.录音中;
+                labRecordVoice.Visible = true;
+                Application.DoEvents();
+               
+                if (recordVoice == null)
+                {
+                    recordVoice = new RecordVoice();
+                }
+                recordVoice.BeginRecord();
+                //if (audioRecorder == null)
+                //{
+                //    audioRecorder = new AudioRecorder();
+                //}
+                //audioRecorder.StartRecording(saveAudioFile);
+            }
+            else
+            {
+                toolRecordVoice.Image = Resource1.录音;
+                labRecordVoice.Visible = false;
+                Application.DoEvents();
+                // ((ToolTipItem)btnRecordAudio.SuperTip.Items[0]).Text = "点击按钮开始录音";
+                string saveFile = recordVoice.StopRecord();
+                // audioRecorder.EndRecord();
+                Thread.Sleep(500);
+
+                UploadFileToALL(saveFile, true);
+            }
         }
     }
 }
