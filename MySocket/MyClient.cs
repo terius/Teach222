@@ -180,9 +180,9 @@ namespace MySocket
         {
             IPEndPoint fLocalIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
             studentUdpClient = new UdpClient(fLocalIPEndPoint);
-            //remoteIp = teacherIP;
-            //remotePort = udpPort;
-            //return;
+            remoteIp = teacherIP;
+            remotePort = udpPort;
+            return;
 
 
 

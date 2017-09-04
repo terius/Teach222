@@ -31,18 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyForm2));
             this.panelTitle = new System.Windows.Forms.Panel();
             this.labTitile = new System.Windows.Forms.Label();
-            this.panelContent = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.picMin = new System.Windows.Forms.PictureBox();
             this.picMax = new System.Windows.Forms.PictureBox();
             this.picClose = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelTitle.SuspendLayout();
-            this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picClose)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panelContent.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTitle
@@ -67,27 +65,6 @@
             this.labTitile.Name = "labTitile";
             this.labTitile.Size = new System.Drawing.Size(0, 19);
             this.labTitile.TabIndex = 1;
-            // 
-            // panelContent
-            // 
-            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
-            this.panelContent.Controls.Add(this.pictureBox1);
-            this.panelContent.Controls.Add(this.button1);
-            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(1, 31);
-            this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(791, 591);
-            this.panelContent.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(70, 60);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // picMin
             // 
@@ -125,15 +102,25 @@
             this.picClose.TabIndex = 0;
             this.picClose.TabStop = false;
             // 
-            // pictureBox1
+            // panelContent
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(233, 138);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(150, 119);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
+            this.panelContent.Controls.Add(this.button1);
+            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContent.Location = new System.Drawing.Point(1, 31);
+            this.panelContent.Name = "panelContent";
+            this.panelContent.Size = new System.Drawing.Size(791, 591);
+            this.panelContent.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(70, 60);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MyForm2
             // 
@@ -150,11 +137,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.panelTitle.ResumeLayout(false);
             this.panelTitle.PerformLayout();
-            this.panelContent.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picClose)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panelContent.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -167,6 +153,5 @@
         protected internal System.Windows.Forms.Panel panelContent;
         private System.Windows.Forms.Panel panelTitle;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

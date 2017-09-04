@@ -21,10 +21,11 @@ namespace NewTeacher
         private void Form2_Load(object sender, EventArgs e)
         {
             StartSocketClient();
-          
+
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             this.labVer.Text = "版本：" + version;
-            VaryQualityLevel();
+         //   ScreenCapture sc = new ScreenCapture();
+           // sc.CaptureScreenToFile(@"D:\" + DateTime.Now.Ticks.ToString() + ".png", ImageFormat.Png);
         }
 
         private void AutoLogin()
@@ -36,56 +37,14 @@ namespace NewTeacher
             LoginIn(_userName, _displayName, pwd);
         }
 
-        private void VaryQualityLevel()
-        {
-            // Get a bitmap. The using statement ensures objects  
-            // are automatically disposed from memory after use.  
-            using (Bitmap bmp1 = new Bitmap(@"C:\Users\Public\Pictures\Sample Pictures\Jellyfish.jpg"))
-            {
-                ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
 
-                // Create an Encoder object based on the GUID  
-                // for the Quality parameter category.  
-                System.Drawing.Imaging.Encoder myEncoder =
-                    System.Drawing.Imaging.Encoder.Quality;
 
-                // Create an EncoderParameters object.  
-                // An EncoderParameters object has an array of EncoderParameter  
-                // objects. In this case, there is only one  
-                // EncoderParameter object in the array.  
-                EncoderParameters myEncoderParameters = new EncoderParameters(1);
 
-                EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 50L);
-                myEncoderParameters.Param[0] = myEncoderParameter;
-                bmp1.Save(@"c:\TestPhotoQualityFifty.jpg", jpgEncoder, myEncoderParameters);
-
-                myEncoderParameter = new EncoderParameter(myEncoder, 100L);
-                myEncoderParameters.Param[0] = myEncoderParameter;
-                bmp1.Save(@"C:\TestPhotoQualityHundred.jpg", jpgEncoder, myEncoderParameters);
-
-                // Save the bitmap as a JPG file with zero quality level compression.  
-                myEncoderParameter = new EncoderParameter(myEncoder, 0L);
-                myEncoderParameters.Param[0] = myEncoderParameter;
-                bmp1.Save(@"C:\TestPhotoQualityZero.jpg", jpgEncoder, myEncoderParameters);
-            }
-        }
-
-        private ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
-        }
 
         private void StartSocketClient()
         {
-            Thread td = new Thread(() => {
+            Thread td = new Thread(() =>
+            {
 
                 GlobalVariable.client = new MyClient(ProgramType.Teacher);
                 GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
@@ -94,7 +53,8 @@ namespace NewTeacher
                     var result = JsonHelper.DeserializeObj<LoginResult>(message.DataStr);
                     if (result.success)
                     {
-                        this.InvokeOnUiThreadIfRequired(() => {
+                        this.InvokeOnUiThreadIfRequired(() =>
+                        {
                             GlobalVariable.LoginUserInfo = new LoginUserInfo
                             {
                                 DisplayName = _displayName,
@@ -114,7 +74,7 @@ namespace NewTeacher
 
 
                 };
-                AutoLogin();
+              //  AutoLogin();
             });
             td.IsBackground = true;
             td.Start();
@@ -150,7 +110,7 @@ namespace NewTeacher
 
         }
 
-        private void LoginIn(string userName,string nickName,string password)
+        private void LoginIn(string userName, string nickName, string password)
         {
             LoginRequest q = new LoginRequest
             {

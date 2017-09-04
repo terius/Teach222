@@ -542,6 +542,13 @@ namespace Helpers
         }
 
 
+        public static Bitmap ResizeImage(string filepath, int width, int height)
+        {
+            var img = Image.FromFile(filepath);
+            return ResizeImage(img, width, height);
+        }
+
+
         public static Bitmap ResizeImage(Image image, int width, int height)
         {
             var destRect = new Rectangle(0, 0, width, height);
@@ -565,6 +572,51 @@ namespace Helpers
             }
 
             return destImage;
+        }
+
+        public static void VaryQualityLevel(Image img, Int64 level,string saveFilePath,ImageFormat format)
+        {
+            FileInfo fi = new FileInfo(saveFilePath);
+            if (!Directory.Exists(fi.DirectoryName))
+            {
+                Directory.CreateDirectory(fi.DirectoryName);
+            }
+            // Get a bitmap. The using statement ensures objects  
+            // are automatically disposed from memory after use.  
+            //  using (Bitmap bmp1 = new Bitmap(@"C:\Users\Public\Pictures\Sample Pictures\Jellyfish.jpg"))
+            //    {
+            ImageCodecInfo jpgEncoder = GetEncoder(format);
+
+            // Create an Encoder object based on the GUID  
+            // for the Quality parameter category.  
+            System.Drawing.Imaging.Encoder myEncoder =
+                System.Drawing.Imaging.Encoder.Quality;
+
+            // Create an EncoderParameters object.  
+            // An EncoderParameters object has an array of EncoderParameter  
+            // objects. In this case, there is only one  
+            // EncoderParameter object in the array.  
+            EncoderParameters myEncoderParameters = new EncoderParameters(1);
+
+            EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, level);
+            myEncoderParameters.Param[0] = myEncoderParameter;
+            img.Save(saveFilePath, jpgEncoder, myEncoderParameters);
+
+
+
+        }
+
+        private static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
         }
     }
 }

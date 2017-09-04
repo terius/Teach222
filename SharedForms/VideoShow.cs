@@ -18,8 +18,9 @@ namespace SharedForms
             if (_type == ProgramType.Student)
             {
                 this.WindowState = FormWindowState.Maximized;
+                this.TopMost = true;
             }
-         //   axVLCPlugin21.video.aspectRatio = GetScreenAspectRatio();
+            axVLCPlugin21.video.aspectRatio = GetScreenAspectRatio();
 
 
         }

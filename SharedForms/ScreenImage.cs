@@ -15,8 +15,11 @@ namespace SharedForms
         /// <returns></returns>
         public Image CaptureScreen()
         {
-            return getThumImage(CaptureWindow(User32.GetDesktopWindow()), 40, 5);
+            //return getThumImage(CaptureWindow(User32.GetDesktopWindow()), 40, 5);
+             return FileHelper.ResizeImage(CaptureWindow(User32.GetDesktopWindow()), 300, 180);
         }
+
+
 
         public Image getThumImage(Image image, long quality, int multiple)
 
@@ -24,13 +27,13 @@ namespace SharedForms
             Bitmap newImage = null;
             try
             {
-                long imageQuality = quality;
+             //   long imageQuality = quality;
                 Bitmap sourceImage = new Bitmap(image);
-                ImageCodecInfo myImageCodecInfo = GetEncoderInfo("image/png");
-                System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
-                EncoderParameters myEncoderParameters = new EncoderParameters(1);
-                EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, imageQuality);
-                myEncoderParameters.Param[0] = myEncoderParameter;
+                //ImageCodecInfo myImageCodecInfo = GetEncoderInfo("image/png");
+                //System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
+                //EncoderParameters myEncoderParameters = new EncoderParameters(1);
+                //EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, imageQuality);
+                //myEncoderParameters.Param[0] = myEncoderParameter;
                 float xWidth = sourceImage.Width;
                 float yWidth = sourceImage.Height;
                 int newWidth = (int)(xWidth / multiple);
@@ -171,6 +174,12 @@ namespace SharedForms
         {
             Image img = CaptureScreen();
             img.Save(filename, format);
+        }
+
+        public void CaptureScreenToSmallFile(string filename, ImageFormat format)
+        {
+            Image img = CaptureScreen();
+            FileHelper.VaryQualityLevel(img, 0, filename, format);
         }
 
         /// <summary>

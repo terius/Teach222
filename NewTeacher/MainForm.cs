@@ -147,7 +147,7 @@ namespace NewTeacher
             }
             videoForm.BringToFront();
             videoForm.Show();
-            //    Thread.Sleep(5000);
+            Thread.Sleep(4000);
             videoForm.PlayVideo(rtsp);
 
         }
@@ -300,7 +300,7 @@ namespace NewTeacher
                     });
 
                 };
-                GlobalVariable.client.CreateUDPTeacherHoleForInterNet();
+                GlobalVariable.client.CreateUDPTeacherHole();
 
 
             });
@@ -331,6 +331,8 @@ namespace NewTeacher
             {
                 StudentScreen newItem = new StudentScreen(sinfo);
                 flowLayoutPanel1.Controls.Add(newItem);
+                newItem.Width = 300;
+                newItem.Height = 220;
             }
         }
         private void SendAction(TeacherAction type)

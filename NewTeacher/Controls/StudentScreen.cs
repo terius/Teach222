@@ -15,6 +15,12 @@ namespace NewTeacher.Controls
             this.labName.Text = info.DisplayName;
             this.UserName = info.UserName;
             this.picScreen.DoubleClick += PicScreen_DoubleClick;
+        
+        }
+
+        public StudentScreen()
+        {
+            InitializeComponent();
         }
 
         private void PicScreen_DoubleClick(object sender, System.EventArgs e)

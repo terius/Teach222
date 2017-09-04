@@ -398,6 +398,7 @@ namespace StudentUser
             videoForm.BringToFront();
             videoForm.Show();
             //  videoPlayer = f;
+            Thread.Sleep(4000);
             videoForm.PlayVideo(rtsp);
 
         }

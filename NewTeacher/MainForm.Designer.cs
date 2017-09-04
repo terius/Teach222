@@ -222,6 +222,7 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.BackColor = System.Drawing.Color.White;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 21);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -745,7 +746,7 @@
             this.userList_studentVideoShow,
             this.userList_stopStudentShow});
             this.UserListMenu.Name = "contextMenuStrip1";
-            this.UserListMenu.Size = new System.Drawing.Size(167, 208);
+            this.UserListMenu.Size = new System.Drawing.Size(167, 186);
             this.UserListMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.UserListMenu_ItemClicked);
             // 
             // userList_privateChat
