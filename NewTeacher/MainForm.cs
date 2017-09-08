@@ -2,12 +2,12 @@
 using Helpers;
 using Model;
 using NewTeacher.Controls;
+using NewTeacher.Properties;
 using SharedForms;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using MySocket;
-using System.Threading;
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace NewTeacher
 {
@@ -21,6 +21,7 @@ namespace NewTeacher
         string actionStuUserName;
         VideoShow videoForm;
         //   ViewRtsp videoPlayer;
+        string videoFileName = "";
         #endregion
         public MainForm()
         {
@@ -463,7 +464,7 @@ namespace NewTeacher
                     break;
                 case TeacherAction.menuFileShare_Click:
                     ChatToALL();
-                    //  chatForm.UploadFileToALL();  暂时屏蔽
+                     chatForm.UploadFileToALL(); // 暂时屏蔽
                     break;
                 case TeacherAction.menuFileShare2_Click:
 
@@ -471,6 +472,21 @@ namespace NewTeacher
                 case TeacherAction.menuAccount_Click:
                     break;
                 case TeacherAction.menuVideoRecord_Click:
+             
+                    if (this.menuVideoRecord.Text == "屏幕录制")
+                    {
+                        videoFileName = GlobalVariable.BeginRecordVideo();
+                        this.menuVideoRecord.Image = Resources.录制;
+                        GlobalVariable.ShowNotifyMessage("正在屏幕录制中...", -1);
+                        this.menuVideoRecord.Text = "停止录制";
+                    }
+                    else
+                    {
+                        GlobalVariable.EndRecordVideo();
+                        GlobalVariable.ShowNotifyMessage("录制完成,视频文件在程序目录的VideoRecord中", -1);
+                        this.menuVideoRecord.Image = Resources.未录制;
+                        this.menuVideoRecord.Text = "屏幕录制";
+                    }
                     break;
                 default:
                     break;
@@ -768,5 +784,11 @@ namespace NewTeacher
         }
 
         #endregion
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            GlobalVariable.client.KillAllFFmpeg();
+            GlobalVariable.client.CloseTeacherUDP();
+        }
     }
 }

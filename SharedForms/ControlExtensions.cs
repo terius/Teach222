@@ -1,5 +1,4 @@
 ﻿using Common;
-using DevExpress.XtraNavBar;
 using Model;
 using System;
 using System.Drawing;
@@ -117,20 +116,7 @@ namespace SharedForms
         //    return item;
         //}
 
-        public static ChatItemOld CreateItem(this NavBarControl source, ChatMessage request)
-        {
-            var item = new ChatItemOld(source, request.SendUserName,
-                request.SendDisplayName, request.ChatType, request.UserType);
-
-            return item;
-        }
-        public static ChatItemOld CreateItem(this NavBarControl source, ChatStore store)
-        {
-            var item = new ChatItemOld(source, store.ChatUserName,
-                store.ChatDisplayName, store.ChatType, store.UserType);
-
-            return item;
-        }
+    
 
         public static bool IsMySelf(this string userName)
         {

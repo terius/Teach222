@@ -392,14 +392,20 @@ namespace Helpers
         }
 
         public static void UploadFile(string fileName, string serverUrl,
-            Action<object, UploadFileCompletedEventArgs> action,
+            Action<object, UploadFileCompletedEventArgs> completeAction,
             Action<object, UploadProgressChangedEventArgs> progressAction
             )
         {
             using (var myClient = new WebClient())
             {
-                myClient.UploadFileCompleted += action.Invoke;
-                myClient.UploadProgressChanged += progressAction.Invoke;
+                if (completeAction != null)
+                {
+                    myClient.UploadFileCompleted += completeAction.Invoke;
+                }
+                if (progressAction != null)
+                {
+                    myClient.UploadProgressChanged += progressAction.Invoke;
+                }
 
                 myClient.UploadFileAsync(new Uri(serverUrl), fileName);
 
@@ -617,6 +623,16 @@ namespace Helpers
                 }
             }
             return null;
+        }
+
+        public static string CreatePath(string pathName)
+        {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pathName);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            return path;
         }
     }
 }

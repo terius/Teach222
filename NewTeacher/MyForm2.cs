@@ -216,7 +216,7 @@ namespace NewTeacher
 
         private void button1_Click(object sender, EventArgs e)
         {
-            NotifyForm frm = new NotifyForm(this);
+            NotifyForm frm = new NotifyForm();
             frm.Show();
             //  MsgForm frm = new MsgForm();
             //  frm.DueSecond = 5;

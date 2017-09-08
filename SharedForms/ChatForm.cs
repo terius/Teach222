@@ -43,6 +43,7 @@ namespace SharedForms
         public ChatForm()
         {
             InitializeComponent();
+            labChatTitle.Text = "";
             ChatNav.SelectChatItem += ChatNav_SelectChatItem;
             ChatNav.CreateNewGroupChat(groupId);
             InitProgressBar();
@@ -102,6 +103,11 @@ namespace SharedForms
             if (!Directory.Exists(GlobalVariable.DownloadPath))
             {
                 Directory.CreateDirectory(GlobalVariable.DownloadPath);
+            }
+
+            if (!Directory.Exists(GlobalVariable.TempPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.TempPath);
             }
         }
         #endregion
@@ -436,15 +442,15 @@ namespace SharedForms
                 toolStrip1.Enabled = false;
                 ProgressBar.Visible = true;
                 //  ShowNotify("上传中，请稍候。。。");
-                FileHelper.UploadFile(uploadFile, UploadFileServer, (ob, ea) =>
+                FileHelper.UploadFile(uploadFile, UploadFileServer, (sender, completeEventArgs) =>
                 {
-                    if (ea.Error != null && !string.IsNullOrWhiteSpace(ea.Error.Message))
+                    if (completeEventArgs.Error != null && !string.IsNullOrWhiteSpace(completeEventArgs.Error.Message))
                     {
                         this.toolStrip1.Enabled = true;
                         ProgressBar.Visible = false;
-                        throw new Exception(ea.Error.Message);
+                        throw new Exception(completeEventArgs.Error.Message);
                     }
-                    string result = Encoding.UTF8.GetString(ea.Result);
+                    string result = Encoding.UTF8.GetString(completeEventArgs.Result);
                     UploadResult uploadResult = JsonHelper.DeserializeObj<UploadResult>(result);
                     if (uploadResult.error == 0)
                     {

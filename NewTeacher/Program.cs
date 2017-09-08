@@ -1,7 +1,4 @@
-﻿using DevExpress.LookAndFeel;
-using DevExpress.Skins;
-using DevExpress.UserSkins;
-using Helpers;
+﻿using Helpers;
 using System;
 using System.Windows.Forms;
 
@@ -32,11 +29,6 @@ namespace NewTeacher
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-
-                    //   BonusSkins.Register();
-                    //   SkinManager.EnableFormSkins();
-                    //  UserLookAndFeel.Default.SetSkinStyle("Office 2013 Light Gray");
-
                     #region 线程异常处理
                     Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
                     AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
@@ -47,7 +39,7 @@ namespace NewTeacher
                         Application.Run(new MainForm());
                     }
 
-                    // Application.Run(new MyForm2());
+                    //  Application.Run(new Form1());
                 }
                 else
                 {

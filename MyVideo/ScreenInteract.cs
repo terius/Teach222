@@ -19,7 +19,7 @@ namespace MyVideo
         private string _serverIp;
         private string _ipSelf;
         private int _portSelf;
-      
+
         //  private int widthPixel;
         //  private int heightPixel;
 
@@ -51,9 +51,9 @@ namespace MyVideo
             {
                 stopScreenInteract();
             }
-       
+
             _rtspAddress = pushVideoByFFmpeg(_serverIp, _ipSelf, _portSelf);
-         
+
             isBeginScreenInteract = true;
             return this._rtspAddress;
         }
@@ -82,6 +82,7 @@ namespace MyVideo
 
         private string GetResolution()
         {
+
             var resolution = Screen.PrimaryScreen.Bounds;
             return resolution.Width + "*" + resolution.Height;
         }
@@ -129,6 +130,42 @@ namespace MyVideo
             return new string[] { rtspUrl, para };
         }
 
+        private string CreateFFmpegVideoRecordParam()
+        {
+            string para = " -r 25 -g 20 -s 1024*768 -vcodec libx264 -x264opts bframes=3:b-adapt=0 -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency ";
+            return para;
+        }
+
+        public void BeginRecordVideo(string filename)
+        {
+
+            var video = GetVideoName();
+            if (string.IsNullOrWhiteSpace(video))
+            {
+                throw new Exception("未找到摄像头");
+            }
+            var url = "-f dshow -i video=\"" + video + "\"";
+            var mic = GetMicName();
+            if (!string.IsNullOrWhiteSpace(mic))
+            {
+                url += ":audio=\"" + mic + "\" -acodec mp2 -ab 128k";
+            }
+            url += CreateFFmpegVideoRecordParam() + filename;
+            Loger.LogMessage("录制视频命令:" + url);
+            this._ffmpeg = new Ffmpeg();
+            this._ffmpeg.beginExecute(url);
+            _ffmpeg.WaitComplete();
+        }
+
+        public void EndRecordVideo()
+        {
+            if (_ffmpeg != null)
+            {
+                this._ffmpeg.dispose();
+
+            }
+        }
+
         private string pushVideoByFFmpeg(string ipServer, string ipSelf, int portSelf)
         {
             var para = GetFFMpegParaAndUrl(ipServer, ipSelf, portSelf);
@@ -162,38 +199,27 @@ namespace MyVideo
             }
             return str + port.ToString();
         }
+
+        public void KillAllFFMPEG()
+        {
+            Process killFfmpeg = new Process();
+            ProcessStartInfo taskkillStartInfo = new ProcessStartInfo
+            {
+                FileName = "taskkill",
+                Arguments = "/F /IM ffmpeg.exe",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            killFfmpeg.StartInfo = taskkillStartInfo;
+            killFfmpeg.Start();
+        }
     }
 
 
     public class Ffmpeg
     {
         private Process myProcess = null;
-
-        public event MessageReceivedEventHandler MessageReceived;
-
-        //public void execute(string para)
-        //{
-        //    try
-        //    {
-        //        this.myProcess = new Process();
-        //        ProcessStartInfo processStartInfo = new ProcessStartInfo("ffmpeg.exe", para);
-        //        this.myProcess.StartInfo = processStartInfo;
-        //        processStartInfo.UseShellExecute = false;
-        //        processStartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;//  Application.StartupPath;
-        //        processStartInfo.CreateNoWindow = true;
-        //        processStartInfo.RedirectStandardOutput = true;
-        //        processStartInfo.RedirectStandardInput = true;
-        //        this.myProcess.Start();
-        //        StreamReader standardOutput = this.myProcess.StandardOutput;
-        //        this.myProcess.WaitForExit();
-        //        while (!standardOutput.EndOfStream)
-        //            this.MessageReceived.BeginInvoke(standardOutput.ReadLine(), (AsyncCallback)null, (object)null);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
         ManualResetEvent runDone = new ManualResetEvent(false);
         public void beginExecute(string para)
         {
@@ -201,35 +227,32 @@ namespace MyVideo
             {
                 new Thread(() =>
                 {
-                    this.myProcess = new Process();
+                    //KillAllFFMPEG();
+                    //Thread.Sleep(200);
+                    myProcess = new Process();
                     ProcessStartInfo processStartInfo = new ProcessStartInfo("ffmpeg.exe", para);
-                    this.myProcess.StartInfo = processStartInfo;
+                    myProcess.StartInfo = processStartInfo;
                     processStartInfo.UseShellExecute = false;
                     processStartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
                     processStartInfo.CreateNoWindow = true;
-                    processStartInfo.RedirectStandardOutput = true;
-                    processStartInfo.RedirectStandardInput = true;
-                    //  processStartInfo.RedirectStandardError = true;
-
-                    //  myProcess.ErrorDataReceived += MyProcess_ErrorDataReceived;
+                    // processStartInfo.RedirectStandardOutput = true;
+                    //  processStartInfo.RedirectStandardInput = true;
+                    processStartInfo.RedirectStandardError = true;
+                    myProcess.ErrorDataReceived += MyProcess_ErrorDataReceived;
                     //  myProcess.OutputDataReceived += MyProcess_OutputDataReceived;
 
-                    this.myProcess.Start();
-                    //   myProcess.BeginErrorReadLine();
-                    //    myProcess.BeginOutputReadLine();
-                    //     string s = myProcess.StandardOutput.ReadToEnd();
-                    //   Loger.LogMessage(s);
-                    //StreamReader standardOutput = this.myProcess.StandardOutput;
-                    //while (!standardOutput.EndOfStream)
-                    //    this.MessageReceived.BeginInvoke(standardOutput.ReadLine(), (AsyncCallback)null, (object)null);
-                    //this.myProcess.WaitForExit();
-                    Thread.Sleep(1000);
+                    myProcess.Start();
+                    myProcess.BeginErrorReadLine();
+                    //     myProcess.BeginOutputReadLine();
                     runDone.Set();
+                    //  this.myProcess.WaitForExit();
+
 
                 }).Start();
             }
             catch (Exception ex)
             {
+                if (myProcess != null) myProcess.Dispose();
                 throw ex;
             }
         }
@@ -258,6 +281,7 @@ namespace MyVideo
 
         public void dispose()
         {
+            //   KillAllFFMPEG();
             if (this.myProcess.HasExited)
                 return;
             this.myProcess.Refresh();
@@ -266,6 +290,8 @@ namespace MyVideo
             this.myProcess.Dispose();
             this.myProcess.Close();
         }
+
+      
 
         public delegate void MessageReceivedEventHandler(string msg);
     }

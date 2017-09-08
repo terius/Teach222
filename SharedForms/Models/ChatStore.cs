@@ -1,6 +1,5 @@
 ﻿
 using Common;
-using DevExpress.XtraEditors;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace SharedForms
 
         public IList<ChatMessage> NewMessageList { get; set; }
 
-        public smsPanel HistoryContent { get; set; }
+     
 
         public smsPanelNew HistoryContentNew { get; set; } //暂时使用
 

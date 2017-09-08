@@ -1,7 +1,4 @@
-﻿using DevExpress.LookAndFeel;
-using DevExpress.Skins;
-using DevExpress.UserSkins;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace vlctest
@@ -19,7 +16,7 @@ namespace vlctest
             //BonusSkins.Register();
             //SkinManager.EnableFormSkins();
             //UserLookAndFeel.Default.SetSkinStyle("Office 2016 Colorful");
-            Application.Run(new Form2());
+            Application.Run(new ffmpegTest());
         }
     }
 }

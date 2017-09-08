@@ -299,7 +299,7 @@
             this.menuVideoRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.menuVideoRecord.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.menuVideoRecord.ForeColor = System.Drawing.Color.Cornsilk;
-            this.menuVideoRecord.Image = ((System.Drawing.Image)(resources.GetObject("menuVideoRecord.Image")));
+            this.menuVideoRecord.Image = global::NewTeacher.Properties.Resources.未录制;
             this.menuVideoRecord.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.menuVideoRecord.Location = new System.Drawing.Point(16, 39);
             this.menuVideoRecord.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -380,6 +380,7 @@
             this.menuFileShare2.Text = "文件共享";
             this.menuFileShare2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.menuFileShare2.UseVisualStyleBackColor = false;
+            this.menuFileShare2.Visible = false;
             this.menuFileShare2.Click += new System.EventHandler(this.menuFileShare2_Click);
             // 
             // menuFileShare
@@ -833,6 +834,7 @@
             this.ClientSize = new System.Drawing.Size(1189, 615);
             this.Name = "MainForm";
             this.Text = "在线教育系统";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Controls.SetChildIndex(this.panelContent, 0);
             this.panelContent.ResumeLayout(false);

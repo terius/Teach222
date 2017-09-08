@@ -32,22 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.BonusSkins.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Data.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Office.v16.2.Core, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Pdf.v16.2.Core, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Printing.v16.2.Core, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v16.2.Core, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Sparkline.v16.2.Core, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraGrid.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraLayout.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraNavBar.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraRichEdit.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraTreeList.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="NAudio, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.8.2\lib\net35\NAudio.dll</HintPath>
       <Private>True</Private>
@@ -76,12 +60,6 @@
     </Compile>
     <Compile Include="ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ChatFormOld.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ChatFormOld.designer.cs">
-      <DependentUpon>ChatFormOld.cs</DependentUpon>
     </Compile>
     <Compile Include="ControlExtensions.cs" />
     <Compile Include="NotifyForm.cs">
@@ -126,9 +104,6 @@
     <Compile Include="UserControls\ChatItem.Designer.cs">
       <DependentUpon>ChatItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ChatItemOld.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UserControls\ChatListPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -153,23 +128,11 @@
     <Compile Include="UserControls\SelectablePanel.Designer.cs">
       <DependentUpon>SelectablePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\sms.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\sms.Designer.cs">
-      <DependentUpon>sms.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\sms2.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\sms2.Designer.cs">
       <DependentUpon>sms2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\smsPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UserControls\smsPanel.Designer.cs">
-      <DependentUpon>smsPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ScrollAblePanelControl.cs">
       <SubType>UserControl</SubType>
@@ -194,9 +157,6 @@
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChatFormOld.resx">
-      <DependentUpon>ChatFormOld.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="NotifyForm.resx">
       <DependentUpon>NotifyForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -206,7 +166,6 @@
     <EmbeddedResource Include="PictureShow.resx">
       <DependentUpon>PictureShow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
@@ -225,9 +184,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SelectablePanel.resx">
       <DependentUpon>SelectablePanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\sms.resx">
-      <DependentUpon>sms.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\sms2.resx">
       <DependentUpon>sms2.cs</DependentUpon>

@@ -42,6 +42,7 @@ namespace MySocket
         bool isConnecting = false;
         private string remoteIp;
         private int remotePort;
+        bool _ffmpegIsRun;
 
         #region UDP方法
 
@@ -95,30 +96,56 @@ namespace MySocket
         }
 
 
+        public void CloseTeacherUDP()
+        {
+            if (teacherUdpClient != null)
+            {
+                teacherUdpClient.Close();
+            }
+        }
+
+
+        public void CloseStudentUDP()
+        {
+            if (studentUdpClient != null)
+            {
+                studentUdpClient.Close();
+            }
+        }
+
+
         public void CreateUDPTeacherHole()
         {
-            IPEndPoint fLocalIPEndPoint = new IPEndPoint(IPAddress.Any, udpPort);
-            teacherUdpClient = new UdpClient(fLocalIPEndPoint);
-            teacherUdpClient.Client.ReceiveBufferSize = 40000;
-            uint IOC_IN = 0x80000000;
-            uint IOC_VENDOR = 0x18000000;
-            uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
-            //  teacherUdpClient.Client.IOControl((int)SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
-            byte[] fHelloData = Encoding.UTF8.GetBytes("TEACHER");
-            //    teacherUdpClient.Send(fHelloData, fHelloData.Length, serverIP, udpPort);
-            ScreenCaptureInfo screenInfo;
-            while (true)
+            try
             {
-                var receiveBytes = teacherUdpClient.Receive(ref RemoteIpEndPoint);
-                //    Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
-                if (receiveBytes.Length > 100)
+                IPEndPoint fLocalIPEndPoint = new IPEndPoint(IPAddress.Any, udpPort);
+                teacherUdpClient = new UdpClient(fLocalIPEndPoint);
+                teacherUdpClient.Client.ReceiveBufferSize = 40000;
+                uint IOC_IN = 0x80000000;
+                uint IOC_VENDOR = 0x18000000;
+                uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
+                //  teacherUdpClient.Client.IOControl((int)SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
+                byte[] fHelloData = Encoding.UTF8.GetBytes("TEACHER");
+                //    teacherUdpClient.Send(fHelloData, fHelloData.Length, serverIP, udpPort);
+                ScreenCaptureInfo screenInfo;
+                while (true)
                 {
-                    screenInfo = GetScreen(receiveBytes);
-                    OnTeacherReceiveUDP?.Invoke(screenInfo);
+                    var receiveBytes = teacherUdpClient.Receive(ref RemoteIpEndPoint);
+                    //    Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
+                    if (receiveBytes.Length > 100)
+                    {
+                        screenInfo = GetScreen(receiveBytes);
+                        OnTeacherReceiveUDP?.Invoke(screenInfo);
+                    }
+                    Thread.Sleep(200);
                 }
-                Thread.Sleep(200);
+                //    teacherUdpClient.BeginReceive(new AsyncCallback(TeacherReceiveUDPCallback), null);
             }
-            //    teacherUdpClient.BeginReceive(new AsyncCallback(TeacherReceiveUDPCallback), null);
+            catch (Exception ex)
+            {
+                Loger.LogMessage(ex.ToString());
+            }
+         
 
         }
 
@@ -697,6 +724,33 @@ namespace MySocket
             byteSource.AddRange(actionBytes);
             byteSource.AddRange(dataBytes);
             return byteSource.ToArray();
+        }
+
+
+        public void BeginRecordVideo(string path)
+        {
+            if (!_ffmpegIsRun)
+            {
+                _ffmpegIsRun = true;
+                CreateScreenInteract();
+                _screenInteract.BeginRecordVideo(path);
+            }
+        }
+
+        public void EndRecordVideo()
+        {
+            if (_ffmpegIsRun)
+            {
+                _screenInteract.EndRecordVideo();
+                _ffmpegIsRun = false;
+            }
+        }
+
+
+        public void KillAllFFmpeg()
+        {
+            CreateScreenInteract();
+            _screenInteract.KillAllFFMPEG();
         }
 
 

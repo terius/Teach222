@@ -16,18 +16,20 @@ namespace SharedForms
         private const UInt32 MF_BYCOMMAND = 0x00000000;
         #endregion
 
-        public NotifyForm()
+        string _message;
+        public NotifyForm() : this("")
         {
-            InitializeComponent();
         }
-        Form _mainform;
+
         Timer closeTimer;
         DateTime timeStart = DateTime.MinValue;
         public int DueSecond { get; set; }
-        public NotifyForm(Form mainform)
+        public NotifyForm(string message, int duesecond = 0)
         {
-            _mainform = mainform;
+            DueSecond = duesecond;
+            _message = message;
             InitializeComponent();
+            txtMessage.Text = _message;
             //   IntPtr hMenu = GetSystemMenu(this.Handle, 0);
             //   RemoveMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
             TopMost = true;
@@ -66,9 +68,19 @@ namespace SharedForms
 
         }
 
+        public void SetMessage(string message, int dueSecond = 0)
+        {
+            txtMessage.Text = _message = message;
+            if (dueSecond != 0)
+            {
+                DueSecond = dueSecond;
+            }
+         
+        }
+
         private void CloseTimer_Tick(object sender, EventArgs e)
         {
-            if (DueSecond != 0 && timeStart != DateTime.MinValue)
+            if (DueSecond > 0 && timeStart != DateTime.MinValue)
             {
                 if (DateTime.Now.Subtract(timeStart).TotalSeconds >= DueSecond)
                 {
@@ -109,7 +121,7 @@ namespace SharedForms
                     height += Height + 10;
                 }
             }
-            label1.Text = height.ToString();
+            // labMessage.Text = height.ToString();
             currentX = Screen.PrimaryScreen.WorkingArea.Width - this.Width;
             currentY = Screen.PrimaryScreen.WorkingArea.Height - height;
             this.Location = new Point(currentX, currentY);

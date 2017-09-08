@@ -102,8 +102,31 @@ namespace SharedForms
                     img = Image.FromFile(_chatMessage.LocalFilePath);
                     //   ScreenCapture sc = new ScreenCapture();
                     var smallImg = FileHelper.ResizeImage(img, 32, 32);
-                    smallImg.Save(@"d:\" + DateTime.Now.Ticks.ToString() + ".png");
+                    //  smallImg.Save(  @"d:\" + DateTime.Now.Ticks.ToString() + ".png");
                     this.pictureBox1.Image = smallImg;
+                }
+                else
+                {
+                    GetSavePath();
+                    Action<object, System.ComponentModel.AsyncCompletedEventArgs> onDownload
+                      = (sender, eve) =>
+                     {
+                         if (eve.Error != null && !string.IsNullOrWhiteSpace(eve.Error.Message))
+                         {
+                             GlobalVariable.ShowError(eve.Error.Message);
+                             return;
+                         }
+                         if (!string.IsNullOrWhiteSpace(saveFilePath))
+                         {
+                             img = Image.FromFile(saveFilePath);
+                             //   ScreenCapture sc = new ScreenCapture();
+                             var smallImg = FileHelper.ResizeImage(img, 32, 32);
+                             //  smallImg.Save(  @"d:\" + DateTime.Now.Ticks.ToString() + ".png");
+                             this.pictureBox1.Image = smallImg;
+                         }
+
+                     };
+                    FileHelper.DownloadFile(_downloadFileUrl, onDownload, null, saveFilePath);
                 }
 
                 //var fileName =_downloadFileUrl.Substring(_downloadFileUrl.LastIndexOf("/") + 1);
@@ -163,29 +186,36 @@ namespace SharedForms
             return Common.MessageType.Image;
         }
 
+
+        private void GetSavePath()
+        {
+            if (string.IsNullOrWhiteSpace(saveFilePath))
+            {
+                var fileName = _downloadFileUrl.Substring(_downloadFileUrl.LastIndexOf("/") + 1);
+                saveFilePath = GlobalVariable.DownloadPath + "\\" + fileName;
+            }
+        }
+
         private void PictureBox1_Click(object sender, EventArgs e)
         {
 
 
             var fileType = GetFileType(_downloadFileUrl);
+            GetSavePath();
             Action<object, System.ComponentModel.AsyncCompletedEventArgs> onDownload;
             Action<object, DownloadProgressChangedEventArgs> onProgress;
-        
+
             if (fileType == Common.MessageType.Sound)
             {
-                //ShowNotify("开始播放", 1000);
-                //  PlayMp3FromUrl(_downloadFileUrl);
-                var fileName = _downloadFileUrl.Substring(_downloadFileUrl.LastIndexOf("/") + 1);
-                var savePath = GlobalVariable.DownloadPath + "\\" + fileName;
-                if (!string.IsNullOrWhiteSpace(savePath))
+                if (!string.IsNullOrWhiteSpace(saveFilePath))
                 {
-                    if (File.Exists(savePath))
+                    if (File.Exists(saveFilePath))
                     {
                         if (progressBar1.Visible)
                         {
                             progressBar1.Hide();
                         }
-                        ((ChatForm)this.ParentForm).PlayVoice(savePath);
+                        ((ChatForm)this.ParentForm).PlayVoice(saveFilePath);
                         return;
                     }
                 }
@@ -209,24 +239,22 @@ namespace SharedForms
                     Application.DoEvents();
                 };
 
-                FileHelper.DownloadFile(_downloadFileUrl, onDownload, onProgress, savePath);
+                FileHelper.DownloadFile(_downloadFileUrl, onDownload, onProgress, saveFilePath);
 
 
             }
             else
             {
-                string savePath = "";
+              
                 if (fileType == Common.MessageType.Image)
                 {
-                    var fileName = _downloadFileUrl.Substring(_downloadFileUrl.LastIndexOf("/") + 1);
-                    savePath = GlobalVariable.DownloadPath + "\\" + fileName;
-                    if (File.Exists(savePath))
+                    if (File.Exists(saveFilePath))
                     {
                         if (progressBar1.Visible)
                         {
                             progressBar1.Hide();
                         }
-                        ShowPic(savePath);
+                        ShowPic(saveFilePath);
                         return;
                     }
                 }
@@ -257,7 +285,7 @@ namespace SharedForms
                     progressBar1.Value = p;
                     Application.DoEvents();
                 };
-                FileHelper.DownloadFile(_downloadFileUrl, onDownload, onProgress, savePath);
+                FileHelper.DownloadFile(_downloadFileUrl, onDownload, onProgress, saveFilePath);
 
             }
 

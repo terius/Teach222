@@ -16,6 +16,7 @@ namespace SharedForms
     {
         public static readonly string DownloadPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DownloadFiles");
         public static readonly string AudioRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AudioRecord");
+        public static readonly string TempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TempPath");
         public static string TeacherIP { get; set; }
         public static MyClient client;
         //public static MyClient client
@@ -31,7 +32,7 @@ namespace SharedForms
         //    }
         //}
 
-        public static void SendCommand(IsendRequest request,CommandType type)
+        public static void SendCommand(IsendRequest request, CommandType type)
         {
             if (client == null || !client.ClientIsConnected)
             {
@@ -275,15 +276,7 @@ namespace SharedForms
         //    chat.MessageList.Add(message);
         //}
 
-        public static void SaveChatMessage(smsPanel content, string userName)
-        {
-            var chatstore = ChatList.FirstOrDefault(d => d.ChatUserName == userName);
-            if (chatstore != null)
-            {
-                chatstore.HistoryContent = content;
-                chatstore.NewMessageList = null;
-            }
-        }
+
 
         public static void SaveChatMessage(smsPanelNew content, string userName)
         {
@@ -582,6 +575,45 @@ namespace SharedForms
             RefleshTeamList(loadTeam);
 
         }
+
+        static NotifyForm notifyForm;
+        public static void ShowNotifyMessage(string message, int dueSecond = 5)
+        {
+            if (notifyForm == null || notifyForm.IsDisposed)
+            {
+                notifyForm = new NotifyForm(message, dueSecond);
+            }
+            else
+            {
+                notifyForm.SetMessage(message, dueSecond);
+            }
+            notifyForm.Show();
+        }
+
+
+        public static void CloseNotifyMessage()
+        {
+            if (notifyForm != null)
+            {
+                notifyForm.Close();
+            }
+        }
+
+
+        public static string BeginRecordVideo()
+        {
+            string fileName = Path.Combine(FileHelper.CreatePath("VideoRecord"), DateTime.Now.Ticks.ToString() + ".mpg");
+
+            client.BeginRecordVideo(fileName);
+            return fileName;
+        }
+        public static void EndRecordVideo()
+        {
+            client.EndRecordVideo();
+        }
+
+
+
 
     }
 }

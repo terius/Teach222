@@ -53,22 +53,15 @@ namespace vlctest
             }
         }
 
-        Form2 f2;
+   
         private void button2_Click(object sender, EventArgs e)
         {
-            if (f2 == null || f2.IsDisposed)
-            {
-                f2 = new Form2();
-            }
-            f2.Show();
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (f2 != null)
-            {
-                f2.Close();
-            }
+            
         }
     }
 }

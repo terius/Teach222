@@ -20,6 +20,10 @@ namespace SharedForms
                 this.WindowState = FormWindowState.Maximized;
                 this.TopMost = true;
             }
+            else
+            {
+                FormBorderStyle = FormBorderStyle.Sizable;
+            }
             axVLCPlugin21.video.aspectRatio = GetScreenAspectRatio();
 
 

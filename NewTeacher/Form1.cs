@@ -19,11 +19,11 @@ namespace NewTeacher
             //GlobalVariable.CreateTestLoginInfo();
             //ChatForm frm = new ChatForm();
             //frm.Show();
-            GlobalVariable.CreateTestLoginInfo();
-            GlobalVariable.client = new MyClient(ProgramType.Teacher);
-            GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
-            GlobalVariable.client.Send_UserLogin(GlobalVariable.LoginUserInfo.UserName, GlobalVariable.LoginUserInfo.DisplayName, "111", ClientRole.Teacher);
-            GlobalVariable.client.Send_OnlineList();
+            //GlobalVariable.CreateTestLoginInfo();
+            //GlobalVariable.client = new MyClient(ProgramType.Teacher);
+            //GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
+            //GlobalVariable.client.Send_UserLogin(GlobalVariable.LoginUserInfo.UserName, GlobalVariable.LoginUserInfo.DisplayName, "111", ClientRole.Teacher);
+            //GlobalVariable.client.Send_OnlineList();
         }
 
         private void Client_OnReveieveData(ReceieveMessage message)
@@ -48,6 +48,16 @@ namespace NewTeacher
             q.SendUserName = GlobalVariable.LoginUserInfo.UserName;
 
             GlobalVariable.client.Send_PrivateChat(q);
+        }
+       
+        private void button2_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 

@@ -11,7 +11,7 @@ namespace vlctest
         private Ffmpeg _ffmpeg = null;
         bool isBegin = false;
         string videoPath;
-        
+
         public ffmpegTest()
         {
             InitializeComponent();
@@ -25,20 +25,29 @@ namespace vlctest
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-          //  GlobalVariable.client.CreateScreenInteract();
-
-
-
             string fileName = Path.Combine(videoPath, DateTime.Now.ToString("HHmmssfff") + ".mpg");
+            string url = "";
+            string videoDevice = GetVideoName();
+            if (!string.IsNullOrWhiteSpace(videoDevice))
+            {
+                url = "-f dshow -i video=\"" + videoDevice + "\"";
+            }
+            else
+            {
+                throw new Exception("未找到摄像头");
+            }
+
             string mic = GetMicName();
             if (!string.IsNullOrWhiteSpace(mic))
             {
-                mic = string.Format("-f dshow -i audio=\"{0}\"", mic);
+                url += ":audio=\"" + mic + "\" -acodec mp2 -ab 128k";
             }
-           // fileName = "-f h264 udp://192.168.100.16:6666";
-            string para = string.Format("-f gdigrab -i desktop {1}  -s 1920*1080 -vcodec libx264 -bufsize 2000k {0}", fileName,mic);
-           // string para = string.Format("-f gdigrab -i desktop {1} -framerate 6 -g 240 -s 1920*1080 -acodec mp2 -ab 128k -vcodec libx264 -x264opts bframes=3:b-adapt=0 -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency {0}", fileName, mic);
+
+            string para = string.Format("{0}  -s 1920*1080 -vcodec libx264 -bufsize 2000k {1}", url, fileName);
+            para = url + " -r 25 -g 20 -s 1024*768 - vcodec libx264 -x264opts bframes=3:b-adapt=0 -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency " + fileName;
+            // string para = string.Format("-f gdigrab -i desktop {1} -framerate 6 -g 240 -s 1920*1080 -acodec mp2 -ab 128k -vcodec libx264 -x264opts bframes=3:b-adapt=0 -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency {0}", fileName, mic);
             _ffmpeg.beginExecute(para);
+
             isBegin = true;
         }
 
@@ -47,7 +56,7 @@ namespace vlctest
             if (isBegin)
             {
                 _ffmpeg.dispose();
-                
+
             }
             isBegin = false;
         }
@@ -57,7 +66,7 @@ namespace vlctest
             var capDevices = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
             foreach (var item in capDevices)
             {
-                textBox1.Text += "name:" + item.Name +  
+                textBox1.Text += "name:" + item.Name +
                             "\r\ndeviceid:" + item.ClassID +
                             "\r\npath:" + item.DevicePath +
                             "\r\n\r\n";
@@ -67,7 +76,7 @@ namespace vlctest
         private void button4_Click(object sender, System.EventArgs e)
         {
             var capDevices = DsDevice.GetDevicesOfCat(FilterCategory.AudioInputDevice);
-           
+
             foreach (var item in capDevices)
             {
                 textBox1.Text += "name:" + item.Name +
@@ -84,12 +93,23 @@ namespace vlctest
 
             foreach (var item in capDevices)
             {
-              if (item.Name.Contains("麦克风"))
+                if (item.Name.Contains("麦克风"))
                 {
                     return item.Name;
                 }
             }
             return "";
         }
+        private string GetVideoName()
+        {
+            var capDevices = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+
+            foreach (var item in capDevices)
+            {
+                return item.Name;
+            }
+            return "";
+        }
+
     }
 }
