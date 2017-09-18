@@ -1,6 +1,6 @@
 ﻿using Common;
 using Model;
-using MySocket;
+using EduService;
 using SharedForms;
 using System;
 using System.Windows.Forms;

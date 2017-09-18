@@ -1,10 +1,13 @@
 ﻿using Common;
+using EduService;
 using Helpers;
 using Model;
 using SharedForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -25,6 +28,8 @@ namespace StudentUser
         ScreenCapture sc;
         object obLock = new object();
         VideoShow videoForm;
+        EduUDPClient udpClient;
+        string tempScreenFile = "";
 
         //最小化窗体
         private bool windowCreate = true;
@@ -44,6 +49,7 @@ namespace StudentUser
         {
 
             InitializeComponent();
+
             chatForm = new ChatForm();
             Text = GlobalVariable.LoginUserInfo.DisplayName;
             tuopan.Text = Text;
@@ -269,6 +275,9 @@ namespace StudentUser
 
         private void UserMainForm_Load(object sender, System.EventArgs e)
         {
+            string tempPath = FileHelper.CreatePath("tempScreen");
+            tempScreenFile = Path.Combine(tempPath, "temp.jpg");
+            udpClient = new EduUDPClient(ProgramType.Student);
             CreateUDPHole();
         }
 
@@ -277,32 +286,33 @@ namespace StudentUser
 
         private void CreateUDPHole()
         {
+
             if (theadScreen == null || theadScreen.ThreadState != ThreadState.Running)
             {
                 theadScreen = new Thread(() =>
-            {
+                    {
 
-                GlobalVariable.client.CreateUDPStudentHole();
-                GetScreenCapture();
+                        udpClient.CreateUDPStudentHole();
+                        GetScreenCapture();
 
-            });
+                    });
                 theadScreen.IsBackground = true;
                 theadScreen.Start();
             }
         }
 
 
-        IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
-        private void CreateUDPServer()
-        {
+        //IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
+        //private void CreateUDPServer()
+        //{
 
-            var receieveUdpClient = new UdpClient(10887);
+        //    var receieveUdpClient = new UdpClient(10887);
 
 
-            Byte[] receiveBytes = receieveUdpClient.Receive(ref RemoteIpEndPoint);
-            var str = Encoding.UTF8.GetString(receiveBytes);
+        //    Byte[] receiveBytes = receieveUdpClient.Receive(ref RemoteIpEndPoint);
+        //    var str = Encoding.UTF8.GetString(receiveBytes);
 
-        }
+        //}
 
         private void DoAction(Action action)
         {
@@ -572,7 +582,8 @@ namespace StudentUser
                         {
                             sc = new ScreenCapture();
                         }
-                        Image screenImage = sc.CaptureScreen();
+
+                        byte[] imgBytes = sc.GetCaptureScreenToSmallFile(tempScreenFile, ImageFormat.Jpeg);// sc.CaptureScreen();
                         ScreenCaptureInfo info = new ScreenCaptureInfo();
                         info.DisplayName = GlobalVariable.LoginUserInfo.DisplayName;
                         info.UserName = GlobalVariable.LoginUserInfo.UserName;
@@ -580,7 +591,7 @@ namespace StudentUser
                         var userJson = JsonHelper.SerializeObj(info);
                         byte[] userBytes = Encoding.UTF8.GetBytes(userJson);
                         byte[] userLengthBytes = BitConverter.GetBytes(userBytes.Length);
-                        byte[] imgBytes = FileHelper.ImageToByteArray(screenImage);
+                        //     byte[] imgBytes = FileHelper.ImageToByteArray(screenImage);
                         byte[] imgLengthBytes = BitConverter.GetBytes(imgBytes.Length);
                         byte[] allLengtBytes = BitConverter.GetBytes(userBytes.Length + userLengthBytes.Length + imgBytes.Length + imgLengthBytes.Length);
 
@@ -593,7 +604,7 @@ namespace StudentUser
                         byteSource.AddRange(imgBytes);
                         var sendBytes = byteSource.ToArray();
 
-                        GlobalVariable.client.SendDesktopPic(sendBytes);
+                        udpClient.SendDesktopPic(sendBytes);
                         //   GlobalVariable.client.StopUdp();
                         Thread.Sleep(5000);
                     }
@@ -613,6 +624,7 @@ namespace StudentUser
 
         private void UserMainForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
         {
+            this.tuopan.Visible = false;
             GlobalVariable.client.Send_StudentLoginOut();
             StopUdp();
             Environment.Exit(Environment.ExitCode);

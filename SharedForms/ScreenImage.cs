@@ -16,7 +16,7 @@ namespace SharedForms
         public Image CaptureScreen()
         {
             //return getThumImage(CaptureWindow(User32.GetDesktopWindow()), 40, 5);
-             return FileHelper.ResizeImage(CaptureWindow(User32.GetDesktopWindow()), 300, 180);
+            return FileHelper.ResizeImage(CaptureWindow(User32.GetDesktopWindow()), 300, 180);
         }
 
 
@@ -27,7 +27,7 @@ namespace SharedForms
             Bitmap newImage = null;
             try
             {
-             //   long imageQuality = quality;
+                //   long imageQuality = quality;
                 Bitmap sourceImage = new Bitmap(image);
                 //ImageCodecInfo myImageCodecInfo = GetEncoderInfo("image/png");
                 //System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
@@ -179,9 +179,14 @@ namespace SharedForms
         public void CaptureScreenToSmallFile(string filename, ImageFormat format)
         {
             Image img = CaptureScreen();
-            FileHelper.VaryQualityLevel(img, 0, filename, format);
+            FileHelper.VaryQualityLevel(img, 50L, filename, format);
         }
 
+        public byte[] GetCaptureScreenToSmallFile(string filename, ImageFormat format)
+        {
+            CaptureScreenToSmallFile(filename, format);
+            return FileHelper.FileToByteArray(filename);
+        }
         /// <summary>
         /// Helper class containing Gdi32 API functions
         /// </summary>

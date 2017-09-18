@@ -1,7 +1,7 @@
 ﻿using Common;
 using Helpers;
 using Model;
-using MySocket;
+using EduService;
 using SharedForms;
 using System;
 using System.Drawing;
@@ -46,7 +46,7 @@ namespace NewTeacher
             Thread td = new Thread(() =>
             {
 
-                GlobalVariable.client = new MyClient(ProgramType.Teacher);
+                GlobalVariable.client = new EduTCPClient(ProgramType.Teacher);
                 GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
                 GlobalVariable.client.OnUserLoginRes = (message) =>
                 {

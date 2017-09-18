@@ -200,6 +200,10 @@
       <Project>{a272ae5d-90b2-4574-b479-dc37060a8862}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EduService\EduService.csproj">
+      <Project>{82ed2e95-b75d-4a90-859f-a9148f494f53}</Project>
+      <Name>EduService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Helper\Helper.csproj">
       <Project>{eec6c97f-af42-4773-be8a-e110309f66c5}</Project>
       <Name>Helper</Name>
@@ -207,10 +211,6 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{2e25ae3c-9dce-4cec-81f5-8b853350ab4c}</Project>
       <Name>Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MySocket\MySocket.csproj">
-      <Project>{82ed2e95-b75d-4a90-859f-a9148f494f53}</Project>
-      <Name>MySocket</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

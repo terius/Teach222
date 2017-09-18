@@ -1,7 +1,7 @@
 ﻿using Common;
 using Helpers;
 using Model;
-using MySocket;
+using EduService;
 using SharedForms;
 using System;
 using System.Threading;
@@ -52,7 +52,7 @@ namespace StudentUser
         {
             Thread td = new Thread(() =>
             {
-                GlobalVariable.client = new MyClient(ProgramType.Student);
+                GlobalVariable.client = new EduTCPClient(ProgramType.Student);
                 GlobalVariable.client.OnUserLoginRes = (message) =>
                 {
 
@@ -117,7 +117,8 @@ namespace StudentUser
                 return;
             }
             //  userGuid = Guid.NewGuid().ToString();
-            GlobalVariable.client.Send_UserLogin(userName, nickName, password, ClientRole.Student);
+            LoginRequest request = new LoginRequest { ClientRole = ClientRole.Student, nickName = nickName, password = password, userName = userName };
+            GlobalVariable.SendCommand(request,CommandType.UserLogin);
         }
 
 

@@ -8,6 +8,7 @@ namespace Helpers
 {
     public class StringHelper
     {
+       
         public static string TenToTwo(int value)
         {
             string j = Convert.ToString(value, 2);//j就是转换后的二进制了！！

@@ -176,13 +176,13 @@
     <None Include="Resources\学生.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyVideo\MyVideo.csproj">
-      <Project>{3472b2b1-63d7-42de-a088-2565969ede39}</Project>
-      <Name>MyVideo</Name>
-    </ProjectReference>
+    <None Include="Resources\Send.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Send.png" />
+    <ProjectReference Include="..\EduService\EduService.csproj">
+      <Project>{82ed2e95-b75d-4a90-859f-a9148f494f53}</Project>
+      <Name>EduService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

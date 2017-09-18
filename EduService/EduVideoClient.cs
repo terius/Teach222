@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MyVideo
+namespace EduService
 {
-    public class ScreenInteract
+    public class EduVideoClient
     {
 
         private Ffmpeg _ffmpeg = null;
@@ -24,7 +24,7 @@ namespace MyVideo
         //  private int heightPixel;
 
         readonly string RTSPserverIP = System.Configuration.ConfigurationManager.AppSettings["RTSPserverIP"];
-        public ScreenInteract(string serverIP, string ipSelf, int portSelf)
+        public EduVideoClient(string serverIP, string ipSelf, int portSelf)
         {
             _serverIp = serverIP;
             _ipSelf = ipSelf;

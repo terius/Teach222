@@ -1,7 +1,7 @@
 ﻿using Common;
 using Helpers;
 using Model;
-using MySocket;
+using EduService;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,7 +18,7 @@ namespace SharedForms
         public static readonly string AudioRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AudioRecord");
         public static readonly string TempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TempPath");
         public static string TeacherIP { get; set; }
-        public static MyClient client;
+        public static EduTCPClient client;
         //public static MyClient client
         //{
         //    get

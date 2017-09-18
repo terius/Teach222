@@ -55,7 +55,7 @@
             // 
             this.btnLockScreen.Location = new System.Drawing.Point(3, 3);
             this.btnLockScreen.Name = "btnLockScreen";
-            this.btnLockScreen.Size = new System.Drawing.Size(87, 27);
+            this.btnLockScreen.Size = new System.Drawing.Size(75, 23);
             this.btnLockScreen.TabIndex = 0;
             this.btnLockScreen.Text = "显示黑屏";
             this.btnLockScreen.UseVisualStyleBackColor = true;
@@ -63,9 +63,9 @@
             // 
             // btnStopLockScreen
             // 
-            this.btnStopLockScreen.Location = new System.Drawing.Point(3, 37);
+            this.btnStopLockScreen.Location = new System.Drawing.Point(3, 32);
             this.btnStopLockScreen.Name = "btnStopLockScreen";
-            this.btnStopLockScreen.Size = new System.Drawing.Size(87, 27);
+            this.btnStopLockScreen.Size = new System.Drawing.Size(75, 23);
             this.btnStopLockScreen.TabIndex = 1;
             this.btnStopLockScreen.Text = "关闭黑屏";
             this.btnStopLockScreen.UseVisualStyleBackColor = true;
@@ -82,14 +82,14 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(762, 73);
+            this.panel1.Size = new System.Drawing.Size(653, 63);
             this.panel1.TabIndex = 2;
             // 
             // btnScreenCapture
             // 
-            this.btnScreenCapture.Location = new System.Drawing.Point(96, 36);
+            this.btnScreenCapture.Location = new System.Drawing.Point(82, 31);
             this.btnScreenCapture.Name = "btnScreenCapture";
-            this.btnScreenCapture.Size = new System.Drawing.Size(87, 27);
+            this.btnScreenCapture.Size = new System.Drawing.Size(75, 23);
             this.btnScreenCapture.TabIndex = 4;
             this.btnScreenCapture.Text = "截屏";
             this.btnScreenCapture.UseVisualStyleBackColor = true;
@@ -97,9 +97,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(189, 3);
+            this.button2.Location = new System.Drawing.Point(162, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 27);
+            this.button2.Size = new System.Drawing.Size(86, 23);
             this.button2.TabIndex = 3;
             this.button2.Text = "停止播放视频";
             this.button2.UseVisualStyleBackColor = true;
@@ -107,9 +107,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(96, 3);
+            this.button1.Location = new System.Drawing.Point(82, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 27);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
             this.button1.Text = "播放视频";
             this.button1.UseVisualStyleBackColor = true;
@@ -189,22 +189,22 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(38, 102);
+            this.pictureBox1.Location = new System.Drawing.Point(33, 87);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(241, 246);
+            this.pictureBox1.Size = new System.Drawing.Size(207, 211);
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
             // UserMainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(762, 472);
+            this.ClientSize = new System.Drawing.Size(653, 405);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(439, 406);
+            this.MinimumSize = new System.Drawing.Size(379, 353);
             this.Name = "UserMainForm";
             this.Text = "Student";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserMainForm_FormClosing);

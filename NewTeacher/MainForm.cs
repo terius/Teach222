@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
+using EduService;
 
 namespace NewTeacher
 {
@@ -22,6 +23,7 @@ namespace NewTeacher
         VideoShow videoForm;
         //   ViewRtsp videoPlayer;
         string videoFileName = "";
+        EduUDPClient udpClient;
         #endregion
         public MainForm()
         {
@@ -29,7 +31,7 @@ namespace NewTeacher
             GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
             InitOnlineInfo();
             GlobalVariable.LoadTeamFromXML();
-
+       
             #region 接收消息事件
             GlobalVariable.client.OnOnlineList = (message) =>
             {
@@ -106,6 +108,7 @@ namespace NewTeacher
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
+        
             CreateUDPConnect();
         }
 
@@ -292,16 +295,16 @@ namespace NewTeacher
         {
             Thread t = new Thread(() =>
             {
+                udpClient = new EduUDPClient(ProgramType.Teacher);
+                udpClient.OnTeacherReceiveUDP = (sinfo) =>
+                 {
+                     this.InvokeOnUiThreadIfRequired(() =>
+                     {
+                         AddStudentScreenToPanel(sinfo);
+                     });
 
-                GlobalVariable.client.OnTeacherReceiveUDP = (sinfo) =>
-                {
-                    this.InvokeOnUiThreadIfRequired(() =>
-                    {
-                        AddStudentScreenToPanel(sinfo);
-                    });
-
-                };
-                GlobalVariable.client.CreateUDPTeacherHole();
+                 };
+                udpClient.CreateUDPTeacherHole();
 
 
             });
@@ -464,7 +467,7 @@ namespace NewTeacher
                     break;
                 case TeacherAction.menuFileShare_Click:
                     ChatToALL();
-                     chatForm.UploadFileToALL(); // 暂时屏蔽
+                    chatForm.UploadFileToALL(); // 暂时屏蔽
                     break;
                 case TeacherAction.menuFileShare2_Click:
 
@@ -472,7 +475,7 @@ namespace NewTeacher
                 case TeacherAction.menuAccount_Click:
                     break;
                 case TeacherAction.menuVideoRecord_Click:
-             
+
                     if (this.menuVideoRecord.Text == "屏幕录制")
                     {
                         videoFileName = GlobalVariable.BeginRecordVideo();
@@ -788,7 +791,7 @@ namespace NewTeacher
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalVariable.client.KillAllFFmpeg();
-            GlobalVariable.client.CloseTeacherUDP();
+            udpClient.CloseTeacherUDP();
         }
     }
 }
