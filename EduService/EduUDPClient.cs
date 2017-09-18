@@ -169,15 +169,18 @@ namespace EduService
             //var fileBytes = FileHelper.FileToByteArray(fileName);
             //  var fHelloData = Encoding.UTF8.GetBytes("hello1111" + DateTime.Now.Ticks);
             Loger.LogMessage("发送图片，地址：" + remoteIp + ":" + remotePort + "   长度：" + fileBytes.Length);
-            //  studentUdpClient.Send(fileBytes, fileBytes.Length, remoteIp, remotePort);
-            studentUdpClient.BeginSend(fileBytes, fileBytes.Length, remoteIp, remotePort, (result) =>
-              {
-                  if (result.IsCompleted)
-                  {
-                      sendDone.Set();
-                  }
-              }, null);
-            sendDone.WaitOne();
+            studentUdpClient.Send(fileBytes, fileBytes.Length, remoteIp, remotePort);
+            // Loger.LogMessage("SendDesktopPic-------------------");
+            //studentUdpClient.BeginSend(fileBytes, fileBytes.Length, remoteIp, remotePort, (result) =>
+            //  {
+            //      if (result.IsCompleted)
+            //      {
+            //          Thread.Sleep(2000);
+            //          Loger.LogMessage("SendDesktopPic:");
+            //          sendDone.Set();
+            //      }
+            //  }, null);
+            //   sendDone.WaitOne();
         }
 
         public void CloseStudentUDP()

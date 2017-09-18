@@ -605,7 +605,8 @@ namespace StudentUser
                         var sendBytes = byteSource.ToArray();
 
                         udpClient.SendDesktopPic(sendBytes);
-                        //   GlobalVariable.client.StopUdp();
+                        //   udpClient.WaitUdp();
+                        //    Loger.LogMessage("GetScreenCapture:");
                         Thread.Sleep(5000);
                     }
                     catch (Exception ex)
