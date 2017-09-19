@@ -50,9 +50,12 @@ namespace EduService
             {
                 CreateStudentUDPClient();
             }
+            remoteIp = serverIP;
+            remotePort = 55556;
+
         }
 
-        #region 老师UDP
+        #region 主机端UDP
         private void CreateTeacherUDPClient()
         {
             if (teacherUdpClient == null)
@@ -81,16 +84,16 @@ namespace EduService
 
             try
             {
-                if (!IsLocalNetwork)
-                {
-                    byte[] fHelloData = Encoding.UTF8.GetBytes("TEACHER");
-                    teacherUdpClient.Send(fHelloData, fHelloData.Length, serverIP, udpPort);
-                }
+                // if (!IsLocalNetwork)
+                // {
+                byte[] fHelloData = Encoding.UTF8.GetBytes("TEACHER");
+                teacherUdpClient.Send(fHelloData, fHelloData.Length, remoteIp, remotePort);
+                // }
                 ScreenCaptureInfo screenInfo;
                 while (true)
                 {
                     var receiveBytes = teacherUdpClient.Receive(ref RemoteIpEndPoint);
-                    //    Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
+                    Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
                     if (receiveBytes.Length > 100)
                     {
                         screenInfo = GetScreen(receiveBytes);
@@ -135,7 +138,7 @@ namespace EduService
         #endregion
 
 
-        #region 学生UDP
+        #region 客户端UDP
         private void CreateStudentUDPClient()
         {
             if (studentUdpClient == null)
@@ -147,11 +150,11 @@ namespace EduService
                 uint IOC_VENDOR = 0x18000000;
                 uint SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;
                 studentUdpClient.Client.IOControl((int)SIO_UDP_CONNRESET, new byte[] { Convert.ToByte(false) }, null);
-                if (IsLocalNetwork)
-                {
-                    remoteIp = teacherIP;
-                    remotePort = udpPort;
-                }
+                //if (IsLocalNetwork)
+                //{
+                //    remoteIp = teacherIP;
+                //    remotePort = udpPort;
+                //}
             }
 
 
@@ -213,7 +216,7 @@ namespace EduService
                 {
                     remoteIp = fContent.Substring(1, fContent.LastIndexOf(":") - 1);
                     remotePort = Convert.ToInt32(fContent.Substring(fContent.LastIndexOf(":") + 1));
-                    Loger.LogMessage("教师端地址： " + remoteIp + ":" + remotePort);
+                    Loger.LogMessage("主机端地址： " + remoteIp + ":" + remotePort);
 
                     fHelloData = Encoding.UTF8.GetBytes("hello" + DateTime.Now.Ticks);
                     studentUdpClient.Send(fHelloData, fHelloData.Length, remoteIp, remotePort);
@@ -328,7 +331,7 @@ namespace EduService
         //                {
         //                    remoteIp = fContent.Substring(1, fContent.LastIndexOf(":") - 1);
         //                    remotePort = Convert.ToInt32(fContent.Substring(fContent.LastIndexOf(":") + 1));
-        //                    Loger.LogMessage("教师端地址： " + remoteIp + ":" + remotePort);
+        //                    Loger.LogMessage("主机端地址： " + remoteIp + ":" + remotePort);
         //                    //while (true)
         //                    //{
         //                    //    byte[] fHelloData = Encoding.UTF8.GetBytes("hello" + DateTime.Now.Ticks);

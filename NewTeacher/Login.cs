@@ -1,11 +1,9 @@
 ﻿using Common;
+using EduService;
 using Helpers;
 using Model;
-using EduService;
 using SharedForms;
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -20,12 +18,19 @@ namespace NewTeacher
         string _userName, _displayName;
         private void Form2_Load(object sender, EventArgs e)
         {
+            if (GlobalVariable.IsHuiShenXiTong)
+            {
+                this.Text = label6.Text = "会审系统";
+                label5.Text = "指挥室登录";
+                label4.Hide();
+            }
+
             StartSocketClient();
 
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             this.labVer.Text = "版本：" + version;
-         //   ScreenCapture sc = new ScreenCapture();
-           // sc.CaptureScreenToFile(@"D:\" + DateTime.Now.Ticks.ToString() + ".png", ImageFormat.Png);
+            //   ScreenCapture sc = new ScreenCapture();
+            // sc.CaptureScreenToFile(@"D:\" + DateTime.Now.Ticks.ToString() + ".png", ImageFormat.Png);
         }
 
         private void AutoLogin()
@@ -33,7 +38,7 @@ namespace NewTeacher
             //自动登录
             _userName = "Teacher001";
             string pwd = "123456";
-            _displayName = "老师001";
+            _displayName = "主机端001";
             LoginIn(_userName, _displayName, pwd);
         }
 
@@ -74,7 +79,7 @@ namespace NewTeacher
 
 
                 };
-              //  AutoLogin();
+                //  AutoLogin();
             });
             td.IsBackground = true;
             td.Start();
@@ -93,7 +98,7 @@ namespace NewTeacher
         private void button1_Click(object sender, EventArgs e)//登录 
         {
             _userName = this.textBox1.Text.Trim();
-            _displayName = "教师888";
+            _displayName = (GlobalVariable.IsHuiShenXiTong ? "指挥室" : "教师") + "001";
             string userPass = this.textBox2.Text.Trim();
             if (_userName == string.Empty)
             {

@@ -28,6 +28,23 @@ namespace NewTeacher
         public MainForm()
         {
             InitializeComponent();
+            if (GlobalVariable.IsHuiShenXiTong)
+            {
+                this.Text = "会审系统";
+                menuClassNamed.Hide();
+                menuExportSign.Hide();
+                menuFileShare.Hide();
+                menuRomoteControl.Hide();
+                tableLayoutPanel1.ColumnCount = 1;
+                tableLayoutPanel1.RowCount = 1;
+                myGroupBox1.Text = "群聊";
+                menuStudentShow.Text = "审讯室演示";
+                myGroupBox7.Text = "在线审讯室列表";
+                myGroupBox8.Text = "审讯室屏幕";
+                menuGroupChat.Text = "群组聊天";
+              //  tableLayoutPanel3.ColumnStyles[4].Width = 0f;
+            }
+           
             GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
             InitOnlineInfo();
             GlobalVariable.LoadTeamFromXML();
@@ -57,7 +74,7 @@ namespace NewTeacher
                 var groupChatRequest = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
                 this.InvokeOnUiThreadIfRequired(() => { ReceieveGroupMessage(groupChatRequest); });
             };
-            GlobalVariable.client.OnOneUserLogIn = (message) =>//某个学生登录
+            GlobalVariable.client.OnOneUserLogIn = (message) =>//某个客户端登录
             {
 
                 var newUser = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
@@ -108,7 +125,7 @@ namespace NewTeacher
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-        
+          
             CreateUDPConnect();
         }
 
@@ -376,7 +393,7 @@ namespace NewTeacher
                 case TeacherAction.menuRomoteControl_Click:
                     if (lvOnline.SelectedItems.Count <= 0)
                     {
-                        GlobalVariable.ShowWarnning("请先选择要控制的学生");
+                        GlobalVariable.ShowWarnning("请先选择要控制的客户端");
                         return;
                     }
                     string username = lvOnline.SelectedItems[0].SubItems[2].Text;
@@ -418,7 +435,7 @@ namespace NewTeacher
                     break;
                 case TeacherAction.menuStudentShow_Click:
                     string menuStudentText = menuStudentShow.Text;
-                    if (menuStudentText == "学生演示")
+                    if (menuStudentText == "客户端演示")
                     {
                         GetSelectStudentUserName();
                         if (!string.IsNullOrWhiteSpace(actionStuUserName))
@@ -436,7 +453,7 @@ namespace NewTeacher
                         {
                             GlobalVariable.client.Send_StopStudentShow(actionStuUserName);
                             actionStuUserName = null;
-                            menuStudentShow.Text = "学生演示";
+                            menuStudentShow.Text = "客户端演示";
                         }
                     }
                     break;
@@ -501,12 +518,12 @@ namespace NewTeacher
             actionStuUserName = null;
             if (lvOnline.Items.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("当前在线学生为空");
+                GlobalVariable.ShowWarnning("当前在线客户端为空");
                 return "";
             }
             if (lvOnline.SelectedItems.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("请先选择学生");
+                GlobalVariable.ShowWarnning("请先选择客户端");
                 return "";
             }
             string username = lvOnline.SelectedItems[0].SubItems[2].Text;
@@ -543,11 +560,11 @@ namespace NewTeacher
             //var onlineList = onlineInfo.GetStudentOnlineList();
             if (onlineInfo == null || onlineInfo.LoginedStuList.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("当前登陆学生为空");
+                GlobalVariable.ShowWarnning("当前登陆客户端为空");
                 return;
             }
             var table = new System.Data.DataTable();
-            table.Columns.Add("学生姓名", typeof(string));
+            table.Columns.Add("客户端姓名", typeof(string));
             table.Columns.Add("是否签到", typeof(string));
             foreach (var item in onlineInfo.LoginedStuList)
             {

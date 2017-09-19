@@ -38,10 +38,10 @@ namespace SharedForms
                     {
                         case ClientRole.Teacher:
                         case ClientRole.Assistant:
-                            headIcon = Resource1.老师24;
+                            headIcon = Resource1.主机端24;
                             break;
                         case ClientRole.Student:
-                            headIcon = Resource1.学生24;
+                            headIcon = Resource1.客户端24;
                             break;
                         default:
                             break;

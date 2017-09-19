@@ -51,7 +51,7 @@
             this.textBox1.Location = new System.Drawing.Point(441, 112);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(186, 27);
+            this.textBox1.Size = new System.Drawing.Size(186, 23);
             this.textBox1.TabIndex = 0;
             this.textBox1.Tag = "";
             // 
@@ -62,7 +62,7 @@
             this.textBox2.Location = new System.Drawing.Point(441, 168);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(186, 27);
+            this.textBox2.Size = new System.Drawing.Size(186, 23);
             this.textBox2.TabIndex = 1;
             this.textBox2.Tag = "";
             this.textBox2.UseSystemPasswordChar = true;
@@ -74,7 +74,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(370, 112);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 25);
+            this.label1.Size = new System.Drawing.Size(65, 19);
             this.label1.TabIndex = 2;
             this.label1.Text = "用户名：";
             // 
@@ -85,7 +85,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(372, 168);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 25);
+            this.label2.Size = new System.Drawing.Size(63, 19);
             this.label2.TabIndex = 8;
             this.label2.Text = "密   码：";
             // 
@@ -94,7 +94,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(1315, 1135);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(159, 20);
+            this.label3.Size = new System.Drawing.Size(128, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "南京航空航天大学研制";
             // 
@@ -113,7 +113,7 @@
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(31, 306);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(219, 20);
+            this.label4.Size = new System.Drawing.Size(176, 17);
             this.label4.TabIndex = 12;
             this.label4.Text = "版权所有：多媒体教育管理系统";
             this.label4.Visible = false;
@@ -140,9 +140,9 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(368, 62);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(123, 36);
+            this.label5.Size = new System.Drawing.Size(123, 30);
             this.label5.TabIndex = 14;
-            this.label5.Text = "学生登陆";
+            this.label5.Text = "客户端登陆";
             // 
             // labVer
             // 
@@ -150,7 +150,7 @@
             this.labVer.ForeColor = System.Drawing.Color.White;
             this.labVer.Location = new System.Drawing.Point(391, 306);
             this.labVer.Name = "labVer";
-            this.labVer.Size = new System.Drawing.Size(39, 20);
+            this.labVer.Size = new System.Drawing.Size(32, 17);
             this.labVer.TabIndex = 15;
             this.labVer.Text = "版本";
             // 
@@ -161,7 +161,7 @@
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(114, 18);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(224, 45);
+            this.label6.Size = new System.Drawing.Size(177, 36);
             this.label6.TabIndex = 16;
             this.label6.Text = "在线教育系统";
             // 
@@ -182,7 +182,7 @@
             // 
             // Login
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(660, 337);
@@ -200,6 +200,7 @@
             this.Controls.Add(this.textBox2);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimumSize = new System.Drawing.Size(464, 267);
             this.Name = "Login";

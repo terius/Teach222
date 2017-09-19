@@ -97,7 +97,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(116, 25);
             this.label3.TabIndex = 5;
-            this.label3.Text = "老师点名";
+            this.label3.Text = "主机端点名";
             // 
             // CallForm
             // 
@@ -117,7 +117,7 @@
             this.Name = "CallForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "老师点名";
+            this.Text = "主机端点名";
             this.ResumeLayout(false);
             this.PerformLayout();
 

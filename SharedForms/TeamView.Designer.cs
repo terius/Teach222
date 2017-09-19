@@ -92,7 +92,7 @@
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "群组.png");
-            this.imageList1.Images.SetKeyName(1, "学生.png");
+            this.imageList1.Images.SetKeyName(1, "客户端.png");
             this.imageList1.Images.SetKeyName(2, "在线.png");
             this.imageList1.Images.SetKeyName(3, "离线.png");
             // 

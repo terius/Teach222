@@ -15,6 +15,11 @@ namespace NewTeacher
         public TeamDiscuss(OnlineInfo onLineInfo)
         {
             InitializeComponent();
+            if (GlobalVariable.IsHuiShenXiTong)
+            {
+                myGroupBox2.Text = "在线审讯室";
+                btnAddStudent.Text = "选择审讯室";
+            }
             _onLineInfo = onLineInfo;
             _onLineInfo.AddOnLine += _onLineInfo_AddOnLine;
             _onLineInfo.DelOnLine += _onLineInfo_DelOnLine;
@@ -237,7 +242,7 @@ namespace NewTeacher
         {
             if (onLineListView.CheckedItems.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("请先选择要添加的学生");
+                GlobalVariable.ShowWarnning("请先选择要添加的客户端");
                 return;
             }
 

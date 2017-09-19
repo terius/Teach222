@@ -168,9 +168,9 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(369, 56);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 30);
+            this.label5.Size = new System.Drawing.Size(123, 30);
             this.label5.TabIndex = 16;
-            this.label5.Text = "教师登录";
+            this.label5.Text = "主机端登录";
             // 
             // label6
             // 

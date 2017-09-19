@@ -73,6 +73,16 @@ namespace NewTeacher.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 主机端 {
+            get {
+                object obj = ResourceManager.GetObject("主机端", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 共享桌面 {
             get {
                 object obj = ResourceManager.GetObject("共享桌面", resourceCulture);
@@ -123,19 +133,9 @@ namespace NewTeacher.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap 学生 {
+        internal static System.Drawing.Bitmap 客户端 {
             get {
-                object obj = ResourceManager.GetObject("学生", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap 学生演示 {
-            get {
-                object obj = ResourceManager.GetObject("学生演示", resourceCulture);
+                object obj = ResourceManager.GetObject("客户端", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -226,16 +226,6 @@ namespace NewTeacher.Properties {
         internal static System.Drawing.Bitmap 群聊 {
             get {
                 object obj = ResourceManager.GetObject("群聊", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap 老师 {
-            get {
-                object obj = ResourceManager.GetObject("老师", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

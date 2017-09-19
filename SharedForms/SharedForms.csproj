@@ -233,7 +233,7 @@
     <None Include="Resources\rb.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\老师.png" />
+    <None Include="Resources\主机.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\学生.png" />
@@ -254,7 +254,7 @@
     <None Include="Resources\学生24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\老师24.png" />
+    <None Include="Resources\主机24.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
@@ -310,6 +310,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\录音.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\主机端24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\客户端.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\客户端24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\主机端.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

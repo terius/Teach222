@@ -67,7 +67,7 @@
             this.labCallShow.Name = "labCallShow";
             this.labCallShow.Size = new System.Drawing.Size(138, 21);
             this.labCallShow.TabIndex = 2;
-            this.labCallShow.Text = "已呼叫该学生演示";
+            this.labCallShow.Text = "已呼叫该客户端演示";
             this.labCallShow.Visible = false;
             // 
             // StudentScreen

@@ -15,8 +15,8 @@ namespace SharedForms
     {
         Brush blackBrush = Brushes.Blue;
         Font titleFont = new Font("微软雅黑", 10F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        Image imgTech = Resource1.老师;
-        Image imgStu = Resource1.学生;
+        Image imgTech = Resource1.主机端;
+        Image imgStu = Resource1.客户端;
         //   string _message;//消息
         //  string _title; //标题
         bool _isMySelf;//是否为自己

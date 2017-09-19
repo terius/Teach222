@@ -19,6 +19,7 @@ namespace SharedForms
         public static readonly string TempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TempPath");
         public static string TeacherIP { get; set; }
         public static EduTCPClient client;
+        public static readonly bool IsHuiShenXiTong = true;//是否为会审系统
         //public static MyClient client
         //{
         //    get

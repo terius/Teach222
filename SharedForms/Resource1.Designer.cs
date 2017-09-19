@@ -123,6 +123,26 @@ namespace SharedForms {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 主机端 {
+            get {
+                object obj = ResourceManager.GetObject("主机端", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 主机端24 {
+            get {
+                object obj = ResourceManager.GetObject("主机端24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 图片 {
             get {
                 object obj = ResourceManager.GetObject("图片", resourceCulture);
@@ -143,9 +163,9 @@ namespace SharedForms {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap 学生 {
+        internal static System.Drawing.Bitmap 客户端 {
             get {
-                object obj = ResourceManager.GetObject("学生", resourceCulture);
+                object obj = ResourceManager.GetObject("客户端", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +173,9 @@ namespace SharedForms {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap 学生24 {
+        internal static System.Drawing.Bitmap 客户端24 {
             get {
-                object obj = ResourceManager.GetObject("学生24", resourceCulture);
+                object obj = ResourceManager.GetObject("客户端24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -276,26 +296,6 @@ namespace SharedForms {
         internal static System.Drawing.Bitmap 群聊 {
             get {
                 object obj = ResourceManager.GetObject("群聊", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap 老师 {
-            get {
-                object obj = ResourceManager.GetObject("老师", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap 老师24 {
-            get {
-                object obj = ResourceManager.GetObject("老师24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

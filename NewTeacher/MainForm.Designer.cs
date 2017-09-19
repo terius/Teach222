@@ -175,7 +175,7 @@
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "学生.png");
+            this.imageList1.Images.SetKeyName(0, "客户端.png");
             // 
             // panel3
             // 
@@ -218,7 +218,7 @@
             this.myGroupBox8.Size = new System.Drawing.Size(946, 469);
             this.myGroupBox8.TabIndex = 0;
             this.myGroupBox8.TabStop = false;
-            this.myGroupBox8.Text = "学生屏幕";
+            this.myGroupBox8.Text = "学生端屏幕";
             // 
             // flowLayoutPanel1
             // 
@@ -747,27 +747,27 @@
             this.userList_studentVideoShow,
             this.userList_stopStudentShow});
             this.UserListMenu.Name = "contextMenuStrip1";
-            this.UserListMenu.Size = new System.Drawing.Size(167, 186);
+            this.UserListMenu.Size = new System.Drawing.Size(181, 186);
             this.UserListMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.UserListMenu_ItemClicked);
             // 
             // userList_privateChat
             // 
             this.userList_privateChat.Image = ((System.Drawing.Image)(resources.GetObject("userList_privateChat.Image")));
             this.userList_privateChat.Name = "userList_privateChat";
-            this.userList_privateChat.Size = new System.Drawing.Size(166, 26);
+            this.userList_privateChat.Size = new System.Drawing.Size(180, 26);
             this.userList_privateChat.Text = "私聊";
             // 
             // userList_lockScreen
             // 
             this.userList_lockScreen.Image = ((System.Drawing.Image)(resources.GetObject("userList_lockScreen.Image")));
             this.userList_lockScreen.Name = "userList_lockScreen";
-            this.userList_lockScreen.Size = new System.Drawing.Size(166, 26);
+            this.userList_lockScreen.Size = new System.Drawing.Size(180, 26);
             this.userList_lockScreen.Text = "锁屏";
             // 
             // userList_stopLockScreen
             // 
             this.userList_stopLockScreen.Name = "userList_stopLockScreen";
-            this.userList_stopLockScreen.Size = new System.Drawing.Size(166, 26);
+            this.userList_stopLockScreen.Size = new System.Drawing.Size(180, 26);
             this.userList_stopLockScreen.Text = "解锁";
             // 
             // userList_permisson
@@ -778,7 +778,7 @@
             this.userList_P_allowPrivateChat,
             this.userList_P_allowGroupChat});
             this.userList_permisson.Name = "userList_permisson";
-            this.userList_permisson.Size = new System.Drawing.Size(166, 26);
+            this.userList_permisson.Size = new System.Drawing.Size(180, 26);
             this.userList_permisson.Text = "权限管理";
             // 
             // userList_P_forbidPrivateChat
@@ -812,26 +812,27 @@
             // userList_studentShow
             // 
             this.userList_studentShow.Name = "userList_studentShow";
-            this.userList_studentShow.Size = new System.Drawing.Size(166, 26);
-            this.userList_studentShow.Text = "学生演示";
+            this.userList_studentShow.Size = new System.Drawing.Size(180, 26);
+            this.userList_studentShow.Text = "客户端演示";
             // 
             // userList_studentVideoShow
             // 
             this.userList_studentVideoShow.Name = "userList_studentVideoShow";
-            this.userList_studentVideoShow.Size = new System.Drawing.Size(166, 26);
-            this.userList_studentVideoShow.Text = "学生视频演示";
+            this.userList_studentVideoShow.Size = new System.Drawing.Size(180, 26);
+            this.userList_studentVideoShow.Text = "客户端视频演示";
             // 
             // userList_stopStudentShow
             // 
             this.userList_stopStudentShow.Name = "userList_stopStudentShow";
-            this.userList_stopStudentShow.Size = new System.Drawing.Size(166, 26);
-            this.userList_stopStudentShow.Text = "停止学生演示";
+            this.userList_stopStudentShow.Size = new System.Drawing.Size(180, 26);
+            this.userList_stopStudentShow.Text = "停止客户端演示";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1189, 615);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "在线教育系统";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);

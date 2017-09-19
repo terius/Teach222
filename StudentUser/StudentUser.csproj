@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>stu.ico</ApplicationIcon>
+    <ApplicationIcon>客户端.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -188,6 +188,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="客户端.ico" />
     <None Include="Resources\文件共享.png" />
     <None Include="Resources\举手.png" />
     <None Include="Resources\聊天.png" />

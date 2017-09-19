@@ -152,7 +152,7 @@ namespace EduService
         public Action<ReceieveMessage> OnForbidTeamChat;
         public Action<ReceieveMessage> OnAllowTeamChat;
 
-        //教师端
+        //主机端
         public Action<ReceieveMessage> OnOnlineList;
         public Action<ReceieveMessage> OnOneUserLogIn;
         public Action<ReceieveMessage> OnStudentCall;
@@ -166,10 +166,10 @@ namespace EduService
                     DueMessage(OnUserLoginRes, message);
 
                     break;
-                case (int)CommandType.TeacherLoginIn://教师端登录
+                case (int)CommandType.TeacherLoginIn://主机端登录
                     DueMessage(OnTeacherLoginIn, message);
                     break;
-                case (int)CommandType.TeacherLoginOut://教师端登出
+                case (int)CommandType.TeacherLoginOut://主机端登出
                     DueMessage(OnTeacherLoginOut, message);
                     break;
                 case (int)CommandType.ScreenInteract://推送视频流
@@ -208,13 +208,13 @@ namespace EduService
                 case (int)CommandType.CreateTeam://收到创建群组信息
                     DueMessage(OnCreateTeam, message);
                     break;
-                case (int)CommandType.CallStudentShow://收到请求学生演示
+                case (int)CommandType.CallStudentShow://收到请求客户端演示
                     DueMessage(OnCallStudentShow, message);
                     break;
-                case (int)CommandType.CallStudentShowForMySelf://收到请求学生演示
+                case (int)CommandType.CallStudentShowForMySelf://收到请求客户端演示
                     DueMessage(OnCallStudentShowForTeacher, message);
                     break;
-                case (int)CommandType.CallStudentShowVideoToTeacher://收到请求学生演示视频
+                case (int)CommandType.CallStudentShowVideoToTeacher://收到请求客户端演示视频
                     DueMessage(OnCallStudentShowVideoForTeacher, message);
                     break;
                 case (int)CommandType.StopStudentShow://停止演示
@@ -623,7 +623,7 @@ namespace EduService
         }
 
         /// <summary>
-        /// 学生提交点名信息
+        /// 客户端提交点名信息
         /// </summary>
         public void Send_StudentCall(string no, string name, string userName)
         {
@@ -633,7 +633,7 @@ namespace EduService
         }
 
         /// <summary>
-        /// 学生登录完成已进入主页面
+        /// 客户端登录完成已进入主页面
         /// </summary>
         public void Send_StudentInMainForm()
         {
@@ -641,7 +641,7 @@ namespace EduService
         }
 
         /// <summary>
-        /// 呼叫学生演示
+        /// 呼叫客户端演示
         /// </summary>
         /// <param name="userName"></param>
         public void Send_CallStudentShow(string userName)
@@ -651,7 +651,7 @@ namespace EduService
         }
 
         /// <summary>
-        /// 呼叫学生演示(只给教师)
+        /// 呼叫客户端演示(只给主机端)
         /// </summary>
         /// <param name="userName"></param>
         public void Send_CallStudentShowForMySelf(string userName)
@@ -661,7 +661,7 @@ namespace EduService
         }
 
         /// <summary>
-        /// 呼叫学生演示视频(只给教师)
+        /// 呼叫客户端演示视频(只给主机端)
         /// </summary>
         /// <param name="userName"></param>
         public void Send_CallStudentShowVideoForMySelf(string userName)
@@ -671,7 +671,7 @@ namespace EduService
         }
 
         /// <summary>
-        /// 关闭学生演示
+        /// 关闭客户端演示
         /// </summary>
         /// <param name="userName"></param>
         public void Send_StopStudentShow(string userName)
@@ -681,7 +681,7 @@ namespace EduService
         }
 
         /// <summary>
-        /// 禁止学生私聊
+        /// 禁止客户端私聊
         /// </summary>
         /// <param name="userName"></param>
         public void Send_ForbidPrivateChat(string userName)
@@ -690,7 +690,7 @@ namespace EduService
             SendMessage(request, CommandType.ForbidPrivateChat);
         }
         /// <summary>
-        /// 允许学生私聊
+        /// 允许客户端私聊
         /// </summary>
         /// <param name="userName"></param>
         public void Send_AllowPrivateChat(string userName)
@@ -719,7 +719,7 @@ namespace EduService
         }
 
         /// <summary>
-        /// 学生端登出
+        /// 客户端端登出
         /// </summary>
         public void Send_StudentLoginOut()
         {

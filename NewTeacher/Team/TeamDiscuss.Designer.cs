@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamDiscuss));
             this.onLineListView = new System.Windows.Forms.ListView();
-            this.MenuImageList = new System.Windows.Forms.ImageList();
+            this.MenuImageList = new System.Windows.Forms.ImageList(this.components);
             this.teamMemList = new System.Windows.Forms.ListView();
             this.cboxTeam = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -39,7 +40,7 @@
             this.btnCreate = new System.Windows.Forms.Button();
             this.txtCreate = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.memberMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.memberMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.memDel = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -87,8 +88,8 @@
             // 
             this.MenuImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("MenuImageList.ImageStream")));
             this.MenuImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.MenuImageList.Images.SetKeyName(0, "学生.png");
-            this.MenuImageList.Images.SetKeyName(1, "老师.png");
+            this.MenuImageList.Images.SetKeyName(0, "客户端.png");
+            this.MenuImageList.Images.SetKeyName(1, "主机端.png");
             // 
             // teamMemList
             // 

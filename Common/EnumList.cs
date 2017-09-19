@@ -109,30 +109,30 @@ namespace Common
         /// </summary>
         UserLoginOut = 18,
 
-        [Description("学生提交点名")]
+        [Description("客户端提交点名")]
         /// <summary>
-        /// 学生提交点名
+        /// 客户端提交点名
         /// </summary>
         StudentCall = 19,
 
         [Description("")]
         StudentInMainForm = 20,
 
-        [Description("开始学生演示")]
+        [Description("开始客户端演示")]
         /// <summary>
-        /// 开始学生演示
+        /// 开始客户端演示
         /// </summary>
         CallStudentShow = 21,
 
 
         ///// <summary>
-        ///// 学生启动演示
+        ///// 客户端启动演示
         ///// </summary>
         //StudentBeginShow = 22,
 
-        [Description("停止学生演示")]
+        [Description("停止客户端演示")]
         /// <summary>
-        /// 停止学生演示
+        /// 停止客户端演示
         /// </summary>
         StopStudentShow = 23,
 
@@ -176,39 +176,39 @@ namespace Common
         /// </summary>
         SendMessageWithFile = 30,
 
-        [Description("教师端登录")]
+        [Description("主机端登录")]
         /// <summary>
-        /// 教师端登录
+        /// 主机端登录
         /// </summary>
         TeacherLoginIn = 80,
 
-        [Description("教师端登出")]
+        [Description("主机端登出")]
         /// <summary>
-        /// 教师端登出
+        /// 主机端登出
         /// </summary>
         TeacherLoginOut = 81,
 
-        [Description("开始学生对教师演示")]
+        [Description("开始客户端对主机端演示")]
         /// <summary>
-        /// 开始学生对教师演示
+        /// 开始客户端对主机端演示
         /// </summary>
         CallStudentShowForMySelf = 31,
 
-        [Description("开始学生对教师演示")]
+        [Description("开始客户端对主机端演示")]
         /// <summary>
-        /// 开始学生对教师演示
+        /// 开始客户端对主机端演示
         /// </summary>
         StudentShowToTeacher = 32,
 
-        [Description("通知学生发送视频直播")]
+        [Description("通知客户端发送视频直播")]
         /// <summary>
-        /// 通知学生发送视频直播
+        /// 通知客户端发送视频直播
         /// </summary>
         CallStudentShowVideoToTeacher = 33,
 
         [Description("连接服务端心跳命令")]
         /// <summary>
-        /// 通知学生发送视频直播
+        /// 通知客户端发送视频直播
         /// </summary>
         XinTiao = 34
 

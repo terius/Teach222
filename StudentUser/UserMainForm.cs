@@ -49,23 +49,28 @@ namespace StudentUser
         {
 
             InitializeComponent();
+            if (GlobalVariable.IsHuiShenXiTong)
+            {
+                mSignIn.Visible = false;
+                mHandUp.Visible = false;
+            }
 
             chatForm = new ChatForm();
             Text = GlobalVariable.LoginUserInfo.DisplayName;
             tuopan.Text = Text;
             #region 处理收到的消息
-            //教师端登入
+            //主机端登入
             GlobalVariable.client.OnTeacherLoginIn = (message) =>
               {
                   TeacherLoginInResponse teachRes = JsonHelper.DeserializeObj<TeacherLoginInResponse>(message.DataStr);
                   GlobalVariable.TeacherIP = teachRes.teachIP;
                   DoAction(() =>
                   {
-                      CreateUDPHole();
+                    //  CreateUDPHole();
 
                   });
               };
-            //教师端登出
+            //主机端登出
             GlobalVariable.client.OnTeacherLoginOut = (message) =>
             {
                 if (theadScreen != null && theadScreen.ThreadState == ThreadState.Background)
@@ -196,7 +201,7 @@ namespace StudentUser
                 });
 
             };
-            //收到请求学生演示
+            //收到请求客户端演示
             GlobalVariable.client.OnCallStudentShow = (message) =>
             {
                 DoAction(() =>
@@ -207,7 +212,7 @@ namespace StudentUser
                 });
 
             };
-            //收到请求学生演示,只给教师
+            //收到请求客户端演示,只给主机端
             GlobalVariable.client.OnCallStudentShowForTeacher = (message) =>
             {
                 DoAction(() =>
@@ -218,7 +223,7 @@ namespace StudentUser
                 });
 
             };
-            //收到请求学生演示视频,只给教师
+            //收到请求客户端演示视频,只给主机端
             GlobalVariable.client.OnCallStudentShowVideoForTeacher = (message) =>
             {
                 DoAction(() =>
@@ -292,7 +297,7 @@ namespace StudentUser
                 theadScreen = new Thread(() =>
                     {
 
-                        udpClient.CreateUDPStudentHole();
+                        //  udpClient.CreateUDPStudentHole();
                         GetScreenCapture();
 
                     });
@@ -607,7 +612,7 @@ namespace StudentUser
                         udpClient.SendDesktopPic(sendBytes);
                         //   udpClient.WaitUdp();
                         //    Loger.LogMessage("GetScreenCapture:");
-                        Thread.Sleep(5000);
+                        Thread.Sleep(1000);
                     }
                     catch (Exception ex)
                     {

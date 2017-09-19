@@ -17,6 +17,11 @@ namespace StudentUser
         public Login()
         {
             InitializeComponent();
+            if (GlobalVariable.IsHuiShenXiTong)
+            {
+                this.Text = label6.Text = "会审系统";
+                label5.Text = "审讯室登录";
+            }
         }
         // string userGuid;
 
@@ -34,7 +39,7 @@ namespace StudentUser
         private void AutoLogin()
         {
             userName = "stu001";
-            nickName = "学生001";
+            nickName =  "客户端001";
             string password = "pw001";
             LoginRequest q = new LoginRequest
             {
@@ -103,7 +108,7 @@ namespace StudentUser
         {
 
             userName = textBox1.Text.Trim();
-            nickName = "学生" + userName;
+            nickName = (GlobalVariable.IsHuiShenXiTong ? "审讯室" : "学生") + userName;
             string password = textBox2.Text.Trim();
 
             if (userName == string.Empty)
