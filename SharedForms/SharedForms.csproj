@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.AXVLC">
-      <HintPath>..\..\..\DLL\vlc\AxInterop.AXVLC.dll</HintPath>
+      <HintPath>..\..\..\dll\vlc\AxInterop.AXVLC.dll</HintPath>
     </Reference>
     <Reference Include="Interop.AXVLC">
-      <HintPath>..\..\..\DLL\vlc\Interop.AXVLC.dll</HintPath>
+      <HintPath>..\..\..\dll\vlc\Interop.AXVLC.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="NAudio, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">

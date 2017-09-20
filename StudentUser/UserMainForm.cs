@@ -567,17 +567,10 @@ namespace StudentUser
 
 
 
-
+        string playurl = @"D:\dy\xart.mp4";
         private void button1_Click(object sender, EventArgs e)
         {
-            //var url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
-            //videoPlayer = new VLCPlayer();
-            //videoPlayer.Show();
-            //videoPlayer.StartPlayStream(@"D:\dy\hl.mkv");
-
-            var url = @"e:\terius\hkdg.mkv";
-            url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
-            ShowRtspVideo(url);
+            ShowRtspVideo(playurl);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -666,9 +659,8 @@ namespace StudentUser
 
         private void btnPlayVideo_Click(object sender, EventArgs e)
         {
-            var url = @"e:\terius\hkdg.mkv";
-            url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
-            PlayVideoByVLCDotNet(url);
+           // url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
+            PlayVideoByVLCDotNet(playurl);
         }
     }
 

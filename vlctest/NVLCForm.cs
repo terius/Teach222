@@ -30,14 +30,15 @@ namespace vlctest
         {
             IMediaPlayerFactory factory = new MediaPlayerFactory();
             //:network-caching=300 :rtsp-caching=300
-            IMedia media = factory.CreateMedia<IMedia>(url, new string[] { "network-caching=1000", "rtsp-caching=1000" });
+            IMedia media = factory.CreateMedia<IMedia>(@"D:\dy\xart.mp4");
+          //  IMedia media = factory.CreateMedia<IMedia>(url, new string[] { "network-caching=1000", "rtsp-caching=1000" });
 
             IVideoPlayer player = factory.CreatePlayer<IVideoPlayer>();
             player.WindowHandle = panel1.Handle;
             player.Open(media);
             player.Events.MediaEnded += Events_MediaEnded;
             player.Events.TimeChanged += Events_TimeChanged;
-            player.AspectRatio = AspectRatioMode.Default;
+          //  player.AspectRatio = AspectRatioMode.Default;
             player.Play();
 
         }
@@ -57,6 +58,18 @@ namespace vlctest
         {
             string url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
             PlayVideo(url);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "媒体文件 (*.jpg,*.gif,*.bmp,*.png,*.mp3,*.wav,*.amr,*.mp4,*.avi,*.mpg)|*.jpg;*.gif;*.bmp;*.png;*.mp3;*.wav;*.amr;*.mp4;*.avi;*.mpg";
+            dlg.Title = "选择媒体文件";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = dlg.FileName;
+                PlayVideo(fileName);
+            }
         }
     }
 }
