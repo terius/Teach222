@@ -19,7 +19,7 @@ namespace StudentUser
     public partial class UserMainForm : Form
     {
         BlackScreen bsForm = null;
-        //  VLCPlayer videoPlayer;
+        VLCPlayer videoPlayer;
         ChatForm chatForm;
         //   ViewRtsp videoPlayer2;
         CallForm callForm;
@@ -66,7 +66,7 @@ namespace StudentUser
                   GlobalVariable.TeacherIP = teachRes.teachIP;
                   DoAction(() =>
                   {
-                    //  CreateUDPHole();
+                      //  CreateUDPHole();
 
                   });
               };
@@ -400,7 +400,17 @@ namespace StudentUser
 
 
 
+        private void PlayVideoByVLCDotNet(string rtsp)
+        {
+            if (videoPlayer == null || videoPlayer.IsDisposed)
+            {
+                videoPlayer = new VLCPlayer();
+            }
+            videoPlayer.BringToFront();
+            videoPlayer.Show();
+            videoPlayer.StartPlayStream(rtsp);
 
+        }
 
 
 
@@ -427,6 +437,13 @@ namespace StudentUser
             {
                 videoForm.Close();
                 videoForm = null;
+            }
+
+            if (videoPlayer != null)
+            {
+                videoPlayer.StopPlay();
+                videoPlayer.Close();
+                videoPlayer = null;
             }
 
         }
@@ -647,7 +664,12 @@ namespace StudentUser
 
         }
 
-
+        private void btnPlayVideo_Click(object sender, EventArgs e)
+        {
+            var url = @"e:\terius\hkdg.mkv";
+            url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
+            PlayVideoByVLCDotNet(url);
+        }
     }
 
 

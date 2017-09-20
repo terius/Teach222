@@ -17,8 +17,8 @@ namespace SharedForms
             InitializeComponent();
             if (_type == ProgramType.Student)
             {
-                this.WindowState = FormWindowState.Maximized;
-                this.TopMost = true;
+               // this.WindowState = FormWindowState.Maximized;
+              //  this.TopMost = true;
             }
             else
             {

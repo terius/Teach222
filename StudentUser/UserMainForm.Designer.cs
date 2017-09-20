@@ -46,6 +46,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnPlayVideo = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.MinMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -73,6 +74,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnPlayVideo);
             this.panel1.Controls.Add(this.btnScreenCapture);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
@@ -97,7 +99,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(162, 3);
+            this.button2.Location = new System.Drawing.Point(315, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(86, 23);
             this.button2.TabIndex = 3;
@@ -195,6 +197,16 @@
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
             // 
+            // btnPlayVideo
+            // 
+            this.btnPlayVideo.Location = new System.Drawing.Point(163, 3);
+            this.btnPlayVideo.Name = "btnPlayVideo";
+            this.btnPlayVideo.Size = new System.Drawing.Size(146, 23);
+            this.btnPlayVideo.TabIndex = 5;
+            this.btnPlayVideo.Text = "播放视频(vlcDotNet)";
+            this.btnPlayVideo.UseVisualStyleBackColor = true;
+            this.btnPlayVideo.Click += new System.EventHandler(this.btnPlayVideo_Click);
+            // 
             // UserMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -237,6 +249,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnScreenCapture;
+        private System.Windows.Forms.Button btnPlayVideo;
     }
 }
 

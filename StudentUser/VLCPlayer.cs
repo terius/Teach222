@@ -50,7 +50,8 @@ namespace StudentUser
             Loger.LogMessage("接收到rtsp地址：" + url);
             //   vlcControl1.Video.FullScreen
             vlcControl1.Video.AspectRatio = "16:9";
-            vlcControl1.Play(uri, new string[] { "start-time=300" });
+            //   vlcControl1.Play(uri);
+            vlcControl1.Play(uri, new string[] { "start-time=1000" });
 
         }
 
