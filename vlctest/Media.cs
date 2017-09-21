@@ -48,15 +48,15 @@ namespace vlctest
             if (isOpen)
             {
                 string playCommand = "Play " + mediaName + " notify";
-                mciSendString(playCommand, null, 0, IntPtr.Zero);
+                mciSendString(playCommand, null, 0, notifyForm.Handle);
             }
         }
 
 
-        public void Play(string fileName)
+        public void Play(string fileName, Form notifyForm)
         {
             this.fileName = fileName;
-          //  this.notifyForm = notifyForm;
+            this.notifyForm = notifyForm;
             OpenMediaFile();
             PlayMediaFile();
         }

@@ -51,6 +51,8 @@ namespace SharedForms
           
         }
 
+    
+
         private void ChatNav_SelectChatItem(object sender, ChatItem chatItem)
         {
            
@@ -71,13 +73,13 @@ namespace SharedForms
 
 
         #region 方法
-        public void PlayVoice(string fileName)
+        public void PlayVoice(string fileName,IntPtr handle)
         {
             if (recordVoice == null)
             {
                 recordVoice = new RecordVoice();
             }
-            recordVoice.PlayVoice(fileName);
+            recordVoice.PlayVoice(fileName, handle);
         }
 
         private void InitProgressBar()

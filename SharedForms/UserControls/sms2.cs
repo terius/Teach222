@@ -33,6 +33,15 @@ namespace SharedForms
 
         ChatMessage _chatMessage;
 
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == RecordVoice.MM_MCINOTIFY)
+            {
+                pictureBox1.Image = Resource1.声音;
+            }
+            base.WndProc(ref m);
+        }
+
 
         public sms2(ChatMessage messageInfo, bool isMySelf)
         {
@@ -203,9 +212,9 @@ namespace SharedForms
             {
                 pictureBox1.Image = Resource1.playvoice;
                 Application.DoEvents();
-                ((ChatForm)this.ParentForm).PlayVoice(file);
-                pictureBox1.Image = Resource1.声音;
-                Application.DoEvents();
+                ((ChatForm)this.ParentForm).PlayVoice(file,this.Handle);
+           
+               // Application.DoEvents();
             }
         }
 

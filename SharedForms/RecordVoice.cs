@@ -13,6 +13,7 @@ namespace SharedForms
 {
     public class RecordVoice
     {
+        public const int MM_MCINOTIFY = 0x3B9;
         //  private Ffmpeg f = (Ffmpeg)null;
         // private AxWindowsMediaPlayer mediaPlayer = (AxWindowsMediaPlayer) null;
         //  private RecordVoice.playVoiceCallBackHandler voicePlayer;
@@ -43,7 +44,7 @@ namespace SharedForms
           int returnLength,
           IntPtr winHandle);
 
-        public void PlayVoice(string name)
+        public void PlayVoice(string name, IntPtr formHandle)
         {
             try
             {
@@ -61,7 +62,7 @@ namespace SharedForms
                         newFile = ConvertAMRToMP3(name);
                     }
                 }
-                Play(newFile);
+                Play(newFile, formHandle);
                 //StringBuilder shortpath = new StringBuilder(180);
                 //int result = GetShortPathName(newFile, shortpath, shortpath.Capacity);
                 //newFile = shortpath.ToString();
@@ -100,20 +101,20 @@ namespace SharedForms
         }
 
 
-        private void PlayMediaFile()
+        private void PlayMediaFile(IntPtr formHandle)
         {
             if (isOpen)
             {
                 string playCommand = "Play " + mediaName + " notify";
-                mciSendString(playCommand, null, 0, IntPtr.Zero);
+                mciSendString(playCommand, null, 0, formHandle);
             }
         }
 
 
-        public void Play(string fileName)
+        public void Play(string fileName,IntPtr formHandle)
         {
             OpenMediaFile(fileName);
-            PlayMediaFile();
+            PlayMediaFile(formHandle);
         }
 
 
