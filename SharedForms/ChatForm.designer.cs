@@ -39,13 +39,13 @@
             this.toolRecordVoice = new System.Windows.Forms.ToolStripButton();
             this.labRecordVoice = new System.Windows.Forms.ToolStripLabel();
             this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolCancelRecordVoice = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
             this.sendBox = new System.Windows.Forms.RichTextBox();
             this.panelControl3 = new System.Windows.Forms.Panel();
             this.labChatTitle = new System.Windows.Forms.Label();
-            this.toolCancelRecordVoice = new System.Windows.Forms.ToolStripButton();
             this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -61,12 +61,14 @@
             // panelContent
             // 
             this.panelContent.Controls.Add(this.splitContainer1);
-            this.panelContent.Size = new System.Drawing.Size(1149, 694);
+            this.panelContent.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.panelContent.Size = new System.Drawing.Size(1533, 868);
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -79,8 +81,9 @@
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
             this.splitContainer1.Panel2.Controls.Add(this.panelControl3);
-            this.splitContainer1.Size = new System.Drawing.Size(1149, 694);
-            this.splitContainer1.SplitterDistance = 342;
+            this.splitContainer1.Size = new System.Drawing.Size(1533, 868);
+            this.splitContainer1.SplitterDistance = 456;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
             // ChatNav
@@ -88,18 +91,20 @@
             this.ChatNav.BackColor = System.Drawing.Color.White;
             this.ChatNav.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ChatNav.Location = new System.Drawing.Point(0, 0);
+            this.ChatNav.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.ChatNav.Name = "ChatNav";
             this.ChatNav.SelectedChatItem = null;
-            this.ChatNav.Size = new System.Drawing.Size(342, 694);
+            this.ChatNav.Size = new System.Drawing.Size(456, 868);
             this.ChatNav.TabIndex = 0;
             // 
             // panMessage
             // 
             this.panMessage.Controls.Add(this.smsPanelNew1);
             this.panMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panMessage.Location = new System.Drawing.Point(0, 36);
+            this.panMessage.Location = new System.Drawing.Point(0, 45);
+            this.panMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panMessage.Name = "panMessage";
-            this.panMessage.Size = new System.Drawing.Size(803, 475);
+            this.panMessage.Size = new System.Drawing.Size(1072, 594);
             this.panMessage.TabIndex = 5;
             // 
             // smsPanelNew1
@@ -108,8 +113,9 @@
             this.smsPanelNew1.BackColor = System.Drawing.Color.White;
             this.smsPanelNew1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.smsPanelNew1.Location = new System.Drawing.Point(0, 0);
+            this.smsPanelNew1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.smsPanelNew1.Name = "smsPanelNew1";
-            this.smsPanelNew1.Size = new System.Drawing.Size(803, 475);
+            this.smsPanelNew1.Size = new System.Drawing.Size(1072, 594);
             this.smsPanelNew1.TabIndex = 4;
             // 
             // panel1
@@ -117,9 +123,10 @@
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel1.Controls.Add(this.toolStrip1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 511);
+            this.panel1.Location = new System.Drawing.Point(0, 639);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(803, 30);
+            this.panel1.Size = new System.Drawing.Size(1072, 38);
             this.panel1.TabIndex = 2;
             // 
             // toolStrip1
@@ -127,6 +134,7 @@
             this.toolStrip1.BackColor = System.Drawing.Color.Transparent;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolUploadPic,
             this.toolRecordVoice,
@@ -135,8 +143,8 @@
             this.toolCancelRecordVoice});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(10, 0, 1, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(803, 30);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(13, 0, 1, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(1072, 38);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -146,7 +154,7 @@
             this.toolUploadPic.Image = global::SharedForms.Resource1.图片;
             this.toolUploadPic.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolUploadPic.Name = "toolUploadPic";
-            this.toolUploadPic.Size = new System.Drawing.Size(23, 27);
+            this.toolUploadPic.Size = new System.Drawing.Size(24, 35);
             this.toolUploadPic.Text = "toolStripButton1";
             this.toolUploadPic.ToolTipText = "上传图片";
             this.toolUploadPic.Click += new System.EventHandler(this.toolUploadPic_Click);
@@ -157,7 +165,7 @@
             this.toolRecordVoice.Image = global::SharedForms.Resource1.录音;
             this.toolRecordVoice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolRecordVoice.Name = "toolRecordVoice";
-            this.toolRecordVoice.Size = new System.Drawing.Size(23, 27);
+            this.toolRecordVoice.Size = new System.Drawing.Size(24, 35);
             this.toolRecordVoice.Text = "toolStripButton1";
             this.toolRecordVoice.ToolTipText = "点击开始录音";
             this.toolRecordVoice.Click += new System.EventHandler(this.toolRecordVoice_Click);
@@ -165,7 +173,7 @@
             // labRecordVoice
             // 
             this.labRecordVoice.Name = "labRecordVoice";
-            this.labRecordVoice.Size = new System.Drawing.Size(44, 27);
+            this.labRecordVoice.Size = new System.Drawing.Size(54, 35);
             this.labRecordVoice.Text = "录音中";
             this.labRecordVoice.Visible = false;
             this.labRecordVoice.Click += new System.EventHandler(this.labRecordVoice_Click);
@@ -175,7 +183,18 @@
             this.ProgressBar.BackColor = System.Drawing.Color.Tomato;
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Padding = new System.Windows.Forms.Padding(7);
-            this.ProgressBar.Size = new System.Drawing.Size(114, 27);
+            this.ProgressBar.Size = new System.Drawing.Size(133, 35);
+            // 
+            // toolCancelRecordVoice
+            // 
+            this.toolCancelRecordVoice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolCancelRecordVoice.Image = ((System.Drawing.Image)(resources.GetObject("toolCancelRecordVoice.Image")));
+            this.toolCancelRecordVoice.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCancelRecordVoice.Name = "toolCancelRecordVoice";
+            this.toolCancelRecordVoice.Size = new System.Drawing.Size(43, 35);
+            this.toolCancelRecordVoice.Text = "取消";
+            this.toolCancelRecordVoice.Visible = false;
+            this.toolCancelRecordVoice.Click += new System.EventHandler(this.toolCancelRecordVoice_Click);
             // 
             // panel2
             // 
@@ -184,9 +203,10 @@
             this.panel2.Controls.Add(this.btnSend);
             this.panel2.Controls.Add(this.sendBox);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 541);
+            this.panel2.Location = new System.Drawing.Point(0, 677);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(803, 153);
+            this.panel2.Size = new System.Drawing.Size(1072, 191);
             this.panel2.TabIndex = 3;
             // 
             // btnClose
@@ -195,9 +215,10 @@
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(702, 106);
+            this.btnClose.Location = new System.Drawing.Point(937, 132);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(87, 32);
+            this.btnClose.Size = new System.Drawing.Size(116, 40);
             this.btnClose.TabIndex = 145;
             this.btnClose.Text = "关闭";
             this.btnClose.UseVisualStyleBackColor = false;
@@ -209,9 +230,10 @@
             this.btnSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Location = new System.Drawing.Point(592, 106);
+            this.btnSend.Location = new System.Drawing.Point(790, 132);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(87, 32);
+            this.btnSend.Size = new System.Drawing.Size(116, 40);
             this.btnSend.TabIndex = 144;
             this.btnSend.Text = "发送";
             this.btnSend.UseVisualStyleBackColor = false;
@@ -223,8 +245,9 @@
             this.sendBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.sendBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sendBox.Location = new System.Drawing.Point(0, 0);
+            this.sendBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.sendBox.Name = "sendBox";
-            this.sendBox.Size = new System.Drawing.Size(803, 153);
+            this.sendBox.Size = new System.Drawing.Size(1072, 191);
             this.sendBox.TabIndex = 143;
             this.sendBox.Text = "";
             this.sendBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.sendBox_KeyDown);
@@ -235,8 +258,9 @@
             this.panelControl3.Controls.Add(this.labChatTitle);
             this.panelControl3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl3.Location = new System.Drawing.Point(0, 0);
+            this.panelControl3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelControl3.Name = "panelControl3";
-            this.panelControl3.Size = new System.Drawing.Size(803, 36);
+            this.panelControl3.Size = new System.Drawing.Size(1072, 45);
             this.panelControl3.TabIndex = 0;
             // 
             // labChatTitle
@@ -244,29 +268,20 @@
             this.labChatTitle.AutoSize = true;
             this.labChatTitle.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labChatTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
-            this.labChatTitle.Location = new System.Drawing.Point(24, 9);
+            this.labChatTitle.Location = new System.Drawing.Point(32, 11);
+            this.labChatTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labChatTitle.Name = "labChatTitle";
-            this.labChatTitle.Size = new System.Drawing.Size(51, 19);
+            this.labChatTitle.Size = new System.Drawing.Size(61, 24);
             this.labChatTitle.TabIndex = 0;
             this.labChatTitle.Text = "label1";
             // 
-            // toolCancelRecordVoice
-            // 
-            this.toolCancelRecordVoice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolCancelRecordVoice.Image = ((System.Drawing.Image)(resources.GetObject("toolCancelRecordVoice.Image")));
-            this.toolCancelRecordVoice.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolCancelRecordVoice.Name = "toolCancelRecordVoice";
-            this.toolCancelRecordVoice.Size = new System.Drawing.Size(36, 27);
-            this.toolCancelRecordVoice.Text = "取消";
-            this.toolCancelRecordVoice.Visible = false;
-            this.toolCancelRecordVoice.Click += new System.EventHandler(this.toolCancelRecordVoice_Click);
-            // 
             // ChatForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1151, 726);
+            this.ClientSize = new System.Drawing.Size(1535, 908);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "ChatForm";
             this.Text = "聊天窗口";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatForm_FormClosing);

@@ -1,6 +1,6 @@
 ﻿using Common;
-using Model;
 using EduService;
+using Model;
 using SharedForms;
 using System;
 using System.Windows.Forms;
@@ -58,6 +58,25 @@ namespace NewTeacher
         private void button3_Click(object sender, EventArgs e)
         {
            
+        }
+
+        //protected override void WndProc(ref Message m)
+        //{
+        //    if (m.Msg == Media.MM_MCINOTIFY)
+        //    {
+        //     //   RefreshStop(false);
+        //    }
+        //    base.WndProc(ref m);
+        //}
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+       
         }
     }
 

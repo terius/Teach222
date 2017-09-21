@@ -12,14 +12,7 @@ namespace NewTeacher
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-
-            //BonusSkins.Register();
-            //SkinManager.EnableFormSkins();
-            //UserLookAndFeel.Default.SetSkinStyle("Visual Studio 2013 Light");
-            //Application.Run(new RibbonForm1());
-            //return;
+         
 
 
             bool createNew;

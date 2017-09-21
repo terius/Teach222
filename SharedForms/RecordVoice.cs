@@ -2,10 +2,12 @@
 using Helper;
 using Helpers;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SharedForms
 {
@@ -34,6 +36,13 @@ namespace SharedForms
         [DllImport("winmm.dll", EntryPoint = "mciSendStringA", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         private static extern int mciSendString(string lpstrCommand, string lpstrReturnString, int uReturnLength, int hwndCallback);
 
+        [DllImport("winmm.dll")]
+        private static extern long mciSendString(
+          string command,
+          StringBuilder returnValue,
+          int returnLength,
+          IntPtr winHandle);
+
         public void PlayVoice(string name)
         {
             try
@@ -52,12 +61,13 @@ namespace SharedForms
                         newFile = ConvertAMRToMP3(name);
                     }
                 }
-                StringBuilder shortpath = new StringBuilder(80);
-                int result = GetShortPathName(newFile, shortpath, shortpath.Capacity);
-                newFile = shortpath.ToString();
-                string buf = string.Empty;
+                Play(newFile);
+                //StringBuilder shortpath = new StringBuilder(180);
+                //int result = GetShortPathName(newFile, shortpath, shortpath.Capacity);
+                //newFile = shortpath.ToString();
+                //string buf = string.Empty;
 
-                mciSendString("play " + newFile, buf, buf.Length, 0); //播放
+                //mciSendString("play " + newFile, buf, buf.Length, 0); //播放
             }
             catch (Exception ex)
             {
@@ -66,10 +76,52 @@ namespace SharedForms
             }
         }
 
+
+
+        bool isOpen = false;
+        string mediaName = "media";
+        private void ClosePlayer()
+        {
+            if (isOpen)
+            {
+                String playCommand = "Close " + mediaName;
+                mciSendString(playCommand, null, 0, IntPtr.Zero);
+                isOpen = false;
+            }
+        }
+
+
+        private void OpenMediaFile(string fileName)
+        {
+            ClosePlayer();
+            string playCommand = "Open \"" + fileName + "\" type mpegvideo alias " + mediaName;
+            mciSendString(playCommand, null, 0, IntPtr.Zero);
+            isOpen = true;
+        }
+
+
+        private void PlayMediaFile()
+        {
+            if (isOpen)
+            {
+                string playCommand = "Play " + mediaName + " notify";
+                mciSendString(playCommand, null, 0, IntPtr.Zero);
+            }
+        }
+
+
+        public void Play(string fileName)
+        {
+            OpenMediaFile(fileName);
+            PlayMediaFile();
+        }
+
+
+
         private string ConvertAMRToMP3(string filename)
         {
             string mp3 = filename.Replace(".amr", ".mp3");
-            string cmdString = "ffmpeg.exe -y -i " + filename + " -ar 8000 -ab 12.2k -ac 1 " + mp3;
+            string cmdString = "-y -i " + filename + " -ar 8000 -ab 12.2k -ac 1 " + mp3;
             Cmd(cmdString);
             return mp3;
         }
@@ -88,7 +140,7 @@ namespace SharedForms
             mciSendString(@"save recsound " + wavFile, "", 0, 0);
             mciSendString("close recsound ", "", 0, 0);
             string amrFile = _audioRecordPath + filename + ".amr";
-            string cmdString = "ffmpeg.exe -y -i " + wavFile + " -ar 8000 -ab 12.2k -ac 1 " + amrFile;
+            string cmdString = "-y -i " + wavFile + " -ar 8000 -ab 12.2k -ac 1 " + amrFile;
             Cmd(cmdString);
             return amrFile;
         }
@@ -117,7 +169,7 @@ namespace SharedForms
             mciSendString("save movie " + str1, "", 0, 0);
             mciSendString("close movie", "", 0, 0);
             string str2 = _audioRecordPath + filename + ".amr";
-            string cmdString = "ffmpeg.exe -y -i " + str1 + " -ar 8000 -ab 12.2k -ac 1 " + str2;
+            string cmdString = "-y -i " + str1 + " -ar 8000 -ab 12.2k -ac 1 " + str2;
             Cmd(cmdString);
             return str2;
         }
@@ -125,62 +177,37 @@ namespace SharedForms
         /// <summary>
         /// 执行Cmd命令
         /// </summary>
-        private void Cmd(string c)
+        private void Cmd(string para)
         {
             try
             {
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                process.StartInfo.FileName = "cmd.exe";
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardInput = true;
+                Process process = new Process();
+                ProcessStartInfo processStartInfo = new ProcessStartInfo("ffmpeg.exe", para);
+                process.StartInfo = processStartInfo;
+                processStartInfo.UseShellExecute = false;
+                processStartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                processStartInfo.CreateNoWindow = true;
                 process.Start();
-
-                process.StandardInput.WriteLine(c);
-                process.StandardInput.AutoFlush = true;
-                process.StandardInput.WriteLine("exit");
-
-                //    StreamReader reader = process.StandardOutput;//截取输出流           
-
                 process.WaitForExit();
+
+                //old
+                //Process process = new Process();
+                //process.StartInfo.FileName = "cmd.exe";
+                //process.StartInfo.UseShellExecute = false;
+                //process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                //process.StartInfo.CreateNoWindow = true;
+                //process.StartInfo.RedirectStandardOutput = true;
+                //process.StartInfo.RedirectStandardInput = true;
+                //process.Start();
+                //process.StandardInput.WriteLine(c);
+                //process.StandardInput.AutoFlush = true;
+                //process.StandardInput.WriteLine("exit");
+                //process.WaitForExit();
+
             }
             catch
             { }
         }
-
-        //public void playVoice(string voiceName)
-        //{
-        //  if (this.mediaPlayer == null)
-        //    return;
-        //  string[] strArray = voiceName.Split('.');
-        //  string str1 = strArray[0];
-        //  if (strArray.Length > 1 && !strArray[1].Equals("amr"))
-        //  {
-        //    this.voicePlayer("cache\\video\\" + voiceName);
-        //  }
-        //  else
-        //  {
-        //    string str2 = "cache\\video\\" + str1 + ".amr";
-        //    string voice = "cache\\video\\" + str1 + ".mp3";
-        //    this.f.execute(" -y -i " + str2 + " -ar 8000 -ab 12.2k -ac 1 " + voice);
-        //    this.voicePlayer(voice);
-        //  }
-        //}
-
-        //private void playVoiceInvoke(string voiceName)
-        //{
-        //  if (this.mediaPlayer == null)
-        //    return;
-        //  this.mediaPlayer.URL = voiceName;
-        //  this.mediaPlayer.Ctlcontrols.play();
-        //}
-
-        //private string generateName()
-        //{
-        //    return DateTime.Now.ToString("MMddHHmmssff", (IFormatProvider)DateTimeFormatInfo.InvariantInfo);
-        //}
 
 
     }

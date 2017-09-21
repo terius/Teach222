@@ -1,67 +1,71 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
+using System;
 using System.Windows.Forms;
 
 namespace vlctest
 {
     public partial class Form1 : Form
     {
+        private Media media;
+
         public Form1()
         {
             InitializeComponent();
+            media = new Media();
+          //  RefreshStop(false);
         }
+
+        //private void closeButton_Click(object sender, EventArgs e)
+        //{
+        //    media.Stop();
+        //    Application.Exit();
+        //}
+
+        //private void browseButton_Click(object sender, EventArgs e)
+        //{
+        //    browseDialog.Filter = "Media File(*.mpg,*.dat,*.avi,*.wmv,*.wav,*.mp3)|*.wav;*.mp3;*.mpg;*.dat;*.avi;*.wmv";
+        //    browseDialog.ShowDialog();
+        //    if (browseDialog.FileName != "")
+        //        mediaFileTextBox.Text = browseDialog.FileName;
+        //}
+
+        //private void playButton_Click(object sender, EventArgs e)
+        //{
+        //    if (File.Exists(mediaFileTextBox.Text))
+        //    {
+        //        media.Play(mediaFileTextBox.Text);
+        //        RefreshStop(true);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("The media file does not exist.", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    }
+        //}
+
+        //private void stopButton_Click(object sender, EventArgs e)
+        //{
+        //    media.Stop();
+        //}
+
+        //Override the WndProc function in the form
+        //to receive the notify message when the playback complete
+        //protected override void WndProc(ref Message m)
+        //{
+        //    if (m.Msg == Media.MM_MCINOTIFY)
+        //    {
+        //        RefreshStop(false);
+        //    }
+        //    base.WndProc(ref m);
+        //}
+
+
+        //private void RefreshStop(bool stop)
+        //{
+        //    stopButton.Enabled = stop;
+        //}
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-        }
-
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string url = textBox1.Text.Trim();
-            if (!string.IsNullOrWhiteSpace(url))
-            {
-                FileInfo file = new FileInfo(url);
-                vlcControl1.Play(file);
-            }
-        }
-
-        private void vlcControl1_VlcLibDirectoryNeeded_1(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
-        {
-            var currentAssembly = Assembly.GetEntryAssembly();
-            var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
-            if (currentDirectory == null)
-                return;
-            if (AssemblyName.GetAssemblyName(currentAssembly.Location).ProcessorArchitecture == ProcessorArchitecture.X86)
-                e.VlcLibDirectory = new DirectoryInfo(Path.Combine(currentDirectory, @"lib\x86\"));
-            else
-                e.VlcLibDirectory = new DirectoryInfo(Path.Combine(currentDirectory, @"lib\x64\"));
-
-            if (!e.VlcLibDirectory.Exists)
-            {
-                var folderBrowserDialog = new FolderBrowserDialog();
-                folderBrowserDialog.Description = "Select Vlc libraries folder.";
-                folderBrowserDialog.RootFolder = Environment.SpecialFolder.Desktop;
-                folderBrowserDialog.ShowNewFolderButton = true;
-                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-                {
-                    e.VlcLibDirectory = new DirectoryInfo(folderBrowserDialog.SelectedPath);
-                }
-            }
-        }
-
-   
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            
+            media.Play(@"D:\4563456456j4k564kj56h45j6456.mp3");
         }
     }
 }

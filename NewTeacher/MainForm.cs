@@ -29,6 +29,7 @@ namespace NewTeacher
         public MainForm()
         {
             InitializeComponent();
+
             CreateFilePath();
             if (GlobalVariable.IsHuiShenXiTong)
             {
@@ -149,8 +150,8 @@ namespace NewTeacher
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-
-            CreateUDPConnect();
+         
+            //   CreateUDPConnect();
         }
 
         #region  接收消息事件
@@ -832,7 +833,10 @@ namespace NewTeacher
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalVariable.client.KillAllFFmpeg();
-            udpClient.CloseTeacherUDP();
+            if (udpClient != null)
+            {
+                udpClient.CloseTeacherUDP();
+            }
         }
     }
 }
