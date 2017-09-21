@@ -598,7 +598,7 @@ namespace EduService
         /// 创建群组
         /// </summary>
         /// <param name="request"></param>
-        public void Send_CreateTeam(TeamChatCreateOrUpdateRequest request)
+        public void Send_CreateTeam(TeacherTeam request)
         {
             SendMessage(request, CommandType.CreateTeam);
         }

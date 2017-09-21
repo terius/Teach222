@@ -47,7 +47,7 @@ namespace SharedForms
             ChatNav.SelectChatItem += ChatNav_SelectChatItem;
             ChatNav.CreateNewGroupChat(groupId);
             InitProgressBar();
-            CheckPath();
+           
           
         }
 
@@ -92,24 +92,7 @@ namespace SharedForms
             ProgressBar.Visible = false;
         }
 
-        private void CheckPath()
-        {
-            if (!Directory.Exists(GlobalVariable.AudioRecordPath))
-            {
-                Directory.CreateDirectory(GlobalVariable.AudioRecordPath);
-            }
-
-
-            if (!Directory.Exists(GlobalVariable.DownloadPath))
-            {
-                Directory.CreateDirectory(GlobalVariable.DownloadPath);
-            }
-
-            if (!Directory.Exists(GlobalVariable.TempPath))
-            {
-                Directory.CreateDirectory(GlobalVariable.TempPath);
-            }
-        }
+     
         #endregion
 
         #region 方法
@@ -595,13 +578,15 @@ namespace SharedForms
             {
                 toolRecordVoice.Image = Resource1.录音中;
                 labRecordVoice.Visible = true;
+                toolCancelRecordVoice.Visible = true;
+                toolRecordVoice.ToolTipText = "点击结束录音并上传";
                 Application.DoEvents();
                
                 if (recordVoice == null)
                 {
                     recordVoice = new RecordVoice();
                 }
-                recordVoice.BeginRecord();
+                recordVoice.BeginRecord2();
                 //if (audioRecorder == null)
                 //{
                 //    audioRecorder = new AudioRecorder();
@@ -612,14 +597,31 @@ namespace SharedForms
             {
                 toolRecordVoice.Image = Resource1.录音;
                 labRecordVoice.Visible = false;
+                toolCancelRecordVoice.Visible = false;
+                toolRecordVoice.ToolTipText = "点击开始录音";
                 Application.DoEvents();
                 // ((ToolTipItem)btnRecordAudio.SuperTip.Items[0]).Text = "点击按钮开始录音";
-                string saveFile = recordVoice.StopRecord();
+                string saveFile = recordVoice.StopRecord2();
                 // audioRecorder.EndRecord();
                 Thread.Sleep(500);
 
-                UploadFileToALL(saveFile, true);
+                UploadFileToALL(saveFile, false);
             }
+        }
+
+        private void labRecordVoice_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolCancelRecordVoice_Click(object sender, EventArgs e)
+        {
+            toolRecordVoice.Image = Resource1.录音;
+            labRecordVoice.Visible = false;
+            toolCancelRecordVoice.Visible = false;
+            toolRecordVoice.ToolTipText = "点击开始录音";
+            Application.DoEvents();
+            recordVoice.CancelRecord();
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using EduService;
+using System.IO;
 
 namespace NewTeacher
 {
@@ -28,6 +29,7 @@ namespace NewTeacher
         public MainForm()
         {
             InitializeComponent();
+            CreateFilePath();
             if (GlobalVariable.IsHuiShenXiTong)
             {
                 this.Text = "会审系统";
@@ -42,13 +44,13 @@ namespace NewTeacher
                 myGroupBox7.Text = "在线审讯室列表";
                 myGroupBox8.Text = "审讯室屏幕";
                 menuGroupChat.Text = "群组聊天";
-              //  tableLayoutPanel3.ColumnStyles[4].Width = 0f;
+                //  tableLayoutPanel3.ColumnStyles[4].Width = 0f;
             }
-           
+
             GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
             InitOnlineInfo();
             GlobalVariable.LoadTeamFromXML();
-       
+
             #region 接收消息事件
             GlobalVariable.client.OnOnlineList = (message) =>
             {
@@ -118,6 +120,28 @@ namespace NewTeacher
             GlobalVariable.client.Send_OnlineList();
         }
 
+        private void CreateFilePath()
+        {
+            if (!Directory.Exists(GlobalVariable.BaseFilePath))
+            {
+                Directory.CreateDirectory(GlobalVariable.BaseFilePath);
+            }
+            if (!Directory.Exists(GlobalVariable.DownloadPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.DownloadPath);
+            }
+
+            if (!Directory.Exists(GlobalVariable.AudioRecordPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.AudioRecordPath);
+            }
+
+            if (!Directory.Exists(GlobalVariable.TempPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.TempPath);
+            }
+        }
+
         private void Client_OnClentIsConnecting(object sender, EventArgs e)
         {
             MessageBox.Show("正在连接中，请稍后再试");
@@ -125,7 +149,7 @@ namespace NewTeacher
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-          
+
             CreateUDPConnect();
         }
 

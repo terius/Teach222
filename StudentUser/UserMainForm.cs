@@ -49,6 +49,7 @@ namespace StudentUser
         {
 
             InitializeComponent();
+            CreateFilePath();
             if (GlobalVariable.IsHuiShenXiTong)
             {
                 mSignIn.Visible = false;
@@ -188,7 +189,7 @@ namespace StudentUser
             //收到创建群组信息
             GlobalVariable.client.OnCreateTeam = (message) =>
             {
-                var teamInfo = JsonHelper.DeserializeObj<TeamChatCreateOrUpdateRequest>(message.DataStr);
+                var teamInfo = JsonHelper.DeserializeObj<TeacherTeam>(message.DataStr);
                 GlobalVariable.RefleshTeamList(teamInfo);
                 DoAction(() =>
                 {
@@ -276,6 +277,28 @@ namespace StudentUser
 
             //  GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
             //   GlobalVariable.client.Send_StudentInMainForm();
+        }
+
+        private void CreateFilePath()
+        {
+            if (!Directory.Exists(GlobalVariable.BaseFilePath))
+            {
+                Directory.CreateDirectory(GlobalVariable.BaseFilePath);
+            }
+            if (!Directory.Exists(GlobalVariable.DownloadPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.DownloadPath);
+            }
+
+            if (!Directory.Exists(GlobalVariable.AudioRecordPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.AudioRecordPath);
+            }
+
+            if (!Directory.Exists(GlobalVariable.TempPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.TempPath);
+            }
         }
 
         private void UserMainForm_Load(object sender, System.EventArgs e)

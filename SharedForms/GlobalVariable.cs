@@ -14,12 +14,37 @@ namespace SharedForms
 {
     public static class GlobalVariable
     {
-        public static readonly string DownloadPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DownloadFiles");
-        public static readonly string AudioRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AudioRecord");
-        public static readonly string TempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TempPath");
+        public static readonly string BaseFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files");
+        public static readonly string DownloadPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\DownloadFiles");
+        public static readonly string AudioRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\AudioRecord");
+        public static readonly string TempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\Temp");
+        public static readonly string FFmpegFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg.exe");
         public static string TeacherIP { get; set; }
         public static EduTCPClient client;
         public static readonly bool IsHuiShenXiTong = true;//是否为会审系统
+
+        public static void UpdateTeamOnline(IList<OnlineListResult> onLineList)
+        {
+            var list = GetTeamChatList();
+            foreach (var onlineUser in onLineList)
+            {
+                
+                foreach (ChatStore item in list)
+                {
+                    foreach (TeamMember mem in item.TeamMembers)
+                    {
+                        if (mem.UserName == onlineUser.username)
+                        {
+                            mem.IsOnline = true;
+                            break;
+                        }
+                    }
+                }
+            }
+           
+        }
+
+      
         //public static MyClient client
         //{
         //    get
@@ -385,8 +410,23 @@ namespace SharedForms
             return info;
         }
 
+      
+
         public static bool AddTeamMember(CheckedListViewItemCollection mems, string guid)
         {
+            //if (TeacherTeam == null || TeacherTeam.TeamInfos.Count <= 0)
+            //{
+            //    ShowError("未找到添加的分组信息");
+            //    return false;
+            //}
+            //var info = TeacherTeam.TeamInfos.FirstOrDefault(d => d.groupid == guid);
+            //if (info == null)
+            //{
+            //    ShowError("未找到添加的分组信息");
+            //    return false;
+            //}
+
+
             var info = ChatList.FirstOrDefault(d => d.ChatUserName == guid && d.ChatType == ChatType.TeamChat);
             if (info == null)
             {
@@ -408,6 +448,9 @@ namespace SharedForms
             //  ShowSuccess("分组成员添加成功");
             return true;
         }
+
+
+    
 
         private static bool AddLoginUserToMember(string guid)
         {
@@ -474,10 +517,12 @@ namespace SharedForms
             return true;
         }
 
-        public static void RefleshTeamList(TeamChatCreateOrUpdateRequest teamList)
+        public static void RefleshTeamList(TeacherTeam teamList)
         {
+           
             IsTeamChatChanged = true;
             var list = GetTeamChatList();
+       
             foreach (TeamInfo teamInfo in teamList.TeamInfos)
             {
                 var chatStore = list.FirstOrDefault(d => d.ChatUserName == teamInfo.groupid);
@@ -505,12 +550,13 @@ namespace SharedForms
         }
 
 
-        public static void SendCommand_CreateOrUpdateTeam()
+        public static TeacherTeam GetTeacherTeamFromChatStore()
         {
-            TeamChatCreateOrUpdateRequest request = new TeamChatCreateOrUpdateRequest();
-            request.TeamInfos = new List<TeamInfo>();
+            var team = new TeacherTeam();
+            team.DisplayName = LoginUserInfo.DisplayName;
+            team.UserName = LoginUserInfo.UserName;
+            team.TeamInfos = new List<TeamInfo>();
             var list = GetTeamChatList();
-            SaveTeamXML(list);
             TeamInfo info;
             foreach (ChatStore item in list)
             {
@@ -518,31 +564,55 @@ namespace SharedForms
                 info.groupname = item.ChatDisplayName;
                 info.groupid = item.ChatUserName;
                 info.groupuserList = item.TeamMembers.ToList();
-                request.TeamInfos.Add(info);
+                team.TeamInfos.Add(info);
             }
+            return team;
+        }
+
+
+        public static void SendCommand_CreateOrUpdateTeam()
+        {
+            var request = GetTeacherTeamFromChatStore();
+            CreateTeamXMLFile(request);
             client.Send_CreateTeam(request);
+            //TeacherTeam request = new TeacherTeam();
+            //request.DisplayName = LoginUserInfo.DisplayName;
+            //request.UserName = LoginUserInfo.UserName;
+            //request.TeamInfos = new List<TeamInfo>();
+            //var list = GetTeamChatList();
+            //SaveTeamXML(list);
+            //TeamInfo info;
+            //foreach (ChatStore item in list)
+            //{
+            //    info = new TeamInfo();
+            //    info.groupname = item.ChatDisplayName;
+            //    info.groupid = item.ChatUserName;
+            //    info.groupuserList = item.TeamMembers.ToList();
+            //    request.TeamInfos.Add(info);
+            //}
+            //client.Send_CreateTeam(request);
         }
 
         public static void SaveTeamInfoToFile()
         {
-            var list = GetTeamChatList();
-            SaveTeamXML(list);
+            var request = GetTeacherTeamFromChatStore();
+            CreateTeamXMLFile(request);
         }
 
-        private static void SaveTeamXML(IList<ChatStore> teamChatList)
+        private static void CreateTeamXMLFile(TeacherTeam info)
         {
-            TeamXmlInfo info = new TeamXmlInfo();
-            info.DisplayName = LoginUserInfo.DisplayName;
-            info.UserName = LoginUserInfo.UserName;
-            info.Teams = new List<TeamInfo>();
-            foreach (ChatStore chat in teamChatList)
-            {
-                TeamInfo team = new TeamInfo();
-                team.groupid = chat.ChatUserName;
-                team.groupname = chat.ChatDisplayName;
-                team.groupuserList = chat.TeamMembers.ToList();
-                info.Teams.Add(team);
-            }
+            //var info = new TeacherTeam();
+            //info.DisplayName = LoginUserInfo.DisplayName;
+            //info.UserName = LoginUserInfo.UserName;
+            //info.TeamInfos = new List<TeamInfo>();
+            //foreach (ChatStore chat in teamChatList)
+            //{
+            //    TeamInfo team = new TeamInfo();
+            //    team.groupid = chat.ChatUserName;
+            //    team.groupname = chat.ChatDisplayName;
+            //    team.groupuserList = chat.TeamMembers.ToList();
+            //    info.TeamInfos.Add(team);
+            //}
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TeamXML");
             if (!Directory.Exists(path))
@@ -570,10 +640,10 @@ namespace SharedForms
             {
                 return;
             }
-            TeamXmlInfo info = XmlHelper.DeserializeFromFile<TeamXmlInfo>(fileName);
-            TeamChatCreateOrUpdateRequest loadTeam = new TeamChatCreateOrUpdateRequest();
-            loadTeam.TeamInfos = info.Teams;
-            RefleshTeamList(loadTeam);
+            var teams = XmlHelper.DeserializeFromFile<TeacherTeam>(fileName);
+            //  TeacherTeam loadTeam = new TeacherTeam();
+            //  loadTeam.TeamInfos = info.Teams;
+            RefleshTeamList(teams);
 
         }
 

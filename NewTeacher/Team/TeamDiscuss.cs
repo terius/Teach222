@@ -191,7 +191,7 @@ namespace NewTeacher
                 }
 
 
-                //TeamChatCreateOrUpdateRequest request = new TeamChatCreateOrUpdateRequest();
+                //TeacherTeam request = new TeacherTeam();
                 //request.groupguid = selectTeam.ChatUserName;
                 //request.groupname = selectTeam.ChatDisplayName;
                 //request.groupuserList = selectTeam.TeamMembers.Select(d => d.UserName).ToArray();
@@ -236,7 +236,7 @@ namespace NewTeacher
         {
             BindTeamMember();
         }
-        
+
 
         private void btnAddStudent_Click_1(object sender, EventArgs e)
         {

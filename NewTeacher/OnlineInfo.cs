@@ -30,7 +30,8 @@ namespace NewTeacher
         public void OnOnlineChange(IList<OnlineListResult> onLineList)
         {
             this.OnLineList = onLineList;
-            LoginedStuList = onLineList.Where(d => d.clientRole == ClientRole.Student).ToList(); ;
+            GlobalVariable.UpdateTeamOnline(onLineList);
+            LoginedStuList = onLineList.Where(d => d.clientRole == ClientRole.Student).ToList(); 
             OnlineEventArgs e = new OnlineEventArgs(onLineList);
             OnLineChange(this, e);
         }

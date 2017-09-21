@@ -93,7 +93,7 @@ namespace EduService
                 while (true)
                 {
                     var receiveBytes = teacherUdpClient.Receive(ref RemoteIpEndPoint);
-                    Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
+                 //   Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
                     if (receiveBytes.Length > 100)
                     {
                         screenInfo = GetScreen(receiveBytes);

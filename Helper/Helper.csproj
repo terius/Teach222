@@ -77,6 +77,7 @@
     <Compile Include="AESHelper3.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="FFmpegHelper.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="Loger.cs" />

@@ -1,6 +1,6 @@
 ﻿using Helpers;
 using Model;
-using NAudio.Wave;
+//using NAudio.Wave;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -196,6 +196,19 @@ namespace SharedForms
             }
         }
 
+
+        private void PlayVoice(string file)
+        {
+            if (!string.IsNullOrWhiteSpace(file))
+            {
+                pictureBox1.Image = Resource1.playvoice;
+                Application.DoEvents();
+                ((ChatForm)this.ParentForm).PlayVoice(file);
+                pictureBox1.Image = Resource1.声音;
+                Application.DoEvents();
+            }
+        }
+
         private void PictureBox1_Click(object sender, EventArgs e)
         {
 
@@ -215,7 +228,7 @@ namespace SharedForms
                         {
                             progressBar1.Hide();
                         }
-                        ((ChatForm)this.ParentForm).PlayVoice(saveFilePath);
+                        PlayVoice(saveFilePath);
                         return;
                     }
                 }
@@ -225,10 +238,7 @@ namespace SharedForms
                 {
                     progressBar1.Visible = false;
                     saveFilePath = eve.UserState.ToString();
-                    if (!string.IsNullOrWhiteSpace(saveFilePath))
-                    {
-                        ((ChatForm)this.ParentForm).PlayVoice(saveFilePath);
-                    }
+                    PlayVoice(saveFilePath);
 
                 };
 
@@ -305,40 +315,40 @@ namespace SharedForms
             picShow.ShowPic(filePath);
         }
 
-        private void PlayMp3FromUrl(string url)
-        {
+        //private void PlayMp3FromUrl(string url)
+        //{
 
-            using (Stream ms = new MemoryStream())
-            {
-                using (Stream stream = WebRequest.Create(url)
-                    .GetResponse().GetResponseStream())
-                {
-                    byte[] buffer = new byte[32768];
-                    int read;
-                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        ms.Write(buffer, 0, read);
-                    }
-                }
+        //    using (Stream ms = new MemoryStream())
+        //    {
+        //        using (Stream stream = WebRequest.Create(url)
+        //            .GetResponse().GetResponseStream())
+        //        {
+        //            byte[] buffer = new byte[32768];
+        //            int read;
+        //            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+        //            {
+        //                ms.Write(buffer, 0, read);
+        //            }
+        //        }
 
-                ms.Position = 0;
-                using (WaveStream blockAlignedStream =
-                    new BlockAlignReductionStream(
-                        WaveFormatConversionStream.CreatePcmStream(
-                            new Mp3FileReader(ms))))
-                {
-                    using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
-                    {
-                        waveOut.Init(blockAlignedStream);
-                        waveOut.Play();
-                        while (waveOut.PlaybackState == PlaybackState.Playing)
-                        {
-                            System.Threading.Thread.Sleep(100);
-                        }
-                    }
-                }
-            }
-        }
+        //        ms.Position = 0;
+        //        using (WaveStream blockAlignedStream =
+        //            new BlockAlignReductionStream(
+        //                WaveFormatConversionStream.CreatePcmStream(
+        //                    new Mp3FileReader(ms))))
+        //        {
+        //            using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
+        //            {
+        //                waveOut.Init(blockAlignedStream);
+        //                waveOut.Play();
+        //                while (waveOut.PlaybackState == PlaybackState.Playing)
+        //                {
+        //                    System.Threading.Thread.Sleep(100);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         private void sms2_Paint(object sender, PaintEventArgs e)
         {

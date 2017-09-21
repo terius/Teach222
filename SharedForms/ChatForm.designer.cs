@@ -45,6 +45,7 @@
             this.sendBox = new System.Windows.Forms.RichTextBox();
             this.panelControl3 = new System.Windows.Forms.Panel();
             this.labChatTitle = new System.Windows.Forms.Label();
+            this.toolCancelRecordVoice = new System.Windows.Forms.ToolStripButton();
             this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -130,7 +131,8 @@
             this.toolUploadPic,
             this.toolRecordVoice,
             this.labRecordVoice,
-            this.ProgressBar});
+            this.ProgressBar,
+            this.toolCancelRecordVoice});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(10, 0, 1, 0);
@@ -157,7 +159,7 @@
             this.toolRecordVoice.Name = "toolRecordVoice";
             this.toolRecordVoice.Size = new System.Drawing.Size(23, 27);
             this.toolRecordVoice.Text = "toolStripButton1";
-            this.toolRecordVoice.ToolTipText = "开始录音";
+            this.toolRecordVoice.ToolTipText = "点击开始录音";
             this.toolRecordVoice.Click += new System.EventHandler(this.toolRecordVoice_Click);
             // 
             // labRecordVoice
@@ -166,6 +168,7 @@
             this.labRecordVoice.Size = new System.Drawing.Size(44, 27);
             this.labRecordVoice.Text = "录音中";
             this.labRecordVoice.Visible = false;
+            this.labRecordVoice.Click += new System.EventHandler(this.labRecordVoice_Click);
             // 
             // ProgressBar
             // 
@@ -247,6 +250,17 @@
             this.labChatTitle.TabIndex = 0;
             this.labChatTitle.Text = "label1";
             // 
+            // toolCancelRecordVoice
+            // 
+            this.toolCancelRecordVoice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolCancelRecordVoice.Image = ((System.Drawing.Image)(resources.GetObject("toolCancelRecordVoice.Image")));
+            this.toolCancelRecordVoice.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCancelRecordVoice.Name = "toolCancelRecordVoice";
+            this.toolCancelRecordVoice.Size = new System.Drawing.Size(36, 27);
+            this.toolCancelRecordVoice.Text = "取消";
+            this.toolCancelRecordVoice.Visible = false;
+            this.toolCancelRecordVoice.Click += new System.EventHandler(this.toolCancelRecordVoice_Click);
+            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -291,5 +305,6 @@
         private System.Windows.Forms.ToolStripButton toolRecordVoice;
         private System.Windows.Forms.ToolStripProgressBar ProgressBar;
         private System.Windows.Forms.ToolStripLabel labRecordVoice;
+        private System.Windows.Forms.ToolStripButton toolCancelRecordVoice;
     }
 }
