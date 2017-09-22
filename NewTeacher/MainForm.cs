@@ -150,8 +150,7 @@ namespace NewTeacher
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-         
-            //   CreateUDPConnect();
+            CreateUDPConnect();
         }
 
         #region  接收消息事件

@@ -12,6 +12,7 @@ namespace NewTeacher
 
         OnlineInfo _onLineInfo;
         ChatStore selectTeam;
+        bool teamIsChange;
         public TeamDiscuss(OnlineInfo onLineInfo)
         {
             InitializeComponent();
@@ -94,6 +95,7 @@ namespace NewTeacher
         {
             if (GlobalVariable.CreateTeamChat(this.txtCreate.Text.Trim()))
             {
+                teamIsChange = true;
                 AddNewTeam();
             }
         }
@@ -147,6 +149,7 @@ namespace NewTeacher
                 fmEditTeamName editForm = new fmEditTeamName(selectTeam.ChatUserName, selectTeam.ChatDisplayName);
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
+                    teamIsChange = true;
                     BindTeam();
                 }
             }
@@ -160,6 +163,7 @@ namespace NewTeacher
                 var rs = GlobalVariable.DelTeam(selectTeam.ChatUserName);
                 if (rs)
                 {
+                    teamIsChange = true;
                     GlobalVariable.ShowSuccess("分组删除成功");
                     BindTeam();
                 }
@@ -211,6 +215,10 @@ namespace NewTeacher
 
                 string userName = this.teamMemList.SelectedItems[0].SubItems[1].Text;
                 bool rs = GlobalVariable.DelTeamMember(selectTeam.ChatUserName, userName);
+                if (rs)
+                {
+                    teamIsChange = true;
+                }
                 BindTeamMember();
             }
         }
@@ -253,20 +261,25 @@ namespace NewTeacher
             }
             selectTeam = (ChatStore)cboxTeam2.SelectedItem;
             GlobalVariable.AddTeamMember(onLineListView.CheckedItems, selectTeam.ChatUserName);
+            teamIsChange = true;
             BindTeamMember();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             GlobalVariable.SendCommand_CreateOrUpdateTeam();
+            teamIsChange = false;
             MessageBox.Show("群组信息保存成功");
         }
 
         private void TeamDiscuss_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("是否要保存群组信息？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            if (teamIsChange)
             {
-                GlobalVariable.SaveTeamInfoToFile();
+                if (MessageBox.Show("是否要保存群组信息？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                {
+                    GlobalVariable.SaveTeamInfoToFile();
+                }
             }
         }
     }
