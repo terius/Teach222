@@ -726,6 +726,14 @@ namespace EduService
             SendMessageNoPara(CommandType.UserLoginOut);
         }
 
+        /// <summary>
+        /// 删除群组成员
+        /// </summary>
+        public void Send_DeleteGroupMember(DeleteTeamMemberRequest request)
+        {
+            SendMessage(request, CommandType.DeleteUserInGroup);
+        }
+
         #region 通用方法
         private void SendMessage<T>(T t, CommandType cmdType) where T : class, new()
         {

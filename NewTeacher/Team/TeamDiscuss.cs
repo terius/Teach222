@@ -217,6 +217,10 @@ namespace NewTeacher
                 bool rs = GlobalVariable.DelTeamMember(selectTeam.ChatUserName, userName);
                 if (rs)
                 {
+                    DeleteTeamMemberRequest request = new DeleteTeamMemberRequest();
+                    request.TeamId = selectTeam.ChatUserName;
+                    request.UserName = userName;
+                    GlobalVariable.SendCommand(request, CommandType.DeleteUserInGroup);
                     teamIsChange = true;
                 }
                 BindTeamMember();
@@ -278,7 +282,7 @@ namespace NewTeacher
             {
                 if (MessageBox.Show("是否要保存群组信息？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                 {
-                    GlobalVariable.SaveTeamInfoToFile();
+                    GlobalVariable.SendCommand_CreateOrUpdateTeam();
                 }
             }
         }

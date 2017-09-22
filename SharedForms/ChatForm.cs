@@ -95,9 +95,7 @@ namespace SharedForms
         }
 
      
-        #endregion
-
-        #region 方法
+       
         ///// <summary>
         ///// 创建聊天对象
         ///// </summary>

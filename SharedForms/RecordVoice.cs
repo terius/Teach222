@@ -151,29 +151,29 @@ namespace SharedForms
             mciSendString("close recsound ", "", 0, 0);
         }
 
-        public void BeginRecord()
-        {
-            mciSendString("set wave bitpersample 8", "", 0, 0);
-            mciSendString("set wave samplespersec 20000", "", 0, 0);
-            mciSendString("set wave channels 1", "", 0, 0);
-            mciSendString("set wave format tag pcm", "", 0, 0);
-            mciSendString("open new type WAVEAudio alias movie", "", 0, 0);
-            mciSendString("record movie", "", 0, 0);
-        }
+        //public void BeginRecord()
+        //{
+        //    mciSendString("set wave bitpersample 8", "", 0, 0);
+        //    mciSendString("set wave samplespersec 20000", "", 0, 0);
+        //    mciSendString("set wave channels 1", "", 0, 0);
+        //    mciSendString("set wave format tag pcm", "", 0, 0);
+        //    mciSendString("open new type WAVEAudio alias movie", "", 0, 0);
+        //    mciSendString("record movie", "", 0, 0);
+        //}
 
-        public string StopRecord()
-        {
-            var filename = DateTime.Now.Ticks.ToString();
-            mciSendString("stop movie", "", 0, 0);
-            // string name = this.generateName();
-            string str1 = _audioRecordPath + filename + ".wav";
-            mciSendString("save movie " + str1, "", 0, 0);
-            mciSendString("close movie", "", 0, 0);
-            string str2 = _audioRecordPath + filename + ".amr";
-            string cmdString = "-y -i " + str1 + " -ar 8000 -ab 12.2k -ac 1 " + str2;
-            Cmd(cmdString);
-            return str2;
-        }
+        //public string StopRecord()
+        //{
+        //    var filename = DateTime.Now.Ticks.ToString();
+        //    mciSendString("stop movie", "", 0, 0);
+        //    // string name = this.generateName();
+        //    string str1 = _audioRecordPath + filename + ".wav";
+        //    mciSendString("save movie " + str1, "", 0, 0);
+        //    mciSendString("close movie", "", 0, 0);
+        //    string str2 = _audioRecordPath + filename + ".amr";
+        //    string cmdString = "-y -i " + str1 + " -ar 8000 -ab 12.2k -ac 1 " + str2;
+        //    Cmd(cmdString);
+        //    return str2;
+        //}
 
         /// <summary>
         /// 执行Cmd命令

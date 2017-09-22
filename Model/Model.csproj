@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Request\DeleteTeamMemberRequest.cs" />
     <Compile Include="Request\EmptyRequest.cs" />
     <Compile Include="Request\LoginRequest.cs" />
     <Compile Include="Request\SendRequest.cs" />

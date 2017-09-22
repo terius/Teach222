@@ -61,7 +61,7 @@
             // panelContent
             // 
             this.panelContent.Controls.Add(this.splitContainer1);
-            this.panelContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelContent.Margin = new System.Windows.Forms.Padding(4);
             this.panelContent.Size = new System.Drawing.Size(885, 495);
             // 
             // splitContainer1
@@ -89,7 +89,7 @@
             this.ChatNav.BackColor = System.Drawing.Color.White;
             this.ChatNav.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ChatNav.Location = new System.Drawing.Point(0, 0);
-            this.ChatNav.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ChatNav.Margin = new System.Windows.Forms.Padding(4);
             this.ChatNav.Name = "ChatNav";
             this.ChatNav.SelectedChatItem = null;
             this.ChatNav.Size = new System.Drawing.Size(263, 495);
@@ -270,7 +270,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(887, 527);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ChatForm";
             this.Text = "聊天窗口";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatForm_FormClosing);

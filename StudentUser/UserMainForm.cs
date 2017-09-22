@@ -193,10 +193,14 @@ namespace StudentUser
                 GlobalVariable.RefleshTeamList(teamInfo);
                 DoAction(() =>
                 {
+                    if (GlobalVariable.CheckChatFormIsOpened())
+                    {
+                        GlobalVariable.ShowNotifyMessage("群组信息已经更改");
+                        chatForm.ReflashTeamChat();
+                    }
+                    //  chatForm.BringToFront();
+                    //  chatForm.Show();
 
-                    chatForm.BringToFront();
-                    chatForm.Show();
-                    chatForm.ReflashTeamChat();
 
 
                 });
@@ -682,7 +686,7 @@ namespace StudentUser
 
         private void btnPlayVideo_Click(object sender, EventArgs e)
         {
-           // url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
+            // url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
             PlayVideoByVLCDotNet(playurl);
         }
     }

@@ -210,7 +210,12 @@ namespace Common
         /// <summary>
         /// 通知客户端发送视频直播
         /// </summary>
-        XinTiao = 34
+        XinTiao = 34,
+        [Description("删除群组成员")]
+        /// <summary>
+        /// 从群组中删除某个成员
+        /// </summary>
+        DeleteUserInGroup=35
 
     }
 

@@ -224,7 +224,7 @@ namespace SharedForms
 
             var fileType = GetFileType(_downloadFileUrl);
             GetSavePath();
-            Action<object, System.ComponentModel.AsyncCompletedEventArgs> onDownload;
+            Action<object, System.ComponentModel.AsyncCompletedEventArgs> onDownloadComplete;
             Action<object, DownloadProgressChangedEventArgs> onProgress;
 
             if (fileType == Common.MessageType.Sound)
@@ -243,7 +243,7 @@ namespace SharedForms
                 }
 
                 progressBar1.Show();
-                onDownload = (ob, eve) =>
+                onDownloadComplete = (ob, eve) =>
                 {
                     progressBar1.Visible = false;
                     saveFilePath = eve.UserState.ToString();
@@ -258,7 +258,7 @@ namespace SharedForms
                     Application.DoEvents();
                 };
 
-                FileHelper.DownloadFile(_downloadFileUrl, onDownload, onProgress, saveFilePath);
+                FileHelper.DownloadFile(_downloadFileUrl, onDownloadComplete, onProgress, saveFilePath);
 
 
             }
@@ -279,7 +279,7 @@ namespace SharedForms
                 }
 
                 progressBar1.Show();
-                onDownload = (ob, eve) =>
+                onDownloadComplete = (ob, eve) =>
                 {
                     progressBar1.Visible = false;
                     // MessageBox.Show("okoko");
@@ -304,7 +304,7 @@ namespace SharedForms
                     progressBar1.Value = p;
                     Application.DoEvents();
                 };
-                FileHelper.DownloadFile(_downloadFileUrl, onDownload, onProgress, saveFilePath);
+                FileHelper.DownloadFile(_downloadFileUrl, onDownloadComplete, onProgress, saveFilePath);
 
             }
 

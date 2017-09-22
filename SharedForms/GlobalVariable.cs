@@ -28,7 +28,7 @@ namespace SharedForms
             var list = GetTeamChatList();
             foreach (var onlineUser in onLineList)
             {
-                
+
                 foreach (ChatStore item in list)
                 {
                     foreach (TeamMember mem in item.TeamMembers)
@@ -41,10 +41,10 @@ namespace SharedForms
                     }
                 }
             }
-           
+
         }
 
-      
+
         //public static MyClient client
         //{
         //    get
@@ -131,6 +131,9 @@ namespace SharedForms
                 case CommandType.CallStudentShowVideoToTeacher:
                     break;
                 case CommandType.XinTiao:
+                    break;
+                case CommandType.DeleteUserInGroup:
+                    client.Send_DeleteGroupMember((DeleteTeamMemberRequest)request);
                     break;
                 default:
                     break;
@@ -410,7 +413,7 @@ namespace SharedForms
             return info;
         }
 
-      
+
 
         public static bool AddTeamMember(CheckedListViewItemCollection mems, string guid)
         {
@@ -450,7 +453,7 @@ namespace SharedForms
         }
 
 
-    
+
 
         private static bool AddLoginUserToMember(string guid)
         {
@@ -519,10 +522,10 @@ namespace SharedForms
 
         public static void RefleshTeamList(TeacherTeam teamList)
         {
-           
+
             IsTeamChatChanged = true;
             var list = GetTeamChatList();
-       
+
             foreach (TeamInfo teamInfo in teamList.TeamInfos)
             {
                 var chatStore = list.FirstOrDefault(d => d.ChatUserName == teamInfo.groupid);
@@ -547,6 +550,20 @@ namespace SharedForms
 
 
 
+        }
+
+        public static bool CheckChatFormIsOpened()
+        {
+            FormCollection fc = Application.OpenForms;
+
+            foreach (Form frm in fc)
+            {
+                if (frm.Name == "ChatForm")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
 
