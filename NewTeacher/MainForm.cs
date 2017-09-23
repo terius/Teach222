@@ -25,6 +25,8 @@ namespace NewTeacher
         //   ViewRtsp videoPlayer;
         string videoFileName = "";
         EduUDPClient udpClient;
+        bool isStudentShowing;
+        string _clientTitle = "学生端";
         #endregion
         public MainForm()
         {
@@ -33,6 +35,7 @@ namespace NewTeacher
             CreateFilePath();
             if (GlobalVariable.IsHuiShenXiTong)
             {
+                _clientTitle = "审讯室";
                 this.Text = "会审系统";
                 menuClassNamed.Hide();
                 menuExportSign.Hide();
@@ -140,6 +143,12 @@ namespace NewTeacher
             if (!Directory.Exists(GlobalVariable.TempPath))
             {
                 Directory.CreateDirectory(GlobalVariable.TempPath);
+            }
+
+
+            if (!Directory.Exists(GlobalVariable.VideoRecordPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.VideoRecordPath);
             }
         }
 
@@ -417,7 +426,7 @@ namespace NewTeacher
                 case TeacherAction.menuRomoteControl_Click:
                     if (lvOnline.SelectedItems.Count <= 0)
                     {
-                        GlobalVariable.ShowWarnning("请先选择要控制的客户端");
+                        GlobalVariable.ShowWarnning("请先选择要控制的" + _clientTitle);
                         return;
                     }
                     string username = lvOnline.SelectedItems[0].SubItems[2].Text;
@@ -459,26 +468,30 @@ namespace NewTeacher
                     break;
                 case TeacherAction.menuStudentShow_Click:
                     string menuStudentText = menuStudentShow.Text;
-                    if (menuStudentText == "客户端演示")
+                    if (!isStudentShowing)
                     {
+
                         GetSelectStudentUserName();
                         if (!string.IsNullOrWhiteSpace(actionStuUserName))
                         {
 
                             GlobalVariable.client.Send_CallStudentShow(actionStuUserName);
                             menuStudentShow.Text = "关闭演示";
-
+                            isStudentShowing = true;
                         }
 
                     }
                     else
                     {
+
                         if (!string.IsNullOrWhiteSpace(actionStuUserName))
                         {
                             GlobalVariable.client.Send_StopStudentShow(actionStuUserName);
                             actionStuUserName = null;
-                            menuStudentShow.Text = "客户端演示";
+                            menuStudentShow.Text = _clientTitle + "演示";
+                            isStudentShowing = false;
                         }
+
                     }
                     break;
                 case TeacherAction.menuVideoLive_Click:
@@ -542,12 +555,12 @@ namespace NewTeacher
             actionStuUserName = null;
             if (lvOnline.Items.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("当前在线客户端为空");
+                GlobalVariable.ShowWarnning("当前在线" + _clientTitle + "为空");
                 return "";
             }
             if (lvOnline.SelectedItems.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("请先选择客户端");
+                GlobalVariable.ShowWarnning("请先选择" + _clientTitle);
                 return "";
             }
             string username = lvOnline.SelectedItems[0].SubItems[2].Text;
@@ -584,11 +597,11 @@ namespace NewTeacher
             //var onlineList = onlineInfo.GetStudentOnlineList();
             if (onlineInfo == null || onlineInfo.LoginedStuList.Count <= 0)
             {
-                GlobalVariable.ShowWarnning("当前登陆客户端为空");
+                GlobalVariable.ShowWarnning("当前登陆" + _clientTitle + "为空");
                 return;
             }
             var table = new System.Data.DataTable();
-            table.Columns.Add("客户端姓名", typeof(string));
+            table.Columns.Add( _clientTitle + "姓名", typeof(string));
             table.Columns.Add("是否签到", typeof(string));
             foreach (var item in onlineInfo.LoginedStuList)
             {
@@ -831,7 +844,7 @@ namespace NewTeacher
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GlobalVariable.client.KillAllFFmpeg();
+            GlobalVariable.KillAllFFmpeg();
             if (udpClient != null)
             {
                 udpClient.CloseTeacherUDP();

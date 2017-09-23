@@ -22,6 +22,7 @@ namespace EduService
         ManualResetEvent sendDone = new ManualResetEvent(false);
         ProgramType _programType;
         public Action<ScreenCaptureInfo> OnTeacherReceiveUDP;
+        volatile bool _udpStop = false;
 
         /// <summary>
         /// 服务端是否为局域网
@@ -75,6 +76,8 @@ namespace EduService
         {
             if (teacherUdpClient != null)
             {
+                _udpStop = true;
+                Thread.Sleep(200);
                 teacherUdpClient.Close();
             }
         }
@@ -92,14 +95,19 @@ namespace EduService
                 ScreenCaptureInfo screenInfo;
                 while (true)
                 {
-                    var receiveBytes = teacherUdpClient.Receive(ref RemoteIpEndPoint);
-                    //   Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
-                    if (receiveBytes.Length > 100)
+                    if (!_udpStop)
                     {
-                        screenInfo = GetScreen(receiveBytes);
-                        OnTeacherReceiveUDP?.Invoke(screenInfo);
+                        if (teacherUdpClient.Available <= 0) continue;
+                        if (teacherUdpClient.Client == null) return;
+                        var receiveBytes = teacherUdpClient.Receive(ref RemoteIpEndPoint);
+                        Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
+                        if (receiveBytes.Length > 100)
+                        {
+                            screenInfo = GetScreen(receiveBytes);
+                            OnTeacherReceiveUDP?.Invoke(screenInfo);
+                        }
+                        Thread.Sleep(200);
                     }
-                    Thread.Sleep(200);
                 }
                 //    teacherUdpClient.BeginReceive(new AsyncCallback(TeacherReceiveUDPCallback), null);
             }
@@ -161,6 +169,8 @@ namespace EduService
 
         }
 
+
+
         public void SendDesktopPic(byte[] fileBytes)
         {
             //if (studentUdpClient == null)
@@ -171,7 +181,7 @@ namespace EduService
             //}
             //var fileBytes = FileHelper.FileToByteArray(fileName);
             //  var fHelloData = Encoding.UTF8.GetBytes("hello1111" + DateTime.Now.Ticks);
-            //    Loger.LogMessage("发送图片，地址：" + remoteIp + ":" + remotePort + "   长度：" + fileBytes.Length);
+           // Loger.LogMessage("发送图片，地址：" + remoteIp + ":" + remotePort + "   长度：" + fileBytes.Length);
             studentUdpClient.Send(fileBytes, fileBytes.Length, remoteIp, remotePort);
             // Loger.LogMessage("SendDesktopPic-------------------");
             //studentUdpClient.BeginSend(fileBytes, fileBytes.Length, remoteIp, remotePort, (result) =>
@@ -188,6 +198,7 @@ namespace EduService
 
         public void CloseStudentUDP()
         {
+            _udpStop = true;
             if (studentUdpClient != null)
             {
                 studentUdpClient.Close();
@@ -264,6 +275,8 @@ namespace EduService
         {
             sendDone.WaitOne();
         }
+
+       
 
 
         #region OLD

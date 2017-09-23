@@ -70,7 +70,7 @@ namespace SharedForms
             panGroup_content.Resize += Chat_content_Resize;
             panTeam_content.Resize += Chat_content_Resize;
             panPrivate_content.Resize += Chat_content_Resize;
-         
+
             #endregion
 
         }
@@ -195,6 +195,12 @@ namespace SharedForms
 
         //    }
         //}
+
+        private void ClearTeam()
+        {
+            this.panTeam_content.Controls.Clear();
+            teamLastY = 0;
+        }
 
 
         public void AddChatItem(ChatItem item)
@@ -428,7 +434,7 @@ namespace SharedForms
             {
                 GlobalVariable.IsTeamChatChanged = false;
                 var list = GlobalVariable.GetTeamChatList();
-                this.panTeam_content.Controls.Clear();
+                ClearTeam();
                 foreach (ChatStore item in list)
                 {
                     if (item.CheckLoginUserNameIsInTeam())

@@ -421,7 +421,7 @@ namespace EduService
             {
                 _ffmpegIsRun = true;
                 CreateScreenInteract();
-                _screenInteract.BeginRecordVideo(path);
+                _screenInteract.BeginRecordScreen(path);
             }
         }
 
@@ -435,11 +435,11 @@ namespace EduService
         }
 
 
-        public void KillAllFFmpeg()
-        {
-            CreateScreenInteract();
-            _screenInteract.KillAllFFMPEG();
-        }
+        //public void KillAllFFmpeg()
+        //{
+        //    CreateScreenInteract();
+        //    _screenInteract.KillAllFFmpeg();
+        //}
 
 
         #region 发送命令

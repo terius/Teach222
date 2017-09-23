@@ -32,26 +32,28 @@ namespace StudentUser
         string tempScreenFile = "";
 
         //最小化窗体
-        //private bool windowCreate = true;
-        //protected override void OnActivated(EventArgs e)
-        //{
-        //    if (windowCreate)
-        //    {
-        //        base.Visible = false;
-        //        windowCreate = false;
-        //    }
+        private bool windowCreate = true;
+        protected override void OnActivated(EventArgs e)
+        {
+            if (windowCreate)
+            {
+                base.Visible = false;
+                windowCreate = false;
+            }
 
-        //    base.OnActivated(e);
-        //}
-
+            base.OnActivated(e);
+        }
+        string _masterTitle;
 
         public UserMainForm()
         {
 
             InitializeComponent();
             CreateFilePath();
+            _masterTitle = "教师端";
             if (GlobalVariable.IsHuiShenXiTong)
             {
+                _masterTitle = "指挥室";
                 mSignIn.Visible = false;
                 mHandUp.Visible = false;
             }
@@ -60,6 +62,10 @@ namespace StudentUser
             Text = GlobalVariable.LoginUserInfo.DisplayName;
             tuopan.Text = Text;
             #region 处理收到的消息
+
+
+            #region old
+          
             //主机端登入
             GlobalVariable.client.OnTeacherLoginIn = (message) =>
               {
@@ -274,6 +280,9 @@ namespace StudentUser
                 GlobalVariable.LoginUserInfo.AllowTeamChat = true;
                 ChangeChatAllowOrForbit(ChatType.TeamChat, true);
             };
+            #endregion
+
+
 
 
             //学生端收到消息
@@ -284,7 +293,9 @@ namespace StudentUser
                     case (int)CommandType.UserLoginRes:
                         break;
                     case (int)CommandType.TeacherLoginIn://主机端登录
+                 
                         TeacherLoginInResponse teachRes = JsonHelper.DeserializeObj<TeacherLoginInResponse>(message.DataStr);
+                        ShowNotify(_masterTitle +"登录");
                         GlobalVariable.TeacherIP = teachRes.teachIP;
                         DoAction(() =>
                         {
@@ -293,6 +304,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.TeacherLoginOut://主机端登出
+                        ShowNotify(_masterTitle +"登出");
                         if (theadScreen != null && theadScreen.ThreadState == ThreadState.Background)
                         {
                             isRunScreen = false;
@@ -301,6 +313,7 @@ namespace StudentUser
                         }
                         break;
                     case (int)CommandType.ScreenInteract://推送视频流
+                        ShowNotify("收到视频流，开始播放");
                         ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
                         DoAction(() =>
                         {
@@ -309,6 +322,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.StopScreenInteract://停止视频流
+                        ShowNotify("视频流已结束，停止播放");
                         DoAction(() =>
                         {
                             StopPlay();
@@ -316,15 +330,19 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.LockScreen://锁屏
+                        ShowNotify("当前屏幕被锁定");
                         LockScreen(false);
                         break;
                     case (int)CommandType.StopLockScreen://终止锁屏
+                        ShowNotify("屏幕锁定已解除");
                         StopLockScreen();
                         break;
                     case (int)CommandType.Quiet://屏幕肃静
+                        ShowNotify("当前屏幕被锁定并黑屏");
                         LockScreen(true);
                         break;
                     case (int)CommandType.StopQuiet://终止屏幕肃静
+                        ShowNotify("屏幕锁定及黑屏已解除");
                         StopLockScreen();
                         break;
                     case (int)CommandType.PrivateChat://收到私聊信息
@@ -354,6 +372,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.BeginCall://开始点名
+                        ShowNotify("开始点名");
                         DoAction(() =>
                         {
                             OpenCallForm();
@@ -361,6 +380,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.EndCall://结束点名
+                        ShowNotify("结束点名");
                         DoAction(() =>
                         {
                             CloseCallForm();
@@ -386,6 +406,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.CallStudentShow://收到请求客户端演示
+                        ShowNotify("收到推送请求，开始广播当前屏幕");
                         DoAction(() =>
                         {
                             GlobalVariable.client.CreateScreenInteract();
@@ -394,6 +415,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.CallStudentShowForMySelf://收到请求客户端演示
+                        ShowNotify("收到推送请求，开始推送当前屏幕到指挥室");
                         DoAction(() =>
                         {
                             GlobalVariable.client.CreateScreenInteract();
@@ -402,6 +424,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.CallStudentShowVideoToTeacher://收到请求客户端演示视频
+                        ShowNotify("收到推送请求，开始推送摄像头视频到指挥室");
                         DoAction(() =>
                         {
                             GlobalVariable.client.CreateScreenInteract();
@@ -410,6 +433,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.StopStudentShow://停止演示
+                        ShowNotify("停止演示");
                         DoAction(() =>
                         {
                             GlobalVariable.client.StopScreenInteract();
@@ -418,18 +442,22 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.ForbidPrivateChat://收到禁止私聊
+                        ShowNotify(_masterTitle + "已禁止私聊");
                         GlobalVariable.LoginUserInfo.AllowPrivateChat = false;
                         ChangeChatAllowOrForbit(ChatType.PrivateChat, false);
                         break;
                     case (int)CommandType.ForbidTeamChat://收到禁止群聊
+                        ShowNotify(_masterTitle + "已禁止群聊");
                         GlobalVariable.LoginUserInfo.AllowTeamChat = false;
                         ChangeChatAllowOrForbit(ChatType.TeamChat, false);
                         break;
                     case (int)CommandType.AllowPrivateChat://收到允许私聊
+                        ShowNotify(_masterTitle +"已允许私聊");
                         GlobalVariable.LoginUserInfo.AllowPrivateChat = true;
                         ChangeChatAllowOrForbit(ChatType.PrivateChat, true);
                         break;
                     case (int)CommandType.AllowTeamChat://收到允许群聊
+                        ShowNotify(_masterTitle + "已允许群聊");
                         GlobalVariable.LoginUserInfo.AllowTeamChat = true;
                         ChangeChatAllowOrForbit(ChatType.TeamChat, true);
                         break;
@@ -452,6 +480,14 @@ namespace StudentUser
 
             //  GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
             //   GlobalVariable.client.Send_StudentInMainForm();
+        }
+
+
+        private void ShowNotify(string message)
+        {
+            this.InvokeOnUiThreadIfRequired(() => {
+                GlobalVariable.ShowNotifyMessage(message);
+            });
         }
 
         private void DeleteTeamMember(DeleteTeamMemberRequest deleteInfo)
@@ -483,6 +519,11 @@ namespace StudentUser
             if (!Directory.Exists(GlobalVariable.TempPath))
             {
                 Directory.CreateDirectory(GlobalVariable.TempPath);
+            }
+
+            if (!Directory.Exists(GlobalVariable.VideoRecordPath))
+            {
+                Directory.CreateDirectory(GlobalVariable.VideoRecordPath);
             }
         }
 
@@ -831,7 +872,7 @@ namespace StudentUser
                         udpClient.SendDesktopPic(sendBytes);
                         //   udpClient.WaitUdp();
                         //    Loger.LogMessage("GetScreenCapture:");
-                        Thread.Sleep(1000);
+                        Thread.Sleep(5000);
                     }
                     catch (Exception ex)
                     {
@@ -852,13 +893,19 @@ namespace StudentUser
             this.tuopan.Visible = false;
             GlobalVariable.client.Send_StudentLoginOut();
             StopUdp();
+            GlobalVariable.KillAllFFmpeg();
             Environment.Exit(Environment.ExitCode);
         }
 
         private void StopUdp()
         {
+            
             isRunScreen = false;
             Thread.Sleep(500);
+            if (udpClient != null)
+            {
+                udpClient.CloseStudentUDP();
+            }
             if (theadScreen != null)
             {
                 theadScreen.Abort();

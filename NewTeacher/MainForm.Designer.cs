@@ -331,6 +331,7 @@
             this.menuAccount.Text = "帐号管理";
             this.menuAccount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.menuAccount.UseVisualStyleBackColor = false;
+            this.menuAccount.Visible = false;
             this.menuAccount.Click += new System.EventHandler(this.menuAccount_Click);
             // 
             // myGroupBox5

@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using static System.Windows.Forms.ListView;
+using System.Diagnostics;
 
 namespace SharedForms
 {
@@ -18,6 +19,7 @@ namespace SharedForms
         public static readonly string DownloadPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\DownloadFiles");
         public static readonly string AudioRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\AudioRecord");
         public static readonly string TempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\Temp");
+        public static readonly string VideoRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\VideoRecord");
         public static readonly string FFmpegFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg.exe");
         public static string TeacherIP { get; set; }
         public static EduTCPClient client;
@@ -470,7 +472,7 @@ namespace SharedForms
             return true;
         }
 
-        public static bool DelTeamMember(string teamGuid, string userName)
+        public static bool DelTeamMember(string teamGuid, string userName, bool isDeleteTeam = false)
         {
             var info = ChatList.FirstOrDefault(d => d.ChatUserName == teamGuid && d.ChatType == ChatType.TeamChat);
             if (info == null)
@@ -478,6 +480,12 @@ namespace SharedForms
                 ShowError("未找到要删除的分组信息");
                 return false;
             }
+            if (isDeleteTeam)
+            {
+                IsTeamChatChanged = true;
+                return ChatList.Remove(info);
+            }
+
             var mem = info.TeamMembers.FirstOrDefault(d => d.UserName == userName);
             if (mem == null)
             {
@@ -489,7 +497,7 @@ namespace SharedForms
 
         public static bool DelTeamMember(DeleteTeamMemberRequest info)
         {
-            return DelTeamMember(info.TeamId, info.UserName);
+            return DelTeamMember(info.TeamId, info.UserName, info.IsDeleteTeam);
         }
 
         public static bool EditTeamName(string teamGuid, string newName)
@@ -512,7 +520,7 @@ namespace SharedForms
 
         }
 
-        public static bool DelTeam(string teamGuid)
+        public static bool DelTeam(string teamGuid, Action<string, IList<TeamMember>> sendDelCommand)
         {
             var item = ChatList.FirstOrDefault(d => d.ChatUserName == teamGuid);
             if (item == null)
@@ -520,6 +528,7 @@ namespace SharedForms
                 ShowError("未找到分组信息！");
                 return false;
             }
+            sendDelCommand(teamGuid, item.TeamMembers);
             ChatList.Remove(item);
             IsTeamChatChanged = true;
             return true;
@@ -672,6 +681,7 @@ namespace SharedForms
         static NotifyForm notifyForm;
         public static void ShowNotifyMessage(string message, int dueSecond = 5)
         {
+
             if (notifyForm == null || notifyForm.IsDisposed)
             {
                 notifyForm = new NotifyForm(message, dueSecond);
@@ -695,7 +705,7 @@ namespace SharedForms
 
         public static string BeginRecordVideo()
         {
-            string fileName = Path.Combine(FileHelper.CreatePath("VideoRecord"), DateTime.Now.Ticks.ToString() + ".mpg");
+            string fileName = Path.Combine(VideoRecordPath, DateTime.Now.Ticks.ToString() + ".mpg");
 
             client.BeginRecordVideo(fileName);
             return fileName;
@@ -703,6 +713,23 @@ namespace SharedForms
         public static void EndRecordVideo()
         {
             client.EndRecordVideo();
+        }
+
+
+        public static void KillAllFFmpeg()
+        {
+            Process killFfmpeg = new Process();
+            ProcessStartInfo taskkillStartInfo = new ProcessStartInfo
+            {
+                FileName = "taskkill",
+                Arguments = "/F /IM ffmpeg.exe",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            killFfmpeg.StartInfo = taskkillStartInfo;
+            killFfmpeg.Start();
+            killFfmpeg.WaitForExit();
         }
 
 

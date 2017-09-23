@@ -160,9 +160,19 @@ namespace NewTeacher
             if (cboxTeam.SelectedIndex >= 0)
             {
                 selectTeam = (ChatStore)cboxTeam.SelectedItem;
-                var rs = GlobalVariable.DelTeam(selectTeam.ChatUserName);
+
+                Action<string, IList<TeamMember>> sendDelCommand = (teamId, member) =>
+                 {
+                     foreach (var item in member)
+                     {
+                         SendDelMemberCommand(teamId, item.UserName, true);
+                         //  SendDelMemberCommand(item.)
+                     }
+                 };
+                var rs = GlobalVariable.DelTeam(selectTeam.ChatUserName, sendDelCommand);
                 if (rs)
                 {
+
                     teamIsChange = true;
                     GlobalVariable.ShowSuccess("分组删除成功");
                     BindTeam();
@@ -217,14 +227,20 @@ namespace NewTeacher
                 bool rs = GlobalVariable.DelTeamMember(selectTeam.ChatUserName, userName);
                 if (rs)
                 {
-                    DeleteTeamMemberRequest request = new DeleteTeamMemberRequest();
-                    request.TeamId = selectTeam.ChatUserName;
-                    request.UserName = userName;
-                    GlobalVariable.SendCommand(request, CommandType.DeleteUserInGroup);
+                    SendDelMemberCommand(selectTeam.ChatUserName, userName);
                     teamIsChange = true;
                 }
                 BindTeamMember();
             }
+        }
+
+        private void SendDelMemberCommand(string teamId, string userName, bool isDeleteTeam = false)
+        {
+            DeleteTeamMemberRequest request = new DeleteTeamMemberRequest();
+            request.TeamId = teamId;
+            request.UserName = userName;
+            request.IsDeleteTeam = isDeleteTeam;
+            GlobalVariable.SendCommand(request, CommandType.DeleteUserInGroup);
         }
 
         private void teamMemList_MouseDown(object sender, MouseEventArgs e)

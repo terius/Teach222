@@ -56,7 +56,7 @@
             this.txtMessage.Location = new System.Drawing.Point(20, 25);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(238, 68);
+            this.txtMessage.Size = new System.Drawing.Size(238, 50);
             this.txtMessage.TabIndex = 1;
             this.txtMessage.Text = "111";
             this.txtMessage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -66,7 +66,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
-            this.ClientSize = new System.Drawing.Size(278, 103);
+            this.ClientSize = new System.Drawing.Size(278, 85);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.picClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

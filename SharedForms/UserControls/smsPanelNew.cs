@@ -36,7 +36,7 @@ namespace SharedForms
                 s = (sms2)item;
                 if (s.IsMySelf)
                 {
-                    s.Left = this.Width - s.Width - 120;
+                    s.Left = this.Width - s.Width - 20;
                    
                 }
             }

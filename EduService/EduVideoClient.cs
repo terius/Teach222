@@ -130,9 +130,10 @@ namespace EduService
             return new string[] { rtspUrl, para };
         }
 
-        private string CreateFFmpegVideoRecordParam()
+        private string CreateFFmpegVideoRecordParam(bool getResolution = false)
         {
-            string para = " -r 25 -g 20 -s 1024*768 -vcodec libx264 -x264opts bframes=3:b-adapt=0 -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency ";
+            string res = getResolution ? GetResolution() : "1024*768";
+            string para = " -r 25 -g 20 -s " + res + " -vcodec libx264 -x264opts bframes=3:b-adapt=0 -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency ";
             return para;
         }
 
@@ -151,6 +152,22 @@ namespace EduService
                 url += ":audio=\"" + mic + "\" -acodec mp2 -ab 128k";
             }
             url += CreateFFmpegVideoRecordParam() + filename;
+            Loger.LogMessage("录制视频命令:" + url);
+            this._ffmpeg = new Ffmpeg();
+            this._ffmpeg.beginExecute(url);
+            _ffmpeg.WaitComplete();
+        }
+
+        public void BeginRecordScreen(string filename)
+        {
+
+            var url = "-f gdigrab -i desktop ";
+            var mic = GetMicName();
+            if (!string.IsNullOrWhiteSpace(mic))
+            {
+                url += " -f dshow -i audio=\"" + mic + "\" -acodec mp2 -ab 128k";
+            }
+            url += CreateFFmpegVideoRecordParam(true) + filename;
             Loger.LogMessage("录制视频命令:" + url);
             this._ffmpeg = new Ffmpeg();
             this._ffmpeg.beginExecute(url);
@@ -200,7 +217,7 @@ namespace EduService
             return str + port.ToString();
         }
 
-        public void KillAllFFMPEG()
+        public void KillAllFFmpeg()
         {
             Process killFfmpeg = new Process();
             ProcessStartInfo taskkillStartInfo = new ProcessStartInfo
@@ -291,7 +308,7 @@ namespace EduService
             this.myProcess.Close();
         }
 
-      
+
 
         public delegate void MessageReceivedEventHandler(string msg);
     }
