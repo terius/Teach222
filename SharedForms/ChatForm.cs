@@ -47,8 +47,8 @@ namespace SharedForms
             ChatNav.SelectChatItem += ChatNav_SelectChatItem;
             ChatNav.CreateNewGroupChat(groupId);
             InitProgressBar();
-           
           
+
         }
 
     

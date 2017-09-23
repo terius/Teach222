@@ -29,16 +29,18 @@ namespace SharedForms
 
         private void SmsPanelNew_Resize(object sender, System.EventArgs e)
         {
+         
             sms2 s;
             foreach (Control item in Controls)
             {
                 s = (sms2)item;
                 if (s.IsMySelf)
                 {
-                    s.Left = this.Width - s.Width - 20;
+                    s.Left = this.Width - s.Width - 120;
+                   
                 }
             }
-            //this.Invalidate();
+           // this.Invalidate();
         }
 
         /// <summary>

@@ -487,6 +487,11 @@ namespace SharedForms
             return info.TeamMembers.Remove(mem);
         }
 
+        public static bool DelTeamMember(DeleteTeamMemberRequest info)
+        {
+            return DelTeamMember(info.TeamId, info.UserName);
+        }
+
         public static bool EditTeamName(string teamGuid, string newName)
         {
             if (ChatList.Any(d => d.ChatDisplayName == newName && d.ChatUserName != teamGuid))

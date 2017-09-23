@@ -151,7 +151,9 @@ namespace EduService
         public Action<ReceieveMessage> OnAllowPrivateChat;
         public Action<ReceieveMessage> OnForbidTeamChat;
         public Action<ReceieveMessage> OnAllowTeamChat;
+        public Action<ReceieveMessage> OnDeleteTeamMember;
 
+        public Action<ReceieveMessage> OnStudentReceiveMessage;
         //主机端
         public Action<ReceieveMessage> OnOnlineList;
         public Action<ReceieveMessage> OnOneUserLogIn;
@@ -160,6 +162,8 @@ namespace EduService
 
         private void Student_OnReveieveData(ReceieveMessage message)
         {
+            DueMessage(OnStudentReceiveMessage, message);
+            return;
             switch (message.Action)
             {
                 case (int)CommandType.UserLoginRes:
@@ -231,6 +235,9 @@ namespace EduService
                     break;
                 case (int)CommandType.AllowTeamChat://收到允许群聊
                     DueMessage(OnAllowTeamChat, message);
+                    break;
+                case (int)CommandType.DeleteUserInGroup://收到删除群组成员
+                    DueMessage(OnDeleteTeamMember, message);
                     break;
                 default:
                     break;

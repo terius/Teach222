@@ -93,7 +93,7 @@ namespace EduService
                 while (true)
                 {
                     var receiveBytes = teacherUdpClient.Receive(ref RemoteIpEndPoint);
-                 //   Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
+                    //   Loger.LogMessage("接收到udp信息，长度：" + receiveBytes.Length);
                     if (receiveBytes.Length > 100)
                     {
                         screenInfo = GetScreen(receiveBytes);
@@ -171,7 +171,7 @@ namespace EduService
             //}
             //var fileBytes = FileHelper.FileToByteArray(fileName);
             //  var fHelloData = Encoding.UTF8.GetBytes("hello1111" + DateTime.Now.Ticks);
-            Loger.LogMessage("发送图片，地址：" + remoteIp + ":" + remotePort + "   长度：" + fileBytes.Length);
+            //    Loger.LogMessage("发送图片，地址：" + remoteIp + ":" + remotePort + "   长度：" + fileBytes.Length);
             studentUdpClient.Send(fileBytes, fileBytes.Length, remoteIp, remotePort);
             // Loger.LogMessage("SendDesktopPic-------------------");
             //studentUdpClient.BeginSend(fileBytes, fileBytes.Length, remoteIp, remotePort, (result) =>

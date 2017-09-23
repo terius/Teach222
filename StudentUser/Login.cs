@@ -58,32 +58,34 @@ namespace StudentUser
             Thread td = new Thread(() =>
             {
                 GlobalVariable.client = new EduTCPClient(ProgramType.Student);
-                GlobalVariable.client.OnUserLoginRes = (message) =>
+                GlobalVariable.client.OnStudentReceiveMessage = (message) =>
                 {
-
-                    var result = JsonHelper.DeserializeObj<LoginResult>(message.DataStr);
-                    if (result.success)
+                    if (message.Action == (int)CommandType.UserLoginRes)
                     {
-                        GlobalVariable.TeacherIP = result.teachIP;
-                        DoAction(() =>
+                        var result = JsonHelper.DeserializeObj<LoginResult>(message.DataStr);
+                        if (result.success)
                         {
+                            GlobalVariable.TeacherIP = result.teachIP;
+                            DoAction(() =>
+                            {
                             // GlobalVariable.client.OnReveieveData -= Client_OnReveieveData;
                             GlobalVariable.LoginUserInfo = new LoginUserInfo
-                            {
-                                DisplayName = nickName,
-                                UserName = userName,
-                                UserType = ClientRole.Student,
-                                No = "n001"
-                            };
-                            this.DialogResult = DialogResult.OK;
-                            this.Close();
-                        });
+                                {
+                                    DisplayName = nickName,
+                                    UserName = userName,
+                                    UserType = ClientRole.Student,
+                                    No = "n001"
+                                };
+                                this.DialogResult = DialogResult.OK;
+                                this.Close();
+                            });
 
 
-                    }
-                    else
-                    {
-                        MessageBox.Show(result.msg);
+                        }
+                        else
+                        {
+                            MessageBox.Show(result.msg);
+                        }
                     }
 
                 };
