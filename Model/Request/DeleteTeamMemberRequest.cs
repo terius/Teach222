@@ -7,6 +7,8 @@
         /// </summary>
         public string TeamId { get; set; }
 
+
+
         /// <summary>
         /// 被删除的用户名
         /// </summary>
