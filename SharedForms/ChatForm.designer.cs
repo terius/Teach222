@@ -195,12 +195,13 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.sendBox);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 368);
             this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(10);
             this.panel2.Size = new System.Drawing.Size(619, 127);
             this.panel2.TabIndex = 3;
             // 
@@ -210,10 +211,10 @@
             this.panel3.Controls.Add(this.btnSend);
             this.panel3.Controls.Add(this.btnClose);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 86);
+            this.panel3.Location = new System.Drawing.Point(10, 76);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(619, 41);
+            this.panel3.Size = new System.Drawing.Size(599, 41);
             this.panel3.TabIndex = 146;
             // 
             // btnSend
@@ -222,7 +223,7 @@
             this.btnSend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Location = new System.Drawing.Point(426, 6);
+            this.btnSend.Location = new System.Drawing.Point(406, 6);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(87, 32);
             this.btnSend.TabIndex = 144;
@@ -236,7 +237,7 @@
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClose.ForeColor = System.Drawing.Color.White;
-            this.btnClose.Location = new System.Drawing.Point(529, 6);
+            this.btnClose.Location = new System.Drawing.Point(509, 6);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(87, 32);
             this.btnClose.TabIndex = 145;
@@ -249,9 +250,9 @@
             this.sendBox.BackColor = System.Drawing.Color.White;
             this.sendBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.sendBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sendBox.Location = new System.Drawing.Point(0, 0);
+            this.sendBox.Location = new System.Drawing.Point(10, 10);
             this.sendBox.Name = "sendBox";
-            this.sendBox.Size = new System.Drawing.Size(619, 127);
+            this.sendBox.Size = new System.Drawing.Size(599, 107);
             this.sendBox.TabIndex = 143;
             this.sendBox.Text = "";
             this.sendBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.sendBox_KeyDown);

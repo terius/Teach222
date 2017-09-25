@@ -126,14 +126,14 @@ namespace EduService
             }
             string nameByIpPort = createNameByIpPort(ipSelf, portSelf);
             var rtspUrl = "rtsp://" + ipServer + "/" + nameByIpPort + ".sdp";
-            string para = " -r 25 -g 20 -s 1024*768 -vcodec libx264 -x264opts bframes=3:b-adapt=0 -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency -f rtsp rtsp://" + ipServer + "/" + nameByIpPort + ".sdp";
+            string para = " -r 25 -g 20 -s 1024*768 -vcodec libx264 -x264opts bframes=3:b-adapt=0 -b:v 2000k -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency -f rtsp rtsp://" + ipServer + "/" + nameByIpPort + ".sdp";
             return new string[] { rtspUrl, para };
         }
 
         private string CreateFFmpegVideoRecordParam(bool getResolution = false)
         {
             string res = getResolution ? GetResolution() : "1024*768";
-            string para = " -r 25 -g 20 -s " + res + " -vcodec libx264 -x264opts bframes=3:b-adapt=0 -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency ";
+            string para = " -r 25 -g 20 -s " + res + " -vcodec libx264 -x264opts bframes=3:b-adapt=0 -b:v 2000k -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency ";
             return para;
         }
 
@@ -178,6 +178,7 @@ namespace EduService
         {
             if (_ffmpeg != null)
             {
+             
                 this._ffmpeg.dispose();
 
             }

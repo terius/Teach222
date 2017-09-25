@@ -55,8 +55,21 @@ namespace SharedForms
 
         private void ChatNav_SelectChatItem(object sender, ChatItem chatItem)
         {
-           
-            this.labChatTitle.Text = "与【" + chatItem.DisplayName + "】的对话：";
+            switch (chatItem.ChatType)
+            {
+                case ChatType.PrivateChat:
+                    this.labChatTitle.Text = "与【" + chatItem.DisplayName + "】的对话：";
+                    break;
+                case ChatType.GroupChat:
+                    this.labChatTitle.Text = "全体成员聊天";
+                    break;
+                case ChatType.TeamChat:
+                    this.labChatTitle.Text = "群组【" + chatItem.DisplayName + "】的聊天";
+                    break;
+                default:
+                    break;
+            }
+          
             //  chatItem.Caption = chatItem.DisplayName;
             if (chatItem.FromClick && chatItem.UserName == selectUserName)
             {

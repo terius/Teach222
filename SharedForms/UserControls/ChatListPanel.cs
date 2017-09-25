@@ -10,7 +10,7 @@ namespace SharedForms
     public partial class ChatListPanel : UserControl
     {
         Color defaultBackColor = Color.FromArgb(250, 250, 250);
-     //   Color chatItemDefaultBackColor = Color.FromArgb(60, 179, 113);
+        //   Color chatItemDefaultBackColor = Color.FromArgb(60, 179, 113);
         ChatTypePanel selectedPan;
         Color defaultSelectChatItemColor = Color.FromArgb(200, 200, 200);
         public event EventHandler<ChatItem> SelectChatItem;
@@ -71,12 +71,27 @@ namespace SharedForms
             panGroup_content.Resize += Chat_content_Resize;
             panTeam_content.Resize += Chat_content_Resize;
             panPrivate_content.Resize += Chat_content_Resize;
-
+            panOut.Resize += PanOut_Resize;
             #endregion
 
         }
 
-
+        private void PanOut_Resize(object sender, EventArgs e)
+        {
+            var height = panOut.Height - panGroup.Height * 3;
+            if (panGroup_content.Height > 0)
+            {
+                panGroup_content.Height = height;
+            }
+            else if (panTeam_content.Height > 0)
+            {
+                panTeam_content.Height = height;
+            }
+            else if (panPrivate_content.Height > 0)
+            {
+                panPrivate_content.Height = height;
+            }
+        }
 
         private void Chat_content_Resize(object sender, EventArgs e)
         {
@@ -94,7 +109,7 @@ namespace SharedForms
 
         public void SetSelectPanel(ChatTypePanel panel)
         {
-
+       
         }
 
         private void PanGroup_MouseClick(object sender, MouseEventArgs e)

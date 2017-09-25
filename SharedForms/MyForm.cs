@@ -90,6 +90,7 @@ namespace SharedForms
         {
             m_aeroEnabled = false; //窗体四边阴影
             InitializeComponent();
+            this.MaximizedBounds = Screen.FromControl(this).WorkingArea;
             panelTitle.MouseDown += PanelTitle_MouseDown;
             picClose.Click += (obj, e) => { this.Close(); };
             picClose.SetButtonHoverLeave();
