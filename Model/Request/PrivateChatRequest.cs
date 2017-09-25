@@ -3,19 +3,19 @@ using System;
 
 namespace Model
 {
-    public class PrivateChatRequest: SendFileView
+    public class PrivateChatRequest : BaseChatRequest
     {
         public string receivename { get; set; }
 
-        public string SendUserName { get; set; }
+        //  public string SendUserName { get; set; }
 
-        public string msg { get; set; }
+        //   public string msg { get; set; }
 
         public string guid { get; set; }
 
-        public string SendDisplayName { get; set; }
+        //   public string SendDisplayName { get; set; }
 
-        public ClientRole clientRole { get; set; }
+        //  public ClientRole clientRole { get; set; }
     }
 
 

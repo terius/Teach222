@@ -2,16 +2,16 @@
 
 namespace Model
 {
-    public class GroupChatRequest:SendFileView
+    public class GroupChatRequest : BaseChatRequest
     {
-       
 
-        public string SendUserName { get; set; }
 
-        public string msg { get; set; }
+        //public string SendUserName { get; set; }
 
-        public string SendDisplayName { get; set; }
-        public ClientRole clientRole { get; set; }
+        //public string msg { get; set; }
+
+        //public string SendDisplayName { get; set; }
+        //public ClientRole clientRole { get; set; }
 
 
     }

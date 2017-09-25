@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="Request\DeleteTeamMemberRequest.cs" />
     <Compile Include="Request\EmptyRequest.cs" />
+    <Compile Include="Request\IChatRequest.cs" />
     <Compile Include="Request\LoginRequest.cs" />
+    <Compile Include="Request\MessageFactory.cs" />
     <Compile Include="Request\SendRequest.cs" />
     <Compile Include="Request\TeacherTeam.cs" />
     <Compile Include="Request\LockScreenRequest.cs" />

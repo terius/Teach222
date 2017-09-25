@@ -63,228 +63,7 @@ namespace StudentUser
             tuopan.Text = Text;
             #region 处理收到的消息
 
-
-            #region old
-          
-            //主机端登入
-            GlobalVariable.client.OnTeacherLoginIn = (message) =>
-              {
-                  TeacherLoginInResponse teachRes = JsonHelper.DeserializeObj<TeacherLoginInResponse>(message.DataStr);
-                  GlobalVariable.TeacherIP = teachRes.teachIP;
-                  DoAction(() =>
-                  {
-                      //  CreateUDPHole();
-
-                  });
-              };
-            //主机端登出
-            GlobalVariable.client.OnTeacherLoginOut = (message) =>
-            {
-                if (theadScreen != null && theadScreen.ThreadState == ThreadState.Background)
-                {
-                    isRunScreen = false;
-                    Thread.Sleep(200);
-                    theadScreen.Abort();
-                }
-            };
-
-
-
-            //收到视频流
-            GlobalVariable.client.OnScreenInteract = (message) =>
-            {
-
-                ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
-                DoAction(() =>
-                {
-                    ShowRtspVideo(resp.url);
-
-                });
-
-            };
-            //收到视频流停止
-            GlobalVariable.client.OnStopScreenInteract = (message) =>
-            {
-
-                DoAction(() =>
-                {
-                    StopPlay();
-
-                });
-
-            };
-            //锁屏
-            GlobalVariable.client.OnLockScreen = (message) =>
-            {
-                LockScreen(false);
-
-            };
-            //终止锁屏
-            GlobalVariable.client.OnStopLockScreen = (message) =>
-            {
-                StopLockScreen();
-
-            };
-            //屏幕肃静
-            GlobalVariable.client.OnQuiet = (message) =>
-            {
-                LockScreen(true);
-
-            };
-            //终止屏幕肃静
-            GlobalVariable.client.OnStopQuiet = (message) =>
-            {
-                StopLockScreen();
-
-            };
-
-            //收到私聊信息
-            GlobalVariable.client.OnPrivateChat = (message) =>
-            {
-                var chatResponse = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
-                DoAction(() =>
-                {
-                    var chatMessage = chatResponse.ToChatMessage();
-                    OpenChatForm(chatMessage);
-                });
-            };
-            //收到群聊信息
-            GlobalVariable.client.OnTeamChat = (message) =>
-            {
-                var teamChatResponse = JsonHelper.DeserializeObj<TeamChatRequest>(message.DataStr);
-
-                DoAction(() =>
-                {
-                    var request = teamChatResponse.ToChatMessage();
-                    OpenChatForm(request);
-                });
-
-            };
-            //收到群聊信息
-            GlobalVariable.client.OnGroupChat = (message) =>
-            {
-                var groupChatResponse = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
-
-                DoAction(() =>
-                {
-                    var request = groupChatResponse.ToChatMessage();
-                    OpenChatForm(request);
-                });
-
-            };
-
-            //点名
-            GlobalVariable.client.OnBeginCall = (message) =>
-            {
-                DoAction(() =>
-                {
-                    OpenCallForm();
-
-                });
-            };
-            //结束点名
-            GlobalVariable.client.OnEndCall = (message) =>
-            {
-                DoAction(() =>
-                {
-                    CloseCallForm();
-
-                });
-
-            };
-            //收到创建群组信息
-            GlobalVariable.client.OnCreateTeam = (message) =>
-            {
-                var teamInfo = JsonHelper.DeserializeObj<TeacherTeam>(message.DataStr);
-                GlobalVariable.RefleshTeamList(teamInfo);
-                DoAction(() =>
-                {
-                    if (GlobalVariable.CheckChatFormIsOpened())
-                    {
-                        GlobalVariable.ShowNotifyMessage("群组信息已经更改");
-                        chatForm.ReflashTeamChat();
-                    }
-                    //  chatForm.BringToFront();
-                    //  chatForm.Show();
-
-
-
-                });
-
-            };
-            //收到请求客户端演示
-            GlobalVariable.client.OnCallStudentShow = (message) =>
-            {
-                DoAction(() =>
-                {
-                    GlobalVariable.client.CreateScreenInteract();
-                    GlobalVariable.client.Send_ScreenInteract();
-
-                });
-
-            };
-            //收到请求客户端演示,只给主机端
-            GlobalVariable.client.OnCallStudentShowForTeacher = (message) =>
-            {
-                DoAction(() =>
-                {
-                    GlobalVariable.client.CreateScreenInteract();
-                    GlobalVariable.client.Send_StudentShowToTeacher();
-
-                });
-
-            };
-            //收到请求客户端演示视频,只给主机端
-            GlobalVariable.client.OnCallStudentShowVideoForTeacher = (message) =>
-            {
-                DoAction(() =>
-                {
-                    GlobalVariable.client.CreateScreenInteract();
-                    GlobalVariable.client.Send_StudentShowVideoToTeacher();
-
-                });
-
-            };
-            //停止演示
-            GlobalVariable.client.OnStopStudentShow = (message) =>
-        {
-            DoAction(() =>
-            {
-                GlobalVariable.client.StopScreenInteract();
-                GlobalVariable.client.Send_StopScreenInteract();
-
-            });
-
-        };
-            //收到禁止私聊
-            GlobalVariable.client.OnForbidPrivateChat = (message) =>
-            {
-                GlobalVariable.LoginUserInfo.AllowPrivateChat = false;
-                ChangeChatAllowOrForbit(ChatType.PrivateChat, false);
-            };
-            //收到禁止群聊
-            GlobalVariable.client.OnForbidTeamChat = (message) =>
-            {
-                GlobalVariable.LoginUserInfo.AllowTeamChat = false;
-                ChangeChatAllowOrForbit(ChatType.TeamChat, false);
-            };
-            //收到允许私聊
-            GlobalVariable.client.OnAllowPrivateChat = (message) =>
-            {
-                GlobalVariable.LoginUserInfo.AllowPrivateChat = true;
-                ChangeChatAllowOrForbit(ChatType.PrivateChat, true);
-            };
-            //收到允许群聊
-            GlobalVariable.client.OnAllowTeamChat = (message) =>
-            {
-                GlobalVariable.LoginUserInfo.AllowTeamChat = true;
-                ChangeChatAllowOrForbit(ChatType.TeamChat, true);
-            };
-            #endregion
-
-
-
-
+            
             //学生端收到消息
             GlobalVariable.client.OnStudentReceiveMessage = (message) =>
             {
@@ -346,30 +125,9 @@ namespace StudentUser
                         StopLockScreen();
                         break;
                     case (int)CommandType.PrivateChat://收到私聊信息
-                        var chatResponse = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
-                        DoAction(() =>
-                        {
-                            var chatMessage = chatResponse.ToChatMessage();
-                            OpenChatForm(chatMessage);
-                        });
-                        break;
                     case (int)CommandType.TeamChat://收到组聊信息
-                        var teamChatResponse = JsonHelper.DeserializeObj<TeamChatRequest>(message.DataStr);
-
-                        DoAction(() =>
-                        {
-                            var request = teamChatResponse.ToChatMessage();
-                            OpenChatForm(request);
-                        });
-                        break;
                     case (int)CommandType.GroupChat://收到群聊信息
-                        var groupChatResponse = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
-
-                        DoAction(() =>
-                        {
-                            var request = groupChatResponse.ToChatMessage();
-                            OpenChatForm(request);
-                        });
+                        DoReceiveChatMessage(message);
                         break;
                     case (int)CommandType.BeginCall://开始点名
                         ShowNotify("开始点名");
@@ -480,6 +238,24 @@ namespace StudentUser
 
             //  GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
             //   GlobalVariable.client.Send_StudentInMainForm();
+        }
+
+
+        private void DoReceiveChatMessage(ReceieveMessage message)
+        {
+            var chatMessage = GlobalVariable.CreateChatMessage(message);
+            DoAction(() =>
+            {
+                bool rs = GlobalVariable.CheckChatFormIsOpened();
+                OpenChatForm(chatMessage);
+            });
+        }
+
+        private void OpenChatForm(ChatMessage message)
+        {
+            chatForm.BringToFront();
+            chatForm.Show();
+            chatForm.CreateChatItems(message, true);
         }
 
 
@@ -629,13 +405,7 @@ namespace StudentUser
         //    chatForm.CreateChatItems(request, true);
         //}
 
-        private void OpenChatForm(ChatMessage message)
-        {
-            GlobalVariable.AddNewChat(message);
-            chatForm.BringToFront();
-            chatForm.Show();
-            chatForm.CreateChatItems(message, true);
-        }
+      
 
 
         ///// <summary>

@@ -11,7 +11,8 @@ namespace SharedForms
         public string DisplayName { get; set; }
 
         public ChatType ChatType { get; set; }
-        Image headIcon, newMsgIcon;
+        Image headIcon;
+        Image newMsgIcon = Resource1.新消息;
         Font titleFont = new Font("微软雅黑", 10F, FontStyle.Bold, GraphicsUnit.Point, 134);
         SolidBrush brush = new SolidBrush(Color.FromArgb(55, 152, 249));
         Color defaultBackColor = Color.FromArgb(250, 250, 250);
@@ -20,6 +21,7 @@ namespace SharedForms
         ChatListPanel _parentPanel;
         int titleHeight;
         public bool FromClick { get; set; }
+        bool showNewMessageIcon;
         public ChatItem(ChatListPanel parent, string userName, string displayName, ChatType chatType, ClientRole userType)
         {
             _parentPanel = parent;
@@ -75,6 +77,7 @@ namespace SharedForms
         {
             if (e.Button == MouseButtons.Left)
             {
+                HideNewMessageIcon();
                 this.BackColor = defaultSelectColor;
                 IsSelected = true;
                 _parentPanel.SetSelectChatItem(this, true);
@@ -125,9 +128,9 @@ namespace SharedForms
             x += 24 + 10;
             g.DrawImage(headIcon, rectArea);
             g.DrawString(DisplayName, titleFont, brush, x, (this.Height - titleFont.Height) / 2);
-            if (newMsgIcon != null)
+            if (showNewMessageIcon)
             {
-                g.DrawImage(newMsgIcon, new Rectangle(this.Width - 34, (this.Height - 24) / 2, 24, 24));
+                g.DrawImage(newMsgIcon, new Rectangle(this.Width - 54, (this.Height - 20) / 2, 20, 20));
             }
             //  g.FillRectangle(brush, ClientRectangle);
             //  g.DrawLine(Pens.Red, 0, ClientSize.Height - 1, ClientSize.Width - 1, ClientSize.Height - 1);
@@ -135,9 +138,26 @@ namespace SharedForms
         }
 
 
-        public void SetNewMessagePic()
+        public void ShowNewMessageIcon()
         {
-            // this.picNewMessage.Image = Resource1.新消息24;
+            if (!showNewMessageIcon)
+            {
+                showNewMessageIcon = true;
+                this.Invalidate();
+                _parentPanel.ShowNewMessageIcon(ChatType);
+            }
+        }
+
+
+
+        private void HideNewMessageIcon()
+        {
+            if (showNewMessageIcon)
+            {
+                showNewMessageIcon = false;
+                this.Invalidate();
+                _parentPanel.HideNewMessageIcon(ChatType);
+            }
         }
 
         public ChatStore GetChatStore()

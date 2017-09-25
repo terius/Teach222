@@ -15,7 +15,13 @@ namespace NewTeacher
         public event OnlineChangeHandle OnLineChange;
         public event OnlineChangeHandle AddOnLine;
         public event OnlineDelHandle DelOnLine;
-        public IList<OnlineListResult> LoginedStuList { get; set; }
+        public IList<OnlineListResult> StudentOnlineList
+        {
+            get
+            {
+                return OnLineList.Where(d => d.clientRole == ClientRole.Student).ToList();
+            }
+        }
 
         public OnlineInfo()
         {
@@ -31,8 +37,8 @@ namespace NewTeacher
         {
             this.OnLineList = onLineList;
             GlobalVariable.UpdateTeamOnline(onLineList);
-            LoginedStuList = onLineList.Where(d => d.clientRole == ClientRole.Student).ToList(); 
-            OnlineEventArgs e = new OnlineEventArgs(onLineList);
+            //    StudentOnlineList = onLineList.Where(d => d.clientRole == ClientRole.Student).ToList();
+            OnlineEventArgs e = new OnlineEventArgs(StudentOnlineList);
             OnLineChange(this, e);
         }
 
@@ -61,13 +67,13 @@ namespace NewTeacher
                 OnLineList.Add(newUser);
             }
 
-            if (!LoginedStuList.Any(d => d.username == newUser.username))
-            {
-                if (newUser.clientRole == ClientRole.Student)
-                {
-                    LoginedStuList.Add(newUser);
-                }
-            }
+            //if (!StudentOnlineList.Any(d => d.username == newUser.username))
+            //{
+            //    if (newUser.clientRole == ClientRole.Student)
+            //    {
+            //        StudentOnlineList.Add(newUser);
+            //    }
+            //}
         }
 
 

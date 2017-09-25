@@ -157,7 +157,7 @@ namespace SharedForms
             {
                 if (!string.IsNullOrWhiteSpace(selectUserName) && chatItem.UserName != selectUserName)
                 {
-                    chatItem.SetNewMessagePic();
+                    chatItem.ShowNewMessageIcon();
                     //chatItem.Caption = chatItem.DisplayName + " 有新消息！";
                     //  chatItem.SmallImage = Resource1.新消息24;
                 }
@@ -622,6 +622,14 @@ namespace SharedForms
             toolRecordVoice.ToolTipText = "点击开始录音";
             Application.DoEvents();
             recordVoice.CancelRecord();
+        }
+
+        private void ChatForm_VisibleChanged(object sender, EventArgs e)
+        {
+           //if (this.Visible)
+           // {
+           //     this.IsHide = false;
+           // }
         }
     }
 }

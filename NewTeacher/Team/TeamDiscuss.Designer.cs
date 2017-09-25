@@ -67,8 +67,8 @@
             // panelContent
             // 
             this.panelContent.Controls.Add(this.tabControl1);
-            this.panelContent.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.panelContent.Size = new System.Drawing.Size(1125, 616);
+            this.panelContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelContent.Size = new System.Drawing.Size(843, 493);
             // 
             // onLineListView
             // 
@@ -76,10 +76,10 @@
             this.onLineListView.CheckBoxes = true;
             this.onLineListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.onLineListView.LargeImageList = this.MenuImageList;
-            this.onLineListView.Location = new System.Drawing.Point(13, 34);
-            this.onLineListView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.onLineListView.Location = new System.Drawing.Point(10, 28);
+            this.onLineListView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.onLineListView.Name = "onLineListView";
-            this.onLineListView.Size = new System.Drawing.Size(391, 841);
+            this.onLineListView.Size = new System.Drawing.Size(293, 423);
             this.onLineListView.SmallImageList = this.MenuImageList;
             this.onLineListView.TabIndex = 0;
             this.onLineListView.UseCompatibleStateImageBehavior = false;
@@ -97,10 +97,10 @@
             this.teamMemList.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.teamMemList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.teamMemList.LargeImageList = this.MenuImageList;
-            this.teamMemList.Location = new System.Drawing.Point(13, 34);
-            this.teamMemList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.teamMemList.Location = new System.Drawing.Point(10, 28);
+            this.teamMemList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.teamMemList.Name = "teamMemList";
-            this.teamMemList.Size = new System.Drawing.Size(684, 841);
+            this.teamMemList.Size = new System.Drawing.Size(298, 423);
             this.teamMemList.SmallImageList = this.MenuImageList;
             this.teamMemList.TabIndex = 0;
             this.teamMemList.UseCompatibleStateImageBehavior = false;
@@ -112,10 +112,10 @@
             this.cboxTeam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxTeam.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cboxTeam.FormattingEnabled = true;
-            this.cboxTeam.Location = new System.Drawing.Point(17, 24);
-            this.cboxTeam.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboxTeam.Location = new System.Drawing.Point(13, 19);
+            this.cboxTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboxTeam.Name = "cboxTeam";
-            this.cboxTeam.Size = new System.Drawing.Size(225, 28);
+            this.cboxTeam.Size = new System.Drawing.Size(170, 24);
             this.cboxTeam.TabIndex = 0;
             this.cboxTeam.SelectedIndexChanged += new System.EventHandler(this.cboxTeam_SelectedIndexChanged);
             // 
@@ -126,21 +126,21 @@
             this.groupBox3.Controls.Add(this.btnEdit);
             this.groupBox3.Controls.Add(this.cboxTeam);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(4, 96);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox3.Location = new System.Drawing.Point(3, 77);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(1109, 487);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Size = new System.Drawing.Size(829, 387);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "编辑删除群组";
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(267, 56);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDelete.Location = new System.Drawing.Point(200, 45);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(173, 28);
+            this.btnDelete.Size = new System.Drawing.Size(130, 22);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "删除选择的分组";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -148,10 +148,10 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(267, 24);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEdit.Location = new System.Drawing.Point(200, 19);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(173, 28);
+            this.btnEdit.Size = new System.Drawing.Size(130, 22);
             this.btnEdit.TabIndex = 3;
             this.btnEdit.Text = "修改选择的分组名";
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -159,10 +159,10 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(177, 32);
-            this.btnCreate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCreate.Location = new System.Drawing.Point(133, 26);
+            this.btnCreate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(81, 28);
+            this.btnCreate.Size = new System.Drawing.Size(61, 22);
             this.btnCreate.TabIndex = 2;
             this.btnCreate.Text = "创建";
             this.btnCreate.UseVisualStyleBackColor = true;
@@ -170,10 +170,10 @@
             // 
             // txtCreate
             // 
-            this.txtCreate.Location = new System.Drawing.Point(11, 32);
-            this.txtCreate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtCreate.Location = new System.Drawing.Point(8, 26);
+            this.txtCreate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtCreate.Name = "txtCreate";
-            this.txtCreate.Size = new System.Drawing.Size(141, 25);
+            this.txtCreate.Size = new System.Drawing.Size(107, 21);
             this.txtCreate.TabIndex = 1;
             // 
             // groupBox4
@@ -181,11 +181,11 @@
             this.groupBox4.Controls.Add(this.txtCreate);
             this.groupBox4.Controls.Add(this.btnCreate);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox4.Location = new System.Drawing.Point(4, 4);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox4.Location = new System.Drawing.Point(3, 3);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox4.Size = new System.Drawing.Size(1109, 92);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Size = new System.Drawing.Size(829, 74);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "创建群组";
@@ -196,12 +196,12 @@
             this.memberMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.memDel});
             this.memberMenu.Name = "memberMenu";
-            this.memberMenu.Size = new System.Drawing.Size(176, 56);
+            this.memberMenu.Size = new System.Drawing.Size(125, 26);
             // 
             // memDel
             // 
             this.memDel.Name = "memDel";
-            this.memDel.Size = new System.Drawing.Size(175, 24);
+            this.memDel.Size = new System.Drawing.Size(124, 22);
             this.memDel.Text = "删除成员";
             this.memDel.Click += new System.EventHandler(this.memDel_Click);
             // 
@@ -211,21 +211,19 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1125, 616);
+            this.tabControl1.Size = new System.Drawing.Size(843, 493);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox4);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Size = new System.Drawing.Size(1117, 587);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(835, 467);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "群组";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -236,11 +234,10 @@
             this.tabPage2.Controls.Add(this.myGroupBox3);
             this.tabPage2.Controls.Add(this.myGroupBox1);
             this.tabPage2.Controls.Add(this.myGroupBox2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage2.Size = new System.Drawing.Size(1399, 895);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Size = new System.Drawing.Size(835, 467);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "群组成员";
             // 
@@ -250,11 +247,10 @@
             this.myGroupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.myGroupBox3.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.myGroupBox3.ForeColor = System.Drawing.Color.White;
-            this.myGroupBox3.Location = new System.Drawing.Point(685, 4);
-            this.myGroupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.myGroupBox3.Location = new System.Drawing.Point(514, 3);
             this.myGroupBox3.Name = "myGroupBox3";
-            this.myGroupBox3.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
-            this.myGroupBox3.Size = new System.Drawing.Size(710, 887);
+            this.myGroupBox3.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.myGroupBox3.Size = new System.Drawing.Size(318, 461);
             this.myGroupBox3.TabIndex = 9;
             this.myGroupBox3.TabStop = false;
             this.myGroupBox3.Text = "群组成员";
@@ -268,11 +264,9 @@
             this.myGroupBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.myGroupBox1.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.myGroupBox1.ForeColor = System.Drawing.Color.White;
-            this.myGroupBox1.Location = new System.Drawing.Point(421, 4);
-            this.myGroupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.myGroupBox1.Location = new System.Drawing.Point(316, 3);
             this.myGroupBox1.Name = "myGroupBox1";
-            this.myGroupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.myGroupBox1.Size = new System.Drawing.Size(264, 887);
+            this.myGroupBox1.Size = new System.Drawing.Size(198, 461);
             this.myGroupBox1.TabIndex = 8;
             this.myGroupBox1.TabStop = false;
             this.myGroupBox1.Text = "选择群组成员";
@@ -283,10 +277,9 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSave.Location = new System.Drawing.Point(8, 380);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Location = new System.Drawing.Point(6, 304);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(248, 40);
+            this.btnSave.Size = new System.Drawing.Size(186, 32);
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "保存群组信息";
             this.btnSave.UseVisualStyleBackColor = false;
@@ -295,10 +288,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 28);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(6, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 24);
+            this.label1.Size = new System.Drawing.Size(65, 19);
             this.label1.TabIndex = 8;
             this.label1.Text = "选择群组";
             // 
@@ -309,10 +301,9 @@
             this.btnAddStudent.ForeColor = System.Drawing.Color.White;
             this.btnAddStudent.Image = ((System.Drawing.Image)(resources.GetObject("btnAddStudent.Image")));
             this.btnAddStudent.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnAddStudent.Location = new System.Drawing.Point(8, 230);
-            this.btnAddStudent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddStudent.Location = new System.Drawing.Point(6, 184);
             this.btnAddStudent.Name = "btnAddStudent";
-            this.btnAddStudent.Size = new System.Drawing.Size(248, 40);
+            this.btnAddStudent.Size = new System.Drawing.Size(186, 32);
             this.btnAddStudent.TabIndex = 10;
             this.btnAddStudent.Text = "选择学生";
             this.btnAddStudent.UseVisualStyleBackColor = false;
@@ -323,10 +314,10 @@
             this.cboxTeam2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxTeam2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cboxTeam2.FormattingEnabled = true;
-            this.cboxTeam2.Location = new System.Drawing.Point(8, 54);
-            this.cboxTeam2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cboxTeam2.Location = new System.Drawing.Point(6, 43);
+            this.cboxTeam2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.cboxTeam2.Name = "cboxTeam2";
-            this.cboxTeam2.Size = new System.Drawing.Size(251, 28);
+            this.cboxTeam2.Size = new System.Drawing.Size(189, 24);
             this.cboxTeam2.TabIndex = 6;
             this.cboxTeam2.SelectedIndexChanged += new System.EventHandler(this.cboxTeam2_SelectedIndexChanged);
             // 
@@ -337,22 +328,21 @@
             this.myGroupBox2.Dock = System.Windows.Forms.DockStyle.Left;
             this.myGroupBox2.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.myGroupBox2.ForeColor = System.Drawing.Color.White;
-            this.myGroupBox2.Location = new System.Drawing.Point(4, 4);
-            this.myGroupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.myGroupBox2.Location = new System.Drawing.Point(3, 3);
             this.myGroupBox2.Name = "myGroupBox2";
-            this.myGroupBox2.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
-            this.myGroupBox2.Size = new System.Drawing.Size(417, 887);
+            this.myGroupBox2.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.myGroupBox2.Size = new System.Drawing.Size(313, 461);
             this.myGroupBox2.TabIndex = 7;
             this.myGroupBox2.TabStop = false;
             this.myGroupBox2.Text = "在线学生";
             // 
             // TeamDiscuss
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1127, 656);
+            this.ClientSize = new System.Drawing.Size(845, 525);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "TeamDiscuss";
             this.ShowInTaskbar = false;
             this.Text = "建立分组";

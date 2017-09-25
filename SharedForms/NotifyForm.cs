@@ -42,6 +42,26 @@ namespace SharedForms
             closeTimer = new Timer();
             closeTimer.Interval = 1000;
             closeTimer.Tick += CloseTimer_Tick;
+            btnOpen.Visible = false;
+            btnOpen.Click += BtnOpen_Click;
+        }
+
+        ChatForm _chatForm;
+
+        private void BtnOpen_Click(object sender, EventArgs e)
+        {
+            if (_chatForm != null)
+            {
+                _chatForm.BringToFront();
+                _chatForm.Show();
+                this.Close();
+            }
+        }
+
+        public void SetMessageOpen(ChatForm form)
+        {
+            _chatForm = form;
+            btnOpen.Visible = true;
         }
 
         private void NotifyForm_MouseLeave(object sender, EventArgs e)
@@ -75,7 +95,7 @@ namespace SharedForms
             {
                 DueSecond = dueSecond;
             }
-         
+
         }
 
         private void CloseTimer_Tick(object sender, EventArgs e)

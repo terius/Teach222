@@ -13,6 +13,8 @@ namespace SharedForms
         Color defaultBackColor = Color.FromArgb(250, 250, 250);
         Color defaultSelectColor = Color.FromArgb(235, 235, 236);
         Pen pen = new Pen(Color.FromArgb(200, 200, 200));
+        bool showNewMessageIcon;
+        Image newMsgIcon = Resource1.新消息;
         //  ChatType _chatType;
         string title;
         public ChatType ChatType { get; set; }
@@ -84,9 +86,30 @@ namespace SharedForms
             g.DrawImage(headIcon, rectArea);
             g.DrawString(title, titleFont, brush, 60, (this.Height - fontHeight) / 2);
             //  g.FillRectangle(brush, ClientRectangle);
-
+            if (showNewMessageIcon)
+            {
+                g.DrawImage(newMsgIcon, new Rectangle(this.Width - 54, (this.Height - 20) / 2, 20, 20));
+            }
             g.DrawLine(pen, 0, ClientSize.Height - 1, ClientSize.Width - 1, ClientSize.Height - 1);
 
+        }
+
+        public void ShowNewMessageIcon()
+        {
+            if (!showNewMessageIcon)
+            {
+                showNewMessageIcon = true;
+                this.Invalidate();
+            }
+        }
+        
+        public void HideNewMessageIcon()
+        {
+            if (showNewMessageIcon)
+            {
+                showNewMessageIcon = false;
+                this.Invalidate();
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ namespace SharedForms
     public partial class ChatListPanel : UserControl
     {
         Color defaultBackColor = Color.FromArgb(250, 250, 250);
+     //   Color chatItemDefaultBackColor = Color.FromArgb(60, 179, 113);
         ChatTypePanel selectedPan;
         Color defaultSelectChatItemColor = Color.FromArgb(200, 200, 200);
         public event EventHandler<ChatItem> SelectChatItem;
@@ -19,7 +20,7 @@ namespace SharedForms
         {
             // SetStyle(ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             InitializeComponent();
-            panGroup_content.BackColor = panTeam_content.BackColor = panPrivate_content.BackColor = defaultBackColor;
+            panGroup_content.BackColor = panTeam_content.BackColor = panPrivate_content.BackColor = Color.FromArgb(240, 255, 240);
 
 
             panGroup_content.HorizontalScroll.Enabled = panTeam_content.HorizontalScroll.Enabled = panPrivate_content.HorizontalScroll.Enabled = false;//好像没用
@@ -136,54 +137,103 @@ namespace SharedForms
 
         }
 
-        private int GetChatPanelHeight(ChatType chatType)
+        bool showNewMessageIcon;
+        public void ShowNewMessageIcon(ChatType chatType)
         {
-            int otherHeight = this.panOut.Height - panGroup.Height * 3;
-            int leftHeight = 0;
-            switch (chatType)
+            if (!showNewMessageIcon)
             {
-                case ChatType.PrivateChat:
-                    if (panGroup_content.Height == otherHeight)
-                    {
-                        panGroup_content.Height = panGroup_content.Height / 2;
-                    }
-                    if (panTeam_content.Height == otherHeight)
-                    {
-                        panTeam_content.Height = panTeam_content.Height / 2;
-                    }
-                    leftHeight = otherHeight - panGroup_content.Height - panTeam_content.Height;
-                    break;
-                case ChatType.GroupChat:
-                    if (panPrivate_content.Height == otherHeight)
-                    {
-                        panPrivate_content.Height = panPrivate_content.Height / 2;
-                    }
-                    if (panTeam_content.Height == otherHeight)
-                    {
-                        panTeam_content.Height = panTeam_content.Height / 2;
-                    }
-                    leftHeight = otherHeight - panPrivate_content.Height - panTeam_content.Height;
-                    break;
-                case ChatType.TeamChat:
-                    if (panGroup_content.Height == otherHeight)
-                    {
-                        panGroup_content.Height = panGroup_content.Height / 2;
-                    }
-                    if (panPrivate_content.Height == otherHeight)
-                    {
-                        panPrivate_content.Height = panPrivate_content.Height / 2;
-                    }
-                    leftHeight = otherHeight - panGroup_content.Height - panPrivate_content.Height;
-                    break;
-                default:
-                    break;
+                showNewMessageIcon = true;
+                switch (chatType)
+                {
+                    case ChatType.PrivateChat:
+                        panPrivate.ShowNewMessageIcon();
+                        break;
+                    case ChatType.GroupChat:
+                        panGroup.ShowNewMessageIcon();
+                        break;
+                    case ChatType.TeamChat:
+                        panTeam.ShowNewMessageIcon();
+                        break;
+                    default:
+                        break;
+                }
             }
-            if (leftHeight == 0)
-            {
-                leftHeight = otherHeight / 2;
-            }
-            return leftHeight;
         }
+
+
+
+        public void HideNewMessageIcon(ChatType chatType)
+        {
+            if (showNewMessageIcon)
+            {
+                showNewMessageIcon = false;
+                switch (chatType)
+                {
+                    case ChatType.PrivateChat:
+                        panPrivate.HideNewMessageIcon();
+                        break;
+                    case ChatType.GroupChat:
+                        panGroup.HideNewMessageIcon();
+                        break;
+                    case ChatType.TeamChat:
+                        panTeam.HideNewMessageIcon();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+
+        //private int GetChatPanelHeightOld(ChatType chatType)
+        //{
+        //    int otherHeight = this.panOut.Height - panGroup.Height * 3;
+        //    int leftHeight = 0;
+        //    switch (chatType)
+        //    {
+        //        case ChatType.PrivateChat:
+        //            if (panGroup_content.Height == otherHeight)
+        //            {
+        //                panGroup_content.Height = panGroup_content.Height / 2;
+        //            }
+        //            if (panTeam_content.Height == otherHeight)
+        //            {
+        //                panTeam_content.Height = panTeam_content.Height / 2;
+        //            }
+        //            leftHeight = otherHeight - panGroup_content.Height - panTeam_content.Height;
+        //            break;
+        //        case ChatType.GroupChat:
+        //            if (panPrivate_content.Height == otherHeight)
+        //            {
+        //                panPrivate_content.Height = panPrivate_content.Height / 2;
+        //            }
+        //            if (panTeam_content.Height == otherHeight)
+        //            {
+        //                panTeam_content.Height = panTeam_content.Height / 2;
+        //            }
+        //            leftHeight = otherHeight - panPrivate_content.Height - panTeam_content.Height;
+        //            break;
+        //        case ChatType.TeamChat:
+        //            if (panGroup_content.Height == otherHeight)
+        //            {
+        //                panGroup_content.Height = panGroup_content.Height / 2;
+        //            }
+        //            if (panPrivate_content.Height == otherHeight)
+        //            {
+        //                panPrivate_content.Height = panPrivate_content.Height / 2;
+        //            }
+        //            leftHeight = otherHeight - panGroup_content.Height - panPrivate_content.Height;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //    if (leftHeight == 0)
+        //    {
+        //        leftHeight = otherHeight / 2;
+        //    }
+        //    return leftHeight;
+        //}
 
         //IList<ChatItem> chatItemList;
 
@@ -338,7 +388,37 @@ namespace SharedForms
         }
 
 
-
+        private int ShowChatContent(ChatType chatType)
+        {
+            int otherHeight = this.panOut.Height - panGroup.Height * 3;
+            switch (chatType)
+            {
+                case ChatType.PrivateChat:
+                    if (panPrivate_content.Height == 0)
+                    {
+                        panGroup_content.Height = panTeam_content.Height = 0;
+                        panPrivate_content.Height = otherHeight;
+                    }
+                    break;
+                case ChatType.GroupChat:
+                    if (panGroup_content.Height == 0)
+                    {
+                        panPrivate_content.Height = panTeam_content.Height = 0;
+                        panGroup_content.Height = otherHeight;
+                    }
+                    break;
+                case ChatType.TeamChat:
+                    if (panTeam_content.Height == 0)
+                    {
+                        panGroup_content.Height = panPrivate_content.Height = 0;
+                        panTeam_content.Height = otherHeight;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return otherHeight;
+        }
 
 
 
@@ -353,7 +433,7 @@ namespace SharedForms
                     }
                     else
                     {
-                        panPrivate_content.Height = GetChatPanelHeight(chatType);
+                        ShowChatContent(chatType);
                     }
                     break;
                 case ChatType.GroupChat:
@@ -363,7 +443,7 @@ namespace SharedForms
                     }
                     else
                     {
-                        panGroup_content.Height = GetChatPanelHeight(chatType);
+                        ShowChatContent(chatType);
                     }
                     break;
                 case ChatType.TeamChat:
@@ -373,7 +453,7 @@ namespace SharedForms
                     }
                     else
                     {
-                        panTeam_content.Height = GetChatPanelHeight(chatType);
+                        ShowChatContent(chatType);
                     }
                     break;
                 default:
@@ -383,35 +463,35 @@ namespace SharedForms
         }
 
 
-        private void ShowContent(ChatType chatType)
-        {
-            switch (chatType)
-            {
-                case ChatType.PrivateChat:
-                    if (panPrivate_content.Height == 0)
-                    {
-                        panPrivate_content.Height = GetChatPanelHeight(chatType);
-                    }
+        //private void ShowContent(ChatType chatType)
+        //{
+        //    switch (chatType)
+        //    {
+        //        case ChatType.PrivateChat:
+        //            if (panPrivate_content.Height == 0)
+        //            {
+        //                panPrivate_content.Height = ShowChatContent(chatType);
+        //            }
 
-                    break;
-                case ChatType.GroupChat:
-                    if (panGroup_content.Height == 0)
-                    {
-                        panGroup_content.Height = GetChatPanelHeight(chatType);
-                    }
+        //            break;
+        //        case ChatType.GroupChat:
+        //            if (panGroup_content.Height == 0)
+        //            {
+        //                panGroup_content.Height = ShowChatContent(chatType);
+        //            }
 
-                    break;
-                case ChatType.TeamChat:
-                    if (panTeam_content.Height == 0)
-                    {
-                        panTeam_content.Height = GetChatPanelHeight(chatType);
-                    }
-                    break;
-                default:
-                    break;
-            }
+        //            break;
+        //        case ChatType.TeamChat:
+        //            if (panTeam_content.Height == 0)
+        //            {
+        //                panTeam_content.Height = ShowChatContent(chatType);
+        //            }
+        //            break;
+        //        default:
+        //            break;
+        //    }
 
-        }
+        //}
 
 
 
@@ -515,7 +595,7 @@ namespace SharedForms
 
         public void SetSelectChatItem(ChatItem item, bool fromClick)
         {
-            ShowContent(item.ChatType);
+            ShowChatContent(item.ChatType);
             if (SelectedChatItem != null && SelectedChatItem.UserName != item.UserName)
             {
                 SelectedChatItem.BackColor = defaultBackColor;

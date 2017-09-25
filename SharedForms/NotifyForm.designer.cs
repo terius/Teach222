@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotifyForm));
             this.picClose = new System.Windows.Forms.PictureBox();
             this.txtMessage = new System.Windows.Forms.TextBox();
+            this.btnOpen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picClose)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,10 +57,22 @@
             this.txtMessage.Location = new System.Drawing.Point(20, 25);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(238, 50);
+            this.txtMessage.Size = new System.Drawing.Size(218, 50);
             this.txtMessage.TabIndex = 1;
             this.txtMessage.Text = "111";
             this.txtMessage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // btnOpen
+            // 
+            this.btnOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpen.ForeColor = System.Drawing.Color.White;
+            this.btnOpen.Location = new System.Drawing.Point(203, 0);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(45, 23);
+            this.btnOpen.TabIndex = 2;
+            this.btnOpen.Text = "打开";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Visible = false;
             // 
             // NotifyForm
             // 
@@ -67,13 +80,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(278, 85);
+            this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.picClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NotifyForm";
-            this.Padding = new System.Windows.Forms.Padding(20, 25, 20, 10);
+            this.Padding = new System.Windows.Forms.Padding(20, 25, 40, 10);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "消息提示";
@@ -88,5 +102,6 @@
 
         private System.Windows.Forms.PictureBox picClose;
         private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.Button btnOpen;
     }
 }

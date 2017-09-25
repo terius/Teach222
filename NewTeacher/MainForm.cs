@@ -27,6 +27,18 @@ namespace NewTeacher
         EduUDPClient udpClient;
         bool isStudentShowing;
         string _clientTitle = "学生端";
+
+        public bool ChatFormIsVisible
+        {
+            get
+            {
+                if (chatForm == null)
+                {
+                    return false;
+                }
+                return chatForm.Visible;
+            }
+        }
         #endregion
         public MainForm()
         {
@@ -56,72 +68,65 @@ namespace NewTeacher
             GlobalVariable.LoadTeamFromXML();
 
             #region 接收消息事件
-            GlobalVariable.client.OnOnlineList = (message) =>
+            GlobalVariable.client.OnTeacherReceiveMessage = (message) =>
             {
-                var userList2 = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
-                onlineInfo.OnOnlineChange(userList2);
-            };
-
-            GlobalVariable.client.OnPrivateChat = (message) =>
-            {
-                var PrivateChatMessage = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
-                this.InvokeOnUiThreadIfRequired(() => { ReceievePrivateMessage(PrivateChatMessage); });
-            };
-
-            GlobalVariable.client.OnTeamChat = (message) =>   //收到群聊信息
-            {
-
-                var TeamChatRequest = JsonHelper.DeserializeObj<TeamChatRequest>(message.DataStr);
-                this.InvokeOnUiThreadIfRequired(() => { ReceieveTeamMessage(TeamChatRequest); });
-            };
-            GlobalVariable.client.OnGroupChat = (message) =>
-            {
-
-                var groupChatRequest = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
-                this.InvokeOnUiThreadIfRequired(() => { ReceieveGroupMessage(groupChatRequest); });
-            };
-            GlobalVariable.client.OnOneUserLogIn = (message) =>//某个客户端登录
-            {
-
-                var newUser = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
-                onlineInfo.OnNewUserLoginIn(newUser);
-            };
-            GlobalVariable.client.OnStudentCall = (message) =>//课堂点名
-            {
-                var callInfo = JsonHelper.DeserializeObj<StuCallRequest>(message.DataStr);
-                UpdateOnLineStatus(callInfo);
-            };
-            GlobalVariable.client.OnUserLoginOut = (message) =>//用户登出
-            {
-                var loginoutInfo = JsonHelper.DeserializeObj<UserLogoutResponse>(message.DataStr);
-                onlineInfo.OnUserLoginOut(loginoutInfo);
-                DeleteScreen(loginoutInfo);
-            };
-            GlobalVariable.client.OnScreenInteract = (message) =>//收到视频流
-            {
-
-                ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
-                this.InvokeOnUiThreadIfRequired(() =>
+                switch ((CommandType)message.Action)
                 {
-                    if (message.Action == (int)CommandType.StudentShowToTeacher)
-                    {
+                    case CommandType.OnlineList:
+                        var userList2 = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
+                        onlineInfo.OnOnlineChange(userList2);
+                        break;
+                    case CommandType.StudentShowToTeacher:
+                    case CommandType.ScreenInteract:
+                        ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
+                        this.InvokeOnUiThreadIfRequired(() =>
+                        {
+                            PlayRtspVideo(resp.url);
+                        });
+                        break;
+                    case CommandType.StopScreenInteract:
+                        this.InvokeOnUiThreadIfRequired(() =>
+                        {
+                            StopPlay();
+                        });
+                        break;
 
-                    }
-                    PlayRtspVideo(resp.url);
-                });
+                    case CommandType.PrivateChat:
+                    case CommandType.TeamChat:
+                    case CommandType.GroupChat:
+                        DoReceiveChatMessage(message);
+                        break;
+                    case CommandType.OneUserLogIn:
+                        var newUser = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
+                        onlineInfo.OnNewUserLoginIn(newUser);
+                        break;
+                    case CommandType.UserLoginOut:
+                        var loginoutInfo = JsonHelper.DeserializeObj<UserLogoutResponse>(message.DataStr);
+                        onlineInfo.OnUserLoginOut(loginoutInfo);
+                        DeleteScreen(loginoutInfo);
+                        break;
+                    case CommandType.StudentCall:
+                        var callInfo = JsonHelper.DeserializeObj<StuCallRequest>(message.DataStr);
+                        UpdateOnLineStatus(callInfo);
+                        break;
+                    default:
+                        break;
+                }
             };
-            GlobalVariable.client.OnStopScreenInteract = (message) =>//收到停止接收视频流
-            {
-                this.InvokeOnUiThreadIfRequired(() =>
-                {
-                    StopPlay();
-                });
-            };
-
             #endregion
 
             GlobalVariable.client.DueLostMessage();
             GlobalVariable.client.Send_OnlineList();
+        }
+
+
+        private void DoReceiveChatMessage(ReceieveMessage message)
+        {
+            var chatMessage = GlobalVariable.CreateChatMessage(message);
+            this.InvokeOnUiThreadIfRequired(() =>
+            {
+                OpenOrCreateChatForm(chatMessage, true);
+            });
         }
 
         private void CreateFilePath()
@@ -215,27 +220,27 @@ namespace NewTeacher
 
         }
 
-        private void ReceieveTeamMessage(TeamChatRequest message)
-        {
-            var request = message.ToChatMessage();
-            GlobalVariable.AddNewChat(request);
-            OpenOrCreateChatForm(request, true);
-        }
+        //private void ReceieveTeamMessage(TeamChatRequest message)
+        //{
+        //    var request = message.ToChatMessage();
+        //    GlobalVariable.AddNewChat(request);
+        //    OpenOrCreateChatForm(request, true);
+        //}
 
-        private void ReceieveGroupMessage(GroupChatRequest message)
-        {
-            var request = message.ToChatMessage();
-            GlobalVariable.AddNewChat(request);
-            OpenOrCreateChatForm(request, true);
-        }
+        //private void ReceieveGroupMessage(GroupChatRequest message)
+        //{
+        //    var request = message.ToChatMessage();
+        //    GlobalVariable.AddNewChat(request);
+        //    OpenOrCreateChatForm(request, true);
+        //}
 
 
-        private void ReceievePrivateMessage(PrivateChatRequest message)
-        {
-            var request = message.ToChatMessage();
-            GlobalVariable.AddNewChat(request);
-            OpenOrCreateChatForm(request, true);
-        }
+        //private void ReceievePrivateMessage(PrivateChatRequest message)
+        //{
+        //    var request = message.ToChatMessage();
+        //    GlobalVariable.AddNewChat(request);
+        //    OpenOrCreateChatForm(request, true);
+        //}
 
         private void UpdateOnLineStatus(StuCallRequest callInfo)
         {
@@ -581,29 +586,37 @@ namespace NewTeacher
 
         public void OpenOrCreateChatForm(ChatMessage request, bool fromReceMsg)
         {
+
             if (chatForm == null || chatForm.IsDisposed)
             {
                 chatForm = new ChatForm();
             }
 
             chatForm.BringToFront();
-            chatForm.Show();
             chatForm.CreateChatItems(request, fromReceMsg);
+            if (fromReceMsg && !ChatFormIsVisible)
+            {
+                GlobalVariable.ShowChatMessageNotify(request, chatForm);
+            }
+            else
+            {
+                chatForm.Show();
+            }
 
         }
 
         private void ExportSign()
         {
             //var onlineList = onlineInfo.GetStudentOnlineList();
-            if (onlineInfo == null || onlineInfo.LoginedStuList.Count <= 0)
+            if (onlineInfo == null || onlineInfo.StudentOnlineList.Count <= 0)
             {
                 GlobalVariable.ShowWarnning("当前登陆" + _clientTitle + "为空");
                 return;
             }
             var table = new System.Data.DataTable();
-            table.Columns.Add( _clientTitle + "姓名", typeof(string));
+            table.Columns.Add(_clientTitle + "姓名", typeof(string));
             table.Columns.Add("是否签到", typeof(string));
-            foreach (var item in onlineInfo.LoginedStuList)
+            foreach (var item in onlineInfo.StudentOnlineList)
             {
                 if (item.clientRole == ClientRole.Student)
                 {

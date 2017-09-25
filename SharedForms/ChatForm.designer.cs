@@ -287,6 +287,7 @@
             this.Name = "ChatForm";
             this.Text = "聊天窗口";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatForm_FormClosing);
+            this.VisibleChanged += new System.EventHandler(this.ChatForm_VisibleChanged);
             this.panelContent.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

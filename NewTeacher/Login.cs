@@ -18,6 +18,7 @@ namespace NewTeacher
         string _userName, _displayName;
         private void Form2_Load(object sender, EventArgs e)
         {
+          //  GlobalVariable.ShowNotifyMessage("测试", -1);
             if (GlobalVariable.IsHuiShenXiTong)
             {
                 this.Text = label6.Text = "会审系统";
@@ -53,28 +54,31 @@ namespace NewTeacher
 
                 GlobalVariable.client = new EduTCPClient(ProgramType.Teacher);
                 GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
-                GlobalVariable.client.OnUserLoginRes = (message) =>
+                GlobalVariable.client.OnTeacherReceiveMessage = (message) =>
                 {
-                    var result = JsonHelper.DeserializeObj<LoginResult>(message.DataStr);
-                    if (result.success)
+                    if (message.Action == (int)CommandType.UserLoginRes)
                     {
-                        this.InvokeOnUiThreadIfRequired(() =>
+                        var result = JsonHelper.DeserializeObj<LoginResult>(message.DataStr);
+                        if (result.success)
                         {
-                            GlobalVariable.LoginUserInfo = new LoginUserInfo
+                            this.InvokeOnUiThreadIfRequired(() =>
                             {
-                                DisplayName = _displayName,
-                                UserName = _userName,
-                                UserType = ClientRole.Teacher,
-                                No = "999"
-                            };
-                            this.DialogResult = DialogResult.OK;
-                            this.Close();
-                        });
+                                GlobalVariable.LoginUserInfo = new LoginUserInfo
+                                {
+                                    DisplayName = _displayName,
+                                    UserName = _userName,
+                                    UserType = ClientRole.Teacher,
+                                    No = "999"
+                                };
+                                this.DialogResult = DialogResult.OK;
+                                this.Close();
+                            });
 
-                    }
-                    else
-                    {
-                        GlobalVariable.ShowError(result.msg);
+                        }
+                        else
+                        {
+                            GlobalVariable.ShowError(result.msg);
+                        }
                     }
 
 

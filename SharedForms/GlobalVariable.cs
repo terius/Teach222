@@ -25,6 +25,31 @@ namespace SharedForms
         public static EduTCPClient client;
         public static readonly bool IsHuiShenXiTong = true;//是否为会审系统
 
+
+        public static ChatMessage CreateChatMessage(ReceieveMessage message)
+        {
+            ChatMessage chatMessage = null;
+            switch (message.Action)
+            {
+                case (int)CommandType.PrivateChat:
+                    var privateRequest = JsonHelper.DeserializeObj<PrivateChatRequest>(message.DataStr);
+                    chatMessage = privateRequest.ToChatMessage();
+                    break;
+                case (int)CommandType.TeamChat:
+                    var teamRequest = JsonHelper.DeserializeObj<TeamChatRequest>(message.DataStr);
+                    chatMessage = teamRequest.ToChatMessage();
+                    break;
+                case (int)CommandType.GroupChat:
+                    var groupRequest = JsonHelper.DeserializeObj<GroupChatRequest>(message.DataStr);
+                    chatMessage = groupRequest.ToChatMessage();
+                    break;
+                default:
+                    break;
+            }
+            AddNewChat(chatMessage);
+            return chatMessage;
+        }
+
         public static void UpdateTeamOnline(IList<OnlineListResult> onLineList)
         {
             var list = GetTeamChatList();
@@ -691,6 +716,34 @@ namespace SharedForms
                 notifyForm.SetMessage(message, dueSecond);
             }
             notifyForm.Show();
+        }
+
+
+        public static string GetTeamNameByTeamId(string teamId)
+        {
+            var chatStore = ChatList.FirstOrDefault(d => d.ChatUserName == teamId && d.ChatType == ChatType.TeamChat);
+            return chatStore == null ? "" : chatStore.ChatDisplayName;
+        }
+
+        public static void ShowChatMessageNotify(ChatMessage message, ChatForm chatForm)
+        {
+            string text = "";
+            switch (message.ChatType)
+            {
+                case ChatType.PrivateChat:
+                    text = message.SendDisplayName + "给您发送了一条私聊信息";
+                    break;
+                case ChatType.GroupChat:
+                    text = message.SendDisplayName + "发送了一条全体信息";
+                    break;
+                case ChatType.TeamChat:
+                    text = message.SendDisplayName + "在群组【" + GetTeamNameByTeamId(message.SendUserName) + "】发送了一条信息";
+                    break;
+                default:
+                    break;
+            }
+            ShowNotifyMessage(text);
+            notifyForm.SetMessageOpen(chatForm);
         }
 
 

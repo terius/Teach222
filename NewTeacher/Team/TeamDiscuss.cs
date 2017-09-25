@@ -76,7 +76,7 @@ namespace NewTeacher
 
         private void BindOnlineUser()
         {
-            foreach (OnlineListResult item in _onLineInfo.OnLineList)
+            foreach (OnlineListResult item in _onLineInfo.StudentOnlineList)
             {
                 if (!item.username.IsMySelf())
                 {

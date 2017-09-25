@@ -124,172 +124,21 @@ namespace EduService
             }
             UnDueMessages.Clear();
         }
-
-
-
+        
         private IList<ReceieveMessage> UnDueMessages = new List<ReceieveMessage>();
-        public Action<ReceieveMessage> OnUserLoginRes;
-        public Action<ReceieveMessage> OnTeacherLoginIn;
-        public Action<ReceieveMessage> OnTeacherLoginOut;
-        public Action<ReceieveMessage> OnBeginCall;
-        public Action<ReceieveMessage> OnPrivateChat;
-        public Action<ReceieveMessage> OnScreenInteract;
-        public Action<ReceieveMessage> OnStopScreenInteract;
-        public Action<ReceieveMessage> OnLockScreen;
-        public Action<ReceieveMessage> OnStopLockScreen;
-        public Action<ReceieveMessage> OnQuiet;
-        public Action<ReceieveMessage> OnStopQuiet;
-        public Action<ReceieveMessage> OnTeamChat;
-        public Action<ReceieveMessage> OnGroupChat;
-        public Action<ReceieveMessage> OnEndCall;
-        public Action<ReceieveMessage> OnCreateTeam;
-        public Action<ReceieveMessage> OnCallStudentShow;
-        public Action<ReceieveMessage> OnCallStudentShowForTeacher;
-        public Action<ReceieveMessage> OnCallStudentShowVideoForTeacher;
-        public Action<ReceieveMessage> OnStopStudentShow;
-        public Action<ReceieveMessage> OnForbidPrivateChat;
-        public Action<ReceieveMessage> OnAllowPrivateChat;
-        public Action<ReceieveMessage> OnForbidTeamChat;
-        public Action<ReceieveMessage> OnAllowTeamChat;
-        public Action<ReceieveMessage> OnDeleteTeamMember;
-
         public Action<ReceieveMessage> OnStudentReceiveMessage;
-        //主机端
-        public Action<ReceieveMessage> OnOnlineList;
-        public Action<ReceieveMessage> OnOneUserLogIn;
-        public Action<ReceieveMessage> OnStudentCall;
-        public Action<ReceieveMessage> OnUserLoginOut;
+        public Action<ReceieveMessage> OnTeacherReceiveMessage;
 
         private void Student_OnReveieveData(ReceieveMessage message)
         {
             DueMessage(OnStudentReceiveMessage, message);
-            return;
-            switch (message.Action)
-            {
-                case (int)CommandType.UserLoginRes:
-                    DueMessage(OnUserLoginRes, message);
-
-                    break;
-                case (int)CommandType.TeacherLoginIn://主机端登录
-                    DueMessage(OnTeacherLoginIn, message);
-                    break;
-                case (int)CommandType.TeacherLoginOut://主机端登出
-                    DueMessage(OnTeacherLoginOut, message);
-                    break;
-                case (int)CommandType.ScreenInteract://推送视频流
-                    DueMessage(OnScreenInteract, message);
-                    break;
-                case (int)CommandType.StopScreenInteract://停止视频流
-                    DueMessage(OnStopScreenInteract, message);
-                    break;
-                case (int)CommandType.LockScreen://锁屏
-                    DueMessage(OnLockScreen, message);
-                    break;
-                case (int)CommandType.StopLockScreen://终止锁屏
-                    DueMessage(OnStopLockScreen, message);
-                    break;
-                case (int)CommandType.Quiet://屏幕肃静
-                    DueMessage(OnQuiet, message);
-                    break;
-                case (int)CommandType.StopQuiet://终止屏幕肃静
-                    DueMessage(OnStopQuiet, message);
-                    break;
-                case (int)CommandType.PrivateChat://收到私聊信息
-                    DueMessage(OnPrivateChat, message);
-                    break;
-                case (int)CommandType.TeamChat://收到组聊信息
-                    DueMessage(OnTeamChat, message);
-                    break;
-                case (int)CommandType.GroupChat://收到群聊信息
-                    DueMessage(OnGroupChat, message);
-                    break;
-                case (int)CommandType.BeginCall://开始点名
-                    DueMessage(OnBeginCall, message);
-                    break;
-                case (int)CommandType.EndCall://结束点名
-                    DueMessage(OnEndCall, message);
-                    break;
-                case (int)CommandType.CreateTeam://收到创建群组信息
-                    DueMessage(OnCreateTeam, message);
-                    break;
-                case (int)CommandType.CallStudentShow://收到请求客户端演示
-                    DueMessage(OnCallStudentShow, message);
-                    break;
-                case (int)CommandType.CallStudentShowForMySelf://收到请求客户端演示
-                    DueMessage(OnCallStudentShowForTeacher, message);
-                    break;
-                case (int)CommandType.CallStudentShowVideoToTeacher://收到请求客户端演示视频
-                    DueMessage(OnCallStudentShowVideoForTeacher, message);
-                    break;
-                case (int)CommandType.StopStudentShow://停止演示
-                    DueMessage(OnStopStudentShow, message);
-                    break;
-                case (int)CommandType.ForbidPrivateChat://收到禁止私聊
-                    DueMessage(OnForbidPrivateChat, message);
-                    break;
-                case (int)CommandType.ForbidTeamChat://收到禁止群聊
-                    DueMessage(OnForbidTeamChat, message);
-                    break;
-                case (int)CommandType.AllowPrivateChat://收到允许私聊
-                    DueMessage(OnAllowPrivateChat, message);
-                    break;
-                case (int)CommandType.AllowTeamChat://收到允许群聊
-                    DueMessage(OnAllowTeamChat, message);
-                    break;
-                case (int)CommandType.DeleteUserInGroup://收到删除群组成员
-                    DueMessage(OnDeleteTeamMember, message);
-                    break;
-                default:
-                    break;
-            }
 
         }
 
 
         private void Teacher_OnReveieveData(ReceieveMessage message)
         {
-            switch ((CommandType)message.Action)
-            {
-                case CommandType.UserLoginRes:
-                    DueMessage(OnUserLoginRes, message);
-                    break;
-                case CommandType.OnlineList:
-                    DueMessage(OnOnlineList, message);
-                    break;
-
-                case CommandType.ScreenInteract:
-                    DueMessage(OnScreenInteract, message);
-                    break;
-                case CommandType.StopScreenInteract:
-                    DueMessage(OnStopScreenInteract, message);
-                    break;
-
-                case CommandType.PrivateChat:
-                    DueMessage(OnPrivateChat, message);
-                    break;
-                case CommandType.GroupChat:
-                    DueMessage(OnGroupChat, message);
-                    break;
-
-                case CommandType.TeamChat:
-                    DueMessage(OnTeamChat, message);
-                    break;
-                case CommandType.OneUserLogIn:
-                    DueMessage(OnOneUserLogIn, message);
-                    break;
-                case CommandType.UserLoginOut:
-                    DueMessage(OnUserLoginOut, message);
-                    break;
-                case CommandType.StudentCall:
-                    DueMessage(OnStudentCall, message);
-                    break;
-                case CommandType.StudentShowToTeacher:
-                    DueMessage(OnScreenInteract, message);
-                    break;
-                default:
-                    break;
-            }
-
+            DueMessage(OnTeacherReceiveMessage, message);
         }
 
         private void DueMessage(Action<ReceieveMessage> action, ReceieveMessage message)
