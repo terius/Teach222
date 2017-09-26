@@ -1,4 +1,5 @@
 ﻿using Common;
+using EduService;
 using Helpers;
 using Model;
 using NewTeacher.Controls;
@@ -6,10 +7,10 @@ using NewTeacher.Properties;
 using SharedForms;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using EduService;
-using System.IO;
 
 namespace NewTeacher
 {
@@ -45,6 +46,7 @@ namespace NewTeacher
             InitializeComponent();
 
             CreateFilePath();
+            this.onlineListGrid1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
             if (GlobalVariable.IsHuiShenXiTong)
             {
                 _clientTitle = "审讯室";
@@ -60,6 +62,7 @@ namespace NewTeacher
                 myGroupBox7.Text = "在线审讯室列表";
                 myGroupBox8.Text = "审讯室屏幕";
                 menuGroupChat.Text = "群组聊天";
+                onlineListGrid1.Columns["col_isval"].Visible = false;
                 //  tableLayoutPanel3.ColumnStyles[4].Width = 0f;
             }
 
@@ -254,17 +257,18 @@ namespace NewTeacher
             }
             this.InvokeOnUiThreadIfRequired(() =>
             {
-                foreach (ListViewItem item in lvOnline.Items)
-                {
-                    // string nickname = item.Text;
-                    //   string no = item.SubItems[3].Text;
-                    string userName = item.SubItems[2].Text;
-                    if (userName == callInfo.username)
-                    {
-                        item.SubItems[1].Text = "是";
-                        break;
-                    }
-                }
+                onlineListGrid1.UpdateDianMing(callInfo.username);
+                //foreach (ListViewItem item in lvOnline.Items)
+                //{
+                //    // string nickname = item.Text;
+                //    //   string no = item.SubItems[3].Text;
+                //    string userName = item.SubItems[2].Text;
+                //    if (userName == callInfo.username)
+                //    {
+                //        item.SubItems[1].Text = "是";
+                //        break;
+                //    }
+                //}
 
             });
 
@@ -285,14 +289,15 @@ namespace NewTeacher
         {
             this.InvokeOnUiThreadIfRequired(() =>
             {
-                foreach (ListViewItem item in this.lvOnline.Items)
-                {
-                    if (item.SubItems[2].Text == delInfo.username)
-                    {
-                        item.Remove();
-                        break;
-                    }
-                }
+                onlineListGrid1.RemoveOnlineUser(delInfo.username);
+                //foreach (ListViewItem item in this.lvOnline.Items)
+                //{
+                //    if (item.SubItems[2].Text == delInfo.username)
+                //    {
+                //        item.Remove();
+                //        break;
+                //    }
+                //}
             });
         }
 
@@ -303,20 +308,21 @@ namespace NewTeacher
 
         private void AddOnlineUser(IList<OnlineListResult> list)
         {
-            foreach (OnlineListResult item in list)
-            {
-                if (!IsMySelf(item.username))
-                {
-                    ListViewItem listItem = new ListViewItem();
-                    listItem.Text = item.nickname;
-                    listItem.ImageIndex = item.clientRole == ClientRole.Student ? 0 : 39;
-                    listItem.SubItems.Add(item.isCalled ? "是" : "");
-                    listItem.SubItems.Add(item.username);
-                    listItem.SubItems.Add(item.no);
-                    this.lvOnline.Items.Add(listItem);
+            onlineListGrid1.AddLoginUser(list[0]);
+            //foreach (OnlineListResult item in list)
+            //{
+            //    if (!IsMySelf(item.username))
+            //    {
+            //        ListViewItem listItem = new ListViewItem();
+            //        listItem.Text = item.nickname;
+            //        listItem.ImageIndex = item.clientRole == ClientRole.Student ? 0 : 39;
+            //        listItem.SubItems.Add(item.isCalled ? "是" : "");
+            //        listItem.SubItems.Add(item.username);
+            //        listItem.SubItems.Add(item.no);
+            //        this.lvOnline.Items.Add(listItem);
 
-                }
-            }
+            //    }
+            //}
         }
 
         private bool IsMySelf(string userName)
@@ -335,8 +341,9 @@ namespace NewTeacher
         /// <param name="onLineList"></param>
         private void userListShow(IList<OnlineListResult> list)
         {
-            this.lvOnline.Items.Clear();
-            AddOnlineUser(list);
+            this.onlineListGrid1.UpdateOnlineUser(list);
+            //this.lvOnline.Items.Clear();
+            // AddOnlineUser(list);
         }
 
         #endregion
@@ -429,21 +436,25 @@ namespace NewTeacher
                     }
                     break;
                 case TeacherAction.menuRomoteControl_Click:
-                    if (lvOnline.SelectedItems.Count <= 0)
+                    //if (lvOnline.SelectedItems.Count <= 0)
+                    //{
+                    //    GlobalVariable.ShowWarnning("请先选择要控制的" + _clientTitle);
+                    //    return;
+                    //}
+                    //string username = lvOnline.SelectedItems[0].SubItems[2].Text;
+                    string username = GetSelectStudentUserName();
+                    if (!string.IsNullOrWhiteSpace(username))
                     {
-                        GlobalVariable.ShowWarnning("请先选择要控制的" + _clientTitle);
-                        return;
-                    }
-                    string username = lvOnline.SelectedItems[0].SubItems[2].Text;
-                    if (menuRomoteControl.Text == "禁用键鼠")
-                    {
-                        GlobalVariable.client.Send_LockScreen(username);
-                        menuRomoteControl.Text = "解锁";
-                    }
-                    else
-                    {
-                        GlobalVariable.client.Send_StopLockScreen(username);
-                        menuRomoteControl.Text = "禁用键鼠";
+                        if (menuRomoteControl.Text == "禁用键鼠")
+                        {
+                            GlobalVariable.client.Send_LockScreen(username);
+                            menuRomoteControl.Text = "解锁";
+                        }
+                        else
+                        {
+                            GlobalVariable.client.Send_StopLockScreen(username);
+                            menuRomoteControl.Text = "禁用键鼠";
+                        }
                     }
                     break;
                 case TeacherAction.menuScreenShare_Click:
@@ -558,19 +569,35 @@ namespace NewTeacher
         private string GetSelectStudentUserName()
         {
             actionStuUserName = null;
-            if (lvOnline.Items.Count <= 0)
+            if (onlineListGrid1.Rows.Count <= 0)
             {
                 GlobalVariable.ShowWarnning("当前在线" + _clientTitle + "为空");
                 return "";
             }
-            if (lvOnline.SelectedItems.Count <= 0)
+            if (onlineListGrid1.SelectedRows.Count <= 0)
             {
                 GlobalVariable.ShowWarnning("请先选择" + _clientTitle);
                 return "";
             }
-            string username = lvOnline.SelectedItems[0].SubItems[2].Text;
+            string username = onlineListGrid1.SelectedRows[0].Cells["col_userName"].Value.ToString();
             actionStuUserName = username;
             return username;
+
+            //old
+            //actionStuUserName = null;
+            //if (lvOnline.Items.Count <= 0)
+            //{
+            //    GlobalVariable.ShowWarnning("当前在线" + _clientTitle + "为空");
+            //    return "";
+            //}
+            //if (lvOnline.SelectedItems.Count <= 0)
+            //{
+            //    GlobalVariable.ShowWarnning("请先选择" + _clientTitle);
+            //    return "";
+            //}
+            //string username = lvOnline.SelectedItems[0].SubItems[2].Text;
+            //actionStuUserName = username;
+            //return username;
         }
 
         private void ChatToALL()
@@ -747,7 +774,7 @@ namespace NewTeacher
             {
                 case "userList_privateChat":
                     // string userName = lvOnline.SelectedItems[0].SubItems[2].Text;
-                    string displayName = lvOnline.SelectedItems[0].Text;
+                    string displayName = onlineListGrid1.SelectedRows[0].Cells["col_name"].Value.ToString();
                     var request = new ChatMessage();
                     request.SendDisplayName = displayName;
                     request.ChatType = ChatType.PrivateChat;
@@ -800,22 +827,7 @@ namespace NewTeacher
 
         }
 
-        private void lvOnline_MouseDown_1(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                ListViewItem lvi = lvOnline.GetItemAt(e.X, e.Y);
-                if (lvi != null)
-                {
-                    lvOnline.ContextMenuStrip = UserListMenu;
-                }
-                else
-                {
-                    lvOnline.ContextMenuStrip = null;
-                }
-                return;
-            }
-        }
+   
 
         private void userList_P_forbidPrivateChat_Click(object sender, System.EventArgs e)
         {
@@ -823,6 +835,7 @@ namespace NewTeacher
             if (!string.IsNullOrWhiteSpace(actionStuUserName))
             {
                 GlobalVariable.client.Send_ForbidPrivateChat(actionStuUserName);
+                onlineListGrid1.SetPrivateChatPermission(actionStuUserName, false);
             }
         }
 
@@ -832,6 +845,7 @@ namespace NewTeacher
             if (!string.IsNullOrWhiteSpace(actionStuUserName))
             {
                 GlobalVariable.client.Send_ForbidTeamChat(actionStuUserName);
+                onlineListGrid1.SetTeamChatPermission(actionStuUserName, false);
             }
         }
 
@@ -841,6 +855,7 @@ namespace NewTeacher
             if (!string.IsNullOrWhiteSpace(actionStuUserName))
             {
                 GlobalVariable.client.Send_AllowPrivateChat(actionStuUserName);
+                onlineListGrid1.SetPrivateChatPermission(actionStuUserName, true);
             }
         }
 
@@ -850,6 +865,7 @@ namespace NewTeacher
             if (!string.IsNullOrWhiteSpace(actionStuUserName))
             {
                 GlobalVariable.client.Send_AllowTeamChat(actionStuUserName);
+                onlineListGrid1.SetTeamChatPermission(actionStuUserName, true);
             }
         }
 
@@ -861,6 +877,24 @@ namespace NewTeacher
             if (udpClient != null)
             {
                 udpClient.CloseTeacherUDP();
+            }
+        }
+
+        private void onlineListGrid1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hti = onlineListGrid1.HitTest(e.X, e.Y);
+                if (hti.RowIndex >= 0)
+                {
+                    onlineListGrid1.ClearSelection();
+                    onlineListGrid1.Rows[hti.RowIndex].Selected = true;
+                    onlineListGrid1.ContextMenuStrip = UserListMenu;
+                }
+                else
+                {
+                    onlineListGrid1.ContextMenuStrip = null;
+                }
             }
         }
     }

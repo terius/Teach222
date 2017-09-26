@@ -30,11 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.myGroupBox7 = new SharedForms.MyGroupBox();
-            this.lvOnline = new System.Windows.Forms.ListView();
-            this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colCall = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
@@ -80,6 +79,12 @@
             this.userList_studentShow = new System.Windows.Forms.ToolStripMenuItem();
             this.userList_studentVideoShow = new System.Windows.Forms.ToolStripMenuItem();
             this.userList_stopStudentShow = new System.Windows.Forms.ToolStripMenuItem();
+            this.onlineListGrid1 = new SharedForms.UserControls.OnlineListGrid();
+            this.col_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_isval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_disablePrivateChat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_disableTeamChat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_userName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -103,6 +108,7 @@
             this.myGroupBox2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.UserListMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onlineListGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelContent
@@ -127,49 +133,22 @@
             this.splitContainer1.Panel2.Controls.Add(this.myGroupBox8);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Size = new System.Drawing.Size(1187, 473);
-            this.splitContainer1.SplitterDistance = 233;
+            this.splitContainer1.SplitterDistance = 324;
             this.splitContainer1.TabIndex = 1;
             // 
             // myGroupBox7
             // 
-            this.myGroupBox7.Controls.Add(this.lvOnline);
+            this.myGroupBox7.Controls.Add(this.onlineListGrid1);
             this.myGroupBox7.Controls.Add(this.panel3);
             this.myGroupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.myGroupBox7.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.myGroupBox7.ForeColor = System.Drawing.Color.White;
             this.myGroupBox7.Location = new System.Drawing.Point(2, 2);
             this.myGroupBox7.Name = "myGroupBox7";
-            this.myGroupBox7.Size = new System.Drawing.Size(229, 469);
+            this.myGroupBox7.Size = new System.Drawing.Size(320, 469);
             this.myGroupBox7.TabIndex = 4;
             this.myGroupBox7.TabStop = false;
             this.myGroupBox7.Text = "在线学生列表";
-            // 
-            // lvOnline
-            // 
-            this.lvOnline.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lvOnline.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colName,
-            this.colCall});
-            this.lvOnline.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvOnline.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lvOnline.Location = new System.Drawing.Point(3, 57);
-            this.lvOnline.Name = "lvOnline";
-            this.lvOnline.Size = new System.Drawing.Size(223, 409);
-            this.lvOnline.SmallImageList = this.imageList1;
-            this.lvOnline.TabIndex = 2;
-            this.lvOnline.UseCompatibleStateImageBehavior = false;
-            this.lvOnline.View = System.Windows.Forms.View.Details;
-            this.lvOnline.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lvOnline_MouseDown_1);
-            // 
-            // colName
-            // 
-            this.colName.Text = "姓名";
-            this.colName.Width = 166;
-            // 
-            // colCall
-            // 
-            this.colCall.Text = "是否验证";
-            this.colCall.Width = 70;
             // 
             // imageList1
             // 
@@ -183,7 +162,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 21);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(223, 36);
+            this.panel3.Size = new System.Drawing.Size(314, 36);
             this.panel3.TabIndex = 3;
             // 
             // btnRefresh
@@ -215,7 +194,7 @@
             this.myGroupBox8.ForeColor = System.Drawing.Color.White;
             this.myGroupBox8.Location = new System.Drawing.Point(2, 2);
             this.myGroupBox8.Name = "myGroupBox8";
-            this.myGroupBox8.Size = new System.Drawing.Size(946, 469);
+            this.myGroupBox8.Size = new System.Drawing.Size(855, 469);
             this.myGroupBox8.TabIndex = 0;
             this.myGroupBox8.TabStop = false;
             this.myGroupBox8.Text = "学生端屏幕";
@@ -226,7 +205,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 21);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(940, 445);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(849, 445);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // panel2
@@ -828,12 +807,87 @@
             this.userList_stopStudentShow.Size = new System.Drawing.Size(180, 26);
             this.userList_stopStudentShow.Text = "停止客户端演示";
             // 
+            // onlineListGrid1
+            // 
+            this.onlineListGrid1.AllowUserToAddRows = false;
+            this.onlineListGrid1.AllowUserToDeleteRows = false;
+            this.onlineListGrid1.AllowUserToResizeRows = false;
+            this.onlineListGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.onlineListGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.onlineListGrid1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.onlineListGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.onlineListGrid1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_name,
+            this.col_isval,
+            this.col_disablePrivateChat,
+            this.col_disableTeamChat,
+            this.col_userName});
+            this.onlineListGrid1.ContextMenuStrip = this.UserListMenu;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.onlineListGrid1.DefaultCellStyle = dataGridViewCellStyle4;
+            this.onlineListGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.onlineListGrid1.Location = new System.Drawing.Point(3, 57);
+            this.onlineListGrid1.MultiSelect = false;
+            this.onlineListGrid1.Name = "onlineListGrid1";
+            this.onlineListGrid1.ReadOnly = true;
+            this.onlineListGrid1.RowHeadersVisible = false;
+            this.onlineListGrid1.RowTemplate.Height = 23;
+            this.onlineListGrid1.Size = new System.Drawing.Size(314, 409);
+            this.onlineListGrid1.TabIndex = 4;
+            this.onlineListGrid1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.onlineListGrid1_MouseDown);
+            // 
+            // col_name
+            // 
+            this.col_name.FillWeight = 120F;
+            this.col_name.HeaderText = "姓名";
+            this.col_name.Name = "col_name";
+            this.col_name.ReadOnly = true;
+            // 
+            // col_isval
+            // 
+            this.col_isval.HeaderText = "验证";
+            this.col_isval.Name = "col_isval";
+            this.col_isval.ReadOnly = true;
+            // 
+            // col_disablePrivateChat
+            // 
+            this.col_disablePrivateChat.HeaderText = "禁私聊";
+            this.col_disablePrivateChat.Name = "col_disablePrivateChat";
+            this.col_disablePrivateChat.ReadOnly = true;
+            // 
+            // col_disableTeamChat
+            // 
+            this.col_disableTeamChat.HeaderText = "禁群聊";
+            this.col_disableTeamChat.Name = "col_disableTeamChat";
+            this.col_disableTeamChat.ReadOnly = true;
+            // 
+            // col_userName
+            // 
+            this.col_userName.HeaderText = "username";
+            this.col_userName.Name = "col_userName";
+            this.col_userName.ReadOnly = true;
+            this.col_userName.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1189, 615);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "MainForm";
             this.Text = "在线教育系统";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -862,6 +916,7 @@
             this.myGroupBox2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.UserListMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.onlineListGrid1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -896,9 +951,6 @@
         private System.Windows.Forms.Button menuFileShare2;
         private System.Windows.Forms.Button menuFileShare;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ListView lvOnline;
-        private System.Windows.Forms.ColumnHeader colName;
-        private System.Windows.Forms.ColumnHeader colCall;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnRefresh;
         private SharedForms.MyGroupBox myGroupBox7;
@@ -917,5 +969,11 @@
         private System.Windows.Forms.ToolStripMenuItem userList_studentVideoShow;
         private System.Windows.Forms.ToolStripMenuItem userList_stopStudentShow;
         private System.Windows.Forms.ImageList imageList1;
+        private SharedForms.UserControls.OnlineListGrid onlineListGrid1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_isval;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_disablePrivateChat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_disableTeamChat;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_userName;
     }
 }

@@ -124,6 +124,12 @@
     <Compile Include="UserControls\MyGroupBox.Designer.cs">
       <DependentUpon>MyGroupBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\OnlineListGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\OnlineListGrid.Designer.cs">
+      <DependentUpon>OnlineListGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SelectablePanel.cs">
       <SubType>Component</SubType>
     </Compile>

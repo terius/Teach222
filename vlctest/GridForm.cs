@@ -20,7 +20,10 @@ namespace vlctest
         private void GridForm_Load(object sender, EventArgs e)
         {
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
-           
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            dataGridView1.AllowUserToResizeRows = false;
             DataGridViewRow row;
             for (int i = 0; i < 20; i++)
             {

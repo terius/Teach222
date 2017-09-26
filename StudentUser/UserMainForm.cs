@@ -5,11 +5,8 @@ using Model;
 using SharedForms;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Net;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -63,7 +60,7 @@ namespace StudentUser
             tuopan.Text = Text;
             #region 处理收到的消息
 
-            
+
             //学生端收到消息
             GlobalVariable.client.OnStudentReceiveMessage = (message) =>
             {
@@ -72,9 +69,9 @@ namespace StudentUser
                     case (int)CommandType.UserLoginRes:
                         break;
                     case (int)CommandType.TeacherLoginIn://主机端登录
-                 
+
                         TeacherLoginInResponse teachRes = JsonHelper.DeserializeObj<TeacherLoginInResponse>(message.DataStr);
-                        ShowNotify(_masterTitle +"登录");
+                        ShowNotify(_masterTitle + "登录");
                         GlobalVariable.TeacherIP = teachRes.teachIP;
                         DoAction(() =>
                         {
@@ -83,7 +80,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.TeacherLoginOut://主机端登出
-                        ShowNotify(_masterTitle +"登出");
+                        ShowNotify(_masterTitle + "登出");
                         if (theadScreen != null && theadScreen.ThreadState == ThreadState.Background)
                         {
                             isRunScreen = false;
@@ -150,7 +147,7 @@ namespace StudentUser
                         GlobalVariable.RefleshTeamList(teamInfo);
                         DoAction(() =>
                         {
-                           
+
                             if (GlobalVariable.CheckChatFormIsOpened())
                             {
                                 GlobalVariable.ShowNotifyMessage("群组信息已经更改");
@@ -210,7 +207,7 @@ namespace StudentUser
                         ChangeChatAllowOrForbit(ChatType.TeamChat, false);
                         break;
                     case (int)CommandType.AllowPrivateChat://收到允许私聊
-                        ShowNotify(_masterTitle +"已允许私聊");
+                        ShowNotify(_masterTitle + "已允许私聊");
                         GlobalVariable.LoginUserInfo.AllowPrivateChat = true;
                         ChangeChatAllowOrForbit(ChatType.PrivateChat, true);
                         break;
@@ -225,7 +222,7 @@ namespace StudentUser
                         {
                             DeleteTeamMember(deleteInfo);
                         });
-                      
+
                         break;
                     default:
                         break;
@@ -246,22 +243,42 @@ namespace StudentUser
             var chatMessage = GlobalVariable.CreateChatMessage(message);
             DoAction(() =>
             {
-                bool rs = GlobalVariable.CheckChatFormIsOpened();
+
                 OpenChatForm(chatMessage);
             });
+        }
+
+        public bool ChatFormIsVisible
+        {
+            get
+            {
+                if (chatForm == null)
+                {
+                    return false;
+                }
+                return chatForm.Visible;
+            }
         }
 
         private void OpenChatForm(ChatMessage message)
         {
             chatForm.BringToFront();
-            chatForm.Show();
             chatForm.CreateChatItems(message, true);
+            if (!ChatFormIsVisible)
+            {
+                GlobalVariable.ShowChatMessageNotify(message, chatForm);
+            }
+            else
+            {
+                chatForm.Show();
+            }
         }
 
 
         private void ShowNotify(string message)
         {
-            this.InvokeOnUiThreadIfRequired(() => {
+            this.InvokeOnUiThreadIfRequired(() =>
+            {
                 GlobalVariable.ShowNotifyMessage(message);
             });
         }
@@ -321,7 +338,6 @@ namespace StudentUser
             {
                 theadScreen = new Thread(() =>
                     {
-
                         //  udpClient.CreateUDPStudentHole();
                         GetScreenCapture();
 
@@ -405,7 +421,7 @@ namespace StudentUser
         //    chatForm.CreateChatItems(request, true);
         //}
 
-      
+
 
 
         ///// <summary>
@@ -538,13 +554,7 @@ namespace StudentUser
 
 
 
-        private void UserMainForm_Shown(object sender, EventArgs e)
-        {
-            // this.Hide();
-        }
-
-
-
+       
 
         #region 右键菜单
 
@@ -585,24 +595,7 @@ namespace StudentUser
 
         #endregion
 
-
-
-        string playurl = @"D:\dy\xart.mp4";
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ShowRtspVideo(playurl);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            StopPlay();
-        }
-
-        private void btnScreenCapture_Click(object sender, EventArgs e)
-        {
-
-
-        }
+        
 
         private void GetScreenCapture()
         {
@@ -669,7 +662,7 @@ namespace StudentUser
 
         private void StopUdp()
         {
-            
+
             isRunScreen = false;
             Thread.Sleep(500);
             if (udpClient != null)
@@ -683,11 +676,7 @@ namespace StudentUser
 
         }
 
-        private void btnPlayVideo_Click(object sender, EventArgs e)
-        {
-            // url = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
-            PlayVideoByVLCDotNet(playurl);
-        }
+      
     }
 
 
