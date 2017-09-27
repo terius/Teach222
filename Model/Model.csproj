@@ -70,6 +70,7 @@
     <Compile Include="Response\LoginResult.cs" />
     <Compile Include="LoginUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="Views\ChatTeamInfo.cs" />
     <Compile Include="Views\ScreenCaptureInfo.cs" />
     <Compile Include="Views\SendFileView.cs" />

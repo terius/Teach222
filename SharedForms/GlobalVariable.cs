@@ -15,17 +15,53 @@ namespace SharedForms
 {
     public static class GlobalVariable
     {
+
+        #region 字段和属性
+        /// <summary>
+        /// 文件根目录
+        /// </summary>
         public static readonly string BaseFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files");
+        /// <summary>
+        /// 下载文件存放目录
+        /// </summary>
         public static readonly string DownloadPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\DownloadFiles");
+        /// <summary>
+        /// 音频文件存放目录
+        /// </summary>
         public static readonly string AudioRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\AudioRecord");
+        /// <summary>
+        /// 临时文件存放目录
+        /// </summary>
         public static readonly string TempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\Temp");
+        /// <summary>
+        /// 视频文件存放目录
+        /// </summary>
         public static readonly string VideoRecordPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files\\VideoRecord");
+        /// <summary>
+        /// FFmpeg程序目录
+        /// </summary>
         public static readonly string FFmpegFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg.exe");
+        /// <summary>
+        /// 主机端IP
+        /// </summary>
         public static string TeacherIP { get; set; }
+        /// <summary>
+        /// TCP客户端
+        /// </summary>
         public static EduTCPClient client;
-        public static readonly bool IsHuiShenXiTong = true;//是否为会审系统
+        /// <summary>
+        /// 是否为会审系统
+        /// </summary>
+        public static readonly bool IsHuiShenXiTong = true;
+        /// <summary>
+        /// 登录用户
+        /// </summary>
+        public static LoginUserInfo LoginUserInfo;
+        private static List<ChatStore> chatList;
+        public static bool IsTeamChatChanged { get; set; }
+        #endregion
 
-
+        #region 聊天
         public static ChatMessage CreateChatMessage(ReceieveMessage message)
         {
             ChatMessage chatMessage = null;
@@ -49,7 +85,9 @@ namespace SharedForms
             AddNewChat(chatMessage);
             return chatMessage;
         }
+        #endregion
 
+        #region 群组
         public static void UpdateTeamOnline(IList<OnlineListResult> onLineList)
         {
             var list = GetTeamChatList();
@@ -71,6 +109,10 @@ namespace SharedForms
 
         }
 
+        #endregion
+
+
+
 
         //public static MyClient client
         //{
@@ -85,6 +127,11 @@ namespace SharedForms
         //    }
         //}
 
+        /// <summary>
+        /// 发送命令
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="type"></param>
         public static void SendCommand(IsendRequest request, CommandType type)
         {
             if (client == null || !client.ClientIsConnected)
@@ -169,7 +216,7 @@ namespace SharedForms
 
 
 
-        public static LoginUserInfo LoginUserInfo;
+
 
         public static void CreateTestLoginInfo()
         {
@@ -183,11 +230,11 @@ namespace SharedForms
 
         }
 
-        private static List<ChatStore> chatList;
+   
 
         //   public static List<ChatStore> ChatList { get; set; }
 
-        public static bool IsTeamChatChanged { get; set; }
+       
 
         public static List<ChatStore> ChatList
         {

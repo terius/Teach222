@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using vlctest.Models;
 
 namespace vlctest
 {
@@ -18,6 +19,7 @@ namespace vlctest
             InitializeComponent();
             media = new Media();
             RefreshStop(false);
+            var aa = GL.TeamList;
         }
 
         private void closeButton_Click(object sender, EventArgs e)

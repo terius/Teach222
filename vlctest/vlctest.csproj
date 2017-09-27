@@ -133,6 +133,9 @@
       <DependentUpon>GridForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Media.cs" />
+    <Compile Include="Models\ENUM.cs" />
+    <Compile Include="Models\GL.cs" />
+    <Compile Include="Models\OnlineUser.cs" />
     <Compile Include="NVLCForm.cs">
       <SubType>Form</SubType>
     </Compile>

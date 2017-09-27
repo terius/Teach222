@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using vlctest.Models;
 
 namespace vlctest
 {
@@ -15,6 +16,7 @@ namespace vlctest
         public GridForm()
         {
             InitializeComponent();
+            GL.CreateTeam("群组1");
         }
 
         private void GridForm_Load(object sender, EventArgs e)
@@ -33,6 +35,12 @@ namespace vlctest
                 dataGridView1.Rows[index].Cells[1].Value = "列2_" + index;
                 dataGridView1.Rows[index].Cells[2].Value = "列3_" + index;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form1 frm = new Form1();
+            frm.ShowDialog();
         }
     }
 }

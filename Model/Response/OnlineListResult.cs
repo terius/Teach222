@@ -19,20 +19,6 @@ namespace Model
        
     }
 
-    public class OnlineListResultTemp
-    {
-        public string username { get; set; }
-        public string nickname { get; set; }
-        public ClientStyle clientStyle { get; set; }
-        public ClientRole clientRole { get; set; }
 
-        public int no { get; set; }
-
-
-       
-
-
-
-
-    }
+  
 }
