@@ -23,6 +23,18 @@ namespace vlctest.Models
 
     }
 
+    public class ChatStore
+    {
+        IList<ChatMessage> messageList = new List<ChatMessage>();
+        public string UserName { get; set; }
+        public void AddMessage(ChatMessage message)
+        {
+            messageList.Add(message);
+        }
+        
+        public IList<ChatMessage> ChatMessageList { get { return messageList; } }
+    }
+
     public class User
     {
         IList<ChatMessage> messageList = new List<ChatMessage>();
