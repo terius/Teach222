@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    public class OnlineListResult
+    public class OnlineUserResponse
     {
         public string username { get; set; }
         public string nickname { get; set; }

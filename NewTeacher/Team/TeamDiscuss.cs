@@ -11,7 +11,7 @@ namespace NewTeacher
     {
 
         OnlineInfo _onLineInfo;
-        ChatStore selectTeam;
+        Team selectTeam;
         bool teamIsChange;
         public TeamDiscuss(OnlineInfo onLineInfo)
         {
@@ -51,16 +51,16 @@ namespace NewTeacher
             });
         }
 
-        private void AddUserList(IList<OnlineListResult> onLineList)
+        private void AddUserList(IList<User> onLineList)
         {
-            foreach (OnlineListResult item in onLineList)
+            foreach (var item in onLineList)
             {
-                if (!item.username.IsMySelf())
+                if (!item.UserName.IsMySelf())
                 {
                     ListViewItem listItem = new ListViewItem();
-                    listItem.Text = item.nickname;
-                    listItem.ImageIndex = item.clientRole == ClientRole.Student ? 0 : 1;
-                    listItem.SubItems.Add(item.username);
+                    listItem.Text = item.DisplayName;
+                    listItem.ImageIndex = item.UserType == ClientRole.Student ? 0 : 1;
+                    listItem.SubItems.Add(item.UserName);
                     this.onLineListView.Items.Add(listItem);
                 }
             }
@@ -76,15 +76,15 @@ namespace NewTeacher
 
         private void BindOnlineUser()
         {
-            foreach (OnlineListResult item in _onLineInfo.StudentOnlineList)
+            foreach (var item in _onLineInfo.StudentOnlineList)
             {
-                if (!item.username.IsMySelf())
+                if (!item.UserName.IsMySelf())
                 {
                     ListViewItem listItem = new ListViewItem();
                     //listItem.Name = item.clientStyle == ClientStyle.PC ? "计算机" : "移动端";
-                    listItem.Text = item.nickname;
-                    listItem.ImageIndex = item.clientRole == ClientRole.Student ? 0 : 1;
-                    listItem.SubItems.Add(item.username);
+                    listItem.Text = item.DisplayName;
+                    listItem.ImageIndex = item.UserType == ClientRole.Student ? 0 : 1;
+                    listItem.SubItems.Add(item.UserName);
 
                     this.onLineListView.Items.Add(listItem);
                 }
@@ -93,14 +93,14 @@ namespace NewTeacher
 
         private void btnCreate_Click(object sender, System.EventArgs e)
         {
-            if (GlobalVariable.CreateTeamChat(this.txtCreate.Text.Trim()))
+            if (GlobalVariable.CreateTeam(this.txtCreate.Text.Trim()))
             {
                 teamIsChange = true;
-                AddNewTeam();
+                UpdateTeamCBox();
             }
         }
 
-        private void AddNewTeam()
+        private void UpdateTeamCBox()
         {
             var newItem = GlobalVariable.GetNewTeamChat();
             cboxTeam.Items.Add(newItem);
@@ -109,6 +109,11 @@ namespace NewTeacher
             {
                 cboxTeam.SelectedIndex = 0;
             }
+
+            if (cboxTeam2.SelectedIndex <= 0)
+            {
+                cboxTeam2.SelectedIndex = 0;
+            }
         }
 
         private void BindTeam()
@@ -116,16 +121,14 @@ namespace NewTeacher
             cboxTeam.Items.Clear();
             cboxTeam2.Items.Clear();
             teamMemList.Clear();
-            var list = GlobalVariable.GetTeamChatList();
-            foreach (ChatStore item in list)
+            //   var list = GlobalVariable.GetTeamChatList();
+            foreach (var team in GlobalVariable.TeamList)
             {
-                cboxTeam.Items.Add(item);
-                cboxTeam2.Items.Add(item);
+                cboxTeam.Items.Add(team);
+                cboxTeam2.Items.Add(team);
             }
-            cboxTeam.DisplayMember = "ChatDisplayName";
-            cboxTeam.ValueMember = "ChatUserName";
-            cboxTeam2.DisplayMember = "ChatDisplayName";
-            cboxTeam2.ValueMember = "ChatUserName";
+            cboxTeam.DisplayMember = cboxTeam2.DisplayMember = "TeamName";
+            cboxTeam.ValueMember = cboxTeam2.ValueMember = "TeamId";
             if (cboxTeam.Items.Count > 0)
             {
                 cboxTeam.SelectedIndex = 0;
@@ -145,8 +148,8 @@ namespace NewTeacher
         {
             if (cboxTeam.SelectedIndex >= 0)
             {
-                selectTeam = (ChatStore)cboxTeam.SelectedItem;
-                fmEditTeamName editForm = new fmEditTeamName(selectTeam.ChatUserName, selectTeam.ChatDisplayName);
+                selectTeam = (Team)cboxTeam.SelectedItem;
+                fmEditTeamName editForm = new fmEditTeamName(selectTeam.TeamId, selectTeam.TeamName);
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
                     teamIsChange = true;
@@ -159,9 +162,9 @@ namespace NewTeacher
         {
             if (cboxTeam.SelectedIndex >= 0)
             {
-                selectTeam = (ChatStore)cboxTeam.SelectedItem;
+                selectTeam = (Team)cboxTeam.SelectedItem;
 
-                Action<string, IList<TeamMember>> sendDelCommand = (teamId, member) =>
+                Action<string, IList<User>> sendDelCommand = (teamId, member) =>
                  {
                      foreach (var item in member)
                      {
@@ -169,7 +172,7 @@ namespace NewTeacher
                          //  SendDelMemberCommand(item.)
                      }
                  };
-                var rs = GlobalVariable.DelTeam(selectTeam.ChatUserName, sendDelCommand);
+                var rs = GlobalVariable.RemoveTeam(selectTeam.TeamId, sendDelCommand);
                 if (rs)
                 {
 
@@ -190,10 +193,10 @@ namespace NewTeacher
         {
             if (cboxTeam2.SelectedIndex >= 0)
             {
-                selectTeam = (ChatStore)cboxTeam2.SelectedItem;
-                myGroupBox3.Text = "分组：" + selectTeam.ChatDisplayName + "的成员";
+                selectTeam = (Team)cboxTeam2.SelectedItem;
+                myGroupBox3.Text = "分组：" + selectTeam.TeamName + "的成员";
                 teamMemList.Clear();
-                foreach (TeamMember mem in selectTeam.TeamMembers)
+                foreach (var mem in selectTeam.TeamMembers)
                 {
                     ListViewItem listItem = new ListViewItem();
                     //listItem.Name = item.clientStyle == ClientStyle.PC ? "计算机" : "移动端";
@@ -221,13 +224,13 @@ namespace NewTeacher
         {
             if (cboxTeam.SelectedIndex >= 0)
             {
-                selectTeam = (ChatStore)cboxTeam.SelectedItem;
+                selectTeam = (Team)cboxTeam.SelectedItem;
 
                 string userName = this.teamMemList.SelectedItems[0].SubItems[1].Text;
-                bool rs = GlobalVariable.DelTeamMember(selectTeam.ChatUserName, userName);
+                bool rs = GlobalVariable.RemoveTeamMember(selectTeam.TeamId, userName);
                 if (rs)
                 {
-                    SendDelMemberCommand(selectTeam.ChatUserName, userName);
+                    SendDelMemberCommand(selectTeam.TeamId, userName);
                     teamIsChange = true;
                 }
                 BindTeamMember();
@@ -279,10 +282,20 @@ namespace NewTeacher
                 GlobalVariable.ShowWarnning("请先选择要添加的分组");
                 return;
             }
-            selectTeam = (ChatStore)cboxTeam2.SelectedItem;
-            GlobalVariable.AddTeamMember(onLineListView.CheckedItems, selectTeam.ChatUserName);
+            selectTeam = (Team)cboxTeam2.SelectedItem;
+            GlobalVariable.AddTeamMembers(ConvertToUserList(onLineListView), selectTeam.TeamId);
             teamIsChange = true;
             BindTeamMember();
+        }
+
+        private IList<User> ConvertToUserList(ListView listView)
+        {
+            IList<User> users = new List<User>();
+            foreach (ListViewItem item in listView.CheckedItems)
+            {
+                users.Add(new User { DisplayName = item.Text, UserName = item.SubItems[1].Text, IsOnline = true, UserType = ClientRole.Student });
+            }
+            return users;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

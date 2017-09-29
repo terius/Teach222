@@ -5,7 +5,7 @@ namespace Model
 {
     public class User
     {
-        IList<ChatMessage> messageList = new List<ChatMessage>();
+      //  IList<ChatMessage> messageList = new List<ChatMessage>();
         public string UserName { get; set; }
         public string DisplayName { get; set; }
 
@@ -15,13 +15,13 @@ namespace Model
 
         public bool IsDianMing { get; set; }
 
-        public void AddMessage(ChatMessage message)
-        {
-            messageList.Add(message);
-        }
+        //public void AddMessage(ChatMessage message)
+        //{
+        //    messageList.Add(message);
+        //}
 
 
 
-        public IList<ChatMessage> ChatMessageList { get { return messageList; } }
+        //public IList<ChatMessage> ChatMessageList { get { return messageList; } }
     }
 }

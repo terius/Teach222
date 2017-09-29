@@ -1,6 +1,6 @@
 ﻿namespace SharedForms
 {
-    partial class smsPanelNew
+    partial class smsPanel
     {
         /// <summary> 
         /// 必需的设计器变量。

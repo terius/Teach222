@@ -9,44 +9,48 @@ namespace NewTeacher
 {
     public class OnlineInfo
     {
-        public IList<OnlineListResult> OnLineList { get; set; }
+        private IList<User> _onLineList;
         public delegate void OnlineChangeHandle(object sender, OnlineEventArgs e);
         public delegate void OnlineDelHandle(UserLogoutResponse e);
         public event OnlineChangeHandle OnLineChange;
         public event OnlineChangeHandle AddOnLine;
         public event OnlineDelHandle DelOnLine;
-        public IList<OnlineListResult> StudentOnlineList
+        public IList<User> StudentOnlineList
         {
             get
             {
-                return OnLineList.Where(d => d.clientRole == ClientRole.Student).ToList();
+                return _onLineList.Where(d => d.UserType == ClientRole.Student).ToList();
             }
         }
 
+
+
         public OnlineInfo()
         {
-            OnLineList = new List<OnlineListResult>();
+            _onLineList = new List<User>();
 
         }
-        public IList<OnlineListResult> GetStudentOnlineList()
+        public IList<User> GetStudentOnlineList()
         {
-            return OnLineList.Where(d => d.clientRole == ClientRole.Student).ToList();
+            return _onLineList.Where(d => d.UserType == ClientRole.Student).ToList();
         }
 
-        public void OnOnlineChange(IList<OnlineListResult> onLineList)
+        public void OnOnlineChange(IList<OnlineUserResponse> onLineList)
         {
-            this.OnLineList = onLineList;
-            GlobalVariable.UpdateTeamOnline(onLineList);
+            this._onLineList = onLineList.ConvertToUserList();
+            GlobalVariable.OnlineUserList = _onLineList;
+            GlobalVariable.UpdateAllTeamMemberOnline();
             //    StudentOnlineList = onLineList.Where(d => d.clientRole == ClientRole.Student).ToList();
             OnlineEventArgs e = new OnlineEventArgs(StudentOnlineList);
             OnLineChange(this, e);
         }
 
-        public void OnNewUserLoginIn(IList<OnlineListResult> onLineList)
+        public void OnNewUserLoginIn(IList<OnlineUserResponse> onLineList)
         {
-            AddNewOnLine(onLineList[0]);
-            GlobalVariable.RefreshTeamMember(onLineList[0].username, true);
-            OnlineEventArgs e = new OnlineEventArgs(onLineList);
+            var userList = onLineList.ConvertToUserList();
+            AddNewOnLine(userList[0]);
+            GlobalVariable.UpdateTeamMemberOnline(userList[0].UserName, true);
+            OnlineEventArgs e = new OnlineEventArgs(userList);
             AddOnLine(this, e);
 
         }
@@ -54,17 +58,17 @@ namespace NewTeacher
         public void OnUserLoginOut(UserLogoutResponse loginOutInfo)
         {
             DeleteOnLine(loginOutInfo);
-            GlobalVariable.RefreshTeamMember(loginOutInfo.username, false);
+            GlobalVariable.UpdateTeamMemberOnline(loginOutInfo.username, false);
             DelOnLine(loginOutInfo);
 
         }
 
 
-        private void AddNewOnLine(OnlineListResult newUser)
+        private void AddNewOnLine(User newUser)
         {
-            if (!OnLineList.Any(d => d.username == newUser.username))
+            if (!_onLineList.Any(d => d.UserName == newUser.UserName))
             {
-                OnLineList.Add(newUser);
+                _onLineList.Add(newUser);
             }
 
             //if (!StudentOnlineList.Any(d => d.username == newUser.username))
@@ -79,10 +83,10 @@ namespace NewTeacher
 
         private void DeleteOnLine(UserLogoutResponse user)
         {
-            var item = OnLineList.FirstOrDefault(d => d.username == user.username);
+            var item = _onLineList.FirstOrDefault(d => d.UserName == user.username);
             if (item != null)
             {
-                OnLineList.Remove(item);
+                _onLineList.Remove(item);
             }
 
 
@@ -92,13 +96,13 @@ namespace NewTeacher
     public class OnlineEventArgs : EventArgs
 
     {
-        private IList<OnlineListResult> _onLineList;
+        private IList<User> _onLineList;
 
-        public OnlineEventArgs(IList<OnlineListResult> onLineList)
+        public OnlineEventArgs(IList<User> onLineList)
         {
             this._onLineList = onLineList;
         }
-        public IList<OnlineListResult> OnLines
+        public IList<User> OnLines
         {
             get { return _onLineList; }
         }

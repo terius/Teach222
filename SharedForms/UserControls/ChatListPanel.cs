@@ -109,7 +109,7 @@ namespace SharedForms
 
         public void SetSelectPanel(ChatTypePanel panel)
         {
-       
+
         }
 
         private void PanGroup_MouseClick(object sender, MouseEventArgs e)
@@ -528,22 +528,31 @@ namespace SharedForms
             if (GlobalVariable.IsTeamChatChanged)
             {
                 GlobalVariable.IsTeamChatChanged = false;
-                var list = GlobalVariable.GetTeamChatList();
+                // var list = GlobalVariable.GetTeamChatList();
                 ClearTeam();
-                foreach (ChatStore item in list)
+                foreach (var team in GlobalVariable.TeamList)
                 {
-                    if (item.CheckLoginUserNameIsInTeam())
+                    if (team.CheckUserIsInTeam(GlobalVariable.LoginUserInfo.UserName))
                     {
-                        CreateItem(item);
+                        CreateTeamChatItem(team);
                     }
                 }
             }
         }
 
-        public ChatItem CreateItem(ChatStore store)
+
+        public ChatItem CreateTeamChatItem(Team team)
+        {
+            ChatItem item = new ChatItem(this, team.TeamId,
+                team.TeamName, ChatType.TeamChat, ClientRole.Student);
+            this.AddChatItem(item);
+            return item;
+        }
+
+        public ChatItem CreateGroupChatItem(ChatStore store)
         {
             ChatItem item = new ChatItem(this, store.ChatUserName,
-                store.ChatDisplayName, store.ChatType, store.UserType);
+                "全体成员", store.ChatType, store.UserType);
             this.AddChatItem(item);
             return item;
         }
@@ -556,13 +565,13 @@ namespace SharedForms
             return item;
         }
 
-        public void CreateNewGroupChat(string groupId)
+        public void CreateALLGroupChat(string groupId)
         {
 
             var groupChat = GlobalVariable.CreateGroupChat(groupId);
             if (groupChat != null)
             {
-                CreateItem(groupChat);
+                CreateGroupChatItem(groupChat);
             }
         }
 

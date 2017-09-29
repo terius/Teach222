@@ -1,6 +1,6 @@
 ﻿namespace SharedForms
 {
-    partial class sms2
+    partial class smsItem
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -69,7 +69,7 @@
             this.progressBar1.TabIndex = 2;
             this.progressBar1.Visible = false;
             // 
-            // sms2
+            // smsItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -77,12 +77,12 @@
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtSMS);
-            this.Name = "sms2";
+            this.Name = "smsItem";
             this.Padding = new System.Windows.Forms.Padding(10, 10, 40, 10);
             this.Size = new System.Drawing.Size(370, 88);
-            this.Load += new System.EventHandler(this.sms2_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.sms2_Paint);
-            this.Resize += new System.EventHandler(this.sms2_Resize);
+            this.Load += new System.EventHandler(this.smsItem_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.smsItem_Paint);
+            this.Resize += new System.EventHandler(this.smsItem_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

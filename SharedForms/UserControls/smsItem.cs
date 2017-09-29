@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace SharedForms
 {
-    public partial class sms2 : UserControl
+    public partial class smsItem : UserControl
     {
         Brush blackBrush = Brushes.Blue;
         Font titleFont = new Font("微软雅黑", 10F, FontStyle.Bold, GraphicsUnit.Point, 134);
@@ -43,7 +43,7 @@ namespace SharedForms
         }
 
 
-        public sms2(ChatMessage messageInfo, bool isMySelf)
+        public smsItem(ChatMessage messageInfo, bool isMySelf)
         {
             _chatMessage = messageInfo;
             //  _title = messageInfo.Title;
@@ -359,7 +359,7 @@ namespace SharedForms
         //    }
         //}
 
-        private void sms2_Paint(object sender, PaintEventArgs e)
+        private void smsItem_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.HighQuality; //高质量 
@@ -409,12 +409,12 @@ namespace SharedForms
 
         }
 
-        private void sms2_Resize(object sender, EventArgs e)
+        private void smsItem_Resize(object sender, EventArgs e)
         {
             this.Invalidate();
         }
 
-        private void sms2_Load(object sender, EventArgs e)
+        private void smsItem_Load(object sender, EventArgs e)
         {
 
             if (txtSMS.Visible)

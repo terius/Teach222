@@ -18,17 +18,17 @@ namespace SharedForms
         {
            // toolTip1.SetToolTip(this.treeView1, "信息提示");
             this.treeView1.Nodes.Clear();
-            var list = GlobalVariable.GetTeamChatList();
+          //  var list = GlobalVariable.GetTeamChatList();
             TreeNode node;
             TreeNode childNode;
-            foreach (ChatStore item in list)
+            foreach (var team in GlobalVariable.TeamList)
             {
-                node = new TreeNode(item.ChatDisplayName);
-                foreach (TeamMember child in item.TeamMembers)
+                node = new TreeNode(team.TeamName);
+                foreach (var member in team.TeamMembers)
                 {
-                    childNode = new TreeNode(child.DisplayName);
-                    childNode.ImageIndex = childNode.SelectedImageIndex = child.IsOnline ? 2 : 3;
-                    childNode.ToolTipText = child.IsOnline ? "在线" : "离线";
+                    childNode = new TreeNode(member.DisplayName);
+                    childNode.ImageIndex = childNode.SelectedImageIndex = member.IsOnline ? 2 : 3;
+                    childNode.ToolTipText = member.IsOnline ? "在线" : "离线";
                     node.Nodes.Add(childNode);
                 }
                 this.treeView1.Nodes.Add(node);

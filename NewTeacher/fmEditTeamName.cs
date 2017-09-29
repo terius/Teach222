@@ -28,7 +28,7 @@ namespace NewTeacher
                 GlobalVariable.ShowError("新组名不能为空");
                 return;
             }
-            bool rs = GlobalVariable.EditTeamName(_teamGuid, newName);
+            bool rs = GlobalVariable.UpdateTeamName(_teamGuid, newName);
             if (rs)
             {
                 GlobalVariable.ShowSuccess("分组名修改成功");

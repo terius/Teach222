@@ -144,7 +144,7 @@ namespace StudentUser
                         break;
                     case (int)CommandType.CreateTeam://收到创建群组信息
                         var teamInfo = JsonHelper.DeserializeObj<TeacherTeam>(message.DataStr);
-                        GlobalVariable.RefleshTeamList(teamInfo);
+                        GlobalVariable.LoadTeamList(teamInfo);
                         DoAction(() =>
                         {
 

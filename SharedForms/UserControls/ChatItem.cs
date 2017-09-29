@@ -24,6 +24,7 @@ namespace SharedForms
         bool showNewMessageIcon;
         public ChatItem(ChatListPanel parent, string userName, string displayName, ChatType chatType, ClientRole userType)
         {
+            GlobalVariable.CreateChatStore(userName, chatType);
             _parentPanel = parent;
             InitializeComponent();
             this.Height = 24 + 5 * 2;
@@ -55,7 +56,7 @@ namespace SharedForms
                     break;
                 case ChatType.TeamChat:
                     headIcon = Resource1.群组24;
-                    var childList = GlobalVariable.GetTeamMemberDisplayNames(userName);
+                    //  var childList = GlobalVariable.GetTeamMemberDisplayNames(userName);
                     this.ContextMenuStrip = contextMenuStrip1;
                     // Caption = displayName + " 【" + childList.Count + "】";
                     //   Hint = string.Join("\r\n", childList);
@@ -165,7 +166,7 @@ namespace SharedForms
             return GlobalVariable.ChatList.FirstOrDefault(d => d.ChatUserName == UserName);
         }
 
-       
+
 
         private void 查看群组成员ToolStripMenuItem_Click_1(object sender, System.EventArgs e)
         {
@@ -173,10 +174,10 @@ namespace SharedForms
             frm.ShowDialog();
         }
 
-        public string GetTeamMemUserNames()
-        {
-            var chat = GetChatStore();
-            return string.Join(",", chat.TeamMembers.Select(d => d.UserName));
-        }
+        //public string GetTeamMemUserNames()
+        //{
+        //    var chat = GetChatStore();
+        //    return string.Join(",", chat.TeamMembers.Select(d => d.UserName));
+        //}
     }
 }

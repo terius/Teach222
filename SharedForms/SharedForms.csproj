@@ -136,23 +136,23 @@
     <Compile Include="UserControls\SelectablePanel.Designer.cs">
       <DependentUpon>SelectablePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\sms2.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\sms2.Designer.cs">
-      <DependentUpon>sms2.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\ScrollAblePanelControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\ScrollAblePanelControl.designer.cs">
       <DependentUpon>ScrollAblePanelControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\smsPanelNew.cs">
+    <Compile Include="UserControls\smsItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\smsItem.Designer.cs">
+      <DependentUpon>smsItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\smsPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControls\smsPanelNew.Designer.cs">
-      <DependentUpon>smsPanelNew.cs</DependentUpon>
+    <Compile Include="UserControls\smsPanel.Designer.cs">
+      <DependentUpon>smsPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="VideoShow.cs">
       <SubType>Form</SubType>
@@ -193,11 +193,11 @@
     <EmbeddedResource Include="UserControls\SelectablePanel.resx">
       <DependentUpon>SelectablePanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\sms2.resx">
-      <DependentUpon>sms2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ScrollAblePanelControl.resx">
       <DependentUpon>ScrollAblePanelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\smsItem.resx">
+      <DependentUpon>smsItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VideoShow.resx">
       <DependentUpon>VideoShow.cs</DependentUpon>

@@ -13,12 +13,12 @@ namespace SharedForms
 
         public string ChatUserName { get; set; }
 
-        public string ChatDisplayName { get; set; }
+     //   public string ChatDisplayName { get; set; }
 
-        public DateTime ChatStartTime { get; set; }
+       // public DateTime ChatStartTime { get; set; }
 
         public ClientRole UserType { get; set; }
-        private IList<TeamMember> teamMembers;
+        //    private IList<TeamMember> teamMembers;
 
 
 
@@ -28,55 +28,55 @@ namespace SharedForms
 
         public IList<ChatMessage> NewMessageList { get; set; }
 
-     
-
-        public smsPanelNew HistoryContentNew { get; set; } //暂时使用
-
-        public IList<TeamMember> TeamMembers
-        {
-            get
-            {
-                if (teamMembers == null)
-                {
-                    teamMembers = new List<TeamMember>();
-                }
-                return teamMembers;
-            }
-
-            set
-            {
-                teamMembers = value;
-            }
-        }
-
-        public string GetUserNames()
-        {
-            return string.Join(",", TeamMembers.Select(d => d.UserName));
-        }
-
-        public string[] GetUserNameList()
-        {
-            return TeamMembers.Select(d => d.UserName).ToArray();
-        }
-
-        public bool CheckLoginUserNameIsInTeam()
-        {
-            string loginUserName = GlobalVariable.LoginUserInfo.UserName;
-            var list = TeamMembers;
-            foreach (var item in list)
-            {
-                if (item.UserName.Equals(loginUserName))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
 
-       
+        public smsPanel HistoryContentNew { get; set; } //暂时使用
+
+        //public IList<TeamMember> TeamMembers
+        //{
+        //    get
+        //    {
+        //        if (teamMembers == null)
+        //        {
+        //            teamMembers = new List<TeamMember>();
+        //        }
+        //        return teamMembers;
+        //    }
+
+        //    set
+        //    {
+        //        teamMembers = value;
+        //    }
+        //}
+
+        //public string GetUserNames()
+        //{
+        //    return string.Join(",", TeamMembers.Select(d => d.UserName));
+        //}
+
+        //public string[] GetUserNameList()
+        //{
+        //    return TeamMembers.Select(d => d.UserName).ToArray();
+        //}
+
+        //public bool CheckLoginUserNameIsInTeam()
+        //{
+        //    string loginUserName = GlobalVariable.LoginUserInfo.UserName;
+        //    var list = TeamMembers;
+        //    foreach (var item in list)
+        //    {
+        //        if (item.UserName.Equals(loginUserName))
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+
+
+
     }
 
-   
+
 
 }

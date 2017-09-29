@@ -67,7 +67,7 @@
             // panelContent
             // 
             this.panelContent.Controls.Add(this.tabControl1);
-            this.panelContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelContent.Margin = new System.Windows.Forms.Padding(4);
             this.panelContent.Size = new System.Drawing.Size(843, 493);
             // 
             // onLineListView
@@ -77,7 +77,7 @@
             this.onLineListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.onLineListView.LargeImageList = this.MenuImageList;
             this.onLineListView.Location = new System.Drawing.Point(10, 28);
-            this.onLineListView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.onLineListView.Margin = new System.Windows.Forms.Padding(2);
             this.onLineListView.Name = "onLineListView";
             this.onLineListView.Size = new System.Drawing.Size(293, 423);
             this.onLineListView.SmallImageList = this.MenuImageList;
@@ -98,7 +98,7 @@
             this.teamMemList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.teamMemList.LargeImageList = this.MenuImageList;
             this.teamMemList.Location = new System.Drawing.Point(10, 28);
-            this.teamMemList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.teamMemList.Margin = new System.Windows.Forms.Padding(2);
             this.teamMemList.Name = "teamMemList";
             this.teamMemList.Size = new System.Drawing.Size(298, 423);
             this.teamMemList.SmallImageList = this.MenuImageList;
@@ -113,7 +113,7 @@
             this.cboxTeam.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cboxTeam.FormattingEnabled = true;
             this.cboxTeam.Location = new System.Drawing.Point(13, 19);
-            this.cboxTeam.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboxTeam.Margin = new System.Windows.Forms.Padding(2);
             this.cboxTeam.Name = "cboxTeam";
             this.cboxTeam.Size = new System.Drawing.Size(170, 24);
             this.cboxTeam.TabIndex = 0;
@@ -127,9 +127,9 @@
             this.groupBox3.Controls.Add(this.cboxTeam);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(3, 77);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(829, 387);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
@@ -138,7 +138,7 @@
             // btnDelete
             // 
             this.btnDelete.Location = new System.Drawing.Point(200, 45);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(130, 22);
             this.btnDelete.TabIndex = 4;
@@ -149,7 +149,7 @@
             // btnEdit
             // 
             this.btnEdit.Location = new System.Drawing.Point(200, 19);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(2);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(130, 22);
             this.btnEdit.TabIndex = 3;
@@ -160,7 +160,7 @@
             // btnCreate
             // 
             this.btnCreate.Location = new System.Drawing.Point(133, 26);
-            this.btnCreate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCreate.Margin = new System.Windows.Forms.Padding(2);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(61, 22);
             this.btnCreate.TabIndex = 2;
@@ -171,7 +171,7 @@
             // txtCreate
             // 
             this.txtCreate.Location = new System.Drawing.Point(8, 26);
-            this.txtCreate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCreate.Margin = new System.Windows.Forms.Padding(2);
             this.txtCreate.Name = "txtCreate";
             this.txtCreate.Size = new System.Drawing.Size(107, 21);
             this.txtCreate.TabIndex = 1;
@@ -182,9 +182,9 @@
             this.groupBox4.Controls.Add(this.btnCreate);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox4.Size = new System.Drawing.Size(829, 74);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
@@ -222,7 +222,7 @@
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(835, 467);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "群组";
@@ -236,7 +236,7 @@
             this.tabPage2.Controls.Add(this.myGroupBox2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(835, 467);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "群组成员";
@@ -249,7 +249,7 @@
             this.myGroupBox3.ForeColor = System.Drawing.Color.White;
             this.myGroupBox3.Location = new System.Drawing.Point(514, 3);
             this.myGroupBox3.Name = "myGroupBox3";
-            this.myGroupBox3.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.myGroupBox3.Padding = new System.Windows.Forms.Padding(10);
             this.myGroupBox3.Size = new System.Drawing.Size(318, 461);
             this.myGroupBox3.TabIndex = 9;
             this.myGroupBox3.TabStop = false;
@@ -315,7 +315,7 @@
             this.cboxTeam2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cboxTeam2.FormattingEnabled = true;
             this.cboxTeam2.Location = new System.Drawing.Point(6, 43);
-            this.cboxTeam2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cboxTeam2.Margin = new System.Windows.Forms.Padding(2);
             this.cboxTeam2.Name = "cboxTeam2";
             this.cboxTeam2.Size = new System.Drawing.Size(189, 24);
             this.cboxTeam2.TabIndex = 6;
@@ -330,7 +330,7 @@
             this.myGroupBox2.ForeColor = System.Drawing.Color.White;
             this.myGroupBox2.Location = new System.Drawing.Point(3, 3);
             this.myGroupBox2.Name = "myGroupBox2";
-            this.myGroupBox2.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.myGroupBox2.Padding = new System.Windows.Forms.Padding(10);
             this.myGroupBox2.Size = new System.Drawing.Size(313, 461);
             this.myGroupBox2.TabIndex = 7;
             this.myGroupBox2.TabStop = false;
@@ -342,7 +342,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(845, 525);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TeamDiscuss";
             this.ShowInTaskbar = false;
             this.Text = "建立分组";

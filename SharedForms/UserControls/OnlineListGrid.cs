@@ -24,12 +24,12 @@ namespace SharedForms.UserControls
             this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
-        public void UpdateOnlineUser(IList<OnlineListResult> list)
+        public void UpdateOnlineUser(IList<User> list)
         {
             this.Rows.Clear();
             foreach (var item in list)
             {
-                string[] obs = new string[] { item.nickname, (item.isCalled ? "是" : "否"), "", "", item.username };
+                string[] obs = new string[] { item.DisplayName, (item.IsDianMing ? "是" : "否"), "", "", item.UserName };
                 this.Rows.Add(obs);
             }
 
@@ -47,10 +47,10 @@ namespace SharedForms.UserControls
             }
         }
 
-        public void AddLoginUser(OnlineListResult onlineUser)
+        public void AddLoginUser(User onlineUser)
         {
-            RemoveOnlineUser(onlineUser.username);
-            string[] obs = new string[] { onlineUser.nickname, (onlineUser.isCalled ? "是" : "否"), "", "", onlineUser.username };
+            RemoveOnlineUser(onlineUser.UserName);
+            string[] obs = new string[] { onlineUser.DisplayName, (onlineUser.IsDianMing ? "是" : "否"), "", "", onlineUser.UserName };
             this.Rows.Add(obs);
         }
 

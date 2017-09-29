@@ -76,7 +76,8 @@ namespace NewTeacher
                 switch ((CommandType)message.Action)
                 {
                     case CommandType.OnlineList:
-                        var userList2 = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
+                        var userList2 = JsonHelper.DeserializeObj<List<OnlineUserResponse>>(message.DataStr);
+                        
                         onlineInfo.OnOnlineChange(userList2);
                         break;
                     case CommandType.StudentShowToTeacher:
@@ -100,7 +101,7 @@ namespace NewTeacher
                         DoReceiveChatMessage(message);
                         break;
                     case CommandType.OneUserLogIn:
-                        var newUser = JsonHelper.DeserializeObj<List<OnlineListResult>>(message.DataStr);
+                        var newUser = JsonHelper.DeserializeObj<List<OnlineUserResponse>>(message.DataStr);
                         onlineInfo.OnNewUserLoginIn(newUser);
                         break;
                     case CommandType.UserLoginOut:
@@ -247,11 +248,11 @@ namespace NewTeacher
 
         private void UpdateOnLineStatus(StuCallRequest callInfo)
         {
-            foreach (OnlineListResult item in onlineInfo.OnLineList)
+            foreach (var item in onlineInfo.StudentOnlineList)
             {
-                if (item.username == callInfo.username)
+                if (item.UserName == callInfo.username)
                 {
-                    item.isCalled = true;
+                    item.IsDianMing = true;
                     break;
                 }
             }
@@ -306,10 +307,10 @@ namespace NewTeacher
             this.InvokeOnUiThreadIfRequired(() => AddOnlineUser(e.OnLines));
         }
 
-        private void AddOnlineUser(IList<OnlineListResult> list)
+        private void AddOnlineUser(IList<User> list)
         {
             onlineListGrid1.AddLoginUser(list[0]);
-            //foreach (OnlineListResult item in list)
+            //foreach (OnlineUserResponse item in list)
             //{
             //    if (!IsMySelf(item.username))
             //    {
@@ -339,7 +340,7 @@ namespace NewTeacher
         /// 显示在线用户列表
         /// </summary>
         /// <param name="onLineList"></param>
-        private void userListShow(IList<OnlineListResult> list)
+        private void userListShow(IList<User> list)
         {
             this.onlineListGrid1.UpdateOnlineUser(list);
             //this.lvOnline.Items.Clear();
@@ -645,11 +646,11 @@ namespace NewTeacher
             table.Columns.Add("是否签到", typeof(string));
             foreach (var item in onlineInfo.StudentOnlineList)
             {
-                if (item.clientRole == ClientRole.Student)
+                if (item.UserType == ClientRole.Student)
                 {
                     System.Data.DataRow dr = table.NewRow();
-                    dr[0] = item.nickname;
-                    dr[1] = item.isCalled ? "是" : "否";
+                    dr[0] = item.DisplayName;
+                    dr[1] = item.IsDianMing ? "是" : "否";
                     table.Rows.Add(dr);
                 }
             }

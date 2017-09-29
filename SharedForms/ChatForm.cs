@@ -38,20 +38,20 @@ namespace SharedForms
         RecordVoice recordVoice;
         // string saveAudioFile = "";
         //   string saveAudioFilePath = "";
-
+        ChatItem _selectChatItem;
         #endregion
         public ChatForm()
         {
             InitializeComponent();
             labChatTitle.Text = "";
             ChatNav.SelectChatItem += ChatNav_SelectChatItem;
-            ChatNav.CreateNewGroupChat(groupId);
+            ChatNav.CreateALLGroupChat(groupId);
             InitProgressBar();
-          
+
 
         }
 
-    
+
 
         private void ChatNav_SelectChatItem(object sender, ChatItem chatItem)
         {
@@ -69,7 +69,7 @@ namespace SharedForms
                 default:
                     break;
             }
-          
+
             //  chatItem.Caption = chatItem.DisplayName;
             if (chatItem.FromClick && chatItem.UserName == selectUserName)
             {
@@ -82,11 +82,12 @@ namespace SharedForms
             }
             AppendNewMessage(chatItem);
             selectUserName = chatItem.UserName;
+            _selectChatItem = chatItem;
         }
 
 
         #region 方法
-        public void PlayVoice(string fileName,IntPtr handle)
+        public void PlayVoice(string fileName, IntPtr handle)
         {
             if (recordVoice == null)
             {
@@ -107,8 +108,8 @@ namespace SharedForms
             ProgressBar.Visible = false;
         }
 
-     
-       
+
+
         ///// <summary>
         ///// 创建聊天对象
         ///// </summary>
@@ -266,7 +267,7 @@ namespace SharedForms
                     {
                         AppendMessage(item, false);
                     }
-                    GlobalVariable.SaveChatMessage(smsPanelNew1, subItem.UserName);
+                    GlobalVariable.SaveChatMessage(smsPanel1, subItem.UserName);
                 }
             }
         }
@@ -285,10 +286,10 @@ namespace SharedForms
             }
             if (chatStore.HistoryContentNew == null)
             {
-                chatStore.HistoryContentNew = new smsPanelNew();
+                chatStore.HistoryContentNew = new smsPanel();
                 panMessage.Controls.Add(chatStore.HistoryContentNew);
             }
-            smsPanelNew1 = chatStore.HistoryContentNew;
+            smsPanel1 = chatStore.HistoryContentNew;
             chatStore.HistoryContentNew.BringToFront();
 
         }
@@ -352,8 +353,8 @@ namespace SharedForms
                 }
                 var chat = GlobalVariable.GetChatStoreByUserName(chatMessage.ReceieveUserName);
                 TeamChatRequest request = new TeamChatRequest();
-                request.groupname = chat.ChatDisplayName;
-                request.groupuserList = chat.GetUserNames();
+                request.groupname = _selectChatItem.DisplayName;// chat.ChatDisplayName;
+                request.groupuserList = GlobalVariable.GetMemberNames(chatMessage.ReceieveUserName);
                 request.msg = chatMessage.Message;
                 request.username = GlobalVariable.LoginUserInfo.UserName;
                 request.groupid = chatMessage.ReceieveUserName;
@@ -393,10 +394,10 @@ namespace SharedForms
         {
 
 
-            //  sms2 sms = new sms2(chatMessage, !isMySelf);
+            //  smsItem sms = new smsItem(chatMessage, !isMySelf);
             //   sms.Location = GetNewPoint(panel1, sms.Width, !isMySelf);
             //    this.panel1.Controls.Add(sms);
-            smsPanelNew1.AddMessage(chatMessage);
+            smsPanel1.AddMessage(chatMessage);
             if (isInput)
             {
                 //清空发送输入框
@@ -468,8 +469,8 @@ namespace SharedForms
                     if (SendMessageCommand(message))
                     {
                         AppendMessage(message, true);
-                        GlobalVariable.SaveChatMessage(smsPanelNew1, selectUserName);
-                     //   ShowNotify("上传成功");
+                        GlobalVariable.SaveChatMessage(smsPanel1, selectUserName);
+                        //   ShowNotify("上传成功");
                     }
                     toolStrip1.Enabled = true;
                     ProgressBar.Visible = false;
@@ -558,7 +559,7 @@ namespace SharedForms
             if (SendMessageCommand(message))
             {
                 AppendMessage(message, true);
-                GlobalVariable.SaveChatMessage(smsPanelNew1, selectUserName);
+                GlobalVariable.SaveChatMessage(smsPanel1, selectUserName);
             }
         }
 
@@ -594,7 +595,7 @@ namespace SharedForms
                 toolCancelRecordVoice.Visible = true;
                 toolRecordVoice.ToolTipText = "点击结束录音并上传";
                 Application.DoEvents();
-               
+
                 if (recordVoice == null)
                 {
                     recordVoice = new RecordVoice();
@@ -639,10 +640,10 @@ namespace SharedForms
 
         private void ChatForm_VisibleChanged(object sender, EventArgs e)
         {
-           //if (this.Visible)
-           // {
-           //     this.IsHide = false;
-           // }
+            //if (this.Visible)
+            // {
+            //     this.IsHide = false;
+            // }
         }
     }
 }

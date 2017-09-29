@@ -32,7 +32,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.ChatNav = new SharedForms.ChatListPanel();
             this.panMessage = new System.Windows.Forms.Panel();
-            this.smsPanelNew1 = new SharedForms.smsPanelNew();
+            this.smsPanel1 = new SharedForms.smsPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolUploadPic = new System.Windows.Forms.ToolStripButton();
@@ -99,22 +99,22 @@
             // 
             // panMessage
             // 
-            this.panMessage.Controls.Add(this.smsPanelNew1);
+            this.panMessage.Controls.Add(this.smsPanel1);
             this.panMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panMessage.Location = new System.Drawing.Point(0, 36);
             this.panMessage.Name = "panMessage";
             this.panMessage.Size = new System.Drawing.Size(619, 302);
             this.panMessage.TabIndex = 5;
             // 
-            // smsPanelNew1
+            // smsPanel1
             // 
-            this.smsPanelNew1.AutoScroll = true;
-            this.smsPanelNew1.BackColor = System.Drawing.Color.White;
-            this.smsPanelNew1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.smsPanelNew1.Location = new System.Drawing.Point(0, 0);
-            this.smsPanelNew1.Name = "smsPanelNew1";
-            this.smsPanelNew1.Size = new System.Drawing.Size(619, 302);
-            this.smsPanelNew1.TabIndex = 4;
+            this.smsPanel1.AutoScroll = true;
+            this.smsPanel1.BackColor = System.Drawing.Color.White;
+            this.smsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.smsPanel1.Location = new System.Drawing.Point(0, 0);
+            this.smsPanel1.Name = "smsPanel1";
+            this.smsPanel1.Size = new System.Drawing.Size(619, 302);
+            this.smsPanel1.TabIndex = 4;
             // 
             // panel1
             // 
@@ -318,7 +318,7 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Label labChatTitle;
-        private smsPanelNew smsPanelNew1;
+        private smsPanel smsPanel1;
         private System.Windows.Forms.Panel panMessage;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolUploadPic;

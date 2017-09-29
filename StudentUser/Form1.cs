@@ -106,21 +106,21 @@ namespace StudentUser
         private void Form1_Load_1(object sender, EventArgs e)
         {
             //  this.panel1.Height = 2000;
-            //  sms2 sms;
+            //  smsItem sms;
             // for (int i = 0; i < 10; i++)
             //  {
-            //sms2 sms = new sms2(this.Width);
+            //smsItem sms = new smsItem(this.Width);
             //sms.Location = new Point(this.Width - sms.Width - 20, 0);
             //this.panel1.Controls.Add(sms);
 
 
-            //sms2 sms22 = new sms2(this.Width);
-            //sms22.Location = new Point(0, sms22.Height + 20);
-            //this.panel1.Controls.Add(sms22);
+            //smsItem smsItem2 = new smsItem(this.Width);
+            //smsItem2.Location = new Point(0, smsItem2.Height + 20);
+            //this.panel1.Controls.Add(smsItem2);
 
-            //sms2 sms23 = new sms2(this.Width);
-            //sms23.Location = new Point(0, sms22.Location.Y + sms22.Height + 20);
-            //this.panel1.Controls.Add(sms23);
+            //smsItem smsItem3 = new smsItem(this.Width);
+            //smsItem3.Location = new Point(0, smsItem2.Location.Y + smsItem2.Height + 20);
+            //this.panel1.Controls.Add(smsItem3);
 
             // }
             //  rightSJ.Location = new System.Drawing.Point(sms.Location.X + sms.Width - 2, sms.Location.Y + (sms.Height - rightSJ.Height) / 2);
@@ -200,7 +200,7 @@ namespace StudentUser
                 isMySelf = false;
                 message.UserType = Common.ClientRole.Teacher;
             }
-            sms2 sms = new sms2(message, isMySelf);
+            smsItem sms = new smsItem(message, isMySelf);
 
             sms.Location = new Point(isMySelf ? panel1.Width - sms.Width - 20 : 0, GetLastY());
             panel1.Controls.Add(sms);
