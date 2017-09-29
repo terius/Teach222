@@ -552,7 +552,7 @@ namespace SharedForms
         public ChatItem CreateGroupChatItem(ChatStore store)
         {
             ChatItem item = new ChatItem(this, store.ChatUserName,
-                "全体成员", store.ChatType, store.UserType);
+                "全体成员", ChatType.GroupChat, ClientRole.Student);
             this.AddChatItem(item);
             return item;
         }
@@ -567,7 +567,6 @@ namespace SharedForms
 
         public void CreateALLGroupChat(string groupId)
         {
-
             var groupChat = GlobalVariable.CreateGroupChat(groupId);
             if (groupChat != null)
             {

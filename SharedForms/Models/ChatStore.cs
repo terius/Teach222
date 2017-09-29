@@ -13,11 +13,11 @@ namespace SharedForms
 
         public string ChatUserName { get; set; }
 
-     //   public string ChatDisplayName { get; set; }
+        //   public string ChatDisplayName { get; set; }
 
-       // public DateTime ChatStartTime { get; set; }
+        // public DateTime ChatStartTime { get; set; }
 
-        public ClientRole UserType { get; set; }
+        //  public ClientRole UserType { get; set; }
         //    private IList<TeamMember> teamMembers;
 
 
@@ -30,7 +30,7 @@ namespace SharedForms
 
 
 
-        public smsPanel HistoryContentNew { get; set; } //暂时使用
+        public smsPanel HistoryMessagePanel { get; set; } //暂时使用
 
         //public IList<TeamMember> TeamMembers
         //{

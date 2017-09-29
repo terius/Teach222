@@ -113,6 +113,18 @@ namespace NewTeacher
                         var callInfo = JsonHelper.DeserializeObj<StuCallRequest>(message.DataStr);
                         UpdateOnLineStatus(callInfo);
                         break;
+                    case CommandType.CreateTeam://收到创建群组信息
+                        var teamInfo = JsonHelper.DeserializeObj<TeacherTeam>(message.DataStr);
+                        GlobalVariable.LoadTeamList(teamInfo);
+                        this.InvokeOnUiThreadIfRequired(() =>
+                        {
+                            if (GlobalVariable.CheckChatFormIsOpened())
+                            {
+                                GlobalVariable.ShowNotifyMessage("群组信息已经更改");
+                                chatForm.ReflashTeamChat();
+                            }
+                        });
+                        break;
                     default:
                         break;
                 }

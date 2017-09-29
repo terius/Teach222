@@ -1,13 +1,15 @@
 ﻿using Common;
-using EduService;
 using Helpers;
 using Model;
+using EduService;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.ListView;
+using System.Diagnostics;
 
 namespace SharedForms
 {
@@ -58,22 +60,34 @@ namespace SharedForms
         /// 登录用户
         /// </summary>
         public static LoginUserInfo LoginUserInfo;
-        private static List<ChatStore> _chatList = new List<ChatStore>();
+        private static List<ChatStore> _chatList;
         public static List<ChatStore> ChatList
         {
             get
             {
+                if (_chatList == null)
+                {
+                    _chatList = new List<ChatStore>();
+                }
                 return _chatList;
             }
+
+            //set
+            //{
+            //    chatList = value;
+            //}
         }
         public static bool IsTeamChatChanged { get; set; }
+
+
+
         public static IList<User> OnlineUserList { get; set; }
         private static IList<Team> _teamList = new List<Team>();
         public static IList<Team> TeamList { get { return _teamList; } }
         #endregion
 
 
-        #region 群组方法
+        #region 新方法
         /// <summary>
         /// 更新群组成员在线状态
         /// </summary>
@@ -224,22 +238,17 @@ namespace SharedForms
             return true;
         }
 
-
         private static Team FindTeamById(string teamId)
         {
             return _teamList.FirstOrDefault(d => d.TeamId == teamId);
         }
 
-        /// <summary>
-        /// 加载群组列表
-        /// </summary>
-        /// <param name="teachTeam"></param>
-        public static void LoadTeamList(TeacherTeam teachTeam)
+        public static void LoadTeamList(TeacherTeam teamList)
         {
 
             IsTeamChatChanged = true;
             //  var list = GetTeamChatList();
-            foreach (TeamInfo teamInfo in teachTeam.TeamInfos)
+            foreach (TeamInfo teamInfo in teamList.TeamInfos)
             {
                 var team = _teamList.FirstOrDefault(d => d.TeamId == teamInfo.groupid);
                 if (team != null)
@@ -251,6 +260,16 @@ namespace SharedForms
                 {
                     Team info = teamInfo.ConvertToTeam();
                     _teamList.Add(info);
+
+                    //ChatStore info = new ChatStore();
+                    //info.ChatDisplayName = teamInfo.groupname;
+                    //info.ChatStartTime = DateTime.Now;
+                    //info.ChatType = ChatType.TeamChat;
+                    //info.ChatUserName = teamInfo.groupid;
+                    //info.UserType = ClientRole.Teacher;
+                    //info.MessageList = new List<ChatMessage>();
+                    //info.TeamMembers = teamInfo.groupuserList;
+                    //ChatList.Add(info);
                 }
             }
 
@@ -259,7 +278,7 @@ namespace SharedForms
         }
 
         /// <summary>
-        /// 获取某一群组成员姓名列表
+        /// 获取某一群组成员列表
         /// </summary>
         /// <param name="teamId"></param>
         /// <returns></returns>
@@ -279,46 +298,27 @@ namespace SharedForms
             return team == null ? "" : team.TeamName;
         }
 
+        public static void CreateChatStore(string userName, ChatType chatType)
+        {
+            if (_chatList.Any(d => d.ChatUserName == userName))
+            {
+                return;
+            }
 
+            ChatStore info = new ChatStore();
+            //   info.ChatDisplayName = "全体成员";
+            //   info.ChatStartTime = DateTime.Now;
+            info.ChatType = chatType;
+            info.ChatUserName = userName;
+            //  info.UserType = ClientRole.Teacher;
+            info.MessageList = new List<ChatMessage>();
+            _chatList.Add(info);
+
+        }
 
         #endregion
 
-        ///// <summary>
-        ///// 创建ChatStore
-        ///// </summary>
-        ///// <param name="userName"></param>
-        ///// <param name="chatType"></param>
-        //public static void CreateChatStore(string userName, ChatType chatType)
-        //{
-        //    if (_chatList.Any(d => d.ChatUserName == userName))
-        //    {
-        //        return;
-        //    }
-        //    ChatStore info = new ChatStore();
-        //    info.ChatType = chatType;
-        //    info.ChatUserName = userName;
-        //    info.MessageList = new List<ChatMessage>();
-        //    _chatList.Add(info);
-
-        //}
-
-
-        public static ChatStore GetOrCreateChatStore(string sendUserName, ChatType chatType)
-        {
-            ChatStore info = _chatList.FirstOrDefault(d => d.ChatUserName == sendUserName);
-
-            if (info == null)
-            {
-                info = new ChatStore();
-                info.ChatType = chatType;
-                info.ChatUserName = sendUserName;
-                info.MessageList = new List<ChatMessage>();
-                _chatList.Add(info);
-            }
-            return info;
-        }
-
-
+        #region 聊天
         public static ChatMessage CreateChatMessage(ReceieveMessage message)
         {
             ChatMessage chatMessage = null;
@@ -342,9 +342,47 @@ namespace SharedForms
             AddNewChat(chatMessage);
             return chatMessage;
         }
+        #endregion
+
+        #region 群组
+        //public static void UpdateTeamOnline(IList<OnlineUserResponse> onLineList)
+        //{
+        //    var list = GetTeamChatList();
+        //    foreach (var onlineUser in onLineList)
+        //    {
+
+        //        foreach (ChatStore item in list)
+        //        {
+        //            foreach (TeamMember mem in item.TeamMembers)
+        //            {
+        //                if (mem.UserName == onlineUser.username)
+        //                {
+        //                    mem.IsOnline = true;
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //}
+
+        #endregion
 
 
 
+
+        //public static MyClient client
+        //{
+        //    get
+        //    {
+        //        if (_client == null || !_client.Connected)
+        //        {
+        //            _client = new MyClient();
+        //        }
+        //        return _client;
+
+        //    }
+        //}
 
         /// <summary>
         /// 发送命令
@@ -434,9 +472,9 @@ namespace SharedForms
         }
 
 
-        /// <summary>
-        /// 测试用
-        /// </summary>
+
+
+
         public static void CreateTestLoginInfo()
         {
             LoginUserInfo = new LoginUserInfo();
@@ -450,13 +488,71 @@ namespace SharedForms
         }
 
 
+
+        //   public static List<ChatStore> ChatList { get; set; }
+
+
+
   
+
+        //public static void AddNewChat(AddChatRequest request)
+        //{
+        //    ChatStore info = ChatList.FirstOrDefault(d => d.ChatUserName == request.UserName);
+
+        //    if (info == null)
+        //    {
+        //        info = new ChatStore();
+        //        info.ChatDisplayName = request.DisplayName;
+        //        info.ChatStartTime = DateTime.Now;
+        //        info.ChatType = request.ChatType;
+        //        info.ChatUserName = request.UserName;
+        //        info.UserType = request.UserType;
+        //        info.MessageList = new List<ChatMessage>();
+        //        ChatList.Add(info);
+        //    }
+
+        //    if (!string.IsNullOrWhiteSpace(request.Message))
+        //    {
+        //        //ChatBoxContent content = new ChatBoxContent(request.Message, messageFont, messageColor);
+        //        var message = request.ToChatMessage();// new ChatMessage(request.UserName, request.DisplayName, LoginUserInfo.UserName, content);
+
+        //        if (info.NewMessageList == null)
+        //        {
+        //            info.NewMessageList = new List<ChatMessage>();
+
+        //        }
+        //        info.NewMessageList.Add(message);
+        //    }
+
+        //}
+
+        private static ChatStore CreateChatStore(ChatMessage request)
+        {
+            ChatStore info = _chatList.FirstOrDefault(d => d.ChatUserName == request.SendUserName);
+
+            if (info == null)
+            {
+                info = new ChatStore();
+                //  info.ChatDisplayName = request.SendDisplayName;
+                // info.ChatStartTime = DateTime.Now;
+                info.ChatType = request.ChatType;
+                info.ChatUserName = request.SendUserName;
+                //    info.UserType = request.UserType;
+                info.MessageList = new List<ChatMessage>();
+                _chatList.Add(info);
+            }
+            return info;
+        }
 
         public static void AddNewChat(ChatMessage request)
         {
-            ChatStore info = GetOrCreateChatStore(request.SendUserName,request.ChatType);
+            ChatStore info = CreateChatStore(request);
+
             if (!string.IsNullOrWhiteSpace(request.Message))
             {
+                //ChatBoxContent content = new ChatBoxContent(request.Message, messageFont, messageColor);
+                //   var message = request.ToChatMessage();// new ChatMessage(request.UserName, request.DisplayName, LoginUserInfo.UserName, content);
+
                 if (info.NewMessageList == null)
                 {
                     info.NewMessageList = new List<ChatMessage>();
@@ -468,8 +564,22 @@ namespace SharedForms
 
         }
 
-     
 
+        //public static void RefreshTeamMember(string userName, bool isOnline)
+        //{
+        //    var list = GetTeamChatList();
+        //    foreach (ChatStore item in list)
+        //    {
+        //        foreach (TeamMember mem in item.TeamMembers)
+        //        {
+        //            if (mem.UserName == userName)
+        //            {
+        //                mem.IsOnline = isOnline;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
         public static ChatType GetChatType(string userName)
         {
@@ -477,6 +587,45 @@ namespace SharedForms
             return info.ChatType;
         }
 
+
+        //public static ChatMessage ToChatMessage(this AddChatRequest request)
+        //{
+
+        //    //   ChatBoxContent content = new ChatBoxContent(request.Message, messageFont, messageColor);
+        //    return new ChatMessage(request.UserName, request.DisplayName, LoginUserInfo.UserName, request.Message, request.UserType);
+        //}
+
+        static Font messageFont = new Font("微软雅黑", 9);
+        static Color messageColor = Color.FromArgb(255, 32, 32, 32);
+        //private static void SaveChatMessage(AddChatRequest request)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(request.Message))
+        //    {
+        //        ChatBoxContent content = new ChatBoxContent(request.Message, messageFont, messageColor);
+        //        var message = new ChatMessage(request.UserName, request.DisplayName, LoginUserInfo.UserName, content);
+        //        SaveNewChatMessage(message, false);
+        //    }
+        //}
+
+        //public static ChatStore GetChatStore(string userName)
+        //{
+        //    return ChatList.FirstOrDefault(d => d.ChatUserName == userName);
+        //}
+        //public static void SaveNewChatMessage(ChatMessage message, bool isSend)
+        //{
+        //    string userName = isSend ? message.ReceieveUserName : message.SendUserName;
+
+        //    var chat = ChatList.FirstOrDefault(d => d.ChatUserName == userName);
+        //    if (chat == null)
+        //    {
+        //        return;
+        //    }
+        //    if (chat.MessageList == null)
+        //    {
+        //        chat.MessageList = new List<ChatMessage>();
+        //    }
+        //    chat.MessageList.Add(message);
+        //}
 
 
 
@@ -506,11 +655,65 @@ namespace SharedForms
             MessageBox.Show(msg, "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        //public static IList<ChatStore> GetTeamChatList()
+        //{
+        //    return ChatList.Where(d => d.ChatType == ChatType.TeamChat).ToList();
+        //}
         public static Team GetNewestTeamChat()
         {
             return _teamList.Last();
         }
 
+        //public static IList<string> GetTeamMemberDisplayNames(string userName)
+        //{
+        //    var chatStore = ChatList.FirstOrDefault(d => d.ChatUserName == userName);
+        //    return chatStore.TeamMembers.Select(d => d.DisplayName).ToList();
+        //}
+
+        //public static ChatStore GetChatStoreByUserName(string userName)
+        //{
+        //    return ChatList.FirstOrDefault(d => d.ChatUserName == userName);
+        //}
+        //public static IList<ChatMessage> GetNewMessageList(string userName)
+        //{
+        //    var chat = ChatList.FirstOrDefault(d => d.ChatUserName == userName);
+        //    if (chat != null)
+        //    {
+        //        return chat.NewMessageList;
+        //    }
+        //    return null;
+        //}
+
+
+        //public static bool CreateTeamChat(string teamName)
+        //{
+        //    if (string.IsNullOrWhiteSpace(teamName))
+        //    {
+        //        ShowError("组名不能为空！");
+        //        return false;
+        //    }
+
+
+        //    if (ChatList.Any(d => d.ChatDisplayName == teamName))
+        //    {
+        //        ShowError("组名不能重复！");
+        //        return false;
+        //    }
+
+
+        //    ChatStore info = new ChatStore();
+        //    info.ChatDisplayName = teamName;
+        //    info.ChatStartTime = DateTime.Now;
+        //    info.ChatType = ChatType.TeamChat;
+        //    info.ChatUserName = Guid.NewGuid().ToString();
+        //    info.UserType = ClientRole.Teacher;
+        //    info.MessageList = new List<ChatMessage>();
+        //    ChatList.Add(info);
+        //    ShowSuccess("分组建立成功");
+        //    IsTeamChatChanged = true;
+        //    AddLoginUserToMember(info.ChatUserName);
+        //    return true;
+        //}
 
         public static ChatStore CreateGroupChat(string groupId)
         {
@@ -518,9 +721,14 @@ namespace SharedForms
             {
                 return null;
             }
+
+
             ChatStore info = new ChatStore();
+            //   info.ChatDisplayName = "全体成员";
+            //   info.ChatStartTime = DateTime.Now;
             info.ChatType = ChatType.GroupChat;
             info.ChatUserName = groupId;
+            //    info.UserType = ClientRole.Teacher;
             info.MessageList = new List<ChatMessage>();
             _chatList.Add(info);
             IsTeamChatChanged = true;
@@ -528,11 +736,143 @@ namespace SharedForms
         }
 
 
+
+        //public static bool AddTeamMember(CheckedListViewItemCollection mems, string guid)
+        //{
+
+        //    var info = ChatList.FirstOrDefault(d => d.ChatUserName == guid && d.ChatType == ChatType.TeamChat);
+        //    if (info == null)
+        //    {
+        //        ShowError("未找到添加的分组信息");
+        //        return false;
+        //    }
+        //    string userName = "";
+        //    string displayName = "";
+        //    foreach (ListViewItem item in mems)
+        //    {
+        //        userName = item.SubItems[1].Text;
+        //        displayName = item.Text;
+        //        if (!info.TeamMembers.Any(d => d.UserName == userName))
+        //        {
+        //            info.TeamMembers.Add(new TeamMember { UserName = userName, DisplayName = displayName, IsOnline = true });
+        //        }
+        //    }
+        //    IsTeamChatChanged = true;
+        //    //  ShowSuccess("分组成员添加成功");
+        //    return true;
+        //}
+
+
+
+
+        //private static bool AddLoginUserToMember(string guid)
+        //{
+        //    var info = ChatList.FirstOrDefault(d => d.ChatUserName == guid && d.ChatType == ChatType.TeamChat);
+        //    if (info == null)
+        //    {
+        //        ShowError("未找到添加的分组信息");
+        //        return false;
+        //    }
+        //    if (!info.TeamMembers.Any(d => d.UserName == LoginUserInfo.UserName))
+        //    {
+        //        info.TeamMembers.Add(new TeamMember { UserName = LoginUserInfo.UserName, DisplayName = LoginUserInfo.DisplayName, IsOnline = true });
+        //    }
+        //    return true;
+        //}
+
+        //public static bool DelTeamMember(string teamGuid, string userName, bool isDeleteTeam = false)
+        //{
+        //    var info = ChatList.FirstOrDefault(d => d.ChatUserName == teamGuid && d.ChatType == ChatType.TeamChat);
+        //    if (info == null)
+        //    {
+        //        ShowError("未找到要删除的分组信息");
+        //        return false;
+        //    }
+        //    if (isDeleteTeam)
+        //    {
+        //        IsTeamChatChanged = true;
+        //        return ChatList.Remove(info);
+        //    }
+
+        //    var mem = info.TeamMembers.FirstOrDefault(d => d.UserName == userName);
+        //    if (mem == null)
+        //    {
+        //        return false;
+        //    }
+        //    IsTeamChatChanged = true;
+        //    return info.TeamMembers.Remove(mem);
+        //}
+
         public static bool DelTeamMember(DeleteTeamMemberRequest info)
         {
             return RemoveTeamMember(info.TeamId, info.UserName, info.IsDeleteTeam);
         }
 
+        //public static bool EditTeamName(string teamGuid, string newName)
+        //{
+        //    if (ChatList.Any(d => d.ChatDisplayName == newName && d.ChatUserName != teamGuid))
+        //    {
+        //        ShowError("组名不能重复！");
+        //        return false;
+        //    }
+        //    var item = ChatList.FirstOrDefault(d => d.ChatUserName == teamGuid);
+        //    if (item == null)
+        //    {
+        //        ShowError("未找到分组信息！");
+        //        return false;
+        //    }
+
+        //    item.ChatDisplayName = newName;
+        //    IsTeamChatChanged = true;
+        //    return true;
+
+        //}
+
+        //public static bool DelTeam(string teamGuid, Action<string, IList<TeamMember>> sendDelCommand)
+        //{
+        //    var item = ChatList.FirstOrDefault(d => d.ChatUserName == teamGuid);
+        //    if (item == null)
+        //    {
+        //        ShowError("未找到分组信息！");
+        //        return false;
+        //    }
+        //    sendDelCommand(teamGuid, item.TeamMembers);
+        //    ChatList.Remove(item);
+        //    IsTeamChatChanged = true;
+        //    return true;
+        //}
+
+        //public static void RefleshTeamList(TeacherTeam teamList)
+        //{
+
+        //    IsTeamChatChanged = true;
+        //    var list = GetTeamChatList();
+
+        //    foreach (TeamInfo teamInfo in teamList.TeamInfos)
+        //    {
+        //        var chatStore = list.FirstOrDefault(d => d.ChatUserName == teamInfo.groupid);
+        //        if (chatStore != null)
+        //        {
+        //            chatStore.ChatDisplayName = teamInfo.groupname;
+        //            chatStore.TeamMembers = teamInfo.groupuserList;
+        //        }
+        //        else
+        //        {
+        //            ChatStore info = new ChatStore();
+        //            info.ChatDisplayName = teamInfo.groupname;
+        //            info.ChatStartTime = DateTime.Now;
+        //            info.ChatType = ChatType.TeamChat;
+        //            info.ChatUserName = teamInfo.groupid;
+        //            info.UserType = ClientRole.Teacher;
+        //            info.MessageList = new List<ChatMessage>();
+        //            info.TeamMembers = teamInfo.groupuserList;
+        //            ChatList.Add(info);
+        //        }
+        //    }
+
+
+
+        //}
 
         public static bool CheckChatFormIsOpened()
         {
@@ -549,17 +889,69 @@ namespace SharedForms
         }
 
 
+        //public static TeacherTeam GetTeacherTeamFromChatStore()
+        //{
+        //    var team = new TeacherTeam();
+        //    team.DisplayName = LoginUserInfo.DisplayName;
+        //    team.UserName = LoginUserInfo.UserName;
+        //    team.TeamInfos = new List<TeamInfo>();
+        //  //  var list = GetTeamChatList();
+        //    TeamInfo info;
+        //    foreach (var item in _teamList)
+        //    {
+        //        info = new TeamInfo();
+        //        info.groupname = item.TeamName;
+        //        info.groupid = item.TeamId;
+        //        info.groupuserList = item.TeamMembers.ConvertToTeamMember();
+        //        team.TeamInfos.Add(info);
+        //    }
+        //    return team;
+        //}
+
 
         public static void SendCommand_CreateOrUpdateTeam()
         {
             var request = _teamList.ConvertToTeacherTeam(LoginUserInfo.UserName, LoginUserInfo.DisplayName);
             CreateTeamXMLFile(request);
             client.Send_CreateTeam(request);
+            //TeacherTeam request = new TeacherTeam();
+            //request.DisplayName = LoginUserInfo.DisplayName;
+            //request.UserName = LoginUserInfo.UserName;
+            //request.TeamInfos = new List<TeamInfo>();
+            //var list = GetTeamChatList();
+            //SaveTeamXML(list);
+            //TeamInfo info;
+            //foreach (ChatStore item in list)
+            //{
+            //    info = new TeamInfo();
+            //    info.groupname = item.ChatDisplayName;
+            //    info.groupid = item.ChatUserName;
+            //    info.groupuserList = item.TeamMembers.ToList();
+            //    request.TeamInfos.Add(info);
+            //}
+            //client.Send_CreateTeam(request);
         }
 
+        //public static void SaveTeamInfoToFile()
+        //{
+        //    var request = _teamList.ConvertToTeacherTeam(LoginUserInfo.UserName, LoginUserInfo.DisplayName);
+        //    CreateTeamXMLFile(request);
+        //}
 
         private static void CreateTeamXMLFile(TeacherTeam info)
         {
+            //var info = new TeacherTeam();
+            //info.DisplayName = LoginUserInfo.DisplayName;
+            //info.UserName = LoginUserInfo.UserName;
+            //info.TeamInfos = new List<TeamInfo>();
+            //foreach (ChatStore chat in teamChatList)
+            //{
+            //    TeamInfo team = new TeamInfo();
+            //    team.groupid = chat.ChatUserName;
+            //    team.groupname = chat.ChatDisplayName;
+            //    team.groupuserList = chat.TeamMembers.ToList();
+            //    info.TeamInfos.Add(team);
+            //}
 
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TeamXML");
             if (!Directory.Exists(path))
@@ -575,6 +967,20 @@ namespace SharedForms
 
         }
 
+        //private static void CreateTeamXMLFile()
+        //{
+        //    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TeamXML");
+        //    if (!Directory.Exists(path))
+        //    {
+        //        Directory.CreateDirectory(path);
+        //    }
+        //    string fileName = Path.Combine(path, "群组" + LoginUserInfo.UserName + ".xml");
+        //    if (File.Exists(fileName))
+        //    {
+        //        File.Delete(fileName);
+        //    }
+        //    XmlHelper.SerializerToFile(_teamList, fileName);
+        //}
 
         public static void LoadTeamFromXML()
         {
@@ -611,6 +1017,11 @@ namespace SharedForms
         }
 
 
+        //public static string GetTeamNameByTeamId(string teamId)
+        //{
+        //    var chatStore = ChatList.FirstOrDefault(d => d.ChatUserName == teamId && d.ChatType == ChatType.TeamChat);
+        //    return chatStore == null ? "" : chatStore.ChatDisplayName;
+        //}
 
         public static void ShowChatMessageNotify(ChatMessage message, ChatForm chatForm)
         {

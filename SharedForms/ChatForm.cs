@@ -2,7 +2,6 @@
 using Helpers;
 using Model;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -284,13 +283,13 @@ namespace SharedForms
             {
                 return;
             }
-            if (chatStore.HistoryContentNew == null)
+            if (chatStore.HistoryMessagePanel == null)
             {
-                chatStore.HistoryContentNew = new smsPanel();
-                panMessage.Controls.Add(chatStore.HistoryContentNew);
+                chatStore.HistoryMessagePanel = new smsPanel();
+                panMessage.Controls.Add(chatStore.HistoryMessagePanel);
             }
-            smsPanel1 = chatStore.HistoryContentNew;
-            chatStore.HistoryContentNew.BringToFront();
+            smsPanel1 = chatStore.HistoryMessagePanel;
+            chatStore.HistoryMessagePanel.BringToFront();
 
         }
 
@@ -351,7 +350,7 @@ namespace SharedForms
                     GlobalVariable.ShowError("您不允许发送群聊信息");
                     return false;
                 }
-                var chat = GlobalVariable.GetChatStoreByUserName(chatMessage.ReceieveUserName);
+             //   var chat = GlobalVariable.GetChatStoreByUserName(chatMessage.ReceieveUserName);
                 TeamChatRequest request = new TeamChatRequest();
                 request.groupname = _selectChatItem.DisplayName;// chat.ChatDisplayName;
                 request.groupuserList = GlobalVariable.GetMemberNames(chatMessage.ReceieveUserName);

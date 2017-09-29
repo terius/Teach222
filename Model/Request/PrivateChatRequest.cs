@@ -86,6 +86,9 @@ namespace Model
         //public string DownloadFileUrl { get; set; }
 
 
+    
+
+
 
         public ChatMessage(string _sendUserName,
             string _sendDisplayName,

@@ -102,7 +102,7 @@ namespace NewTeacher
 
         private void UpdateTeamCBox()
         {
-            var newItem = GlobalVariable.GetNewTeamChat();
+            var newItem = GlobalVariable.GetNewestTeamChat();
             cboxTeam.Items.Add(newItem);
             cboxTeam2.Items.Add(newItem);
             if (cboxTeam.SelectedIndex <= 0)

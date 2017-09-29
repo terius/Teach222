@@ -24,7 +24,7 @@ namespace SharedForms
         bool showNewMessageIcon;
         public ChatItem(ChatListPanel parent, string userName, string displayName, ChatType chatType, ClientRole userType)
         {
-            GlobalVariable.CreateChatStore(userName, chatType);
+            GlobalVariable.GetOrCreateChatStore(userName, chatType);
             _parentPanel = parent;
             InitializeComponent();
             this.Height = 24 + 5 * 2;
