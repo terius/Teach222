@@ -77,7 +77,7 @@ namespace NewTeacher
                 {
                     case CommandType.OnlineList:
                         var userList2 = JsonHelper.DeserializeObj<List<OnlineUserResponse>>(message.DataStr);
-                        
+
                         onlineInfo.OnOnlineChange(userList2);
                         break;
                     case CommandType.StudentShowToTeacher:
@@ -298,44 +298,22 @@ namespace NewTeacher
             onlineInfo.AddOnLine += OnlineInfo_AddOnLine;
             onlineInfo.DelOnLine += OnlineInfo_DelOnLine;
         }
-        private void OnlineInfo_DelOnLine(UserLogoutResponse delInfo)
+        private void OnlineInfo_DelOnLine(object sender, string delUserName)
         {
             this.InvokeOnUiThreadIfRequired(() =>
             {
-                onlineListGrid1.RemoveOnlineUser(delInfo.username);
-                //foreach (ListViewItem item in this.lvOnline.Items)
-                //{
-                //    if (item.SubItems[2].Text == delInfo.username)
-                //    {
-                //        item.Remove();
-                //        break;
-                //    }
-                //}
+                onlineListGrid1.RemoveOnlineUser(delUserName);
             });
         }
 
-        private void OnlineInfo_AddOnLine(object sender, OnlineEventArgs e)
+        private void OnlineInfo_AddOnLine(object sender, IList<User> e)
         {
-            this.InvokeOnUiThreadIfRequired(() => AddOnlineUser(e.OnLines));
+            this.InvokeOnUiThreadIfRequired(() => AddOnlineUser(e));
         }
 
         private void AddOnlineUser(IList<User> list)
         {
             onlineListGrid1.AddLoginUser(list[0]);
-            //foreach (OnlineUserResponse item in list)
-            //{
-            //    if (!IsMySelf(item.username))
-            //    {
-            //        ListViewItem listItem = new ListViewItem();
-            //        listItem.Text = item.nickname;
-            //        listItem.ImageIndex = item.clientRole == ClientRole.Student ? 0 : 39;
-            //        listItem.SubItems.Add(item.isCalled ? "是" : "");
-            //        listItem.SubItems.Add(item.username);
-            //        listItem.SubItems.Add(item.no);
-            //        this.lvOnline.Items.Add(listItem);
-
-            //    }
-            //}
         }
 
         private bool IsMySelf(string userName)
@@ -343,9 +321,9 @@ namespace NewTeacher
             return userName == GlobalVariable.LoginUserInfo.UserName;
         }
 
-        private void OnlineInfo_OnLineChange(object sender, OnlineEventArgs e)
+        private void OnlineInfo_OnLineChange(object sender, IList<User> e)
         {
-            this.InvokeOnUiThreadIfRequired(() => userListShow(e.OnLines));
+            this.InvokeOnUiThreadIfRequired(() => userListShow(e));
         }
 
         /// <summary>
@@ -355,8 +333,6 @@ namespace NewTeacher
         private void userListShow(IList<User> list)
         {
             this.onlineListGrid1.UpdateOnlineUser(list);
-            //this.lvOnline.Items.Clear();
-            // AddOnlineUser(list);
         }
 
         #endregion
@@ -840,7 +816,7 @@ namespace NewTeacher
 
         }
 
-   
+
 
         private void userList_P_forbidPrivateChat_Click(object sender, System.EventArgs e)
         {

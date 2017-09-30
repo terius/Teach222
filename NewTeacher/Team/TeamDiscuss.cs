@@ -27,13 +27,13 @@ namespace NewTeacher
 
         }
 
-        private void _onLineInfo_DelOnLine(UserLogoutResponse delInfo)
+        private void _onLineInfo_DelOnLine(object sender, string delUserName)
         {
             this.InvokeOnUiThreadIfRequired(() =>
             {
                 foreach (ListViewItem item in this.onLineListView.Items)
                 {
-                    if (item.SubItems[1].Text == delInfo.username)
+                    if (item.SubItems[1].Text == delUserName)
                     {
                         item.Remove();
                         break;
@@ -43,11 +43,11 @@ namespace NewTeacher
 
         }
 
-        private void _onLineInfo_AddOnLine(object sender, OnlineEventArgs e)
+        private void _onLineInfo_AddOnLine(object sender, IList<User> e)
         {
             this.InvokeOnUiThreadIfRequired(() =>
             {
-                AddUserList(e.OnLines);
+                AddUserList(e);
             });
         }
 
