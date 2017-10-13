@@ -1,6 +1,7 @@
 ﻿
 using Helper;
 using Helpers;
+using NAudio.Wave;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -18,11 +19,50 @@ namespace SharedForms
         // private AxWindowsMediaPlayer mediaPlayer = (AxWindowsMediaPlayer) null;
         //  private RecordVoice.playVoiceCallBackHandler voicePlayer;
         string _audioRecordPath = "Files\\AudioRecord\\";
+        public WaveIn waveSource = null;
+        public WaveFileWriter waveFile = null;
         public RecordVoice()
         {
             // this.f = new Ffmpeg();
             //    this.mediaPlayer = player;
             //  this.voicePlayer = new RecordVoice.playVoiceCallBackHandler(this.playVoiceInvoke);
+            waveSource = new WaveIn();
+            waveSource.WaveFormat = new WaveFormat(44100, 1);
+
+            waveSource.DataAvailable += WaveSource_DataAvailable;
+            waveSource.RecordingStopped += WaveSource_RecordingStopped;
+        }
+
+        private void WaveSource_RecordingStopped(object sender, StoppedEventArgs e)
+        {
+            if (waveSource != null)
+            {
+                waveSource.Dispose();
+                waveSource = null;
+            }
+
+            if (waveFile != null)
+            {
+                waveFile.Dispose();
+                waveFile = null;
+            }
+           // ConvertToAmr();
+        }
+
+        private void ConvertToAmr()
+        {
+            string amrFile = audioFileName.Substring(0, audioFileName.LastIndexOf('.') + 1) + "amr";
+            string cmdString = "-y -i " + audioFileName + " -ar 8000 -ab 12.2k -ac 1 " + amrFile;
+            Cmd(cmdString);
+        }
+
+        private void WaveSource_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            if (waveFile != null)
+            {
+                waveFile.Write(e.Buffer, 0, e.BytesRecorded);
+                waveFile.Flush();
+            }
         }
 
         //[DllImport("winmm.dll", CharSet = CharSet.Auto)]
@@ -131,9 +171,6 @@ namespace SharedForms
         public void BeginRecord2()
         {
             mciSendString("open new Type waveaudio Alias recsound", "", 0, 0);
-            //mciSendString("set recsound bitspersample 16", "", 0, 0);
-            //mciSendString("set recsound samplespersec 44100", "", 0, 0);
-            //mciSendString("set recsound channels 1", "", 0, 0);
             mciSendString("record recsound", "", 0, 0);
 
 
