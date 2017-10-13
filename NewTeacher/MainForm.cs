@@ -313,6 +313,7 @@ namespace NewTeacher
 
         private void AddOnlineUser(IList<User> list)
         {
+        
             onlineListGrid1.AddLoginUser(list[0]);
         }
 

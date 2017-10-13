@@ -16,7 +16,7 @@ namespace vlctest
             //BonusSkins.Register();
             //SkinManager.EnableFormSkins();
             //UserLookAndFeel.Default.SetSkinStyle("Office 2016 Colorful");
-            Application.Run(new GridForm());
+            Application.Run(new NAudioForm());
         }
     }
 }

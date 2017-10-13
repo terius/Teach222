@@ -103,7 +103,7 @@ namespace vlctest
         private string GetVideoName()
         {
             var capDevices = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
-
+           
             foreach (var item in capDevices)
             {
                 return item.Name;

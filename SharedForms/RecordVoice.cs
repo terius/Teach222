@@ -111,7 +111,7 @@ namespace SharedForms
         }
 
 
-        public void Play(string fileName,IntPtr formHandle)
+        public void Play(string fileName, IntPtr formHandle)
         {
             OpenMediaFile(fileName);
             PlayMediaFile(formHandle);
@@ -131,7 +131,12 @@ namespace SharedForms
         public void BeginRecord2()
         {
             mciSendString("open new Type waveaudio Alias recsound", "", 0, 0);
+            //mciSendString("set recsound bitspersample 16", "", 0, 0);
+            //mciSendString("set recsound samplespersec 44100", "", 0, 0);
+            //mciSendString("set recsound channels 1", "", 0, 0);
             mciSendString("record recsound", "", 0, 0);
+
+
         }
 
         public string StopRecord2()
