@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SharedForms
@@ -21,18 +22,20 @@ namespace SharedForms
         string _audioRecordPath = "Files\\AudioRecord\\";
         public WaveIn waveSource = null;
         public WaveFileWriter waveFile = null;
+        string _audioFileName;
+        // private ManualResetEvent mre = new ManualResetEvent(false);
+        bool isCancelRecord;
         public RecordVoice()
         {
             // this.f = new Ffmpeg();
             //    this.mediaPlayer = player;
             //  this.voicePlayer = new RecordVoice.playVoiceCallBackHandler(this.playVoiceInvoke);
-            waveSource = new WaveIn();
-            waveSource.WaveFormat = new WaveFormat(44100, 1);
+          
 
-            waveSource.DataAvailable += WaveSource_DataAvailable;
-            waveSource.RecordingStopped += WaveSource_RecordingStopped;
         }
 
+
+        #region 录音
         private void WaveSource_RecordingStopped(object sender, StoppedEventArgs e)
         {
             if (waveSource != null)
@@ -46,15 +49,14 @@ namespace SharedForms
                 waveFile.Dispose();
                 waveFile = null;
             }
-           // ConvertToAmr();
+            if (isCancelRecord)
+            {
+                isCancelRecord = false;
+                File.Delete(_audioFileName);
+            }
         }
 
-        private void ConvertToAmr()
-        {
-            string amrFile = audioFileName.Substring(0, audioFileName.LastIndexOf('.') + 1) + "amr";
-            string cmdString = "-y -i " + audioFileName + " -ar 8000 -ab 12.2k -ac 1 " + amrFile;
-            Cmd(cmdString);
-        }
+
 
         private void WaveSource_DataAvailable(object sender, WaveInEventArgs e)
         {
@@ -65,11 +67,81 @@ namespace SharedForms
             }
         }
 
+        private void CreateWave()
+        {
+            waveSource = new WaveIn();
+            waveSource.WaveFormat = new WaveFormat(44100, 1);
+            waveSource.DataAvailable += WaveSource_DataAvailable;
+            waveSource.RecordingStopped += WaveSource_RecordingStopped;
+            _audioFileName = _audioRecordPath + DateTime.Now.ToString("yyyyMMddHHmmss") + ".wav";
+            waveFile = new WaveFileWriter(_audioFileName, waveSource.WaveFormat);
+        }
+
+        public void BeginRecord2()
+        {
+            CreateWave();
+            //mciSendString("open new Type waveaudio Alias recsound", "", 0, 0);
+            //mciSendString("record recsound", "", 0, 0);
+
+            waveSource.StartRecording();
+
+        }
+
+        public string StopRecord2()
+        {
+            waveSource.StopRecording();
+            string amrFile = _audioFileName.Substring(0, _audioFileName.LastIndexOf('.') + 1) + "amr";
+            string cmdString = "-y -i " + _audioFileName + " -ar 8000 -ab 12.2k -ac 1 " + amrFile;
+            Cmd(cmdString);
+            return amrFile;
+            //var filename = DateTime.Now.Ticks.ToString();
+            //string wavFile = _audioRecordPath + filename + ".wav";
+            //mciSendString(@"save recsound " + wavFile, "", 0, 0);
+            //mciSendString("close recsound ", "", 0, 0);
+            //string amrFile = _audioRecordPath + filename + ".amr";
+            //string cmdString = "-y -i " + wavFile + " -ar 8000 -ab 12.2k -ac 1 " + amrFile;
+            //Cmd(cmdString);
+            //return amrFile;
+        }
+
+        public void CancelRecord()
+        {
+            isCancelRecord = true;
+            //  mciSendString("close recsound ", "", 0, 0);
+            waveSource.StopRecording();
+        }
+
+        //public void BeginRecord()
+        //{
+        //    mciSendString("set wave bitpersample 8", "", 0, 0);
+        //    mciSendString("set wave samplespersec 20000", "", 0, 0);
+        //    mciSendString("set wave channels 1", "", 0, 0);
+        //    mciSendString("set wave format tag pcm", "", 0, 0);
+        //    mciSendString("open new type WAVEAudio alias movie", "", 0, 0);
+        //    mciSendString("record movie", "", 0, 0);
+        //}
+
+        //public string StopRecord()
+        //{
+        //    var filename = DateTime.Now.Ticks.ToString();
+        //    mciSendString("stop movie", "", 0, 0);
+        //    // string name = this.generateName();
+        //    string str1 = _audioRecordPath + filename + ".wav";
+        //    mciSendString("save movie " + str1, "", 0, 0);
+        //    mciSendString("close movie", "", 0, 0);
+        //    string str2 = _audioRecordPath + filename + ".amr";
+        //    string cmdString = "-y -i " + str1 + " -ar 8000 -ab 12.2k -ac 1 " + str2;
+        //    Cmd(cmdString);
+        //    return str2;
+        //}
+
+        #endregion
+
         //[DllImport("winmm.dll", CharSet = CharSet.Auto)]
         //public static extern int mciSendString(string lpstrCommand, string lpstrReturnString, int uReturnLength, int hwndCallback);
 
 
-
+        #region 播放
         [DllImport("Kernel32", CharSet = CharSet.Auto)]
         static extern Int32 GetShortPathName(String path, StringBuilder shortPath, Int32 shortPathLength);
 
@@ -167,55 +239,10 @@ namespace SharedForms
             return mp3;
         }
 
-
-        public void BeginRecord2()
-        {
-            mciSendString("open new Type waveaudio Alias recsound", "", 0, 0);
-            mciSendString("record recsound", "", 0, 0);
+        #endregion
 
 
-        }
-
-        public string StopRecord2()
-        {
-            var filename = DateTime.Now.Ticks.ToString();
-            string wavFile = _audioRecordPath + filename + ".wav";
-            mciSendString(@"save recsound " + wavFile, "", 0, 0);
-            mciSendString("close recsound ", "", 0, 0);
-            string amrFile = _audioRecordPath + filename + ".amr";
-            string cmdString = "-y -i " + wavFile + " -ar 8000 -ab 12.2k -ac 1 " + amrFile;
-            Cmd(cmdString);
-            return amrFile;
-        }
-
-        public void CancelRecord()
-        {
-            mciSendString("close recsound ", "", 0, 0);
-        }
-
-        //public void BeginRecord()
-        //{
-        //    mciSendString("set wave bitpersample 8", "", 0, 0);
-        //    mciSendString("set wave samplespersec 20000", "", 0, 0);
-        //    mciSendString("set wave channels 1", "", 0, 0);
-        //    mciSendString("set wave format tag pcm", "", 0, 0);
-        //    mciSendString("open new type WAVEAudio alias movie", "", 0, 0);
-        //    mciSendString("record movie", "", 0, 0);
-        //}
-
-        //public string StopRecord()
-        //{
-        //    var filename = DateTime.Now.Ticks.ToString();
-        //    mciSendString("stop movie", "", 0, 0);
-        //    // string name = this.generateName();
-        //    string str1 = _audioRecordPath + filename + ".wav";
-        //    mciSendString("save movie " + str1, "", 0, 0);
-        //    mciSendString("close movie", "", 0, 0);
-        //    string str2 = _audioRecordPath + filename + ".amr";
-        //    string cmdString = "-y -i " + str1 + " -ar 8000 -ab 12.2k -ac 1 " + str2;
-        //    Cmd(cmdString);
-        //    return str2;
-        //}
+      
 
         /// <summary>
         /// 执行Cmd命令

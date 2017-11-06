@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeacherUser", "TeacherUser\TeacherUser.csproj", "{06BF00AE-3E4E-4C2F-AB68-3C5687380760}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{EC2C57C8-402F-4F7C-969B-9276C3AB6D93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EduService", "EduService\EduService.csproj", "{82ED2E95-B75D-4A90-859F-A9148F494F53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePusher", "C:\Users\teriushome\Desktop\PusherC#\PusherC#\ConsolePusher\ConsolePusher.csproj", "{496929CB-0706-41E4-B4AA-D8E00552915D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -155,6 +157,18 @@ Global
 		{82ED2E95-B75D-4A90-859F-A9148F494F53}.Release|x64.Build.0 = Release|Any CPU
 		{82ED2E95-B75D-4A90-859F-A9148F494F53}.Release|x86.ActiveCfg = Release|Any CPU
 		{82ED2E95-B75D-4A90-859F-A9148F494F53}.Release|x86.Build.0 = Release|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Debug|x64.Build.0 = Debug|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Debug|x86.Build.0 = Debug|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Release|x64.ActiveCfg = Release|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Release|x64.Build.0 = Release|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Release|x86.ActiveCfg = Release|Any CPU
+		{496929CB-0706-41E4-B4AA-D8E00552915D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
