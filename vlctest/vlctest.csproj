@@ -165,6 +165,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="VLCDotNetForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +182,12 @@
     </Compile>
     <Compile Include="VLCForm.Designer.cs">
       <DependentUpon>VLCForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VLCPlayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VLCPlayer.Designer.cs">
+      <DependentUpon>VLCPlayer.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="DirectShowForm.resx">
       <DependentUpon>DirectShowForm.cs</DependentUpon>
@@ -205,11 +217,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VLCDotNetForm.resx">
       <DependentUpon>VLCDotNetForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VLCForm.resx">
       <DependentUpon>VLCForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VLCPlayer.resx">
+      <DependentUpon>VLCPlayer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

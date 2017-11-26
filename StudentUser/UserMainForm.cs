@@ -16,7 +16,7 @@ namespace StudentUser
     public partial class UserMainForm : Form
     {
         BlackScreen bsForm = null;
-        VLCPlayer videoPlayer;
+     
         ChatForm chatForm;
         //   ViewRtsp videoPlayer2;
         CallForm callForm;
@@ -40,17 +40,17 @@ namespace StudentUser
 
             base.OnActivated(e);
         }
-        string _masterTitle;
+        //   string GlobalVariable.MasterTitle;
 
         public UserMainForm()
         {
 
             InitializeComponent();
             CreateFilePath();
-            _masterTitle = "教师端";
+            //  GlobalVariable.MasterTitle = "教师端";
             if (GlobalVariable.IsHuiShenXiTong)
             {
-                _masterTitle = "指挥室";
+                // GlobalVariable.MasterTitle = "指挥室";
                 mSignIn.Visible = false;
                 mHandUp.Visible = false;
             }
@@ -71,7 +71,7 @@ namespace StudentUser
                     case (int)CommandType.TeacherLoginIn://主机端登录
 
                         TeacherLoginInResponse teachRes = JsonHelper.DeserializeObj<TeacherLoginInResponse>(message.DataStr);
-                        ShowNotify(_masterTitle + "登录");
+                        ShowNotify(GlobalVariable.MasterTitle + "登录");
                         GlobalVariable.TeacherIP = teachRes.teachIP;
                         DoAction(() =>
                         {
@@ -80,7 +80,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.TeacherLoginOut://主机端登出
-                        ShowNotify(_masterTitle + "登出");
+                        ShowNotify(GlobalVariable.MasterTitle + "登出");
                         if (theadScreen != null && theadScreen.ThreadState == ThreadState.Background)
                         {
                             isRunScreen = false;
@@ -170,7 +170,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.CallStudentShowForMySelf://收到请求客户端演示
-                        ShowNotify("收到推送请求，开始推送当前屏幕到指挥室");
+                        ShowNotify("收到推送请求，开始推送当前屏幕到" + GlobalVariable.MasterTitle);
                         DoAction(() =>
                         {
                             GlobalVariable.client.CreateScreenInteract();
@@ -179,7 +179,7 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.CallStudentShowVideoToTeacher://收到请求客户端演示视频
-                        ShowNotify("收到推送请求，开始推送摄像头视频到指挥室");
+                        ShowNotify("收到推送请求，开始推送摄像头视频到" + GlobalVariable.MasterTitle);
                         DoAction(() =>
                         {
                             GlobalVariable.client.CreateScreenInteract();
@@ -197,22 +197,22 @@ namespace StudentUser
                         });
                         break;
                     case (int)CommandType.ForbidPrivateChat://收到禁止私聊
-                        ShowNotify(_masterTitle + "已禁止私聊");
+                        ShowNotify(GlobalVariable.MasterTitle + "已禁止私聊");
                         GlobalVariable.LoginUserInfo.AllowPrivateChat = false;
                         ChangeChatAllowOrForbit(ChatType.PrivateChat, false);
                         break;
                     case (int)CommandType.ForbidTeamChat://收到禁止群聊
-                        ShowNotify(_masterTitle + "已禁止群聊");
+                        ShowNotify(GlobalVariable.MasterTitle + "已禁止群聊");
                         GlobalVariable.LoginUserInfo.AllowTeamChat = false;
                         ChangeChatAllowOrForbit(ChatType.TeamChat, false);
                         break;
                     case (int)CommandType.AllowPrivateChat://收到允许私聊
-                        ShowNotify(_masterTitle + "已允许私聊");
+                        ShowNotify(GlobalVariable.MasterTitle + "已允许私聊");
                         GlobalVariable.LoginUserInfo.AllowPrivateChat = true;
                         ChangeChatAllowOrForbit(ChatType.PrivateChat, true);
                         break;
                     case (int)CommandType.AllowTeamChat://收到允许群聊
-                        ShowNotify(_masterTitle + "已允许群聊");
+                        ShowNotify(GlobalVariable.MasterTitle + "已允许群聊");
                         GlobalVariable.LoginUserInfo.AllowTeamChat = true;
                         ChangeChatAllowOrForbit(ChatType.TeamChat, true);
                         break;
@@ -435,17 +435,7 @@ namespace StudentUser
 
 
 
-        private void PlayVideoByVLCDotNet(string rtsp)
-        {
-            if (videoPlayer == null || videoPlayer.IsDisposed)
-            {
-                videoPlayer = new VLCPlayer();
-            }
-            videoPlayer.BringToFront();
-            videoPlayer.Show();
-            videoPlayer.StartPlayStream(rtsp);
-
-        }
+      
 
 
 
@@ -474,12 +464,7 @@ namespace StudentUser
                 videoForm = null;
             }
 
-            if (videoPlayer != null)
-            {
-                videoPlayer.StopPlay();
-                videoPlayer.Close();
-                videoPlayer = null;
-            }
+           
 
         }
 
@@ -554,7 +539,7 @@ namespace StudentUser
 
 
 
-       
+
 
         #region 右键菜单
 
@@ -595,7 +580,7 @@ namespace StudentUser
 
         #endregion
 
-        
+
 
         private void GetScreenCapture()
         {
@@ -676,7 +661,7 @@ namespace StudentUser
 
         }
 
-      
+
     }
 
 

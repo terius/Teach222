@@ -1,5 +1,6 @@
 ﻿using Common;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -15,19 +16,23 @@ namespace SharedForms
             _type = type;
             _userName = userName;
             InitializeComponent();
-            if (_type == ProgramType.Student)
-            {
-               // this.WindowState = FormWindowState.Maximized;
-              //  this.TopMost = true;
-            }
-            else
-            {
-                FormBorderStyle = FormBorderStyle.Sizable;
-            }
+            //if (_type == ProgramType.Student)
+            //{
+            //    // this.WindowState = FormWindowState.Maximized;
+            //    //  this.TopMost = true;
+            
+            //}
+            //else
+            //{
+            //    FormBorderStyle = FormBorderStyle.Sizable;
+            //}
             axVLCPlugin21.video.aspectRatio = GetScreenAspectRatio();
-
+        
 
         }
+
+      
+
 
         public void PlayVideo(string url)
         {
@@ -53,7 +58,7 @@ namespace SharedForms
 
         private void VideoShow_Load(object sender, EventArgs e)
         {
-          
+            label1.Text = _userName;
             //  axVLCPlugin21.Toolbar = false;
             // axVLCPlugin21.AllowDrop = false;
             //  this.FormBorderStyle = FormBorderStyle.Sizable;

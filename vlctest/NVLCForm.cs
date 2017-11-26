@@ -30,7 +30,7 @@ namespace vlctest
         {
             IMediaPlayerFactory factory = new MediaPlayerFactory();
             //:network-caching=300 :rtsp-caching=300
-            IMedia media = factory.CreateMedia<IMedia>(@"D:\dy\xart.mp4");
+            IMedia media = factory.CreateMedia<IMedia>(url);
           //  IMedia media = factory.CreateMedia<IMedia>(url, new string[] { "network-caching=1000", "rtsp-caching=1000" });
 
             IVideoPlayer player = factory.CreatePlayer<IVideoPlayer>();
@@ -38,7 +38,7 @@ namespace vlctest
             player.Open(media);
             player.Events.MediaEnded += Events_MediaEnded;
             player.Events.TimeChanged += Events_TimeChanged;
-          //  player.AspectRatio = AspectRatioMode.Default;
+     //       player.AspectRatio = AspectRatioMode.Default;
             player.Play();
 
         }
@@ -71,5 +71,7 @@ namespace vlctest
                 PlayVideo(fileName);
             }
         }
+
+      
     }
 }

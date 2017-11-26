@@ -18,11 +18,11 @@ namespace NewTeacher
         string _userName, _displayName;
         private void Form2_Load(object sender, EventArgs e)
         {
-          //  GlobalVariable.ShowNotifyMessage("测试", -1);
+            //  GlobalVariable.ShowNotifyMessage("测试", -1);
+            this.Text = label6.Text = GlobalVariable.SystemTitle;
+            label5.Text = GlobalVariable.MasterTitle + "登录";
             if (GlobalVariable.IsHuiShenXiTong)
             {
-                this.Text = label6.Text = "会审系统";
-                label5.Text = "指挥室登录";
                 label4.Hide();
             }
 
@@ -102,7 +102,7 @@ namespace NewTeacher
         private void button1_Click(object sender, EventArgs e)//登录 
         {
             _userName = this.textBox1.Text.Trim();
-            _displayName = (GlobalVariable.IsHuiShenXiTong ? "指挥室" : "教师") + "001";
+            _displayName = GlobalVariable.MasterTitle + "001";
             string userPass = this.textBox2.Text.Trim();
             if (_userName == string.Empty)
             {

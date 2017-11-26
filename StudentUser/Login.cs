@@ -17,11 +17,8 @@ namespace StudentUser
         public Login()
         {
             InitializeComponent();
-            if (GlobalVariable.IsHuiShenXiTong)
-            {
-                this.Text = label6.Text = "会审系统";
-                label5.Text = "审讯室登录";
-            }
+            this.Text = label6.Text = GlobalVariable.SystemTitle;
+            label5.Text = GlobalVariable.ClientTitle +  "登录";
         }
         // string userGuid;
 
@@ -110,7 +107,7 @@ namespace StudentUser
         {
 
             userName = textBox1.Text.Trim();
-            nickName = (GlobalVariable.IsHuiShenXiTong ? "审讯室" : "学生") + userName;
+            nickName = GlobalVariable.ClientTitle + userName;
             string password = textBox2.Text.Trim();
 
             if (userName == string.Empty)

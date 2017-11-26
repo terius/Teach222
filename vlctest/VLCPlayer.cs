@@ -1,11 +1,10 @@
-﻿using Helpers;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 
-namespace StudentUser
+namespace vlctest
 {
     public partial class VLCPlayer : Form
     {
@@ -47,7 +46,7 @@ namespace StudentUser
             this.Text = url;
             Uri uri = new Uri(url);
             var option = ":network-caching=300:rtsp-caching=300:no-video-title-show";
-            Loger.LogMessage("接收到rtsp地址：" + url);
+         //   Loger.LogMessage("接收到rtsp地址：" + url);
             //   vlcControl1.Video.FullScreen
             vlcControl1.Video.AspectRatio = "16:9";
             //   vlcControl1.Play(uri);

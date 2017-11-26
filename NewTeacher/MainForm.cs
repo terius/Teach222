@@ -47,10 +47,15 @@ namespace NewTeacher
 
             CreateFilePath();
             this.onlineListGrid1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
+            _clientTitle = GlobalVariable.ClientTitle;
+            this.Text = GlobalVariable.SystemTitle;
+            menuStudentShow.Text = GlobalVariable.ClientTitle + "演示";
+            myGroupBox7.Text = "在线" + GlobalVariable.ClientTitle +  "列表";
+            myGroupBox8.Text = GlobalVariable.ClientTitle + "屏幕";
             if (GlobalVariable.IsHuiShenXiTong)
             {
-                _clientTitle = "审讯室";
-                this.Text = "会审系统";
+
+
                 menuClassNamed.Hide();
                 menuExportSign.Hide();
                 menuFileShare.Hide();
@@ -58,9 +63,6 @@ namespace NewTeacher
                 tableLayoutPanel1.ColumnCount = 1;
                 tableLayoutPanel1.RowCount = 1;
                 myGroupBox1.Text = "群聊";
-                menuStudentShow.Text = "审讯室演示";
-                myGroupBox7.Text = "在线审讯室列表";
-                myGroupBox8.Text = "审讯室屏幕";
                 menuGroupChat.Text = "群组聊天";
                 onlineListGrid1.Columns["col_isval"].Visible = false;
                 //  tableLayoutPanel3.ColumnStyles[4].Width = 0f;
@@ -313,7 +315,7 @@ namespace NewTeacher
 
         private void AddOnlineUser(IList<User> list)
         {
-        
+
             onlineListGrid1.AddLoginUser(list[0]);
         }
 
@@ -594,7 +596,7 @@ namespace NewTeacher
         {
             var request = new ChatMessage();
             request.SendDisplayName = "所有人";
-            request.ChatType = ChatType.PrivateChat;
+            request.ChatType = ChatType.GroupChat;
             request.SendUserName = "allpeople";
             request.UserType = ClientRole.Student;
             GlobalVariable.AddNewChat(request);
@@ -659,7 +661,11 @@ namespace NewTeacher
         #region  事件
         private void menuClassNamed_Click(object sender, System.EventArgs e)
         {
-            SendAction(TeacherAction.menuClassNamed_Click);
+            VideoShow vs = new VideoShow(ProgramType.Student,"stu213123");
+            vs.Show();
+           // vs.PlayVideo(@"D:\qh\0811.mp4");
+
+         //   SendAction(TeacherAction.menuClassNamed_Click);
         }
 
         private void menuExportSign_Click(object sender, System.EventArgs e)

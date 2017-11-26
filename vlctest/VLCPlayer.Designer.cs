@@ -1,4 +1,4 @@
-﻿namespace StudentUser
+﻿namespace vlctest
 {
     partial class VLCPlayer
     {

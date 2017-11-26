@@ -53,7 +53,50 @@ namespace SharedForms
         /// <summary>
         /// 是否为会审系统
         /// </summary>
-        public static readonly bool IsHuiShenXiTong = true;
+        public static readonly bool IsHuiShenXiTong = false;
+
+
+        static readonly string msgSound = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "msg.wav");
+
+        public static string SystemTitle
+        {
+            get
+            {
+                if (IsHuiShenXiTong)
+                {
+                    return "会审系统";
+                }
+                return "在线教育系统";
+            }
+        }
+
+        public static string MasterTitle
+        {
+            get
+            {
+                if (IsHuiShenXiTong)
+                {
+                    return "指挥室";
+                }
+                return "老师";
+            }
+        }
+
+
+        public static string ClientTitle
+        {
+            get
+            {
+                if (IsHuiShenXiTong)
+                {
+                    return "审讯室";
+                }
+                return "学生";
+            }
+        }
+
+
+
         /// <summary>
         /// 登录用户
         /// </summary>
@@ -318,9 +361,9 @@ namespace SharedForms
             return info;
         }
 
-
         public static ChatMessage CreateChatMessage(ReceieveMessage message)
         {
+            PlayMsgVoice();
             ChatMessage chatMessage = null;
             switch (message.Action)
             {
@@ -341,6 +384,12 @@ namespace SharedForms
             }
             AddNewChat(chatMessage);
             return chatMessage;
+        }
+
+        static System.Media.SoundPlayer player = new System.Media.SoundPlayer(msgSound);
+        public static void PlayMsgVoice()
+        {
+            player.Play();
         }
 
 
@@ -450,11 +499,11 @@ namespace SharedForms
         }
 
 
-  
+
 
         public static void AddNewChat(ChatMessage request)
         {
-            ChatStore info = GetOrCreateChatStore(request.SendUserName,request.ChatType);
+            ChatStore info = GetOrCreateChatStore(request.SendUserName, request.ChatType);
             if (!string.IsNullOrWhiteSpace(request.Message))
             {
                 if (info.NewMessageList == null)
@@ -468,7 +517,7 @@ namespace SharedForms
 
         }
 
-     
+
 
 
         public static ChatType GetChatType(string userName)

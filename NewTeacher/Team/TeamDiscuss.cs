@@ -16,11 +16,8 @@ namespace NewTeacher
         public TeamDiscuss(OnlineInfo onLineInfo)
         {
             InitializeComponent();
-            if (GlobalVariable.IsHuiShenXiTong)
-            {
-                myGroupBox2.Text = "在线审讯室";
-                btnAddStudent.Text = "选择审讯室";
-            }
+            myGroupBox2.Text = "在线" + GlobalVariable.ClientTitle;
+            btnAddStudent.Text = "选择" + GlobalVariable.ClientTitle;
             _onLineInfo = onLineInfo;
             _onLineInfo.AddOnLine += _onLineInfo_AddOnLine;
             _onLineInfo.DelOnLine += _onLineInfo_DelOnLine;

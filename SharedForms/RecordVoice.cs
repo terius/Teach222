@@ -158,6 +158,7 @@ namespace SharedForms
 
         public void PlayVoice(string name, IntPtr formHandle)
         {
+         
             try
             {
                 string newFile = name;
@@ -174,6 +175,7 @@ namespace SharedForms
                         newFile = ConvertAMRToMP3(name);
                     }
                 }
+           
                 Play(newFile, formHandle);
                 //StringBuilder shortpath = new StringBuilder(180);
                 //int result = GetShortPathName(newFile, shortpath, shortpath.Capacity);
