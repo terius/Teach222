@@ -692,12 +692,11 @@ namespace SharedForms
         //}
 
 
-        public static string BeginRecordVideo()
+        public static void BeginRecordVideo()
         {
             string fileName = Path.Combine(VideoRecordPath, DateTime.Now.Ticks.ToString() + ".mpg");
-
             client.BeginRecordVideo(fileName);
-            return fileName;
+          
         }
         public static void EndRecordVideo()
         {

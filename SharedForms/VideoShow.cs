@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace SharedForms
 {
-    public partial class VideoShow : Form
+    public partial class VideoShow : MyForm
     {
         private string param = ":network-caching=300 :rtsp-caching=300";// ":aspect-ratio=4:3:network-caching=300:rtsp-caching=300";//:aspect-ratio=16:9
         ProgramType _type;
@@ -58,7 +58,7 @@ namespace SharedForms
 
         private void VideoShow_Load(object sender, EventArgs e)
         {
-            label1.Text = _userName;
+          //  label1.Text = _userName;
             //  axVLCPlugin21.Toolbar = false;
             // axVLCPlugin21.AllowDrop = false;
             //  this.FormBorderStyle = FormBorderStyle.Sizable;

@@ -30,15 +30,31 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.myGroupBox7 = new SharedForms.MyGroupBox();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.onlineListGrid1 = new SharedForms.UserControls.OnlineListGrid();
+            this.col_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_isval = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_disablePrivateChat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_disableTeamChat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_userName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.userList_privateChat = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_lockScreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_stopLockScreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_permisson = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_P_forbidPrivateChat = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_P_forbidGroupChat = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_P_allowPrivateChat = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_P_allowGroupChat = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_studentShow = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_studentVideoShow = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList_stopStudentShow = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.myGroupBox8 = new SharedForms.MyGroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.myGroupBox6 = new SharedForms.MyGroupBox();
@@ -67,30 +83,14 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.menuRomoteControl = new System.Windows.Forms.Button();
             this.menuSilence = new System.Windows.Forms.Button();
-            this.UserListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.userList_privateChat = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_lockScreen = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_stopLockScreen = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_permisson = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_P_forbidPrivateChat = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_P_forbidGroupChat = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_P_allowPrivateChat = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_P_allowGroupChat = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_studentShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_studentVideoShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.userList_stopStudentShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.onlineListGrid1 = new SharedForms.UserControls.OnlineListGrid();
-            this.col_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_isval = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_disablePrivateChat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_disableTeamChat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_userName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.myGroupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onlineListGrid1)).BeginInit();
+            this.UserListMenu.SuspendLayout();
             this.panel3.SuspendLayout();
             this.myGroupBox8.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -107,8 +107,6 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.myGroupBox2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.UserListMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.onlineListGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelContent
@@ -150,11 +148,159 @@
             this.myGroupBox7.TabStop = false;
             this.myGroupBox7.Text = "在线学生列表";
             // 
-            // imageList1
+            // onlineListGrid1
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "客户端.png");
+            this.onlineListGrid1.AllowUserToAddRows = false;
+            this.onlineListGrid1.AllowUserToDeleteRows = false;
+            this.onlineListGrid1.AllowUserToResizeRows = false;
+            this.onlineListGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.onlineListGrid1.BackgroundColor = System.Drawing.Color.White;
+            this.onlineListGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.onlineListGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.onlineListGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.onlineListGrid1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.col_name,
+            this.col_isval,
+            this.col_disablePrivateChat,
+            this.col_disableTeamChat,
+            this.col_userName});
+            this.onlineListGrid1.ContextMenuStrip = this.UserListMenu;
+            this.onlineListGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.onlineListGrid1.Location = new System.Drawing.Point(3, 57);
+            this.onlineListGrid1.MultiSelect = false;
+            this.onlineListGrid1.Name = "onlineListGrid1";
+            this.onlineListGrid1.ReadOnly = true;
+            this.onlineListGrid1.RowHeadersVisible = false;
+            this.onlineListGrid1.RowTemplate.Height = 23;
+            this.onlineListGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.onlineListGrid1.Size = new System.Drawing.Size(314, 409);
+            this.onlineListGrid1.TabIndex = 4;
+            this.onlineListGrid1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.onlineListGrid1_MouseDown);
+            // 
+            // col_name
+            // 
+            this.col_name.FillWeight = 120F;
+            this.col_name.HeaderText = "姓名";
+            this.col_name.Name = "col_name";
+            this.col_name.ReadOnly = true;
+            // 
+            // col_isval
+            // 
+            this.col_isval.HeaderText = "验证";
+            this.col_isval.Name = "col_isval";
+            this.col_isval.ReadOnly = true;
+            // 
+            // col_disablePrivateChat
+            // 
+            this.col_disablePrivateChat.HeaderText = "禁私聊";
+            this.col_disablePrivateChat.Name = "col_disablePrivateChat";
+            this.col_disablePrivateChat.ReadOnly = true;
+            // 
+            // col_disableTeamChat
+            // 
+            this.col_disableTeamChat.HeaderText = "禁群聊";
+            this.col_disableTeamChat.Name = "col_disableTeamChat";
+            this.col_disableTeamChat.ReadOnly = true;
+            // 
+            // col_userName
+            // 
+            this.col_userName.HeaderText = "username";
+            this.col_userName.Name = "col_userName";
+            this.col_userName.ReadOnly = true;
+            this.col_userName.Visible = false;
+            // 
+            // UserListMenu
+            // 
+            this.UserListMenu.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.UserListMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.UserListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.userList_privateChat,
+            this.userList_lockScreen,
+            this.userList_stopLockScreen,
+            this.userList_permisson,
+            this.userList_studentShow,
+            this.userList_studentVideoShow,
+            this.userList_stopStudentShow});
+            this.UserListMenu.Name = "contextMenuStrip1";
+            this.UserListMenu.Size = new System.Drawing.Size(181, 186);
+            this.UserListMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.UserListMenu_ItemClicked);
+            // 
+            // userList_privateChat
+            // 
+            this.userList_privateChat.Image = ((System.Drawing.Image)(resources.GetObject("userList_privateChat.Image")));
+            this.userList_privateChat.Name = "userList_privateChat";
+            this.userList_privateChat.Size = new System.Drawing.Size(180, 26);
+            this.userList_privateChat.Text = "私聊";
+            // 
+            // userList_lockScreen
+            // 
+            this.userList_lockScreen.Image = ((System.Drawing.Image)(resources.GetObject("userList_lockScreen.Image")));
+            this.userList_lockScreen.Name = "userList_lockScreen";
+            this.userList_lockScreen.Size = new System.Drawing.Size(180, 26);
+            this.userList_lockScreen.Text = "锁屏";
+            // 
+            // userList_stopLockScreen
+            // 
+            this.userList_stopLockScreen.Name = "userList_stopLockScreen";
+            this.userList_stopLockScreen.Size = new System.Drawing.Size(180, 26);
+            this.userList_stopLockScreen.Text = "解锁";
+            // 
+            // userList_permisson
+            // 
+            this.userList_permisson.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.userList_P_forbidPrivateChat,
+            this.userList_P_forbidGroupChat,
+            this.userList_P_allowPrivateChat,
+            this.userList_P_allowGroupChat});
+            this.userList_permisson.Name = "userList_permisson";
+            this.userList_permisson.Size = new System.Drawing.Size(180, 26);
+            this.userList_permisson.Text = "权限管理";
+            // 
+            // userList_P_forbidPrivateChat
+            // 
+            this.userList_P_forbidPrivateChat.Name = "userList_P_forbidPrivateChat";
+            this.userList_P_forbidPrivateChat.Size = new System.Drawing.Size(152, 24);
+            this.userList_P_forbidPrivateChat.Text = "禁止私聊";
+            this.userList_P_forbidPrivateChat.Click += new System.EventHandler(this.userList_P_forbidPrivateChat_Click);
+            // 
+            // userList_P_forbidGroupChat
+            // 
+            this.userList_P_forbidGroupChat.Name = "userList_P_forbidGroupChat";
+            this.userList_P_forbidGroupChat.Size = new System.Drawing.Size(152, 24);
+            this.userList_P_forbidGroupChat.Text = "禁止群聊";
+            this.userList_P_forbidGroupChat.Click += new System.EventHandler(this.userList_P_forbidGroupChat_Click);
+            // 
+            // userList_P_allowPrivateChat
+            // 
+            this.userList_P_allowPrivateChat.Name = "userList_P_allowPrivateChat";
+            this.userList_P_allowPrivateChat.Size = new System.Drawing.Size(152, 24);
+            this.userList_P_allowPrivateChat.Text = "允许私聊";
+            this.userList_P_allowPrivateChat.Click += new System.EventHandler(this.userList_P_allowPrivateChat_Click);
+            // 
+            // userList_P_allowGroupChat
+            // 
+            this.userList_P_allowGroupChat.Name = "userList_P_allowGroupChat";
+            this.userList_P_allowGroupChat.Size = new System.Drawing.Size(152, 24);
+            this.userList_P_allowGroupChat.Text = "允许群聊";
+            this.userList_P_allowGroupChat.Click += new System.EventHandler(this.userList_P_allowGroupChat_Click);
+            // 
+            // userList_studentShow
+            // 
+            this.userList_studentShow.Name = "userList_studentShow";
+            this.userList_studentShow.Size = new System.Drawing.Size(180, 26);
+            this.userList_studentShow.Text = "客户端桌面演示";
+            // 
+            // userList_studentVideoShow
+            // 
+            this.userList_studentVideoShow.Name = "userList_studentVideoShow";
+            this.userList_studentVideoShow.Size = new System.Drawing.Size(180, 26);
+            this.userList_studentVideoShow.Text = "客户端视频演示";
+            // 
+            // userList_stopStudentShow
+            // 
+            this.userList_stopStudentShow.Name = "userList_stopStudentShow";
+            this.userList_stopStudentShow.Size = new System.Drawing.Size(180, 26);
+            this.userList_stopStudentShow.Text = "停止客户端演示";
             // 
             // panel3
             // 
@@ -207,6 +353,12 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(849, 445);
             this.flowLayoutPanel1.TabIndex = 1;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "客户端.png");
             // 
             // panel2
             // 
@@ -714,173 +866,6 @@
             this.menuSilence.UseVisualStyleBackColor = false;
             this.menuSilence.Click += new System.EventHandler(this.menuSilence_Click);
             // 
-            // UserListMenu
-            // 
-            this.UserListMenu.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.UserListMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.UserListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.userList_privateChat,
-            this.userList_lockScreen,
-            this.userList_stopLockScreen,
-            this.userList_permisson,
-            this.userList_studentShow,
-            this.userList_studentVideoShow,
-            this.userList_stopStudentShow});
-            this.UserListMenu.Name = "contextMenuStrip1";
-            this.UserListMenu.Size = new System.Drawing.Size(181, 186);
-            this.UserListMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.UserListMenu_ItemClicked);
-            // 
-            // userList_privateChat
-            // 
-            this.userList_privateChat.Image = ((System.Drawing.Image)(resources.GetObject("userList_privateChat.Image")));
-            this.userList_privateChat.Name = "userList_privateChat";
-            this.userList_privateChat.Size = new System.Drawing.Size(180, 26);
-            this.userList_privateChat.Text = "私聊";
-            // 
-            // userList_lockScreen
-            // 
-            this.userList_lockScreen.Image = ((System.Drawing.Image)(resources.GetObject("userList_lockScreen.Image")));
-            this.userList_lockScreen.Name = "userList_lockScreen";
-            this.userList_lockScreen.Size = new System.Drawing.Size(180, 26);
-            this.userList_lockScreen.Text = "锁屏";
-            // 
-            // userList_stopLockScreen
-            // 
-            this.userList_stopLockScreen.Name = "userList_stopLockScreen";
-            this.userList_stopLockScreen.Size = new System.Drawing.Size(180, 26);
-            this.userList_stopLockScreen.Text = "解锁";
-            // 
-            // userList_permisson
-            // 
-            this.userList_permisson.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.userList_P_forbidPrivateChat,
-            this.userList_P_forbidGroupChat,
-            this.userList_P_allowPrivateChat,
-            this.userList_P_allowGroupChat});
-            this.userList_permisson.Name = "userList_permisson";
-            this.userList_permisson.Size = new System.Drawing.Size(180, 26);
-            this.userList_permisson.Text = "权限管理";
-            // 
-            // userList_P_forbidPrivateChat
-            // 
-            this.userList_P_forbidPrivateChat.Name = "userList_P_forbidPrivateChat";
-            this.userList_P_forbidPrivateChat.Size = new System.Drawing.Size(134, 24);
-            this.userList_P_forbidPrivateChat.Text = "禁止私聊";
-            this.userList_P_forbidPrivateChat.Click += new System.EventHandler(this.userList_P_forbidPrivateChat_Click);
-            // 
-            // userList_P_forbidGroupChat
-            // 
-            this.userList_P_forbidGroupChat.Name = "userList_P_forbidGroupChat";
-            this.userList_P_forbidGroupChat.Size = new System.Drawing.Size(134, 24);
-            this.userList_P_forbidGroupChat.Text = "禁止群聊";
-            this.userList_P_forbidGroupChat.Click += new System.EventHandler(this.userList_P_forbidGroupChat_Click);
-            // 
-            // userList_P_allowPrivateChat
-            // 
-            this.userList_P_allowPrivateChat.Name = "userList_P_allowPrivateChat";
-            this.userList_P_allowPrivateChat.Size = new System.Drawing.Size(134, 24);
-            this.userList_P_allowPrivateChat.Text = "允许私聊";
-            this.userList_P_allowPrivateChat.Click += new System.EventHandler(this.userList_P_allowPrivateChat_Click);
-            // 
-            // userList_P_allowGroupChat
-            // 
-            this.userList_P_allowGroupChat.Name = "userList_P_allowGroupChat";
-            this.userList_P_allowGroupChat.Size = new System.Drawing.Size(134, 24);
-            this.userList_P_allowGroupChat.Text = "允许群聊";
-            this.userList_P_allowGroupChat.Click += new System.EventHandler(this.userList_P_allowGroupChat_Click);
-            // 
-            // userList_studentShow
-            // 
-            this.userList_studentShow.Name = "userList_studentShow";
-            this.userList_studentShow.Size = new System.Drawing.Size(180, 26);
-            this.userList_studentShow.Text = "客户端演示";
-            // 
-            // userList_studentVideoShow
-            // 
-            this.userList_studentVideoShow.Name = "userList_studentVideoShow";
-            this.userList_studentVideoShow.Size = new System.Drawing.Size(180, 26);
-            this.userList_studentVideoShow.Text = "客户端视频演示";
-            // 
-            // userList_stopStudentShow
-            // 
-            this.userList_stopStudentShow.Name = "userList_stopStudentShow";
-            this.userList_stopStudentShow.Size = new System.Drawing.Size(180, 26);
-            this.userList_stopStudentShow.Text = "停止客户端演示";
-            // 
-            // onlineListGrid1
-            // 
-            this.onlineListGrid1.AllowUserToAddRows = false;
-            this.onlineListGrid1.AllowUserToDeleteRows = false;
-            this.onlineListGrid1.AllowUserToResizeRows = false;
-            this.onlineListGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.onlineListGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.onlineListGrid1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.onlineListGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.onlineListGrid1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.col_name,
-            this.col_isval,
-            this.col_disablePrivateChat,
-            this.col_disableTeamChat,
-            this.col_userName});
-            this.onlineListGrid1.ContextMenuStrip = this.UserListMenu;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.onlineListGrid1.DefaultCellStyle = dataGridViewCellStyle4;
-            this.onlineListGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.onlineListGrid1.Location = new System.Drawing.Point(3, 57);
-            this.onlineListGrid1.MultiSelect = false;
-            this.onlineListGrid1.Name = "onlineListGrid1";
-            this.onlineListGrid1.ReadOnly = true;
-            this.onlineListGrid1.RowHeadersVisible = false;
-            this.onlineListGrid1.RowTemplate.Height = 23;
-            this.onlineListGrid1.Size = new System.Drawing.Size(314, 409);
-            this.onlineListGrid1.TabIndex = 4;
-            this.onlineListGrid1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.onlineListGrid1_MouseDown);
-            // 
-            // col_name
-            // 
-            this.col_name.FillWeight = 120F;
-            this.col_name.HeaderText = "姓名";
-            this.col_name.Name = "col_name";
-            this.col_name.ReadOnly = true;
-            // 
-            // col_isval
-            // 
-            this.col_isval.HeaderText = "验证";
-            this.col_isval.Name = "col_isval";
-            this.col_isval.ReadOnly = true;
-            // 
-            // col_disablePrivateChat
-            // 
-            this.col_disablePrivateChat.HeaderText = "禁私聊";
-            this.col_disablePrivateChat.Name = "col_disablePrivateChat";
-            this.col_disablePrivateChat.ReadOnly = true;
-            // 
-            // col_disableTeamChat
-            // 
-            this.col_disableTeamChat.HeaderText = "禁群聊";
-            this.col_disableTeamChat.Name = "col_disableTeamChat";
-            this.col_disableTeamChat.ReadOnly = true;
-            // 
-            // col_userName
-            // 
-            this.col_userName.HeaderText = "username";
-            this.col_userName.Name = "col_userName";
-            this.col_userName.ReadOnly = true;
-            this.col_userName.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -899,6 +884,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.myGroupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.onlineListGrid1)).EndInit();
+            this.UserListMenu.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.myGroupBox8.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -915,8 +902,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.myGroupBox2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.UserListMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.onlineListGrid1)).EndInit();
             this.ResumeLayout(false);
 
         }

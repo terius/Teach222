@@ -17,18 +17,55 @@ namespace NewTeacher
     public partial class MainForm : MyForm
     {
         #region 自定义字段
+        /// <summary>
+        /// 在线用户类
+        /// </summary>
         OnlineInfo onlineInfo;
+
+        /// <summary>
+        /// 聊天窗体
+        /// </summary>
         ChatForm chatForm;
-        //  string soundSource;
-        bool isPush = false;//是否正在推送视频流
+
+        /// <summary>
+        /// 是否正在推送视频流
+        /// </summary>
+        bool isPush = false;
+
+        /// <summary>
+        ///  当前操作的学生用户名
+        /// </summary>
         string actionStuUserName;
+
+        /// <summary>
+        ///  当前操作的学生姓名
+        /// </summary>
+        string actionStuTrueName;
+
+        /// <summary>
+        /// 视频播放窗体
+        /// </summary>
         VideoShow videoForm;
-        //   ViewRtsp videoPlayer;
-        string videoFileName = "";
+
+        /// <summary>
+        /// UDP控制类
+        /// </summary>
         EduUDPClient udpClient;
+
+
+        /// <summary>
+        /// 是否正在学生演示
+        /// </summary>
         bool isStudentShowing;
+
+        /// <summary>
+        /// 学生端标题
+        /// </summary>
         string _clientTitle = "学生端";
 
+        /// <summary>
+        /// 聊天窗体是否已打开
+        /// </summary>
         public bool ChatFormIsVisible
         {
             get
@@ -50,7 +87,7 @@ namespace NewTeacher
             _clientTitle = GlobalVariable.ClientTitle;
             this.Text = GlobalVariable.SystemTitle;
             menuStudentShow.Text = GlobalVariable.ClientTitle + "演示";
-            myGroupBox7.Text = "在线" + GlobalVariable.ClientTitle +  "列表";
+            myGroupBox7.Text = "在线" + GlobalVariable.ClientTitle + "列表";
             myGroupBox8.Text = GlobalVariable.ClientTitle + "屏幕";
             if (GlobalVariable.IsHuiShenXiTong)
             {
@@ -138,6 +175,10 @@ namespace NewTeacher
         }
 
 
+        /// <summary>
+        /// 处理收到的聊天信息
+        /// </summary>
+        /// <param name="message"></param>
         private void DoReceiveChatMessage(ReceieveMessage message)
         {
             var chatMessage = GlobalVariable.CreateChatMessage(message);
@@ -147,6 +188,9 @@ namespace NewTeacher
             });
         }
 
+        /// <summary>
+        /// 创建文件夹
+        /// </summary>
         private void CreateFilePath()
         {
             if (!Directory.Exists(GlobalVariable.BaseFilePath))
@@ -393,6 +437,210 @@ namespace NewTeacher
                 newItem.Height = 220;
             }
         }
+
+
+
+        private void GetSelectStudentUserName()
+        {
+            actionStuUserName = null;
+            if (onlineListGrid1.Rows.Count <= 0)
+            {
+                GlobalVariable.ShowWarnning("当前在线" + _clientTitle + "为空");
+                return;
+            }
+            if (onlineListGrid1.SelectedRows.Count <= 0)
+            {
+                GlobalVariable.ShowWarnning("请先选择" + _clientTitle);
+                return;
+            }
+
+            actionStuUserName = onlineListGrid1.SelectedRows[0].Cells["col_userName"].Value.ToString();
+            actionStuTrueName = onlineListGrid1.SelectedRows[0].Cells["col_name"].Value.ToString();
+
+
+            //old
+            //actionStuUserName = null;
+            //if (lvOnline.Items.Count <= 0)
+            //{
+            //    GlobalVariable.ShowWarnning("当前在线" + _clientTitle + "为空");
+            //    return "";
+            //}
+            //if (lvOnline.SelectedItems.Count <= 0)
+            //{
+            //    GlobalVariable.ShowWarnning("请先选择" + _clientTitle);
+            //    return "";
+            //}
+            //string username = lvOnline.SelectedItems[0].SubItems[2].Text;
+            //actionStuUserName = username;
+            //return username;
+        }
+
+        private void ChatToALL()
+        {
+            var request = new ChatMessage();
+            request.SendDisplayName = "所有人";
+            request.ChatType = ChatType.GroupChat;
+            request.SendUserName = "allpeople";
+            request.UserType = ClientRole.Student;
+            GlobalVariable.AddNewChat(request);
+            OpenOrCreateChatForm(request, false);
+        }
+
+        public void OpenOrCreateChatForm(ChatMessage request, bool fromReceMsg)
+        {
+
+            if (chatForm == null || chatForm.IsDisposed)
+            {
+                chatForm = new ChatForm();
+            }
+
+            chatForm.BringToFront();
+            chatForm.CreateChatItems(request, fromReceMsg);
+            if (fromReceMsg && !ChatFormIsVisible)
+            {
+                GlobalVariable.ShowChatMessageNotify(request, chatForm);
+            }
+            else
+            {
+                chatForm.Show();
+            }
+
+        }
+
+        /// <summary>
+        /// 导出签到
+        /// </summary>
+        private void ExportSign()
+        {
+            //var onlineList = onlineInfo.GetStudentOnlineList();
+            if (onlineInfo == null || onlineInfo.StudentOnlineList.Count <= 0)
+            {
+                GlobalVariable.ShowWarnning("当前登陆" + _clientTitle + "为空");
+                return;
+            }
+            var table = new System.Data.DataTable();
+            table.Columns.Add(_clientTitle + "姓名", typeof(string));
+            table.Columns.Add("是否签到", typeof(string));
+            foreach (var item in onlineInfo.StudentOnlineList)
+            {
+                if (item.UserType == ClientRole.Student)
+                {
+                    System.Data.DataRow dr = table.NewRow();
+                    dr[0] = item.DisplayName;
+                    dr[1] = item.IsDianMing ? "是" : "否";
+                    table.Rows.Add(dr);
+                }
+            }
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.FileName = "导出签到.xls";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                ExcelHelper.Export(table, saveFileDialog1.FileName);
+                GlobalVariable.ShowSuccess("导出成功");
+            }
+
+        }
+        #endregion
+
+
+        #region  主菜单按钮事件
+        private void menuClassNamed_Click(object sender, System.EventArgs e)
+        {
+            VideoShow vs = new VideoShow(ProgramType.Student, "stu213123");
+            vs.Show();
+            vs.PlayVideo(@"D:\qh\0811.mp4");
+
+            //   SendAction(TeacherAction.menuClassNamed_Click);
+        }
+
+        private void menuExportSign_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuExportSign_Click);
+        }
+
+        private void menuGroupChat_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuGroupChat_Click);
+        }
+
+        private void menuTeamCreate_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuTeamCreate_Click);
+        }
+
+        private void menuViewTeam_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuViewTeam_Click);
+        }
+
+        private void menuSilence_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuSilence_Click);
+        }
+
+        private void menuRomoteControl_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuRomoteControl_Click);
+        }
+
+        private void menuScreenShare_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuScreenShare_Click);
+        }
+
+        private void menuStudentShow_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuStudentShow_Click);
+        }
+
+        private void menuVideoLive_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuVideoLive_Click);
+        }
+
+        private void menuFileShare_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuFileShare_Click);
+        }
+
+        private void menuFileShare2_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuFileShare2_Click);
+        }
+
+        private void menuAccount_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuAccount_Click);
+        }
+
+        private void menuVideoRecord_Click(object sender, System.EventArgs e)
+        {
+            SendAction(TeacherAction.menuVideoRecord_Click);
+        }
+
+        private enum TeacherAction
+        {
+            menuClassNamed_Click,
+            menuExportSign_Click,
+            menuGroupChat_Click,
+            menuTeamCreate_Click,
+            menuViewTeam_Click,
+            menuSilence_Click,
+            menuRomoteControl_Click,
+            menuScreenShare_Click,
+            menuStudentShow_Click,
+            menuVideoLive_Click,
+            menuFileShare_Click,
+            menuFileShare2_Click,
+            menuAccount_Click,
+            menuVideoRecord_Click
+        }
+
+        /// <summary>
+        /// 屏幕主菜单
+        /// </summary>
+        /// <param name="type"></param>
         private void SendAction(TeacherAction type)
         {
             switch (type)
@@ -434,17 +682,17 @@ namespace NewTeacher
                     //    return;
                     //}
                     //string username = lvOnline.SelectedItems[0].SubItems[2].Text;
-                    string username = GetSelectStudentUserName();
-                    if (!string.IsNullOrWhiteSpace(username))
+                    GetSelectStudentUserName();
+                    if (!string.IsNullOrWhiteSpace(actionStuUserName))
                     {
                         if (menuRomoteControl.Text == "禁用键鼠")
                         {
-                            GlobalVariable.client.Send_LockScreen(username);
+                            GlobalVariable.client.Send_LockScreen(actionStuUserName);
                             menuRomoteControl.Text = "解锁";
                         }
                         else
                         {
-                            GlobalVariable.client.Send_StopLockScreen(username);
+                            GlobalVariable.client.Send_StopLockScreen(actionStuUserName);
                             menuRomoteControl.Text = "禁用键鼠";
                         }
                     }
@@ -540,7 +788,7 @@ namespace NewTeacher
 
                     if (this.menuVideoRecord.Text == "屏幕录制")
                     {
-                        videoFileName = GlobalVariable.BeginRecordVideo();
+                        GlobalVariable.BeginRecordVideo();
                         this.menuVideoRecord.Image = Resources.录制;
                         GlobalVariable.ShowNotifyMessage("正在屏幕录制中...", -1);
                         this.menuVideoRecord.Text = "停止录制";
@@ -558,205 +806,22 @@ namespace NewTeacher
             }
         }
 
-        private string GetSelectStudentUserName()
-        {
-            actionStuUserName = null;
-            if (onlineListGrid1.Rows.Count <= 0)
-            {
-                GlobalVariable.ShowWarnning("当前在线" + _clientTitle + "为空");
-                return "";
-            }
-            if (onlineListGrid1.SelectedRows.Count <= 0)
-            {
-                GlobalVariable.ShowWarnning("请先选择" + _clientTitle);
-                return "";
-            }
-            string username = onlineListGrid1.SelectedRows[0].Cells["col_userName"].Value.ToString();
-            actionStuUserName = username;
-            return username;
-
-            //old
-            //actionStuUserName = null;
-            //if (lvOnline.Items.Count <= 0)
-            //{
-            //    GlobalVariable.ShowWarnning("当前在线" + _clientTitle + "为空");
-            //    return "";
-            //}
-            //if (lvOnline.SelectedItems.Count <= 0)
-            //{
-            //    GlobalVariable.ShowWarnning("请先选择" + _clientTitle);
-            //    return "";
-            //}
-            //string username = lvOnline.SelectedItems[0].SubItems[2].Text;
-            //actionStuUserName = username;
-            //return username;
-        }
-
-        private void ChatToALL()
-        {
-            var request = new ChatMessage();
-            request.SendDisplayName = "所有人";
-            request.ChatType = ChatType.GroupChat;
-            request.SendUserName = "allpeople";
-            request.UserType = ClientRole.Student;
-            GlobalVariable.AddNewChat(request);
-            OpenOrCreateChatForm(request, false);
-        }
-
-        public void OpenOrCreateChatForm(ChatMessage request, bool fromReceMsg)
-        {
-
-            if (chatForm == null || chatForm.IsDisposed)
-            {
-                chatForm = new ChatForm();
-            }
-
-            chatForm.BringToFront();
-            chatForm.CreateChatItems(request, fromReceMsg);
-            if (fromReceMsg && !ChatFormIsVisible)
-            {
-                GlobalVariable.ShowChatMessageNotify(request, chatForm);
-            }
-            else
-            {
-                chatForm.Show();
-            }
-
-        }
-
-        private void ExportSign()
-        {
-            //var onlineList = onlineInfo.GetStudentOnlineList();
-            if (onlineInfo == null || onlineInfo.StudentOnlineList.Count <= 0)
-            {
-                GlobalVariable.ShowWarnning("当前登陆" + _clientTitle + "为空");
-                return;
-            }
-            var table = new System.Data.DataTable();
-            table.Columns.Add(_clientTitle + "姓名", typeof(string));
-            table.Columns.Add("是否签到", typeof(string));
-            foreach (var item in onlineInfo.StudentOnlineList)
-            {
-                if (item.UserType == ClientRole.Student)
-                {
-                    System.Data.DataRow dr = table.NewRow();
-                    dr[0] = item.DisplayName;
-                    dr[1] = item.IsDianMing ? "是" : "否";
-                    table.Rows.Add(dr);
-                }
-            }
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.RestoreDirectory = true;
-            saveFileDialog1.FileName = "导出签到.xls";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                ExcelHelper.Export(table, saveFileDialog1.FileName);
-                GlobalVariable.ShowSuccess("导出成功");
-            }
-
-        }
         #endregion
 
 
-        #region  事件
-        private void menuClassNamed_Click(object sender, System.EventArgs e)
-        {
-            VideoShow vs = new VideoShow(ProgramType.Student,"stu213123");
-            vs.Show();
-           // vs.PlayVideo(@"D:\qh\0811.mp4");
 
-         //   SendAction(TeacherAction.menuClassNamed_Click);
-        }
-
-        private void menuExportSign_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuExportSign_Click);
-        }
-
-        private void menuGroupChat_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuGroupChat_Click);
-        }
-
-        private void menuTeamCreate_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuTeamCreate_Click);
-        }
-
-        private void menuViewTeam_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuViewTeam_Click);
-        }
-
-        private void menuSilence_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuSilence_Click);
-        }
-
-        private void menuRomoteControl_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuRomoteControl_Click);
-        }
-
-        private void menuScreenShare_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuScreenShare_Click);
-        }
-
-        private void menuStudentShow_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuStudentShow_Click);
-        }
-
-        private void menuVideoLive_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuVideoLive_Click);
-        }
-
-        private void menuFileShare_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuFileShare_Click);
-        }
-
-        private void menuFileShare2_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuFileShare2_Click);
-        }
-
-        private void menuAccount_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuAccount_Click);
-        }
-
-        private void menuVideoRecord_Click(object sender, System.EventArgs e)
-        {
-            SendAction(TeacherAction.menuVideoRecord_Click);
-        }
-
-        private enum TeacherAction
-        {
-            menuClassNamed_Click,
-            menuExportSign_Click,
-            menuGroupChat_Click,
-            menuTeamCreate_Click,
-            menuViewTeam_Click,
-            menuSilence_Click,
-            menuRomoteControl_Click,
-            menuScreenShare_Click,
-            menuStudentShow_Click,
-            menuVideoLive_Click,
-            menuFileShare_Click,
-            menuFileShare2_Click,
-            menuAccount_Click,
-            menuVideoRecord_Click
-        }
-
-
+        #region 用户列表右键操作事件
         private void btnRefresh_Click(object sender, System.EventArgs e)
         {
             GlobalVariable.client.Send_OnlineList();
         }
 
+
+        /// <summary>
+        /// 用户列表右键操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserListMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             string name = e.ClickedItem.Name;
@@ -824,7 +889,11 @@ namespace NewTeacher
         }
 
 
-
+        /// <summary>
+        /// 用户列表禁止私聊
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void userList_P_forbidPrivateChat_Click(object sender, System.EventArgs e)
         {
             GetSelectStudentUserName();
@@ -835,6 +904,11 @@ namespace NewTeacher
             }
         }
 
+        /// <summary>
+        /// 用户列表禁止群聊
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void userList_P_forbidGroupChat_Click(object sender, System.EventArgs e)
         {
             GetSelectStudentUserName();
@@ -845,6 +919,11 @@ namespace NewTeacher
             }
         }
 
+        /// <summary>
+        /// 用户列表允许私聊
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void userList_P_allowPrivateChat_Click(object sender, System.EventArgs e)
         {
             GetSelectStudentUserName();
@@ -855,6 +934,11 @@ namespace NewTeacher
             }
         }
 
+        /// <summary>
+        /// 用户列表允许群聊
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void userList_P_allowGroupChat_Click(object sender, System.EventArgs e)
         {
             GetSelectStudentUserName();
@@ -866,6 +950,8 @@ namespace NewTeacher
         }
 
         #endregion
+
+
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
