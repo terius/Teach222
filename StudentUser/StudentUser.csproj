@@ -78,6 +78,12 @@
     <Compile Include="Controls\CustomTextBox.Designer.cs">
       <DependentUpon>CustomTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="DisableMouseAndKeyboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DisableMouseAndKeyboardForm.Designer.cs">
+      <DependentUpon>DisableMouseAndKeyboardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CustomTextBox.resx">
       <DependentUpon>CustomTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DisableMouseAndKeyboardForm.resx">
+      <DependentUpon>DisableMouseAndKeyboardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

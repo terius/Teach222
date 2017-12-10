@@ -53,7 +53,7 @@ namespace SharedForms
         /// <summary>
         /// 是否为会审系统
         /// </summary>
-        public static readonly bool IsHuiShenXiTong = false;
+        public static readonly bool IsHuiShenXiTong = System.Configuration.ConfigurationManager.AppSettings["IsHuiShen"] == "1" ? true : false;
 
 
         static readonly string msgSound = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "msg.wav");
@@ -696,7 +696,7 @@ namespace SharedForms
         {
             string fileName = Path.Combine(VideoRecordPath, DateTime.Now.Ticks.ToString() + ".mpg");
             client.BeginRecordVideo(fileName);
-          
+
         }
         public static void EndRecordVideo()
         {

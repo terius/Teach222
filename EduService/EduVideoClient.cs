@@ -19,6 +19,7 @@ namespace EduService
         private string _serverIp;
         private string _ipSelf;
         private int _portSelf;
+        string _fbl;//分辨率
 
         //  private int widthPixel;
         //  private int heightPixel;
@@ -33,20 +34,23 @@ namespace EduService
 
 
 
-        public string beginScreenInteract()
+
+        public string beginScreenInteract(string fbl = null)
         {
+            _fbl = fbl;
             if (isBeginScreenInteract)
             {
                 stopScreenInteract();
             }
-            this._rtspAddress = this.pushRtspStream(this._serverIp, this._ipSelf, this._portSelf);
+            this._rtspAddress = pushRtspStream(this._serverIp, this._ipSelf, this._portSelf);
 
             this.isBeginScreenInteract = true;
             return this._rtspAddress;
         }
 
-        public string beginVideoInteract()
+        public string beginVideoInteract(string fbl = null)
         {
+            _fbl = fbl;
             if (isBeginScreenInteract)
             {
                 stopScreenInteract();
@@ -126,7 +130,8 @@ namespace EduService
             }
             string nameByIpPort = createNameByIpPort(ipSelf, portSelf);
             var rtspUrl = "rtsp://" + ipServer + "/" + nameByIpPort + ".sdp";
-            string para = " -r 25 -g 20 -s 1024*768 -vcodec libx264 -x264opts bframes=3:b-adapt=0 -b:v 2000k -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency -f rtsp rtsp://" + ipServer + "/" + nameByIpPort + ".sdp";
+            var fbl = string.IsNullOrWhiteSpace(_fbl) ? "1280*720" : _fbl;
+            string para = string.Format(" -r 25 -g 20 -s {0} -vcodec libx264 -x264opts bframes=3:b-adapt=0 -b:v 2000k -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency -f rtsp rtsp://{1}/{2}.sdp", fbl, ipServer, nameByIpPort);
             return new string[] { rtspUrl, para };
         }
 
@@ -137,26 +142,26 @@ namespace EduService
             return para;
         }
 
-        public void BeginRecordVideo(string filename)
-        {
+        //public void BeginRecordVideo(string filename)
+        //{
 
-            var video = GetVideoName();
-            if (string.IsNullOrWhiteSpace(video))
-            {
-                throw new Exception("未找到摄像头");
-            }
-            var url = "-f dshow -i video=\"" + video + "\"";
-            var mic = GetMicName();
-            if (!string.IsNullOrWhiteSpace(mic))
-            {
-                url += ":audio=\"" + mic + "\" -acodec mp2 -ab 128k";
-            }
-            url += CreateFFmpegVideoRecordParam() + filename;
-            Loger.LogMessage("录制视频命令:" + url);
-            this._ffmpeg = new Ffmpeg();
-            this._ffmpeg.beginExecute(url);
-            _ffmpeg.WaitComplete();
-        }
+        //    var video = GetVideoName();
+        //    if (string.IsNullOrWhiteSpace(video))
+        //    {
+        //        throw new Exception("未找到摄像头");
+        //    }
+        //    var url = "-f dshow -i video=\"" + video + "\"";
+        //    var mic = GetMicName();
+        //    if (!string.IsNullOrWhiteSpace(mic))
+        //    {
+        //        url += ":audio=\"" + mic + "\" -acodec mp2 -ab 128k";
+        //    }
+        //    url += CreateFFmpegVideoRecordParam() + filename;
+        //    Loger.LogMessage("录制视频命令:" + url);
+        //    this._ffmpeg = new Ffmpeg();
+        //    this._ffmpeg.beginExecute(url);
+        //    _ffmpeg.WaitComplete();
+        //}
 
         public void BeginRecordScreen(string filename)
         {
@@ -178,7 +183,7 @@ namespace EduService
         {
             if (_ffmpeg != null)
             {
-             
+
                 this._ffmpeg.dispose();
 
             }
@@ -313,4 +318,6 @@ namespace EduService
 
         public delegate void MessageReceivedEventHandler(string msg);
     }
+
+
 }

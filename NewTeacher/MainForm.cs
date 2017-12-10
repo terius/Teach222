@@ -547,11 +547,11 @@ namespace NewTeacher
         #region  主菜单按钮事件
         private void menuClassNamed_Click(object sender, System.EventArgs e)
         {
-            VideoShow vs = new VideoShow(ProgramType.Student, "stu213123");
-            vs.Show();
-            vs.PlayVideo(@"D:\qh\0811.mp4");
+            //VideoShow vs = new VideoShow(ProgramType.Student, "stu213123");
+            //vs.Show();
+            //vs.PlayVideo(@"D:\qh\0811.mp4");
 
-            //   SendAction(TeacherAction.menuClassNamed_Click);
+               SendAction(TeacherAction.menuClassNamed_Click);
         }
 
         private void menuExportSign_Click(object sender, System.EventArgs e)
@@ -703,7 +703,7 @@ namespace NewTeacher
                     {
                         if (!isPush)
                         {
-                            GlobalVariable.client.CreateScreenInteract();
+                        
                             GlobalVariable.client.Send_ScreenInteract();
                             menuScreenShare.Text = "关闭广播";
                             isPush = true;
@@ -756,7 +756,7 @@ namespace NewTeacher
                     {
                         if (!isPush)
                         {
-                            GlobalVariable.client.CreateScreenInteract();
+                        
                             GlobalVariable.client.Send_VideoInteract();
                             menuVideoLive.Text = "关闭直播";
                             isPush = true;

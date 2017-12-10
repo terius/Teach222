@@ -29,12 +29,12 @@ namespace EduService
         readonly int serverPort = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["serverPort"]);
         bool _connected;
         EduVideoClient _screenInteract;
-    
+
         ProgramType programType;
         bool isConnecting = false;
         bool _ffmpegIsRun;
 
-        
+
 
 
         public bool ClientIsConnected
@@ -52,11 +52,11 @@ namespace EduService
         }
 
 
- 
+
 
         private void Client_Error(object sender, ErrorEventArgs e)
         {
-           ConnectToServer();
+            ConnectToServer();
         }
 
         private void ConnectToServer()
@@ -124,7 +124,7 @@ namespace EduService
             }
             UnDueMessages.Clear();
         }
-        
+
         private IList<ReceieveMessage> UnDueMessages = new List<ReceieveMessage>();
         public Action<ReceieveMessage> OnStudentReceiveMessage;
         public Action<ReceieveMessage> OnTeacherReceiveMessage;
@@ -212,7 +212,7 @@ namespace EduService
             return await client.Close();
         }
 
-        public void CreateScreenInteract()
+        private void CreateScreenInteract()
         {
             if (_screenInteract == null)
             {
@@ -333,24 +333,27 @@ namespace EduService
         /// <summary>
         /// 屏幕广播
         /// </summary>
-        public void Send_ScreenInteract()
+        public void Send_ScreenInteract(string fbl = null)
         {
-            string rtspAddress = _screenInteract.beginScreenInteract();
+            CreateScreenInteract();
+            string rtspAddress = _screenInteract.beginScreenInteract(fbl);
             var request = new ScreenInteract_Request { url = rtspAddress };
             SendMessage(request, CommandType.ScreenInteract);
         }
 
 
-        public void Send_StudentShowToTeacher()
+        public void Send_StudentShowToTeacher(string fbl = null)
         {
-            string rtspAddress = _screenInteract.beginScreenInteract();
+            CreateScreenInteract();
+            string rtspAddress = _screenInteract.beginScreenInteract(fbl);
             var request = new ScreenInteract_Request { url = rtspAddress };
             SendMessage(request, CommandType.StudentShowToTeacher);
         }
 
-        public void Send_StudentShowVideoToTeacher()
+        public void Send_StudentShowVideoToTeacher(string fbl = null)
         {
-            string rtspAddress = _screenInteract.beginVideoInteract();
+            CreateScreenInteract();
+            string rtspAddress = _screenInteract.beginVideoInteract(fbl);
             var request = new ScreenInteract_Request { url = rtspAddress };
             SendMessage(request, CommandType.StudentShowToTeacher);
         }
@@ -360,6 +363,7 @@ namespace EduService
         /// </summary>
         public void Send_VideoInteract()
         {
+            CreateScreenInteract();
             string rtspAddress = _screenInteract.beginVideoInteract();
             var request = new ScreenInteract_Request { url = rtspAddress };
             SendMessage(request, CommandType.ScreenInteract);

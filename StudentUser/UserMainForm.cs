@@ -15,8 +15,11 @@ namespace StudentUser
 {
     public partial class UserMainForm : Form
     {
-        BlackScreen bsForm = null;
-     
+        //  BlackScreen bsForm = null;
+        DisableMouseAndKeyboardForm bsForm = null;
+        bool isPushScream = false;
+        CommandType currPushCreamType;
+
         ChatForm chatForm;
         //   ViewRtsp videoPlayer2;
         CallForm callForm;
@@ -53,6 +56,8 @@ namespace StudentUser
                 // GlobalVariable.MasterTitle = "指挥室";
                 mSignIn.Visible = false;
                 mHandUp.Visible = false;
+                mPrivateSMS.Visible = false;
+                mFileShare.Visible = false;
             }
 
             chatForm = new ChatForm();
@@ -88,7 +93,7 @@ namespace StudentUser
                             theadScreen.Abort();
                         }
                         break;
-                    case (int)CommandType.ScreenInteract://推送视频流
+                    case (int)CommandType.ScreenInteract://播放视频流
                         ShowNotify("收到视频流，开始播放");
                         ScreenInteract_Response resp = JsonHelper.DeserializeObj<ScreenInteract_Response>(message.DataStr);
                         DoAction(() =>
@@ -164,8 +169,8 @@ namespace StudentUser
                         ShowNotify("收到推送请求，开始广播当前屏幕");
                         DoAction(() =>
                         {
-                            GlobalVariable.client.CreateScreenInteract();
-                            GlobalVariable.client.Send_ScreenInteract();
+                            currPushCreamType = CommandType.CallStudentShow;
+                            PushVideoCream();
 
                         });
                         break;
@@ -173,8 +178,8 @@ namespace StudentUser
                         ShowNotify("收到推送请求，开始推送当前屏幕到" + GlobalVariable.MasterTitle);
                         DoAction(() =>
                         {
-                            GlobalVariable.client.CreateScreenInteract();
-                            GlobalVariable.client.Send_StudentShowToTeacher();
+                            currPushCreamType = CommandType.CallStudentShowForMySelf;
+                            PushVideoCream();
 
                         });
                         break;
@@ -182,8 +187,8 @@ namespace StudentUser
                         ShowNotify("收到推送请求，开始推送摄像头视频到" + GlobalVariable.MasterTitle);
                         DoAction(() =>
                         {
-                            GlobalVariable.client.CreateScreenInteract();
-                            GlobalVariable.client.Send_StudentShowVideoToTeacher();
+                            currPushCreamType = CommandType.CallStudentShowVideoToTeacher;
+                            PushVideoCream();
 
                         });
                         break;
@@ -193,7 +198,7 @@ namespace StudentUser
                         {
                             GlobalVariable.client.StopScreenInteract();
                             GlobalVariable.client.Send_StopScreenInteract();
-
+                            isPushScream = false;
                         });
                         break;
                     case (int)CommandType.ForbidPrivateChat://收到禁止私聊
@@ -235,6 +240,33 @@ namespace StudentUser
 
             //  GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
             //   GlobalVariable.client.Send_StudentInMainForm();
+        }
+
+        private void StopPushScream()
+        {
+            if (isPushScream)
+            {
+                GlobalVariable.client.StopScreenInteract();
+                GlobalVariable.client.Send_StopScreenInteract();
+            }
+        }
+
+        private void PushVideoCream(string fbl = null)
+        {
+         //   StopPushScream();
+            if (currPushCreamType == CommandType.CallStudentShow)
+            {
+                GlobalVariable.client.Send_ScreenInteract(fbl);
+            }
+            else if (currPushCreamType == CommandType.CallStudentShowForMySelf)
+            {
+                GlobalVariable.client.Send_StudentShowToTeacher(fbl);
+            }
+            else if (currPushCreamType == CommandType.CallStudentShowVideoToTeacher)
+            {
+                GlobalVariable.client.Send_StudentShowVideoToTeacher(fbl);
+            }
+            isPushScream = true;
         }
 
 
@@ -435,7 +467,7 @@ namespace StudentUser
 
 
 
-      
+
 
 
 
@@ -464,14 +496,14 @@ namespace StudentUser
                 videoForm = null;
             }
 
-           
+
 
         }
 
         /// <summary>
         /// 锁屏（禁止鼠标和键盘)
         /// </summary>
-        private void LockScreen(bool isSlient)
+        private void LockScreen(bool setBlack)
         {
             // BlockInput(true);
             // actHook = new Cls.UserActivityHook();
@@ -482,12 +514,16 @@ namespace StudentUser
             //     actHook.Start();
             DoAction(() =>
             {
-                if (bsForm == null)
+                if (bsForm == null || bsForm.IsDisposed)
                 {
-                    BlackScreen frm = new BlackScreen(isSlient);
-                    frm.Show();
-                    bsForm = frm;
+                    bsForm = new DisableMouseAndKeyboardForm();
+                    //BlackScreen frm = new BlackScreen(isSlient);
+                    //frm.Show();
+                    //bsForm = frm;
                 }
+                bsForm.Show();
+                bsForm.SetDisable(setBlack);
+
             });
 
 
@@ -505,10 +541,10 @@ namespace StudentUser
             //}
             DoAction(() =>
             {
+
                 if (bsForm != null)
                 {
-                    bsForm.EnableMouseAndKeyboard();
-                    bsForm.Close();
+                    bsForm.Release();
                     bsForm = null;
                 }
                 //FormCollection fc = Application.OpenForms;
@@ -661,7 +697,29 @@ namespace StudentUser
 
         }
 
+        private void 高清ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isPushScream)
+            {
+                PushVideoCream("1280*720");
+            }
+        }
 
+        private void 标清ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isPushScream)
+            {
+                PushVideoCream("640*480");
+            }
+        }
+
+        private void 流畅ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isPushScream)
+            {
+                PushVideoCream("320*240");
+            }
+        }
     }
 
 

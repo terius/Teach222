@@ -1,7 +1,5 @@
 ﻿using Common;
 using System;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace SharedForms
@@ -16,6 +14,7 @@ namespace SharedForms
             _type = type;
             _userName = userName;
             InitializeComponent();
+            this.Text = userName;
             //if (_type == ProgramType.Student)
             //{
             //    // this.WindowState = FormWindowState.Maximized;

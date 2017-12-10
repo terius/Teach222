@@ -39,6 +39,10 @@
             this.mFileShare = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mSetFBL = new System.Windows.Forms.ToolStripMenuItem();
+            this.高清ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.标清ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.流畅ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MinMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,16 +60,17 @@
             this.mHandUp,
             this.mPrivateSMS,
             this.mFileShare,
+            this.mSetFBL,
             this.toolStripSeparator1,
             this.mExit});
             this.MinMenu.Name = "MinMenu";
-            this.MinMenu.Size = new System.Drawing.Size(125, 142);
+            this.MinMenu.Size = new System.Drawing.Size(161, 186);
             // 
             // mSignIn
             // 
             this.mSignIn.Image = global::StudentUser.Properties.Resources.签到;
             this.mSignIn.Name = "mSignIn";
-            this.mSignIn.Size = new System.Drawing.Size(124, 22);
+            this.mSignIn.Size = new System.Drawing.Size(160, 22);
             this.mSignIn.Text = "签到";
             this.mSignIn.Click += new System.EventHandler(this.mSignIn_Click);
             // 
@@ -73,7 +78,7 @@
             // 
             this.mChat.Image = global::StudentUser.Properties.Resources.聊天;
             this.mChat.Name = "mChat";
-            this.mChat.Size = new System.Drawing.Size(124, 22);
+            this.mChat.Size = new System.Drawing.Size(160, 22);
             this.mChat.Text = "聊天";
             this.mChat.Click += new System.EventHandler(this.mChat_Click);
             // 
@@ -81,7 +86,7 @@
             // 
             this.mHandUp.Image = global::StudentUser.Properties.Resources.举手;
             this.mHandUp.Name = "mHandUp";
-            this.mHandUp.Size = new System.Drawing.Size(124, 22);
+            this.mHandUp.Size = new System.Drawing.Size(160, 22);
             this.mHandUp.Text = "举手";
             this.mHandUp.Click += new System.EventHandler(this.mHandUp_Click);
             // 
@@ -89,7 +94,7 @@
             // 
             this.mPrivateSMS.Image = global::StudentUser.Properties.Resources.私信;
             this.mPrivateSMS.Name = "mPrivateSMS";
-            this.mPrivateSMS.Size = new System.Drawing.Size(124, 22);
+            this.mPrivateSMS.Size = new System.Drawing.Size(160, 22);
             this.mPrivateSMS.Text = "私信";
             this.mPrivateSMS.Click += new System.EventHandler(this.mPrivateSMS_Click);
             // 
@@ -97,22 +102,53 @@
             // 
             this.mFileShare.Image = global::StudentUser.Properties.Resources.文件共享;
             this.mFileShare.Name = "mFileShare";
-            this.mFileShare.Size = new System.Drawing.Size(124, 22);
+            this.mFileShare.Size = new System.Drawing.Size(160, 22);
             this.mFileShare.Text = "文件共享";
             this.mFileShare.Click += new System.EventHandler(this.mFileShare_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
             // 
             // mExit
             // 
             this.mExit.Image = global::StudentUser.Properties.Resources.退出;
             this.mExit.Name = "mExit";
-            this.mExit.Size = new System.Drawing.Size(124, 22);
+            this.mExit.Size = new System.Drawing.Size(160, 22);
             this.mExit.Text = "退出";
             this.mExit.Click += new System.EventHandler(this.mExit_Click);
+            // 
+            // mSetFBL
+            // 
+            this.mSetFBL.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.高清ToolStripMenuItem,
+            this.标清ToolStripMenuItem,
+            this.流畅ToolStripMenuItem});
+            this.mSetFBL.Name = "mSetFBL";
+            this.mSetFBL.Size = new System.Drawing.Size(160, 22);
+            this.mSetFBL.Text = "设置视频分辨率";
+            // 
+            // 高清ToolStripMenuItem
+            // 
+            this.高清ToolStripMenuItem.Name = "高清ToolStripMenuItem";
+            this.高清ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.高清ToolStripMenuItem.Text = "高清";
+            this.高清ToolStripMenuItem.Click += new System.EventHandler(this.高清ToolStripMenuItem_Click);
+            // 
+            // 标清ToolStripMenuItem
+            // 
+            this.标清ToolStripMenuItem.Name = "标清ToolStripMenuItem";
+            this.标清ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.标清ToolStripMenuItem.Text = "标清";
+            this.标清ToolStripMenuItem.Click += new System.EventHandler(this.标清ToolStripMenuItem_Click);
+            // 
+            // 流畅ToolStripMenuItem
+            // 
+            this.流畅ToolStripMenuItem.Name = "流畅ToolStripMenuItem";
+            this.流畅ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.流畅ToolStripMenuItem.Text = "流畅";
+            this.流畅ToolStripMenuItem.Click += new System.EventHandler(this.流畅ToolStripMenuItem_Click);
             // 
             // UserMainForm
             // 
@@ -143,6 +179,10 @@
         private System.Windows.Forms.ToolStripMenuItem mFileShare;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem mExit;
+        private System.Windows.Forms.ToolStripMenuItem mSetFBL;
+        private System.Windows.Forms.ToolStripMenuItem 高清ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 标清ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 流畅ToolStripMenuItem;
     }
 }
 
