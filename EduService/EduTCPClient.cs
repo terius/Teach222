@@ -93,7 +93,7 @@ namespace EduService
                 try
                 {
                     string text = StringHelper.GetEnumDescription((CommandType)response.Action);
-                    Loger.LogMessage("收到消息【" + ((CommandType)response.Action).ToString() + " " + text + "】：" + JsonHelper.SerializeObj(response));
+                    Loger.LogMessage("Receive【" + ((CommandType)response.Action).ToString() + " " + text + "  " + response.Action +"】：" + JsonHelper.SerializeObj(response));
                     OnReveieveData(response);
                 }
                 catch (Exception ex)
@@ -180,7 +180,7 @@ namespace EduService
             if (client.IsConnected)
             {
                 string text = StringHelper.GetEnumDescription((CommandType)message.Action);
-                Loger.LogMessage("发送信息【" + ((CommandType)message.Action).ToString() + " " + text + "】：" + JsonHelper.SerializeObj(message));
+                Loger.LogMessage("Send【" + ((CommandType)message.Action).ToString() + " " + text + "  " + message.Action +"】：" + JsonHelper.SerializeObj(message));
                 var messageByte = CreateSendMessageByte(message);
                 client.Send(messageByte);
             }
@@ -190,7 +190,7 @@ namespace EduService
         }
 
 
-        private void SendXinTiao()
+        public void SendXinTiao()
         {
             ThreadPool.QueueUserWorkItem((ob) =>
             {

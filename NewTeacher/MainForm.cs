@@ -172,6 +172,7 @@ namespace NewTeacher
 
             GlobalVariable.client.DueLostMessage();
             GlobalVariable.client.Send_OnlineList();
+           
         }
 
 
