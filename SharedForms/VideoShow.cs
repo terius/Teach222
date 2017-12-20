@@ -9,6 +9,7 @@ namespace SharedForms
         private string param = ":network-caching=300 :rtsp-caching=300";// ":aspect-ratio=4:3:network-caching=300:rtsp-caching=300";//:aspect-ratio=16:9
         ProgramType _type;
         string _userName;
+        public event EventHandler Onclosed;
         public VideoShow(ProgramType type, string userName)
         {
             _type = type;

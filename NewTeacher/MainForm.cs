@@ -81,6 +81,15 @@ namespace NewTeacher
         public MainForm()
         {
             InitializeComponent();
+            //flowLayoutPanel1.MouseWheel += FlowLayoutPanel1_MouseWheel;
+            //for (int i = 0; i < 30; i++)
+            //{
+            //    ScreenCaptureInfo sc = new ScreenCaptureInfo();
+            //    sc.UserName = "username" + i;
+            //    sc.DisplayName = "disname" + i;
+            //    AddStudentScreenToPanel(sc);
+            //}
+        
 
             CreateFilePath();
             this.onlineListGrid1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
@@ -174,6 +183,21 @@ namespace NewTeacher
             GlobalVariable.client.Send_OnlineList();
         }
 
+        int lastRightPanelVerticalScrollValue = -1;//为鼠标滚动事件提供一个静态变量，用来存储上次滚动后的VerticalScroll.Value
+        private void FlowLayoutPanel1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (!(flowLayoutPanel1.VerticalScroll.Visible == false
+                || (flowLayoutPanel1.VerticalScroll.Value == 0 && e.Delta > 0) 
+                || (flowLayoutPanel1.VerticalScroll.Value == lastRightPanelVerticalScrollValue && e.Delta < 0)))
+            {
+                flowLayoutPanel1.VerticalScroll.Value += 10;
+                lastRightPanelVerticalScrollValue = flowLayoutPanel1.VerticalScroll.Value;
+                flowLayoutPanel1.Refresh();
+                flowLayoutPanel1.Invalidate();
+                flowLayoutPanel1.Update();
+            }
+        }
+
 
         /// <summary>
         /// 处理收到的聊天信息
@@ -265,6 +289,7 @@ namespace NewTeacher
             if (videoForm == null || videoForm.IsDisposed)
             {
                 videoForm = new VideoShow(ProgramType.Teacher, actionStuUserName);
+                videoForm.FormClosing += VideoForm_FormClosing;
             }
             videoForm.BringToFront();
             videoForm.Show();
@@ -272,8 +297,15 @@ namespace NewTeacher
             videoForm.PlayVideo(rtsp);
 
         }
+
+        private void VideoForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void StopPlay()
         {
+            
             if (videoForm != null)
             {
                 videoForm.Close();
@@ -878,6 +910,7 @@ namespace NewTeacher
 
                     if (!string.IsNullOrWhiteSpace(actionStuUserName))
                     {
+                        HideScreenShowPic(actionStuUserName);
                         GlobalVariable.client.Send_StopStudentShow(actionStuUserName);
                     }
                     break;
@@ -978,6 +1011,11 @@ namespace NewTeacher
                     onlineListGrid1.ContextMenuStrip = null;
                 }
             }
+        }
+
+        private void flowLayoutPanel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            this.flowLayoutPanel1.Focus();
         }
     }
 }
