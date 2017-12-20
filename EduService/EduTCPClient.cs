@@ -196,11 +196,12 @@ namespace EduService
             {
                 while (true)
                 {
-                    if (client.IsConnected)
-                    {
+                    //if (client.IsConnected)
+                   // {
+                        
                         SendMessageNoPara(CommandType.XinTiao);
-                    }
-                    Thread.Sleep(5000);
+                  //  }
+                    Thread.Sleep(20000);
                 }
 
             });
