@@ -181,6 +181,7 @@ namespace NewTeacher
 
             GlobalVariable.client.DueLostMessage();
             GlobalVariable.client.Send_OnlineList();
+           
         }
 
         int lastRightPanelVerticalScrollValue = -1;//为鼠标滚动事件提供一个静态变量，用来存储上次滚动后的VerticalScroll.Value

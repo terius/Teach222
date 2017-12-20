@@ -54,6 +54,7 @@ namespace NewTeacher
 
                 GlobalVariable.client = new EduTCPClient(ProgramType.Teacher);
                 GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
+                GlobalVariable.client.SendXinTiao();
                 GlobalVariable.client.OnTeacherReceiveMessage = (message) =>
                 {
                     if (message.Action == (int)CommandType.UserLoginRes)
@@ -87,6 +88,8 @@ namespace NewTeacher
             });
             td.IsBackground = true;
             td.Start();
+
+          
         }
 
         private void Client_OnClentIsConnecting(object sender, EventArgs e)
