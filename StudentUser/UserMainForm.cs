@@ -237,7 +237,7 @@ namespace StudentUser
 
             #endregion
             GlobalVariable.client.DueLostMessage();
-
+            GlobalVariable.client.SendXinTiao();
             //  GlobalVariable.client.OnReveieveData += Client_OnReveieveData;
             //   GlobalVariable.client.Send_StudentInMainForm();
         }
@@ -358,8 +358,37 @@ namespace StudentUser
             tempScreenFile = Path.Combine(tempPath, "temp.jpg");
             udpClient = new EduUDPClient(ProgramType.Student);
             CreateUDPHole();
+            CheckNetworkStatus();
         }
+        private void CheckNetworkStatus()
+        {
+           
+            ThreadPool.QueueUserWorkItem((ob) =>
+            {
+                bool netStatus = false;
+                string errMsg;
+                string serverUrl = System.Configuration.ConfigurationManager.AppSettings["serverIP"];
+                while (true)
+                {
+                   
+                    netStatus = PingNetwork.GetServerStatus(serverUrl, out errMsg);
+                    if (!netStatus)
+                    {
+                        GlobalVariable.client.IsNetworkOK = false;
+                        this.InvokeOnUiThreadIfRequired(() =>
+                        {
+                            GlobalVariable.ShowNotifyMessage(errMsg, 5, "red");
+                        });
+                    }
+                    else
+                    {
+                        GlobalVariable.client.IsNetworkOK = true;
+                    }
+                    Thread.Sleep(20000);
+                }
 
+            });
+        }
 
 
 

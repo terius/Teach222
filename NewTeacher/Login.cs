@@ -53,8 +53,8 @@ namespace NewTeacher
             {
 
                 GlobalVariable.client = new EduTCPClient(ProgramType.Teacher);
-                GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
-                GlobalVariable.client.SendXinTiao();
+              //  GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
+               
                 GlobalVariable.client.OnTeacherReceiveMessage = (message) =>
                 {
                     if (message.Action == (int)CommandType.UserLoginRes)
@@ -124,7 +124,7 @@ namespace NewTeacher
 
         private void LoginIn(string userName, string nickName, string password)
         {
-            LoginRequest q = new LoginRequest
+            var loginRequest = new LoginRequest
             {
                 ClientRole = ClientRole.Teacher,
                 nickName = nickName,
@@ -132,7 +132,7 @@ namespace NewTeacher
                 userName = userName
 
             };
-            GlobalVariable.SendCommand(q, CommandType.UserLogin);
+            GlobalVariable.SendCommand(loginRequest, CommandType.UserLogin);
         }
 
 

@@ -113,6 +113,9 @@ namespace SharedForms
         public static IList<User> OnlineUserList { get; set; }
         private static IList<Team> _teamList = new List<Team>();
         public static IList<Team> TeamList { get { return _teamList; } }
+
+
+       
         #endregion
 
 
@@ -392,7 +395,7 @@ namespace SharedForms
             player.Play();
         }
 
-
+    
 
 
         /// <summary>
@@ -645,12 +648,12 @@ namespace SharedForms
         }
 
         static NotifyForm notifyForm;
-        public static void ShowNotifyMessage(string message, int dueSecond = 5)
+        public static void ShowNotifyMessage(string message, int dueSecond = 5, string color = null)
         {
 
             if (notifyForm == null || notifyForm.IsDisposed)
             {
-                notifyForm = new NotifyForm(message, dueSecond);
+                notifyForm = new NotifyForm(message, dueSecond, color);
             }
             else
             {

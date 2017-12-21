@@ -34,6 +34,8 @@ namespace EduService
         bool isConnecting = false;
         bool _ffmpegIsRun;
 
+        public bool IsNetworkOK { get; set; }
+
 
 
 
@@ -47,8 +49,6 @@ namespace EduService
                 }
                 return client.IsConnected;
             }
-
-
         }
 
 
@@ -61,6 +61,10 @@ namespace EduService
 
         private void ConnectToServer()
         {
+            if (!IsNetworkOK)
+            {
+                return;
+            }
             if (!isConnecting)
             {
                 isConnecting = true;
@@ -86,6 +90,13 @@ namespace EduService
 
         public EduTCPClient(ProgramType _programType)
         {
+            string errmsg = "";
+            IsNetworkOK = PingNetwork.GetServerStatus(serverIP, out errmsg);
+            if (!IsNetworkOK)
+            {
+                throw new Exception(errmsg);
+            }
+
             programType = _programType;
             client = new EasyClient();
             client.Initialize(new MyReceiveFilter(), (response) =>
@@ -93,7 +104,7 @@ namespace EduService
                 try
                 {
                     string text = StringHelper.GetEnumDescription((CommandType)response.Action);
-                    Loger.LogMessage("Receive【" + ((CommandType)response.Action).ToString() + " " + text + "  " + response.Action +"】：" + JsonHelper.SerializeObj(response));
+                    Loger.LogMessage("Receive【" + ((CommandType)response.Action).ToString() + " " + text + "  " + response.Action + "】：" + JsonHelper.SerializeObj(response));
                     OnReveieveData(response);
                 }
                 catch (Exception ex)
@@ -112,6 +123,11 @@ namespace EduService
             }
             //  client.Error += Client_Error;
             ConnectToServer();
+        }
+
+        private void ReSendLoginCommand()
+        {
+
         }
 
 
@@ -171,16 +187,25 @@ namespace EduService
 
         public void SendMessage<T>(SendMessage<T> message) where T : class, new()
         {
+            if (!IsNetworkOK)
+            {
+                return;
+            }
             if (!client.IsConnected)
             {
+               
                 OnClentIsConnecting?.Invoke(this, null);
                 ConnectToServer();
-                //  CreateSocketClient();
+                if (client.IsConnected)
+                {
+                    Loger.LogMessage("自动重新登录");
+                    SendMessage(loginInfo, CommandType.UserLogin);
+                }
             }
             if (client.IsConnected)
             {
                 string text = StringHelper.GetEnumDescription((CommandType)message.Action);
-                Loger.LogMessage("Send【" + ((CommandType)message.Action).ToString() + " " + text + "  " + message.Action +"】：" + JsonHelper.SerializeObj(message));
+                Loger.LogMessage("Send【" + ((CommandType)message.Action).ToString() + " " + text + "  " + message.Action + "】：" + JsonHelper.SerializeObj(message));
                 var messageByte = CreateSendMessageByte(message);
                 client.Send(messageByte);
             }
@@ -197,10 +222,10 @@ namespace EduService
                 while (true)
                 {
                     //if (client.IsConnected)
-                   // {
-                        
-                        SendMessageNoPara(CommandType.XinTiao);
-                  //  }
+                    // {
+
+                    SendMessageNoPara(CommandType.XinTiao);
+                    //  }
                     Thread.Sleep(20000);
                 }
 
@@ -314,7 +339,7 @@ namespace EduService
 
         public void Send_UserLogin(LoginRequest request)
         {
-            var loginInfo = new LoginInfo();
+            loginInfo = new LoginInfo();
             loginInfo.username = request.userName;
             loginInfo.nickname = request.nickName;
             loginInfo.no = request.password;
@@ -322,6 +347,8 @@ namespace EduService
             loginInfo.clientStyle = ClientStyle.PC;
             SendMessage(loginInfo, CommandType.UserLogin);
         }
+
+        private LoginInfo loginInfo;
 
 
         /// <summary>

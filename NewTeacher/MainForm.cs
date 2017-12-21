@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NewTeacher
@@ -89,7 +90,7 @@ namespace NewTeacher
             //    sc.DisplayName = "disname" + i;
             //    AddStudentScreenToPanel(sc);
             //}
-        
+
 
             CreateFilePath();
             this.onlineListGrid1.Columns.Cast<DataGridViewColumn>().ToList().ForEach(f => f.SortMode = DataGridViewColumnSortMode.NotSortable);
@@ -114,7 +115,7 @@ namespace NewTeacher
                 //  tableLayoutPanel3.ColumnStyles[4].Width = 0f;
             }
 
-            GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
+            //   GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
             InitOnlineInfo();
             GlobalVariable.LoadTeamFromXML();
 
@@ -181,14 +182,14 @@ namespace NewTeacher
 
             GlobalVariable.client.DueLostMessage();
             GlobalVariable.client.Send_OnlineList();
-           
+            GlobalVariable.client.SendXinTiao();
         }
 
         int lastRightPanelVerticalScrollValue = -1;//为鼠标滚动事件提供一个静态变量，用来存储上次滚动后的VerticalScroll.Value
         private void FlowLayoutPanel1_MouseWheel(object sender, MouseEventArgs e)
         {
             if (!(flowLayoutPanel1.VerticalScroll.Visible == false
-                || (flowLayoutPanel1.VerticalScroll.Value == 0 && e.Delta > 0) 
+                || (flowLayoutPanel1.VerticalScroll.Value == 0 && e.Delta > 0)
                 || (flowLayoutPanel1.VerticalScroll.Value == lastRightPanelVerticalScrollValue && e.Delta < 0)))
             {
                 flowLayoutPanel1.VerticalScroll.Value += 10;
@@ -252,6 +253,37 @@ namespace NewTeacher
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             CreateUDPConnect();
+            CheckNetworkStatus();
+        }
+
+        private void CheckNetworkStatus()
+        {
+
+            ThreadPool.QueueUserWorkItem((ob) =>
+            {
+                bool netStatus = false;
+                string errMsg;
+                string serverUrl = System.Configuration.ConfigurationManager.AppSettings["serverIP"];
+                while (true)
+                {
+                   
+                    netStatus = PingNetwork.GetServerStatus(serverUrl, out errMsg);
+                    if (!netStatus)
+                    {
+                        GlobalVariable.client.IsNetworkOK = false;
+                        this.InvokeOnUiThreadIfRequired(() =>
+                        {
+                            GlobalVariable.ShowNotifyMessage(errMsg, 5, "red");
+                        });
+                    }
+                    else
+                    {
+                        GlobalVariable.client.IsNetworkOK = true;
+                    }
+                    Thread.Sleep(20000);
+                }
+
+            });
         }
 
         #region  接收消息事件
@@ -306,7 +338,7 @@ namespace NewTeacher
 
         private void StopPlay()
         {
-            
+
             if (videoForm != null)
             {
                 videoForm.Close();
@@ -584,7 +616,7 @@ namespace NewTeacher
             //vs.Show();
             //vs.PlayVideo(@"D:\qh\0811.mp4");
 
-               SendAction(TeacherAction.menuClassNamed_Click);
+            SendAction(TeacherAction.menuClassNamed_Click);
         }
 
         private void menuExportSign_Click(object sender, System.EventArgs e)
@@ -736,7 +768,7 @@ namespace NewTeacher
                     {
                         if (!isPush)
                         {
-                        
+
                             GlobalVariable.client.Send_ScreenInteract();
                             menuScreenShare.Text = "关闭广播";
                             isPush = true;
@@ -789,7 +821,7 @@ namespace NewTeacher
                     {
                         if (!isPush)
                         {
-                        
+
                             GlobalVariable.client.Send_VideoInteract();
                             menuVideoLive.Text = "关闭直播";
                             isPush = true;

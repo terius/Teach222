@@ -24,11 +24,15 @@ namespace SharedForms
         Timer closeTimer;
         DateTime timeStart = DateTime.MinValue;
         public int DueSecond { get; set; }
-        public NotifyForm(string message, int duesecond = 0)
+        public NotifyForm(string message, int duesecond = 0, string color = null)
         {
             DueSecond = duesecond;
             _message = message;
             InitializeComponent();
+            if (color == "red")
+            {
+                this.BackColor = this.txtMessage.BackColor = Color.Red;
+            }
             txtMessage.Text = _message;
             //   IntPtr hMenu = GetSystemMenu(this.Handle, 0);
             //   RemoveMenu(hMenu, SC_CLOSE, MF_BYCOMMAND);
@@ -88,12 +92,21 @@ namespace SharedForms
 
         }
 
-        public void SetMessage(string message, int dueSecond = 0)
+        public void SetMessage(string message, int dueSecond = 0, string color = null)
         {
             txtMessage.Text = _message = message;
             if (dueSecond != 0)
             {
                 DueSecond = dueSecond;
+            }
+
+            if (color == "red")
+            {
+                this.BackColor = this.txtMessage.BackColor = Color.Red;
+            }
+            else
+            {
+                this.BackColor = this.txtMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
             }
 
         }
