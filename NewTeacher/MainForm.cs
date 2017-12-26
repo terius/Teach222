@@ -183,7 +183,7 @@ namespace NewTeacher
 
             GlobalVariable.client.DueLostMessage();
             GlobalVariable.client.Send_OnlineList();
-           // GlobalVariable.client.SendXinTiao();
+            GlobalVariable.client.SendXinTiao();
             LogUser();
         }
         StringBuilder sbUser = new StringBuilder();
@@ -359,15 +359,7 @@ namespace NewTeacher
 
         private void VideoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach (StudentScreen item in flowLayoutPanel1.Controls)
-            {
-                if (item.UserName == actionStuUserName)
-                {
-
-                    item.HideCallShowLabel();
-                    break;
-                }
-            }
+            HideScreenShowPic(actionStuUserName);
         }
 
         private void StopPlay()
