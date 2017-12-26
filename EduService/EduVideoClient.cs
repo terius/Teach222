@@ -287,19 +287,19 @@ namespace EduService
 
         private void MyProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (e.Data != null)
-            {
-                FileHelper.WriteLog(e.Data.ToString());
-            }
+            //if (e.Data != null)
+            //{
+            //    FileHelper.WriteLog(e.Data.ToString());
+            //}
 
         }
 
         private void MyProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (e.Data != null)
-            {
-                FileHelper.WriteLog(e.Data.ToString());
-            }
+            //if (e.Data != null)
+            //{
+            //    FileHelper.WriteLog(e.Data.ToString());
+            //}
         }
 
         public void dispose()

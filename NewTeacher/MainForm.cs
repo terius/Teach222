@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -182,7 +183,32 @@ namespace NewTeacher
 
             GlobalVariable.client.DueLostMessage();
             GlobalVariable.client.Send_OnlineList();
-            GlobalVariable.client.SendXinTiao();
+           // GlobalVariable.client.SendXinTiao();
+            LogUser();
+        }
+        StringBuilder sbUser = new StringBuilder();
+        public void LogUser()
+        {
+            ThreadPool.QueueUserWorkItem((ob) =>
+            {
+                while (true)
+                {
+
+                    this.InvokeOnUiThreadIfRequired(() =>
+                    {
+                        sbUser = new StringBuilder("当前在线用户:\r\n");
+                        foreach (DataGridViewRow row in onlineListGrid1.Rows)
+                        {
+
+                            sbUser.AppendLine("姓名：" + row.Cells[0].Value.ToString() + "  用户名：" + row.Cells[4].Value.ToString());
+                        }
+                        FileHelper.WriteLog(sbUser.ToString(), "test");
+                    });
+                    Thread.Sleep(60000);
+                }
+
+            });
+
         }
 
         int lastRightPanelVerticalScrollValue = -1;//为鼠标滚动事件提供一个静态变量，用来存储上次滚动后的VerticalScroll.Value
@@ -266,7 +292,7 @@ namespace NewTeacher
                 string serverUrl = System.Configuration.ConfigurationManager.AppSettings["serverIP"];
                 while (true)
                 {
-                   
+
                     netStatus = PingNetwork.GetServerStatus(serverUrl, out errMsg);
                     if (!netStatus)
                     {
@@ -333,7 +359,15 @@ namespace NewTeacher
 
         private void VideoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            throw new NotImplementedException();
+            foreach (StudentScreen item in flowLayoutPanel1.Controls)
+            {
+                if (item.UserName == actionStuUserName)
+                {
+
+                    item.HideCallShowLabel();
+                    break;
+                }
+            }
         }
 
         private void StopPlay()
@@ -612,10 +646,6 @@ namespace NewTeacher
         #region  主菜单按钮事件
         private void menuClassNamed_Click(object sender, System.EventArgs e)
         {
-            //VideoShow vs = new VideoShow(ProgramType.Student, "stu213123");
-            //vs.Show();
-            //vs.PlayVideo(@"D:\qh\0811.mp4");
-
             SendAction(TeacherAction.menuClassNamed_Click);
         }
 
@@ -626,6 +656,9 @@ namespace NewTeacher
 
         private void menuGroupChat_Click(object sender, System.EventArgs e)
         {
+            //VideoShow vs = new VideoShow(ProgramType.Student, "stu213123");
+            //vs.Show();
+            //vs.PlayVideo(@"E:\1.mp4");
             SendAction(TeacherAction.menuGroupChat_Click);
         }
 

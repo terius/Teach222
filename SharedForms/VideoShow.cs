@@ -39,7 +39,10 @@ namespace SharedForms
             var uri = new Uri(url);
             
             var convertedURI = uri.AbsoluteUri;
-            axVLCPlugin21.playlist.items.clear();
+            if (axVLCPlugin21.playlist.items != null)
+            {
+                axVLCPlugin21.playlist.items.clear();
+            }
             axVLCPlugin21.playlist.add(convertedURI);
        
             //Thread.Sleep(1000);

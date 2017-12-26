@@ -32,6 +32,7 @@ namespace NewTeacher
             this.labVer.Text = "版本：" + version;
             //   ScreenCapture sc = new ScreenCapture();
             // sc.CaptureScreenToFile(@"D:\" + DateTime.Now.Ticks.ToString() + ".png", ImageFormat.Png);
+            
         }
 
         private void AutoLogin()

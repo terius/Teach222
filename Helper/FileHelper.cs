@@ -499,46 +499,89 @@ namespace Helpers
         const int LOCK = 500; //申请读写时间
         const int SLEEP = 100; //线程挂起时间
         static ReaderWriterLock readWriteLock = new ReaderWriterLock();
-        public static void WriteLog(string msg) //写入文件
+        //public static void WriteLog(string msg) //写入文件
+        //{
+        //    if (string.IsNullOrWhiteSpace(msg))
+        //    {
+        //        return;
+        //    }
+        //    readWriteLock.AcquireWriterLock(LOCK);
+        //    try
+        //    {
+
+        //        string path = AppDomain.CurrentDomain.BaseDirectory + "ffmpeglog";
+        //        if (!Directory.Exists(path))
+        //        {
+        //            Directory.CreateDirectory(path);
+        //        }
+        //        path += "\\" + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
+        //        if (!File.Exists(path))
+        //        {
+        //            FileStream fs1 = File.Create(path);
+        //            fs1.Close();
+        //            Thread.Sleep(10);
+        //        }
+
+        //        using (StreamWriter sw = new StreamWriter(path, true, Encoding.Default))
+        //        {
+        //            sw.WriteLine(msg);
+        //            sw.Flush();
+        //            sw.Close();
+        //        }
+        //        Thread.Sleep(SLEEP);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //    }
+        //    finally
+        //    {
+        //        readWriteLock.ReleaseWriterLock();
+        //    }
+        //}
+
+        static object oblock = new object();
+        public static void WriteLog(string msg, string path, string fileName = null) //写入文件
         {
             if (string.IsNullOrWhiteSpace(msg))
             {
                 return;
             }
-            readWriteLock.AcquireWriterLock(LOCK);
-            try
+            lock (oblock)
             {
-
-                string path = AppDomain.CurrentDomain.BaseDirectory + "ffmpeglog";
-                if (!Directory.Exists(path))
+                try
                 {
-                    Directory.CreateDirectory(path);
+
+                    path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    var file = fileName == null ? (DateTime.Now.ToString("yyyy-MM-dd") + ".log") : (fileName + ".log");
+                    file = Path.Combine(path, file);
+                    if (!File.Exists(file))
+                    {
+                        FileStream fs1 = File.Create(file);
+                        fs1.Close();
+                        Thread.Sleep(10);
+                    }
+                    msg = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":\r\n" + msg + "\r\n------------------------------------------------------------------------\r\n";
+                    using (StreamWriter sw = new StreamWriter(file, true, Encoding.Default))
+                    {
+                        sw.WriteLine(msg);
+                        sw.Flush();
+                        sw.Close();
+                    }
+                    //  Thread.Sleep(SLEEP);
+
                 }
-                path += "\\" + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
-                if (!File.Exists(path))
+                catch (Exception ex)
                 {
-                    FileStream fs1 = File.Create(path);
-                    fs1.Close();
-                    Thread.Sleep(10);
+
                 }
-
-                using (StreamWriter sw = new StreamWriter(path, true, Encoding.Default))
-                {
-                    sw.WriteLine(msg);
-                    sw.Flush();
-                    sw.Close();
-                }
-                Thread.Sleep(SLEEP);
-
             }
-            catch (Exception ex)
-            {
 
-            }
-            finally
-            {
-                readWriteLock.ReleaseWriterLock();
-            }
         }
 
 
@@ -580,7 +623,7 @@ namespace Helpers
             return destImage;
         }
 
-        public static void VaryQualityLevel(Image img, Int64 level,string saveFilePath,ImageFormat format)
+        public static void VaryQualityLevel(Image img, Int64 level, string saveFilePath, ImageFormat format)
         {
             FileInfo fi = new FileInfo(saveFilePath);
             if (!Directory.Exists(fi.DirectoryName))
