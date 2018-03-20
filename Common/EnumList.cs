@@ -267,4 +267,11 @@ namespace Common
         Teacher,
         Student
     }
+
+
+    public enum CaptureType
+    {
+        SCREEN_CAPTURE,
+        LOCAL_CAMERA
+    }
 }

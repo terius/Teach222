@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace vlctest
+namespace libEasyScreenLive
 {
     static class Program
     {
@@ -13,10 +16,7 @@ namespace vlctest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //BonusSkins.Register();
-            //SkinManager.EnableFormSkins();
-            //UserLookAndFeel.Default.SetSkinStyle("Office 2016 Colorful");
-            Application.Run(new EasyScreenLiveForm());
+            Application.Run(new Form1());
         }
     }
 }

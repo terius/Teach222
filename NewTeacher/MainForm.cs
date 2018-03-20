@@ -794,7 +794,7 @@ namespace NewTeacher
                         if (!isPush)
                         {
 
-                            GlobalVariable.client.Send_ScreenInteract();
+                            GlobalVariable.client.Send_ScreenInteract(videoF.Handle, GlobalVariable.LoginUserInfo.UserName);
                             menuScreenShare.Text = "关闭广播";
                             isPush = true;
                         }
@@ -847,7 +847,7 @@ namespace NewTeacher
                         if (!isPush)
                         {
 
-                            GlobalVariable.client.Send_VideoInteract();
+                            GlobalVariable.client.Send_VideoInteract(videoF.Handle, GlobalVariable.LoginUserInfo.UserName);
                             menuVideoLive.Text = "关闭直播";
                             isPush = true;
                         }
@@ -1051,6 +1051,8 @@ namespace NewTeacher
             {
                 udpClient.CloseTeacherUDP();
             }
+
+            GlobalVariable.client.ReleaseEasyScreen();
         }
 
         private void onlineListGrid1_MouseDown(object sender, MouseEventArgs e)

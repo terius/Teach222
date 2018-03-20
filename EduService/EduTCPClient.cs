@@ -1,4 +1,5 @@
 ﻿using Common;
+using EasyScreenLiveLib;
 using Helpers;
 using Model;
 using SuperSocket.ClientEngine;
@@ -28,11 +29,9 @@ namespace EduService
         readonly string serverIP = System.Configuration.ConfigurationManager.AppSettings["serverIP"];
         readonly int serverPort = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["serverPort"]);
         bool _connected;
-        EduVideoClient _screenInteract;
-
+        EasyScreen _screenInteract;
         ProgramType programType;
         bool isConnecting = false;
-        bool _ffmpegIsRun;
 
         public bool IsNetworkOK { get; set; }
 
@@ -193,7 +192,7 @@ namespace EduService
             }
             if (!client.IsConnected)
             {
-               
+
                 OnClentIsConnecting?.Invoke(this, null);
                 ConnectToServer();
                 if (client.IsConnected)
@@ -213,7 +212,7 @@ namespace EduService
 
 
         }
-     
+
 
 
         public void SendXinTiao()
@@ -243,11 +242,16 @@ namespace EduService
         {
             if (_screenInteract == null)
             {
-                var local = (IPEndPoint)client.LocalEndPoint;
-                var ipv4 = local.Address.ToString();
-                string localIP = ipv4.Substring(ipv4.LastIndexOf(':') + 1);// this.client.LocalEndPoint
-                int localPort = local.Port;// local.Port;// this.client.LocalEndPoint.AddressFamily.;
-                _screenInteract = new EduVideoClient(serverIP, localIP, localPort);
+                _screenInteract = EasyScreen.Init();
+            }
+        }
+
+
+        public void ReleaseEasyScreen()
+        {
+            if (_screenInteract != null)
+            {
+                _screenInteract.Close();
             }
         }
 
@@ -270,7 +274,7 @@ namespace EduService
             {
                 return;
             }
-            _screenInteract.stopScreenInteract();
+            _screenInteract.StopCaptureAndPush();
         }
 
         private byte[] CreateSendMessageByte<T>(SendMessage<T> message) where T : class, new()
@@ -293,21 +297,14 @@ namespace EduService
 
         public void BeginRecordVideo(string path)
         {
-            if (!_ffmpegIsRun)
-            {
-                _ffmpegIsRun = true;
-                CreateScreenInteract();
-                _screenInteract.BeginRecordScreen(path);
-            }
+            CreateScreenInteract();
+            // _screenInteract.BeginRecordScreen(path);
+
         }
 
         public void EndRecordVideo()
         {
-            if (_ffmpegIsRun)
-            {
-                _screenInteract.EndRecordVideo();
-                _ffmpegIsRun = false;
-            }
+
         }
 
 
@@ -362,27 +359,27 @@ namespace EduService
         /// <summary>
         /// 屏幕广播
         /// </summary>
-        public void Send_ScreenInteract(string fbl = null)
+        public void Send_ScreenInteract(IntPtr handle, string pushName)
         {
             CreateScreenInteract();
-            string rtspAddress = _screenInteract.beginScreenInteract(fbl);
+            string rtspAddress = _screenInteract.StartCaptureAndPush(handle, pushName, CaptureType.SCREEN_CAPTURE);
             var request = new ScreenInteract_Request { url = rtspAddress };
             SendMessage(request, CommandType.ScreenInteract);
         }
 
 
-        public void Send_StudentShowToTeacher(string fbl = null)
+        public void Send_StudentShowToTeacher(IntPtr handle, string pushName)
         {
             CreateScreenInteract();
-            string rtspAddress = _screenInteract.beginScreenInteract(fbl);
+            string rtspAddress = _screenInteract.StartCaptureAndPush(handle, pushName, CaptureType.SCREEN_CAPTURE);
             var request = new ScreenInteract_Request { url = rtspAddress };
             SendMessage(request, CommandType.StudentShowToTeacher);
         }
 
-        public void Send_StudentShowVideoToTeacher(string fbl = null)
+        public void Send_StudentShowVideoToTeacher(IntPtr handle, string pushName)
         {
             CreateScreenInteract();
-            string rtspAddress = _screenInteract.beginVideoInteract(fbl);
+            string rtspAddress = _screenInteract.StartCaptureAndPush(handle, pushName, CaptureType.LOCAL_CAMERA);
             var request = new ScreenInteract_Request { url = rtspAddress };
             SendMessage(request, CommandType.StudentShowToTeacher);
         }
@@ -390,10 +387,10 @@ namespace EduService
         /// <summary>
         /// 视频直播
         /// </summary>
-        public void Send_VideoInteract()
+        public void Send_VideoInteract(IntPtr handle, string pushName)
         {
             CreateScreenInteract();
-            string rtspAddress = _screenInteract.beginVideoInteract();
+            string rtspAddress = _screenInteract.StartCaptureAndPush(handle, pushName, CaptureType.LOCAL_CAMERA);
             var request = new ScreenInteract_Request { url = rtspAddress };
             SendMessage(request, CommandType.ScreenInteract);
         }

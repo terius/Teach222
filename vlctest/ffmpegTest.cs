@@ -8,7 +8,7 @@ namespace vlctest
 {
     public partial class ffmpegTest : Form
     {
-        private Ffmpeg _ffmpeg = null;
+      //  private Ffmpeg _ffmpeg = null;
         bool isBegin = false;
         string videoPath;
 
@@ -20,7 +20,7 @@ namespace vlctest
             {
                 Directory.CreateDirectory(videoPath);
             }
-            _ffmpeg = new Ffmpeg();
+        //    _ffmpeg = new Ffmpeg();
         }
 
         private void button1_Click(object sender, System.EventArgs e)

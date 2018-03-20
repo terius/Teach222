@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.myGroupBox7 = new SharedForms.MyGroupBox();
@@ -84,6 +83,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.menuRomoteControl = new System.Windows.Forms.Button();
             this.menuSilence = new System.Windows.Forms.Button();
+            this.videoF = new System.Windows.Forms.PictureBox();
             this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -108,6 +108,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.myGroupBox2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.videoF)).BeginInit();
             this.SuspendLayout();
             // 
             // panelContent
@@ -166,14 +167,6 @@
             this.col_disableTeamChat,
             this.col_userName});
             this.onlineListGrid1.ContextMenuStrip = this.UserListMenu;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.onlineListGrid1.DefaultCellStyle = dataGridViewCellStyle1;
             this.onlineListGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.onlineListGrid1.Location = new System.Drawing.Point(3, 57);
             this.onlineListGrid1.MultiSelect = false;
@@ -313,6 +306,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.videoF);
             this.panel3.Controls.Add(this.btnRefresh);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 21);
@@ -877,6 +871,15 @@
             this.menuSilence.UseVisualStyleBackColor = false;
             this.menuSilence.Click += new System.EventHandler(this.menuSilence_Click);
             // 
+            // videoF
+            // 
+            this.videoF.Location = new System.Drawing.Point(255, 5);
+            this.videoF.Name = "videoF";
+            this.videoF.Size = new System.Drawing.Size(30, 25);
+            this.videoF.TabIndex = 10;
+            this.videoF.TabStop = false;
+            this.videoF.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -913,6 +916,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.myGroupBox2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.videoF)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -971,5 +975,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_disablePrivateChat;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_disableTeamChat;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_userName;
+        private System.Windows.Forms.PictureBox videoF;
     }
 }

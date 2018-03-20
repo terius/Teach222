@@ -83,7 +83,7 @@ namespace SharedForms
                     default:
                         break;
                 }
-                this.Width = 200;
+               // this.Width = 200;
                 this.txtSMS.Hide();
 
                 //  this.txtLink.Show();

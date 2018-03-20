@@ -256,15 +256,15 @@ namespace StudentUser
          //   StopPushScream();
             if (currPushCreamType == CommandType.CallStudentShow)
             {
-                GlobalVariable.client.Send_ScreenInteract(fbl);
+                GlobalVariable.client.Send_ScreenInteract(this.Handle, GlobalVariable.LoginUserInfo.UserName);
             }
             else if (currPushCreamType == CommandType.CallStudentShowForMySelf)
             {
-                GlobalVariable.client.Send_StudentShowToTeacher(fbl);
+                GlobalVariable.client.Send_StudentShowToTeacher(this.Handle, GlobalVariable.LoginUserInfo.UserName);
             }
             else if (currPushCreamType == CommandType.CallStudentShowVideoToTeacher)
             {
-                GlobalVariable.client.Send_StudentShowVideoToTeacher(fbl);
+                GlobalVariable.client.Send_StudentShowVideoToTeacher(this.Handle, GlobalVariable.LoginUserInfo.UserName);
             }
             isPushScream = true;
         }
@@ -707,6 +707,7 @@ namespace StudentUser
             GlobalVariable.client.Send_StudentLoginOut();
             StopUdp();
             GlobalVariable.KillAllFFmpeg();
+            GlobalVariable.client.ReleaseEasyScreen();
             Environment.Exit(Environment.ExitCode);
         }
 

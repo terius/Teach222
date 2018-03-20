@@ -31,7 +31,7 @@ namespace EduService
         {
             get
             {
-                return true;//只用于测试
+               
                 if (serverIP.StartsWith("192.168"))
                 {
                     return true;
