@@ -25,6 +25,7 @@ namespace EduService
         //  private int heightPixel;
 
         readonly string RTSPserverIP = System.Configuration.ConfigurationManager.AppSettings["RTSPserverIP"];
+        string _videoFilePath;
         public EduVideoClient(string serverIP, string ipSelf, int portSelf)
         {
             _serverIp = serverIP;
@@ -32,7 +33,10 @@ namespace EduService
             _portSelf = portSelf;
         }
 
-
+        public EduVideoClient(string videoFilePath)
+        {
+            _videoFilePath = videoFilePath;
+        }
 
 
         public string beginScreenInteract(string fbl = null)
@@ -142,6 +146,13 @@ namespace EduService
             return para;
         }
 
+        private string CreateLocalVideoFFmpegParam()
+        {
+            string para = " -r 25 -g 20 -s 640*480 -vcodec libx264 -x264opts bframes=3:b-adapt=0 -b:v 2000k -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency ";
+     
+            return para;
+        }
+
         //public void BeginRecordVideo(string filename)
         //{
 
@@ -173,6 +184,29 @@ namespace EduService
                 url += " -f dshow -i audio=\"" + mic + "\" -acodec mp2 -ab 128k";
             }
             url += CreateFFmpegVideoRecordParam(true) + filename;
+            Loger.LogMessage("录制视频命令:" + url);
+            this._ffmpeg = new Ffmpeg();
+            this._ffmpeg.beginExecute(url);
+            _ffmpeg.WaitComplete();
+        }
+
+        /// <summary>
+        /// 开始录制本地摄像头视频
+        /// </summary>
+        public void BeginRecordLocalVideo()
+        {
+            var video = GetVideoName();
+            if (string.IsNullOrWhiteSpace(video))
+            {
+                throw new Exception("未找到摄像头");
+            }
+            var url = "-f dshow -i video=\"" + video + "\"";
+            var mic = GetMicName();
+            if (!string.IsNullOrWhiteSpace(mic))
+            {
+                url += " -f dshow -i audio=\"" + mic + "\" -acodec mp2 -ab 128k";
+            }
+            url += " -r 25 -g 20 -s 1280*720 -vcodec libx264 -preset:v ultrafast -tune:v zerolatency " + _videoFilePath ;
             Loger.LogMessage("录制视频命令:" + url);
             this._ffmpeg = new Ffmpeg();
             this._ffmpeg.beginExecute(url);

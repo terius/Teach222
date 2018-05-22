@@ -102,8 +102,6 @@ namespace NewTeacher
             myGroupBox8.Text = GlobalVariable.ClientTitle + "屏幕";
             if (GlobalVariable.IsHuiShenXiTong)
             {
-
-
                 menuClassNamed.Hide();
                 menuExportSign.Hide();
                 menuFileShare.Hide();
@@ -111,9 +109,16 @@ namespace NewTeacher
                 tableLayoutPanel1.ColumnCount = 1;
                 tableLayoutPanel1.RowCount = 1;
                 myGroupBox1.Text = "群聊";
-                menuGroupChat.Text = "群组聊天";
+                menuGroupChat.Text = "群组通信";
                 onlineListGrid1.Columns["col_isval"].Visible = false;
-                //  tableLayoutPanel3.ColumnStyles[4].Width = 0f;
+                menuTeamCreate.Text = "分组审讯";
+                menuSilence.Visible = false;
+                tableLayoutPanel3.ColumnStyles[2].Width = 0f;
+                myGroupBox4.Text = "控制室";
+                menuScreenShare.Text = "同步推送";
+                menuStudentShow.Text = "同步审讯室桌面";
+                menuStudentShow.Width = 400;
+                tableLayoutPanel5.ColumnStyles[1].Width = 50F;
             }
 
             //   GlobalVariable.client.OnClentIsConnecting += Client_OnClentIsConnecting;
@@ -878,14 +883,14 @@ namespace NewTeacher
 
                     if (this.menuVideoRecord.Text == "屏幕录制")
                     {
-                        GlobalVariable.BeginRecordVideo();
+                        GlobalVariable.BeginRecordLocalVideo();
                         this.menuVideoRecord.Image = Resources.录制;
                         GlobalVariable.ShowNotifyMessage("正在屏幕录制中...", -1);
                         this.menuVideoRecord.Text = "停止录制";
                     }
                     else
                     {
-                        GlobalVariable.EndRecordVideo();
+                        GlobalVariable.EndRecordLocalVideo();
                         GlobalVariable.ShowNotifyMessage("录制完成,视频文件在程序目录的VideoRecord中", -1);
                         this.menuVideoRecord.Image = Resources.未录制;
                         this.menuVideoRecord.Text = "屏幕录制";

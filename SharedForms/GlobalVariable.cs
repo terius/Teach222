@@ -115,7 +115,7 @@ namespace SharedForms
         public static IList<Team> TeamList { get { return _teamList; } }
 
 
-       
+
         #endregion
 
 
@@ -395,7 +395,7 @@ namespace SharedForms
             player.Play();
         }
 
-    
+
 
 
         /// <summary>
@@ -695,15 +695,26 @@ namespace SharedForms
         //}
 
 
-        public static void BeginRecordVideo()
-        {
-           // string fileName = Path.Combine(VideoRecordPath, DateTime.Now.Ticks.ToString() + ".mpg");
-         //   client.BeginRecordVideo(fileName);
+        //public static void BeginRecordVideo()
+        //{
+        //    // string fileName = Path.Combine(VideoRecordPath, DateTime.Now.Ticks.ToString() + ".mpg");
+        //    //   client.BeginRecordVideo(fileName);
 
-        }
-        public static void EndRecordVideo()
+        //}
+        static EduVideoClient _videoClient;
+        public static void BeginRecordLocalVideo()
         {
-            client.EndRecordVideo();
+            string fileName = Path.Combine(VideoRecordPath, DateTime.Now.Ticks.ToString() + ".mpg");
+            if (_videoClient == null)
+            {
+                _videoClient = new EduVideoClient(fileName);
+            }
+            _videoClient.BeginRecordLocalVideo();
+        }
+        public static void EndRecordLocalVideo()
+        {
+            //   client.EndRecordVideo();
+            _videoClient.EndRecordVideo();
         }
 
 

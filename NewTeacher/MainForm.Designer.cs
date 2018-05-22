@@ -51,6 +51,7 @@
             this.userList_studentVideoShow = new System.Windows.Forms.ToolStripMenuItem();
             this.userList_stopStudentShow = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.videoF = new System.Windows.Forms.PictureBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.myGroupBox8 = new SharedForms.MyGroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -83,7 +84,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.menuRomoteControl = new System.Windows.Forms.Button();
             this.menuSilence = new System.Windows.Forms.Button();
-            this.videoF = new System.Windows.Forms.PictureBox();
             this.panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -93,6 +93,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.onlineListGrid1)).BeginInit();
             this.UserListMenu.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.videoF)).BeginInit();
             this.myGroupBox8.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -108,7 +109,6 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.myGroupBox2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.videoF)).BeginInit();
             this.SuspendLayout();
             // 
             // panelContent
@@ -313,6 +313,15 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(314, 36);
             this.panel3.TabIndex = 3;
+            // 
+            // videoF
+            // 
+            this.videoF.Location = new System.Drawing.Point(255, 5);
+            this.videoF.Name = "videoF";
+            this.videoF.Size = new System.Drawing.Size(30, 25);
+            this.videoF.TabIndex = 10;
+            this.videoF.TabStop = false;
+            this.videoF.Visible = false;
             // 
             // btnRefresh
             // 
@@ -871,15 +880,6 @@
             this.menuSilence.UseVisualStyleBackColor = false;
             this.menuSilence.Click += new System.EventHandler(this.menuSilence_Click);
             // 
-            // videoF
-            // 
-            this.videoF.Location = new System.Drawing.Point(255, 5);
-            this.videoF.Name = "videoF";
-            this.videoF.Size = new System.Drawing.Size(30, 25);
-            this.videoF.TabIndex = 10;
-            this.videoF.TabStop = false;
-            this.videoF.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -901,6 +901,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.onlineListGrid1)).EndInit();
             this.UserListMenu.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.videoF)).EndInit();
             this.myGroupBox8.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -916,7 +917,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.myGroupBox2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.videoF)).EndInit();
             this.ResumeLayout(false);
 
         }
