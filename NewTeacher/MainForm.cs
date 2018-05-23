@@ -65,6 +65,9 @@ namespace NewTeacher
         /// </summary>
         string _clientTitle = "学生端";
 
+
+        string _screenShareText = "屏幕广播";
+
         /// <summary>
         /// 聊天窗体是否已打开
         /// </summary>
@@ -115,7 +118,7 @@ namespace NewTeacher
                 menuSilence.Visible = false;
                 tableLayoutPanel3.ColumnStyles[2].Width = 0f;
                 myGroupBox4.Text = "控制室";
-                menuScreenShare.Text = "同步推送";
+                menuScreenShare.Text = _screenShareText = "同步推送";
                 menuStudentShow.Text = "同步审讯室桌面";
                 menuStudentShow.Width = 400;
                 tableLayoutPanel5.ColumnStyles[1].Width = 50F;
@@ -794,7 +797,7 @@ namespace NewTeacher
                     break;
                 case TeacherAction.menuScreenShare_Click:
                     string text = menuScreenShare.Text;
-                    if (text == "屏幕广播")
+                    if (text == _screenShareText)
                     {
                         if (!isPush)
                         {
@@ -813,7 +816,7 @@ namespace NewTeacher
                     {
                         GlobalVariable.client.StopScreenInteract();
                         GlobalVariable.client.Send_StopScreenInteract();
-                        menuScreenShare.Text = "屏幕广播";
+                        menuScreenShare.Text = _screenShareText;
                         isPush = false;
                     }
                     break;
