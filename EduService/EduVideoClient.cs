@@ -149,7 +149,7 @@ namespace EduService
         private string CreateLocalVideoFFmpegParam()
         {
             string para = " -r 25 -g 20 -s 640*480 -vcodec libx264 -x264opts bframes=3:b-adapt=0 -b:v 2000k -bufsize 2000k -threads 16 -preset:v ultrafast -tune:v zerolatency ";
-     
+
             return para;
         }
 
@@ -206,11 +206,12 @@ namespace EduService
             {
                 url += " -f dshow -i audio=\"" + mic + "\" -acodec mp2 -ab 128k";
             }
-            url += " -r 25 -g 20 -s 1280*720 -vcodec libx264 -preset:v ultrafast -tune:v zerolatency " + _videoFilePath ;
+            url += " -r 25 -g 20 -s 1280*720 -vcodec libx264 -preset:v ultrafast -tune:v zerolatency " + _videoFilePath;
             Loger.LogMessage("录制视频命令:" + url);
             this._ffmpeg = new Ffmpeg();
-            this._ffmpeg.beginExecute(url);
-            _ffmpeg.WaitComplete();
+            _ffmpeg.Cmd(url);
+            //   this._ffmpeg.beginExecute(url);
+            //   _ffmpeg.WaitComplete();
         }
 
         public void EndRecordVideo()
@@ -312,6 +313,30 @@ namespace EduService
                 if (myProcess != null) myProcess.Dispose();
                 throw ex;
             }
+        }
+
+
+        public void Cmd(string para)
+        {
+            try
+            {
+                new Thread(() =>
+                {
+                    myProcess = new Process();
+                    ProcessStartInfo processStartInfo = new ProcessStartInfo("ffmpeg.exe", para);
+                    myProcess.StartInfo = processStartInfo;
+                    processStartInfo.UseShellExecute = false;//不使用系统外壳程序启动进程
+                    processStartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    processStartInfo.CreateNoWindow = true;//不显示dos程序窗口
+                    myProcess.Start();
+                    myProcess.WaitForExit();
+                    myProcess.Close();//关闭进程
+                    myProcess.Dispose();//释放资源
+                }).Start();
+
+            }
+            catch
+            { }
         }
 
         public void WaitComplete()

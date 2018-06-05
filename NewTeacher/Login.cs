@@ -107,17 +107,17 @@ namespace NewTeacher
         {
             _userName = this.textBox1.Text.Trim();
             _displayName = GlobalVariable.MasterTitle + "001";
-            string userPass = this.textBox2.Text.Trim();
+            string userPass = "001";// this.textBox2.Text.Trim();
             if (_userName == string.Empty)
             {
                 MessageBox.Show("请输入用户名！");
                 return;
             }
-            if (userPass == string.Empty)
-            {
-                MessageBox.Show("请输入密码！");
-                return;
-            }
+            //if (userPass == string.Empty)
+            //{
+            //    MessageBox.Show("请输入密码！");
+            //    return;
+            //}
             LoginIn(_userName, _displayName, userPass);
 
 

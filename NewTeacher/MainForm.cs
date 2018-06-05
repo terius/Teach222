@@ -107,7 +107,7 @@ namespace NewTeacher
             {
                 menuClassNamed.Hide();
                 menuExportSign.Hide();
-                menuFileShare.Hide();
+                //   menuFileShare.Hide();
                 menuRomoteControl.Hide();
                 tableLayoutPanel1.ColumnCount = 1;
                 tableLayoutPanel1.RowCount = 1;
@@ -803,7 +803,7 @@ namespace NewTeacher
                         {
 
                             GlobalVariable.client.Send_ScreenInteract(videoF.Handle, GlobalVariable.LoginUserInfo.UserName);
-                            menuScreenShare.Text = "关闭广播";
+                            menuScreenShare.Text = "关闭推送";
                             isPush = true;
                         }
                         else
@@ -856,6 +856,8 @@ namespace NewTeacher
                         {
 
                             GlobalVariable.client.Send_VideoInteract(videoF.Handle, GlobalVariable.LoginUserInfo.UserName);
+
+
                             menuVideoLive.Text = "关闭直播";
                             isPush = true;
                         }

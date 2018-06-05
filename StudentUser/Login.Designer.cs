@@ -48,7 +48,7 @@
             // 
             this.textBox1.BackColor = System.Drawing.Color.White;
             this.textBox1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(441, 112);
+            this.textBox1.Location = new System.Drawing.Point(511, 127);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(186, 23);
@@ -59,20 +59,21 @@
             // 
             this.textBox2.BackColor = System.Drawing.Color.White;
             this.textBox2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(441, 168);
+            this.textBox2.Location = new System.Drawing.Point(511, 232);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(186, 23);
             this.textBox2.TabIndex = 1;
             this.textBox2.Tag = "";
             this.textBox2.UseSystemPasswordChar = true;
+            this.textBox2.Visible = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(370, 112);
+            this.label1.Location = new System.Drawing.Point(440, 127);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 19);
             this.label1.TabIndex = 2;
@@ -83,11 +84,12 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(372, 168);
+            this.label2.Location = new System.Drawing.Point(442, 232);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 19);
             this.label2.TabIndex = 8;
             this.label2.Text = "密   码：";
+            this.label2.Visible = false;
             // 
             // label3
             // 
@@ -101,9 +103,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(34, 62);
+            this.pictureBox1.Location = new System.Drawing.Point(31, 74);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(297, 210);
+            this.pictureBox1.Size = new System.Drawing.Size(367, 251);
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
@@ -111,7 +113,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(31, 306);
+            this.label4.Location = new System.Drawing.Point(61, 350);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(176, 17);
             this.label4.TabIndex = 12;
@@ -124,7 +126,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnExit.ForeColor = System.Drawing.Color.Cornsilk;
-            this.btnExit.Location = new System.Drawing.Point(525, 234);
+            this.btnExit.Location = new System.Drawing.Point(584, 185);
             this.btnExit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(102, 43);
@@ -138,7 +140,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("微软雅黑", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(368, 62);
+            this.label5.Location = new System.Drawing.Point(439, 62);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(123, 30);
             this.label5.TabIndex = 14;
@@ -148,7 +150,7 @@
             // 
             this.labVer.AutoSize = true;
             this.labVer.ForeColor = System.Drawing.Color.White;
-            this.labVer.Location = new System.Drawing.Point(391, 306);
+            this.labVer.Location = new System.Drawing.Point(366, 351);
             this.labVer.Name = "labVer";
             this.labVer.Size = new System.Drawing.Size(32, 17);
             this.labVer.TabIndex = 15;
@@ -171,7 +173,7 @@
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogin.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnLogin.ForeColor = System.Drawing.Color.Cornsilk;
-            this.btnLogin.Location = new System.Drawing.Point(374, 234);
+            this.btnLogin.Location = new System.Drawing.Point(444, 185);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(102, 43);
@@ -185,7 +187,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(152)))), ((int)(((byte)(249)))));
-            this.ClientSize = new System.Drawing.Size(660, 337);
+            this.ClientSize = new System.Drawing.Size(741, 377);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.labVer);

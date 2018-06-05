@@ -18,7 +18,7 @@ namespace StudentUser
         {
             InitializeComponent();
             this.Text = label6.Text = GlobalVariable.SystemTitle;
-            label5.Text = GlobalVariable.ClientTitle +  "登录";
+            label5.Text = GlobalVariable.ClientTitle + "登录";
         }
         // string userGuid;
 
@@ -36,7 +36,7 @@ namespace StudentUser
         private void AutoLogin()
         {
             userName = "stu001";
-            nickName =  "客户端001";
+            nickName = "客户端001";
             string password = "pw001";
             LoginRequest q = new LoginRequest
             {
@@ -47,7 +47,7 @@ namespace StudentUser
 
             };
             GlobalVariable.SendCommand(q, CommandType.UserLogin);
-         //   GlobalVariable.client.Send_UserLogin(userName, nickName, password, ClientRole.Student);
+            //   GlobalVariable.client.Send_UserLogin(userName, nickName, password, ClientRole.Student);
         }
 
         private void StartSocketClient()
@@ -65,8 +65,8 @@ namespace StudentUser
                             GlobalVariable.TeacherIP = result.teachIP;
                             DoAction(() =>
                             {
-                            // GlobalVariable.client.OnReveieveData -= Client_OnReveieveData;
-                            GlobalVariable.LoginUserInfo = new LoginUserInfo
+                                // GlobalVariable.client.OnReveieveData -= Client_OnReveieveData;
+                                GlobalVariable.LoginUserInfo = new LoginUserInfo
                                 {
                                     DisplayName = nickName,
                                     UserName = userName,
@@ -86,7 +86,7 @@ namespace StudentUser
                     }
 
                 };
-             //   AutoLogin();
+                //   AutoLogin();
 
             });
             td.IsBackground = true;
@@ -107,8 +107,8 @@ namespace StudentUser
         {
 
             userName = textBox1.Text.Trim();
-            nickName = GlobalVariable.ClientTitle + userName;
-            string password = textBox2.Text.Trim();
+            nickName = userName;
+            string password = "001";// textBox2.Text.Trim();
 
             if (userName == string.Empty)
             {
@@ -122,7 +122,7 @@ namespace StudentUser
             }
             //  userGuid = Guid.NewGuid().ToString();
             LoginRequest request = new LoginRequest { ClientRole = ClientRole.Student, nickName = nickName, password = password, userName = userName };
-            GlobalVariable.SendCommand(request,CommandType.UserLogin);
+            GlobalVariable.SendCommand(request, CommandType.UserLogin);
         }
 
 
